@@ -1,13 +1,15 @@
 plugins {
     alias(libs.plugins.android.application)
+    //id 'com.android.application'
+    id 'com.google.gms.google-services'
 }
 
 android {
-    namespace 'com.example.planetze'
+    namespace 'com.b07.planetze'
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.example.planetze"
+        applicationId "com.b07.planetze"
         minSdk 24
         targetSdk 34
         versionCode 1
@@ -32,7 +34,12 @@ dependencies {
 
     implementation libs.appcompat
     implementation libs.material
+    implementation libs.firebase.database
     testImplementation libs.junit
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core
+
+    implementation platform('com.google.firebase:firebase-bom:33.5.1')
+    implementation("com.google.firebase:firebase-database")
+    implementation 'com.google.firebase:firebase-analytics'
 }
