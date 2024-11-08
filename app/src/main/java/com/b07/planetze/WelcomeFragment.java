@@ -25,13 +25,8 @@ public class WelcomeFragment extends Fragment{
                 loadFragment(new RegisterFragment());        <- create register fragment/page
             }
         });
-
-        buttonLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loadFragment(new LoginFragment());          <- create login fragment/page
-            }
-        });*/
+        */
+        buttonLogin.setOnClickListener(v -> loadFragment(new LoginFragment()));
 
         return view;
     }
