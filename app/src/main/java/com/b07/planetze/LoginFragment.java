@@ -28,10 +28,10 @@ public class LoginFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_login, container, false);
 
-        Button loginButton = view.findViewById(R.id.loginButton);
+        Button loginButton = view.findViewById(R.id.loginSubmitButton);
 
         loginButton.setOnClickListener(v -> {
-            EditText usernameField = view.findViewById(R.id.loginUsername);
+            EditText usernameField = view.findViewById(R.id.loginEmail);
             EditText passwordField = view.findViewById(R.id.loginPassword);
 
             Log.d(TAG, "user: " + usernameField.getText().toString());
