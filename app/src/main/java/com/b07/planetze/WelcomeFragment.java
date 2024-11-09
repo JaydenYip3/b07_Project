@@ -1,5 +1,6 @@
 package com.b07.planetze;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,14 +19,15 @@ public class WelcomeFragment extends Fragment{
         Button buttonRegister = view.findViewById(R.id.buttonRegister);
         Button buttonLogin = view.findViewById(R.id.buttonLogin);
 
-        /*
+
         buttonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadFragment(new RegisterFragment());        <- create register fragment/page
+                Intent intent = new Intent(getActivity(), Register.class);
+                startActivity(intent);
             }
         });
-
+        /*
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
