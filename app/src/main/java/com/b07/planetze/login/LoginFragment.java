@@ -1,4 +1,4 @@
-package com.b07.planetze;
+package com.b07.planetze.login;
 
 import android.os.Bundle;
 
@@ -10,6 +10,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+
+import com.b07.planetze.R;
 
 
 public class LoginFragment extends Fragment {
@@ -31,11 +33,17 @@ public class LoginFragment extends Fragment {
         Button loginButton = view.findViewById(R.id.loginSubmitButton);
 
         loginButton.setOnClickListener(v -> {
-            EditText usernameField = view.findViewById(R.id.loginEmail);
+            EditText emailField = view.findViewById(R.id.loginEmail);
             EditText passwordField = view.findViewById(R.id.loginPassword);
 
-            Log.d(TAG, "user: " + usernameField.getText().toString());
-            Log.d(TAG, "pass: " + passwordField.getText().toString());
+            String email = emailField.toString();
+            String password = passwordField.toString();
+
+            if (getActivity() instanceof LoginCallback) {
+                ((LoginCallback)getActivity()).login(email, password);
+            } else {
+                Log.w(TAG, "attached activity does not implement LoginCallback");
+            }
         });
 
         return view;
