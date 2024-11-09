@@ -36,8 +36,8 @@ public class LoginFragment extends Fragment {
             EditText emailField = view.findViewById(R.id.loginEmail);
             EditText passwordField = view.findViewById(R.id.loginPassword);
 
-            String email = emailField.toString();
-            String password = passwordField.toString();
+            String email = emailField.getText().toString();
+            String password = passwordField.getText().toString();
 
             if (getActivity() instanceof LoginCallback) {
                 ((LoginCallback)getActivity()).login(email, password);
