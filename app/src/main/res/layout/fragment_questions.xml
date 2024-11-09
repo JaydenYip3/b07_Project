@@ -1,0 +1,1472 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray"
+    tools:context=".QuestionsFragment">
+
+    <Button
+        android:id="@+id/back"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="55dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/shape"
+        android:text="Back"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <!-- Page per Cateogry????             jump to top/bottom buttons-->
+    <TextView
+        android:id="@+id/textViewCat"
+        android:layout_width="380dp"
+        android:layout_height="31dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="74dp"
+        android:gravity="center"
+        android:text="@string/survey_category1"
+        android:textColor="@color/dark_bluegray"
+        android:textStyle="bold"
+        android:background="#22000000"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="411dp"
+        android:layout_height="530dp"
+        android:layout_marginTop="100dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.666"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="320dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:lineSpacingMultiplier="1.5"
+                android:textColor="@color/dark_bluegray"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:text="@string/survey_question1" />
+            <RadioGroup
+                android:id="@+id/radioGroup1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/textView1"
+                app:layout_constraintStart_toStartOf="@id/textView1">
+
+                <RadioButton
+                    android:id="@+id/radioButton11"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="48dp"
+                    android:text="@string/survey_answer11"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="@id/textView1"
+                    app:layout_constraintStart_toStartOf="@id/textView1"
+                    app:layout_constraintTop_toBottomOf="@id/textView1" />
+
+                <RadioButton
+                    android:id="@+id/radioButton12"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer12"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="@id/radioButton11"
+                    app:layout_constraintStart_toStartOf="@id/radioButton11"
+                    app:layout_constraintTop_toBottomOf="@id/radioButton11" />
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:lineSpacingMultiplier="1.5"
+                android:textColor="@color/dark_bluegray"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/radioGroup1"
+                app:layout_constraintStart_toStartOf="@id/radioGroup1"
+                app:layout_constraintTop_toBottomOf="@id/radioGroup1"
+                android:text="@string/survey_question2" />
+            <RadioGroup
+                android:id="@+id/radioGroup2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/textView2"
+                app:layout_constraintStart_toStartOf="@id/textView2">
+
+                <RadioButton
+                    android:id="@+id/radioButton21"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="1dp"
+                    android:text="@string/survey_answer21"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textView2" />
+
+                <RadioButton
+                    android:id="@+id/radioButton22"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer22"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioButton21" />
+
+                <RadioButton
+                    android:id="@+id/radioButton23"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer23"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioButton22" />
+
+                <RadioButton
+                    android:id="@+id/radioButton24"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer24"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioButton23" />
+
+                <RadioButton
+                    android:id="@+id/radioButton25"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer25"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioButton24" />
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:lineSpacingMultiplier="1.5"
+                android:textColor="@color/dark_bluegray"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/radioGroup2"
+                app:layout_constraintStart_toStartOf="@id/radioGroup2"
+                app:layout_constraintTop_toBottomOf="@id/radioGroup2"
+                android:text="@string/survey_question3" />
+            <RadioGroup
+                android:id="@+id/radioGroup3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/textView3"
+                app:layout_constraintStart_toStartOf="@id/textView3">
+
+                <RadioButton
+                    android:id="@+id/radioButton31"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer31"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textView3" />
+
+                <RadioButton
+                    android:id="@+id/radioButton32"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer32"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioButton31" />
+
+                <RadioButton
+                    android:id="@+id/radioButton33"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer33"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioButton32" />
+
+                <RadioButton
+                    android:id="@+id/radioButton34"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer34"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioButton33" />
+
+                <RadioButton
+                    android:id="@+id/radioButton35"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer35"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioButton34" />
+
+                <RadioButton
+                    android:id="@+id/radioButton36"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer36"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioButton35" />
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:lineSpacingMultiplier="1.5"
+                android:textColor="@color/dark_bluegray"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/radioGroup3"
+                app:layout_constraintStart_toStartOf="@id/radioGroup3"
+                app:layout_constraintTop_toBottomOf="@id/radioGroup3"
+                android:text="@string/survey_question4" />
+            <RadioGroup
+                android:id="@+id/radioGroup4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/textView4"
+                app:layout_constraintStart_toStartOf="@id/textView4">
+
+                <RadioButton
+                    android:id="@+id/radioButton41"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer41"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textView4" />
+
+                <RadioButton
+                    android:id="@+id/radioButton42"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer42"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioButton41" />
+
+                <RadioButton
+                    android:id="@+id/radioButton43"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer43"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioButton42" />
+
+                <RadioButton
+                    android:id="@+id/radioButton44"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer44"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioButton43" />
+            </RadioGroup>
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:lineSpacingMultiplier="1.5"
+                android:textColor="@color/dark_bluegray"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/radioGroup4"
+                app:layout_constraintStart_toStartOf="@id/radioGroup4"
+                app:layout_constraintTop_toBottomOf="@id/radioGroup4"
+                android:text="@string/survey_question5" />
+            <RadioGroup
+                android:id="@+id/radioGroup5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/textView5"
+                app:layout_constraintStart_toStartOf="@id/textView5">
+
+                <RadioButton
+                    android:id="@+id/radioButton51"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer51"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textView5" />
+
+                <RadioButton
+                    android:id="@+id/radioButton52"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer52"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioButton51" />
+
+                <RadioButton
+                    android:id="@+id/radioButton53"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer53"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioButton52" />
+
+                <RadioButton
+                    android:id="@+id/radioButton54"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer54"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioButton53" />
+
+                <RadioButton
+                    android:id="@+id/radioButton55"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer55"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioButton54" />
+            </RadioGroup>
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:lineSpacingMultiplier="1.5"
+                android:textColor="@color/dark_bluegray"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/radioGroup5"
+                app:layout_constraintStart_toStartOf="@id/radioGroup5"
+                app:layout_constraintTop_toBottomOf="@id/radioGroup5"
+                android:text="@string/survey_question6" />
+            <RadioGroup
+                android:id="@+id/radioGroup6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/textView6"
+                app:layout_constraintStart_toStartOf="@id/textView6">
+
+                <RadioButton
+                    android:id="@+id/radioButton61"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer61"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textView6" />
+
+                <RadioButton
+                    android:id="@+id/radioButton62"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer62"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioButton61" />
+
+                <RadioButton
+                    android:id="@+id/radioButton63"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer63"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioButton62" />
+
+                <RadioButton
+                    android:id="@+id/radioButton64"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer64"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioButton63" />
+
+                <RadioButton
+                    android:id="@+id/radioButton65"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer65"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioButton64" />
+            </RadioGroup>
+            <TextView
+                android:id="@+id/textView7"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:lineSpacingMultiplier="1.5"
+                android:textColor="@color/dark_bluegray"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/radioGroup6"
+                app:layout_constraintStart_toStartOf="@id/radioGroup6"
+                app:layout_constraintTop_toBottomOf="@id/radioGroup6"
+                android:text="@string/survey_question7" />
+            <RadioGroup
+                android:id="@+id/radioGroup7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/textView7"
+                app:layout_constraintStart_toStartOf="@id/textView7">
+
+                <RadioButton
+                    android:id="@+id/radioButton71"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer71"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textView7" />
+
+                <RadioButton
+                    android:id="@+id/radioButton72"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer72"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioButton71" />
+
+                <RadioButton
+                    android:id="@+id/radioButton73"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer73"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioButton72" />
+
+                <RadioButton
+                    android:id="@+id/radioButton74"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer74"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioButton73" />
+
+                <RadioButton
+                    android:id="@+id/radioButton75"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer75"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioButton74" />
+            </RadioGroup>
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:lineSpacingMultiplier="1.5"
+                android:textColor="@color/dark_bluegray"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/radioGroup7"
+                app:layout_constraintStart_toStartOf="@id/radioGroup7"
+                app:layout_constraintTop_toBottomOf="@id/radioGroup7"
+                android:text="@string/survey_question8" />
+            <RadioGroup
+                android:id="@+id/radioGroup8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/textView8"
+                app:layout_constraintStart_toStartOf="@id/textView8">
+
+                <RadioButton
+                    android:id="@+id/radioButton81"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer81"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textView8" />
+
+                <RadioButton
+                    android:id="@+id/radioButton82"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer82"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioButton81" />
+
+                <RadioButton
+                    android:id="@+id/radioButton83"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer83"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioButton82" />
+
+                <RadioButton
+                    android:id="@+id/radioButton84"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer84"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioButton83" />
+            </RadioGroup>
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:lineSpacingMultiplier="1.5"
+                android:textColor="@color/dark_bluegray"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/radioGroup8"
+                app:layout_constraintStart_toStartOf="@id/radioGroup8"
+                app:layout_constraintTop_toBottomOf="@id/radioGroup8"
+                android:text="@string/survey_question9" />
+            <RadioGroup
+                android:id="@+id/radioGroup9"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/textView9"
+                app:layout_constraintStart_toStartOf="@id/textView9">
+
+                <RadioButton
+                    android:id="@+id/radioButton91"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer91"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textView9" />
+
+                <RadioButton
+                    android:id="@+id/radioButton92"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer92"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioButton91" />
+
+                <RadioButton
+                    android:id="@+id/radioButton93"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer93"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioButton92" />
+
+                <RadioButton
+                    android:id="@+id/radioButton94"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer94"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioButton93" />
+            </RadioGroup>
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:lineSpacingMultiplier="1.5"
+                android:textColor="@color/dark_bluegray"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/radioGroup9"
+                app:layout_constraintStart_toStartOf="@id/radioGroup9"
+                app:layout_constraintTop_toBottomOf="@id/radioGroup9"
+                android:text="@string/survey_question10" />
+            <RadioGroup
+                android:id="@+id/radioGroup10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/textView10"
+                app:layout_constraintStart_toStartOf="@id/textView10">
+
+                <RadioButton
+                    android:id="@+id/radioButton101"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer101"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textView10" />
+
+                <RadioButton
+                    android:id="@+id/radioButton102"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer102"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioButton101" />
+
+                <RadioButton
+                    android:id="@+id/radioButton103"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer103"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioButton102" />
+
+                <RadioButton
+                    android:id="@+id/radioButton104"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer104"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioButton103" />
+            </RadioGroup>
+            <TextView
+                android:id="@+id/textView11"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:lineSpacingMultiplier="1.5"
+                android:textColor="@color/dark_bluegray"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/radioGroup10"
+                app:layout_constraintStart_toStartOf="@id/radioGroup10"
+                app:layout_constraintTop_toBottomOf="@id/radioGroup10"
+                android:text="@string/survey_question11" />
+            <RadioGroup
+                android:id="@+id/radioGroup11"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/textView11"
+                app:layout_constraintStart_toStartOf="@id/textView11">
+
+                <RadioButton
+                    android:id="@+id/radioButton111"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer111"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textView11" />
+
+                <RadioButton
+                    android:id="@+id/radioButton112"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer112"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioButton111" />
+
+                <RadioButton
+                    android:id="@+id/radioButton113"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer113"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioButton112" />
+
+                <RadioButton
+                    android:id="@+id/radioButton114"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer114"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioButton113" />
+
+                <RadioButton
+                    android:id="@+id/radioButton115"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer115"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioButton114" />
+            </RadioGroup>
+            <TextView
+                android:id="@+id/textView12"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:lineSpacingMultiplier="1.5"
+                android:textColor="@color/dark_bluegray"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/radioGroup11"
+                app:layout_constraintStart_toStartOf="@id/radioGroup11"
+                app:layout_constraintTop_toBottomOf="@id/radioGroup11"
+                android:text="@string/survey_question12" />
+            <RadioGroup
+                android:id="@+id/radioGroup12"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/textView12"
+                app:layout_constraintStart_toStartOf="@id/textView12">
+
+                <RadioButton
+                    android:id="@+id/radioButton121"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer121"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textView12" />
+
+                <RadioButton
+                    android:id="@+id/radioButton122"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer122"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioButton121" />
+
+                <RadioButton
+                    android:id="@+id/radioButton123"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer123"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioButton122" />
+
+                <RadioButton
+                    android:id="@+id/radioButton124"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer124"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioButton123" />
+            </RadioGroup>
+            <TextView
+                android:id="@+id/textView13"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:lineSpacingMultiplier="1.5"
+                android:textColor="@color/dark_bluegray"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/radioGroup12"
+                app:layout_constraintStart_toStartOf="@id/radioGroup12"
+                app:layout_constraintTop_toBottomOf="@id/radioGroup12"
+                android:text="@string/survey_question13" />
+            <RadioGroup
+                android:id="@+id/radioGroup13"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/textView13"
+                app:layout_constraintStart_toStartOf="@id/textView13">
+
+                <RadioButton
+                    android:id="@+id/radioButton131"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer131"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textView13" />
+
+                <RadioButton
+                    android:id="@+id/radioButton132"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer132"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioButton131" />
+
+                <RadioButton
+                    android:id="@+id/radioButton133"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer133"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioButton132" />
+            </RadioGroup>
+            <TextView
+                android:id="@+id/textView14"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:lineSpacingMultiplier="1.5"
+                android:textColor="@color/dark_bluegray"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/radioGroup13"
+                app:layout_constraintStart_toStartOf="@id/radioGroup13"
+                app:layout_constraintTop_toBottomOf="@id/radioGroup13"
+                android:text="@string/survey_question14" />
+            <RadioGroup
+                android:id="@+id/radioGroup14"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/textView14"
+                app:layout_constraintStart_toStartOf="@id/textView14">
+
+                <RadioButton
+                    android:id="@+id/radioButton141"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer141"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textView14" />
+
+                <RadioButton
+                    android:id="@+id/radioButton142"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer142"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioButton141" />
+
+                <RadioButton
+                    android:id="@+id/radioButton143"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer143"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioButton142" />
+
+                <RadioButton
+                    android:id="@+id/radioButton144"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer144"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioButton143" />
+
+                <RadioButton
+                    android:id="@+id/radioButton145"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer145"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioButton144" />
+
+                <RadioButton
+                    android:id="@+id/radioButton146"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer146"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioButton145" />
+            </RadioGroup>
+            <TextView
+                android:id="@+id/textView15"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:lineSpacingMultiplier="1.5"
+                android:textColor="@color/dark_bluegray"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/radioGroup14"
+                app:layout_constraintStart_toStartOf="@id/radioGroup14"
+                app:layout_constraintTop_toBottomOf="@id/radioGroup14"
+                android:text="@string/survey_question15" />
+            <RadioGroup
+                android:id="@+id/radioGroup15"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/textView15"
+                app:layout_constraintStart_toStartOf="@id/textView15">
+
+                <RadioButton
+                    android:id="@+id/radioButton151"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer151"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textView15" />
+
+                <RadioButton
+                    android:id="@+id/radioButton152"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer152"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioButton151" />
+
+                <RadioButton
+                    android:id="@+id/radioButton153"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer153"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioButton152" />
+
+                <RadioButton
+                    android:id="@+id/radioButton154"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer154"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioButton153" />
+
+                <RadioButton
+                    android:id="@+id/radioButton155"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer155"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioButton154" />
+            </RadioGroup>
+            <TextView
+                android:id="@+id/textView16"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:lineSpacingMultiplier="1.5"
+                android:textColor="@color/dark_bluegray"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/radioGroup15"
+                app:layout_constraintStart_toStartOf="@id/radioGroup15"
+                app:layout_constraintTop_toBottomOf="@id/radioGroup15"
+                android:text="@string/survey_question16" />
+            <RadioGroup
+                android:id="@+id/radioGroup16"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/textView16"
+                app:layout_constraintStart_toStartOf="@id/textView16">
+
+                <RadioButton
+                    android:id="@+id/radioButton161"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer161"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textView16" />
+
+                <RadioButton
+                    android:id="@+id/radioButton162"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer162"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioButton161" />
+
+                <RadioButton
+                    android:id="@+id/radioButton163"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer163"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioButton162" />
+
+                <RadioButton
+                    android:id="@+id/radioButton164"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer164"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioButton163" />
+
+                <RadioButton
+                    android:id="@+id/radioButton165"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer165"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioButton164" />
+
+                <RadioButton
+                    android:id="@+id/radioButton166"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer166"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioButton165" />
+            </RadioGroup>
+            <TextView
+                android:id="@+id/textView17"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:lineSpacingMultiplier="1.5"
+                android:textColor="@color/dark_bluegray"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/radioGroup16"
+                app:layout_constraintStart_toStartOf="@id/radioGroup16"
+                app:layout_constraintTop_toBottomOf="@id/radioGroup16"
+                android:text="@string/survey_question17" />
+            <RadioGroup
+                android:id="@+id/radioGroup17"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/textView17"
+                app:layout_constraintStart_toStartOf="@id/textView17">
+
+                <RadioButton
+                    android:id="@+id/radioButton171"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer171"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textView17" />
+
+                <RadioButton
+                    android:id="@+id/radioButton172"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer172"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioButton171" />
+
+                <RadioButton
+                    android:id="@+id/radioButton173"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer173"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioButton172" />
+            </RadioGroup>
+            <TextView
+                android:id="@+id/textView18"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:lineSpacingMultiplier="1.5"
+                android:textColor="@color/dark_bluegray"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/radioGroup17"
+                app:layout_constraintStart_toStartOf="@id/radioGroup17"
+                app:layout_constraintTop_toBottomOf="@id/radioGroup17"
+                android:text="@string/survey_question18" />
+            <RadioGroup
+                android:id="@+id/radioGroup18"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/textView18"
+                app:layout_constraintStart_toStartOf="@id/textView18">
+
+                <RadioButton
+                    android:id="@+id/radioButton181"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer181"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textView18" />
+
+                <RadioButton
+                    android:id="@+id/radioButton182"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer182"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioButton181" />
+
+                <RadioButton
+                    android:id="@+id/radioButton183"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer183"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioButton182" />
+
+                <RadioButton
+                    android:id="@+id/radioButton184"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer184"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioButton183" />
+            </RadioGroup>
+            <TextView
+                android:id="@+id/textView19"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:lineSpacingMultiplier="1.5"
+                android:textColor="@color/dark_bluegray"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/radioGroup18"
+                app:layout_constraintStart_toStartOf="@id/radioGroup18"
+                app:layout_constraintTop_toBottomOf="@id/radioGroup18"
+                android:text="@string/survey_question19" />
+            <RadioGroup
+                android:id="@+id/radioGroup19"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/textView19"
+                app:layout_constraintStart_toStartOf="@id/textView19">
+
+                <RadioButton
+                    android:id="@+id/radioButton191"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer191"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textView19" />
+
+                <RadioButton
+                    android:id="@+id/radioButton192"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer192"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioButton191" />
+
+                <RadioButton
+                    android:id="@+id/radioButton193"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer193"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioButton192" />
+            </RadioGroup>
+            <TextView
+                android:id="@+id/textView20"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:lineSpacingMultiplier="1.5"
+                android:textColor="@color/dark_bluegray"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/radioGroup19"
+                app:layout_constraintStart_toStartOf="@id/radioGroup19"
+                app:layout_constraintTop_toBottomOf="@id/radioGroup19"
+                android:text="@string/survey_question20" />
+            <RadioGroup
+                android:id="@+id/radioGroup20"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/textView20"
+                app:layout_constraintStart_toStartOf="@id/textView20">
+
+                <RadioButton
+                    android:id="@+id/radioButton201"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer201"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textView20" />
+
+                <RadioButton
+                    android:id="@+id/radioButton202"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer202"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioButton201" />
+
+                <RadioButton
+                    android:id="@+id/radioButton203"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer203"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioButton202" />
+
+                <RadioButton
+                    android:id="@+id/radioButton204"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer204"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioButton203" />
+            </RadioGroup>
+            <TextView
+                android:id="@+id/textView21"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:lineSpacingMultiplier="1.5"
+                android:textColor="@color/dark_bluegray"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/radioGroup20"
+                app:layout_constraintStart_toStartOf="@id/radioGroup20"
+                app:layout_constraintTop_toBottomOf="@id/radioGroup20"
+                android:text="@string/survey_question21" />
+            <RadioGroup
+                android:id="@+id/radioGroup21"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/textView21"
+                app:layout_constraintStart_toStartOf="@id/textView21">
+
+                <RadioButton
+                    android:id="@+id/radioButton211"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer211"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textView21" />
+
+                <RadioButton
+                    android:id="@+id/radioButton212"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer212"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioButton211" />
+
+                <RadioButton
+                    android:id="@+id/radioButton213"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer213"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioButton212" />
+
+                <RadioButton
+                    android:id="@+id/radioButton214"
+                    android:buttonTint="@color/teal"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/survey_answer214"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioButton213" />
+            </RadioGroup>
+            <Button
+                android:id="@+id/submit"
+                android:layout_width="300dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="55dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/shape"
+                android:text="Submit"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/radioGroup21" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

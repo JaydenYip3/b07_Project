@@ -42,7 +42,7 @@ public class WelcomeFragment extends Fragment{
         buttonRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadFragment(new RegisterFragment());        <- create register fragment/page
+                loadFragment(new RegisterFragment());        //<- create register fragment/page
             }
         });
 
@@ -52,6 +52,8 @@ public class WelcomeFragment extends Fragment{
                 loadFragment(new LoginFragment());          <- create login fragment/page
             }
         });*/
+
+        // button onclick fcn after registration confirmation: loadFragment(new QuestionsFragment());
 
         return view;
     }
