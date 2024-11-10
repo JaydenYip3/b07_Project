@@ -1,0 +1,31 @@
+# Android Studio
+.idea/
+*.iml
+.gradle/
+build/
+captures/
+output.json
+
+# Keystore files
+*.jks
+*.keystore
+
+# Android specific files
+local.properties
+app/*.apk
+app/*.ap_
+*.log
+*.hprof
+
+# Emacs
+*~
+
+# MacOS
+.DS_Store
+
+# Windows
+Thumbs.db
+
+# Other
+.gradle/
+*/build/
