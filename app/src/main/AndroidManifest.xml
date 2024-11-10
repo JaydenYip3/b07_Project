@@ -12,6 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Planetze"
         tools:targetApi="31">
+
+        <!-- Main Activity -->
         <activity
             android:name=".auth.AuthActivity"
             android:exported="false" />
@@ -20,10 +22,15 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Register Activity -->
+        <activity
+            android:name="com.b07.planetze.Register"
+            android:exported="true" />
+
     </application>
 
 </manifest>
