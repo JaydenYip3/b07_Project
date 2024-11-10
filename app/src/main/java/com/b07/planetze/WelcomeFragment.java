@@ -3,14 +3,11 @@ package com.b07.planetze;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
-import android.view.animation.Interpolator;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.RotateAnimation;
 
@@ -22,6 +19,8 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.b07.planetze.auth.AuthActivity;
+import com.b07.planetze.auth.AuthScreen;
+import com.b07.planetze.auth.RegisterFragment;
 
 public class WelcomeFragment extends Fragment{
     private static final String TAG = "WelcomeFragment";
@@ -46,24 +45,9 @@ public class WelcomeFragment extends Fragment{
         rotate.setInterpolator(new LinearInterpolator());
         image.startAnimation(rotate);
 
-        buttonRegister.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), Register.class);
-                startActivity(intent);
-            }
-        });
+        buttonRegister.setOnClickListener(v -> AuthActivity.start(requireActivity(), AuthScreen.REGISTER));
 
-        buttonLogin.setOnClickListener(v -> {
-            Intent intent = new Intent();
-            FragmentActivity activity = getActivity();
-            if (activity == null) {
-                Log.w(TAG, "getActivity() returned null");
-                return;
-            }
-            intent.setClass(getActivity(), AuthActivity.class);
-            activity.startActivity(intent);
-        });
+        buttonLogin.setOnClickListener(v -> AuthActivity.start(requireActivity(), AuthScreen.LOGIN));
 
         return view;
     }
