@@ -4,5 +4,4 @@ import androidx.annotation.NonNull;
 
 public interface SendResetCallback {
     void sendPasswordResetEmail(@NonNull String email);
-    void toLogin();
 }

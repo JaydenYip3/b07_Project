@@ -15,7 +15,7 @@ import com.b07.planetze.R;
 
 /**
  * An email + password login screen. <br>
- * Activities using this fragment must implement LoginCallback.
+ * Activities using this fragment must implement LoginCallback and AuthScreenSwitch
  */
 public class LoginFragment extends Fragment {
     private static final String TAG = "LoginFragment";
@@ -43,11 +43,11 @@ public class LoginFragment extends Fragment {
             String email = emailField.getText().toString().trim();
             String password = passwordField.getText().toString();
 
-            ((LoginCallback)getActivity()).login(email, password);
+            ((LoginCallback) getActivity()).login(email, password);
         });
 
         resetPasswordButton.setOnClickListener(v -> {
-            ((LoginCallback)getActivity()).toSendReset();
+            ((AuthScreenSwitch) getActivity()).switchScreens(AuthScreen.SEND_PASSWORD_RESET);
         });
 
         return view;

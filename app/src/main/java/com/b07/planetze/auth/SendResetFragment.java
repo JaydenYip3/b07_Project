@@ -19,7 +19,7 @@ import com.google.firebase.auth.FirebaseAuth;
 
 /**
  * A "send password instructions via email" screen. <br>
- * Activities using this fragment must implement SendResetCallback.
+ * Activities using this fragment must implement SendResetCallback and AuthScreenSwitch.
  */
 public class SendResetFragment extends Fragment {
     private static final String TAG = "SendResetFragment";
@@ -43,11 +43,11 @@ public class SendResetFragment extends Fragment {
         buttonReset.setOnClickListener(v -> {
             String email = textBoxEmail.getText().toString().trim();
 
-            ((SendResetCallback)getActivity()).sendPasswordResetEmail(email);
+            ((SendResetCallback) getActivity()).sendPasswordResetEmail(email);
         });
 
         buttonSignIn.setOnClickListener(v -> {
-            ((SendResetCallback)getActivity()).toLogin();
+            ((AuthScreenSwitch) getActivity()).switchScreens(AuthScreen.LOGIN);
         });
 
         return view;

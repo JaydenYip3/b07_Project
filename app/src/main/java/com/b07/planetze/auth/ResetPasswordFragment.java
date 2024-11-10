@@ -41,7 +41,7 @@ public class ResetPasswordFragment extends Fragment {
             String newPassword = textBoxPass.getText().toString().trim();
             String confirmPassword = textBoxConPass.getText().toString().trim();
 
-            ((ResetPasswordCallback)getActivity()).resetPassword(code, newPassword, confirmPassword);
+            ((ResetPasswordCallback) getActivity()).resetPassword(code, newPassword, confirmPassword);
         });
 
         return view;
