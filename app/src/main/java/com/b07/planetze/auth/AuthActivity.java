@@ -56,7 +56,7 @@ public class AuthActivity extends AppCompatActivity implements LoginCallback, Re
     }
 
     @Override
-    public void toResetPassword() {
+    public void toSendReset() {
         loadFragment(new SendResetFragment());
     }
 
@@ -82,6 +82,11 @@ public class AuthActivity extends AppCompatActivity implements LoginCallback, Re
     }
 
     @Override
+    public void toLogin() {
+        loadFragment(new LoginFragment());
+    }
+
+    @Override
     public void resetPassword(@NonNull String code, @NonNull String newPassword, @NonNull String confirmPassword) {
         if (TextUtils.isEmpty(code) || TextUtils.isEmpty(newPassword) || TextUtils.isEmpty(confirmPassword)) {
             Toast.makeText(this, "All fields are required", Toast.LENGTH_SHORT).show();
@@ -100,7 +105,7 @@ public class AuthActivity extends AppCompatActivity implements LoginCallback, Re
                                 .addOnCompleteListener(resetTask -> {
                                     if (resetTask.isSuccessful()) {
                                         Toast.makeText(this, "Password reset successfully", Toast.LENGTH_SHORT).show();
-                                        loadFragment(new LoginFragment());
+                                        toLogin();
                                     } else {
                                         Log.e(TAG, "Password reset failed", resetTask.getException());
                                         Toast.makeText(this, "Password reset failed: " + resetTask.getException().getMessage(), Toast.LENGTH_LONG).show();
@@ -132,6 +137,6 @@ public class AuthActivity extends AppCompatActivity implements LoginCallback, Re
         });
 
         auth = FirebaseAuth.getInstance();
-        loadFragment(new LoginFragment());
+        toLogin();
     }
 }

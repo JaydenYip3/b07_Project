@@ -12,6 +12,10 @@ import androidx.fragment.app.Fragment;
 
 import com.b07.planetze.R;
 
+/**
+ * A password reset screen. <br>
+ * Activities using this fragment must implement ResetPasswordCallback.
+ */
 public class ResetPasswordFragment extends Fragment {
     private static final String TAG = "ResetPasswordFragment";
     private EditText textBoxCode, textBoxPass, textBoxConPass;
@@ -37,11 +41,7 @@ public class ResetPasswordFragment extends Fragment {
             String newPassword = textBoxPass.getText().toString().trim();
             String confirmPassword = textBoxConPass.getText().toString().trim();
 
-            if (getActivity() instanceof ResetPasswordCallback) {
-                ((ResetPasswordCallback)getActivity()).resetPassword(code, newPassword, confirmPassword);
-            } else {
-                Log.e(TAG, "attached activity does not implement ResetPasswordCallback");
-            }
+            ((ResetPasswordCallback)getActivity()).resetPassword(code, newPassword, confirmPassword);
         });
 
         return view;

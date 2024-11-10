@@ -5,5 +5,5 @@ import androidx.annotation.NonNull;
 public interface LoginCallback {
     void login(@NonNull String email, @NonNull String password);
 
-    void toResetPassword();
+    void toSendReset();
 }

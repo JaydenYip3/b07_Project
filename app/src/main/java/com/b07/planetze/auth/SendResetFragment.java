@@ -17,6 +17,10 @@ import androidx.fragment.app.Fragment;
 import com.b07.planetze.R;
 import com.google.firebase.auth.FirebaseAuth;
 
+/**
+ * A "send password instructions via email" screen. <br>
+ * Activities using this fragment must implement SendResetCallback.
+ */
 public class SendResetFragment extends Fragment {
     private static final String TAG = "SendResetFragment";
     private EditText textBoxEmail;
@@ -39,18 +43,12 @@ public class SendResetFragment extends Fragment {
         buttonReset.setOnClickListener(v -> {
             String email = textBoxEmail.getText().toString().trim();
 
-            if (getActivity() instanceof SendResetCallback) {
-                ((SendResetCallback) getActivity()).sendPasswordResetEmail(email);
-            } else {
-                Log.e(TAG, "attached activity does not implement SendResetCallback");
-            }
+            ((SendResetCallback)getActivity()).sendPasswordResetEmail(email);
         });
 
-//        buttonSignIn.setOnClickListener(v -> {
-//            // Redirect to the sign-in screen
-//            Intent intent = new Intent(ResetPassword.this, SignInActivity.class);
-//            startActivity(intent);
-//        });
+        buttonSignIn.setOnClickListener(v -> {
+            ((SendResetCallback)getActivity()).toLogin();
+        });
 
         return view;
     }

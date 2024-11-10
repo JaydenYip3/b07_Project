@@ -13,7 +13,10 @@ import android.widget.EditText;
 
 import com.b07.planetze.R;
 
-
+/**
+ * An email + password login screen. <br>
+ * Activities using this fragment must implement LoginCallback.
+ */
 public class LoginFragment extends Fragment {
     private static final String TAG = "LoginFragment";
 
@@ -40,19 +43,11 @@ public class LoginFragment extends Fragment {
             String email = emailField.getText().toString().trim();
             String password = passwordField.getText().toString();
 
-            if (getActivity() instanceof LoginCallback) {
-                ((LoginCallback)getActivity()).login(email, password);
-            } else {
-                Log.e(TAG, "attached activity does not implement LoginCallback");
-            }
+            ((LoginCallback)getActivity()).login(email, password);
         });
 
         resetPasswordButton.setOnClickListener(v -> {
-            if (getActivity() instanceof LoginCallback) {
-                ((LoginCallback)getActivity()).toResetPassword();
-            } else {
-                Log.e(TAG, "attached activity does not implement LoginCallback");
-            }
+            ((LoginCallback)getActivity()).toSendReset();
         });
 
         return view;
