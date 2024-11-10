@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.Patterns;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -17,6 +18,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.b07.planetze.R;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseUser;
 
 public class AuthActivity extends AppCompatActivity implements LoginCallback, ResetPasswordCallback, SendResetCallback {
@@ -26,16 +28,29 @@ public class AuthActivity extends AppCompatActivity implements LoginCallback, Re
 
     @Override
     public void login(@NonNull String email, @NonNull String password) {
-        Log.d(TAG, "logging in " + email);
+        if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
+            Toast.makeText(this, "Email and password fields must be filled", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            Toast.makeText(this, "Email address is malformed", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         auth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
                         FirebaseUser user = auth.getCurrentUser();
 
-                        Log.d(TAG, "login success: email=" + user.getEmail());
+                        Toast.makeText(this, "Logged in as " + user.getEmail(), Toast.LENGTH_SHORT).show();
                     } else {
-                        Log.e(TAG, "login fail: ", task.getException());
+                        Exception e = task.getException();
+
+                        if (e instanceof FirebaseAuthInvalidCredentialsException) {
+                            Toast.makeText(this, "Invalid credentials", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Log.e(TAG, "login error: ", e);
+                        }
                     }
                 });
     }
@@ -50,18 +65,18 @@ public class AuthActivity extends AppCompatActivity implements LoginCallback, Re
         Log.d(TAG, "sending password reset email to " + email);
 
         if (TextUtils.isEmpty(email)) {
-            Toast.makeText(AuthActivity.this, "Enter your email address", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Enter your email address", Toast.LENGTH_SHORT).show();
             return;
         }
 
         auth.sendPasswordResetEmail(email)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        Toast.makeText(AuthActivity.this, "Password reset email sent", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Password reset email sent", Toast.LENGTH_SHORT).show();
                         loadFragment(new ResetPasswordFragment());
                     } else {
                         Log.e(TAG, "failed to send reset email: ", task.getException());
-                        Toast.makeText(AuthActivity.this, "Error: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(this, "Error: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
     }
@@ -69,12 +84,12 @@ public class AuthActivity extends AppCompatActivity implements LoginCallback, Re
     @Override
     public void resetPassword(@NonNull String code, @NonNull String newPassword, @NonNull String confirmPassword) {
         if (TextUtils.isEmpty(code) || TextUtils.isEmpty(newPassword) || TextUtils.isEmpty(confirmPassword)) {
-            Toast.makeText(AuthActivity.this, "All fields are required", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "All fields are required", Toast.LENGTH_SHORT).show();
             return;
         }
 
         if (!newPassword.equals(confirmPassword)) {
-            Toast.makeText(AuthActivity.this, "Passwords do not match", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -84,17 +99,16 @@ public class AuthActivity extends AppCompatActivity implements LoginCallback, Re
                         auth.confirmPasswordReset(code, newPassword)
                                 .addOnCompleteListener(resetTask -> {
                                     if (resetTask.isSuccessful()) {
-                                        Toast.makeText(AuthActivity.this, "Password reset successfully", Toast.LENGTH_SHORT).show();
-                                        // finish();  // Optionally, redirect to login screen
+                                        Toast.makeText(this, "Password reset successfully", Toast.LENGTH_SHORT).show();
                                         loadFragment(new LoginFragment());
                                     } else {
                                         Log.e(TAG, "Password reset failed", resetTask.getException());
-                                        Toast.makeText(AuthActivity.this, "Password reset failed: " + resetTask.getException().getMessage(), Toast.LENGTH_LONG).show();
+                                        Toast.makeText(this, "Password reset failed: " + resetTask.getException().getMessage(), Toast.LENGTH_LONG).show();
                                     }
                                 });
                     } else {
                         Log.e(TAG, "Invalid reset code", verifyTask.getException());
-                        Toast.makeText(AuthActivity.this, "Invalid code", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Invalid code", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
