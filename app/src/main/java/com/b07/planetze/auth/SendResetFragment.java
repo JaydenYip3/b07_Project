@@ -43,11 +43,11 @@ public class SendResetFragment extends Fragment {
         buttonReset.setOnClickListener(v -> {
             String email = textBoxEmail.getText().toString().trim();
 
-            ((SendResetCallback) getActivity()).sendPasswordResetEmail(email);
+            ((SendResetCallback) requireActivity()).sendPasswordResetEmail(email);
         });
 
         buttonSignIn.setOnClickListener(v -> {
-            ((AuthScreenSwitch) getActivity()).switchScreens(AuthScreen.LOGIN);
+            ((AuthScreenSwitch) requireActivity()).switchScreens(AuthScreen.LOGIN);
         });
 
         return view;

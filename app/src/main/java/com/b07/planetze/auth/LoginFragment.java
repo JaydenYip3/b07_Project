@@ -43,11 +43,11 @@ public class LoginFragment extends Fragment {
             String email = emailField.getText().toString().trim();
             String password = passwordField.getText().toString();
 
-            ((LoginCallback) getActivity()).login(email, password);
+            ((LoginCallback) requireActivity()).login(email, password);
         });
 
         resetPasswordButton.setOnClickListener(v -> {
-            ((AuthScreenSwitch) getActivity()).switchScreens(AuthScreen.SEND_PASSWORD_RESET);
+            ((AuthScreenSwitch) requireActivity()).switchScreens(AuthScreen.SEND_PASSWORD_RESET);
         });
 
         return view;

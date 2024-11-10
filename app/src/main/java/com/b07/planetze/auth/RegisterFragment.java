@@ -38,7 +38,7 @@ public class RegisterFragment extends Fragment {
             String email = editEmailRegister.getText().toString();
             String password = editPasswordRegister.getText().toString();
 
-            ((RegisterCallback) getActivity()).register(email, password);
+            ((RegisterCallback) requireActivity()).register(email, password);
         });
 
         return view;
