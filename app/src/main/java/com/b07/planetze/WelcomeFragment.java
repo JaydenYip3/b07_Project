@@ -13,7 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.b07.planetze.auth.LoginActivity;
+import com.b07.planetze.auth.AuthActivity;
 
 public class WelcomeFragment extends Fragment{
     private static final String TAG = "WelcomeFragment";
@@ -42,7 +42,7 @@ public class WelcomeFragment extends Fragment{
                 Log.w(TAG, "getActivity() returned null");
                 return;
             }
-            intent.setClass(getActivity(), LoginActivity.class);
+            intent.setClass(getActivity(), AuthActivity.class);
             activity.startActivity(intent);
         });
 

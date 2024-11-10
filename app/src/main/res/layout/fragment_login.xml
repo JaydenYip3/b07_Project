@@ -33,5 +33,11 @@
             android:layout_height="50dp"
             android:text="Login" />
 
+        <Button
+            android:id="@+id/resetPasswordButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Reset password" />
+
     </LinearLayout>
 </FrameLayout>

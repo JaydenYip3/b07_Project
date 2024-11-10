@@ -31,6 +31,7 @@ public class LoginFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_login, container, false);
 
         Button loginButton = view.findViewById(R.id.loginSubmitButton);
+        Button resetPasswordButton = view.findViewById(R.id.resetPasswordButton);
 
         loginButton.setOnClickListener(v -> {
             EditText emailField = view.findViewById(R.id.loginEmail);
@@ -42,7 +43,15 @@ public class LoginFragment extends Fragment {
             if (getActivity() instanceof LoginCallback) {
                 ((LoginCallback)getActivity()).login(email, password);
             } else {
-                Log.w(TAG, "attached activity does not implement LoginCallback");
+                Log.e(TAG, "attached activity does not implement LoginCallback");
+            }
+        });
+
+        resetPasswordButton.setOnClickListener(v -> {
+            if (getActivity() instanceof LoginCallback) {
+                ((LoginCallback)getActivity()).toResetPassword();
+            } else {
+                Log.e(TAG, "attached activity does not implement LoginCallback");
             }
         });
 
