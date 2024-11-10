@@ -1,4 +1,4 @@
-package com.b07.planetze.login;
+package com.b07.planetze.auth;
 
 import android.os.Bundle;
 

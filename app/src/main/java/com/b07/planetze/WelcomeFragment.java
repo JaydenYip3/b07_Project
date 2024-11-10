@@ -1,6 +1,8 @@
 package com.b07.planetze;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,11 +10,14 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
 
-import com.b07.planetze.login.LoginFragment;
+import com.b07.planetze.auth.LoginActivity;
 
 public class WelcomeFragment extends Fragment{
+    private static final String TAG = "WelcomeFragment";
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -29,7 +34,17 @@ public class WelcomeFragment extends Fragment{
             }
         });
         */
-        buttonLogin.setOnClickListener(v -> loadFragment(new LoginFragment()));
+
+        buttonLogin.setOnClickListener(v -> {
+            Intent intent = new Intent();
+            FragmentActivity activity = getActivity();
+            if (activity == null) {
+                Log.w(TAG, "getActivity() returned null");
+                return;
+            }
+            intent.setClass(getActivity(), LoginActivity.class);
+            activity.startActivity(intent);
+        });
 
         return view;
     }

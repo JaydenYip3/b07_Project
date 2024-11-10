@@ -5,11 +5,11 @@
     android:id="@+id/main"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    tools:context=".login.LoginActivity">
+    tools:context=".auth.LoginActivity">
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/loginActivityFragment"
-        android:name="com.b07.planetze.login.LoginFragment"
+        android:name="com.b07.planetze.auth.LoginFragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
