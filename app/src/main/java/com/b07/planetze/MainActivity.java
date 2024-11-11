@@ -29,8 +29,9 @@ public class MainActivity extends AppCompatActivity {
         db = FirebaseDatabase.getInstance("https://planetze-3cc9d-default-rtdb.firebaseio.com/");
         DatabaseReference myRef = db.getReference("testDemo");
 
-//        myRef.setValue("B07 Demo!");
-        myRef.child("movies").setValue("B07 Demo!");
+        //myRef.setValue("B07 Demo!");
+        //User bruh = new User("Caleb", "passwordthatneedstobeencrypted", "bruh.com");
+        //myRef.child("User").setValue(bruh);
 
         if (savedInstanceState == null) {
             loadFragment(new WelcomeFragment());
