@@ -1,5 +1,8 @@
 package com.b07.planetze.util;
 
+import java.util.function.Consumer;
+import java.util.function.Function;
+
 /**
  * A sum type of variants <code>Ok</code> and <code>Error</code>
  * representing either success or failure, respectively.
@@ -8,6 +11,37 @@ package com.b07.planetze.util;
  */
 public sealed class Result<T, E> {
     private Result() {}
+
+    /**
+     * Calls <code>ok</code> with the value stored by the <code>Ok</code> variant
+     * if <code>this</code> is successful; otherwise, calls <code>error</code> with
+     * the value stored by the <code>Error</code> variant.
+     * @param ok the function to call on success
+     * @param error the function to call on failure
+     */
+    public void match(Consumer<T> ok, Consumer<E> error) {
+        if (this instanceof Result.Ok<T, E> r) {
+            ok.accept(r.get());
+        } else {
+            error.accept(((Result.Error<T, E>) this).error());
+        }
+    }
+
+    /**
+     * Calls <code>ok</code> with the value stored by the <code>Ok</code> variant
+     * if this result is successful; otherwise, calls <code>error</code> with
+     * the value stored by the <code>Error</code> variant.
+     * @param ok the function to call on success
+     * @param error the function to call on failure
+     * @param <R> the return type of both functions
+     * @return the value returned by whichever function was called
+     */
+    public <R> R match(Function<T, R> ok, Function<E, R> error) {
+        if (this instanceof Result.Ok<T, E> r) {
+            return ok.apply(r.get());
+        }
+        return error.apply(((Result.Error<T, E>) this).error());
+    }
 
     /**
      * Stores a value for use upon success.
