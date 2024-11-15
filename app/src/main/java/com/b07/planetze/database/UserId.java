@@ -2,8 +2,8 @@ package com.b07.planetze.database;
 
 /**
  * A user id wrapper. <br>
- * With this, the type checker can enforce that non-user-id
- * strings aren't used where user ids are expected.
+ * This exists to ensure that non-user-id strings
+ * aren't used where user ids are expected.
  */
 public class UserId {
     private String id;

@@ -5,6 +5,8 @@ import com.b07.planetze.util.Mass;
 import com.b07.planetze.util.Result;
 
 import java.time.LocalDate;
+import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * A database. <br>
@@ -26,20 +28,29 @@ public interface Database {
      * Days with no recorded emissions are considered to have an emission mass of 0kg.
      * @param userId the user's id
      * @param date the date
-     * @param callback an object containing the method to be called
-     *                 upon fetching
+     * @param callback a callback that takes in the mass of CO2e emissions on the
+     *                 specified date if the fetch was successful, or an error otherwise
      */
-    void fetchDailyEmissions(UserId userId, LocalDate date, DailyEmissionsCallback callback);
+    void fetchDailyEmissions(
+            UserId userId,
+            LocalDate date,
+            Consumer<Result<Mass, DatabaseError>> callback
+    );
 
     /**
      * Fetches daily CO2e emissions over an interval of dates. <br>
      * Days with no recorded emissions are skipped.
      * @param userId the user's id
      * @param interval the interval of dates
-     * @param callback an object containing the method to be called
-     *                 upon fetching
+     * @param callback a callback that takes in a list of the mass and date of CO2e emissions
+     *                 over the specified interval if the fetch was successful, or an error
+     *                 otherwise
      */
-    void fetchEmissionsOverInterval(UserId userId, DateInterval interval, IntervalEmissionsCallback callback);
+    void fetchEmissionsOverInterval(
+            UserId userId,
+            DateInterval interval,
+            Consumer<Result<List<DatedEmissions>, DatabaseError>> callback
+    );
 
     /**
      * Updates daily CO2e emissions for a specific user and date.
@@ -47,5 +58,9 @@ public interface Database {
      * @param date the date of the emissions
      * @param emissions the mass of CO2e emitted
      */
-    void updateDailyEmissions(UserId userId, LocalDate date, Mass emissions);
+    void updateDailyEmissions(
+            UserId userId,
+            LocalDate date,
+            Mass emissions
+    );
 }

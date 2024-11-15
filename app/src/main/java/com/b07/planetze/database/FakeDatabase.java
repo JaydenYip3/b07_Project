@@ -7,25 +7,39 @@ import com.b07.planetze.util.Result;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.function.Consumer;
 
 /**
- * Local "database" for the purpose of testing.
+ * A local "database" for the purpose of testing.
  */
-public class MockDatabase implements Database {
-    private HashMap<UserIdWithDate, Mass> map;
+public class FakeDatabase implements Database {
+    private final HashMap<UserIdWithDate, Mass> map;
 
     private record UserIdWithDate(UserId userId, LocalDate date) {}
 
-    @Override
-    public void fetchDailyEmissions(UserId userId, LocalDate date, DailyEmissionsCallback callback) {
-        UserIdWithDate key = new UserIdWithDate(userId, date);
-        callback.dailyEmissionsCallback(new Result.Ok<>(Objects.requireNonNull(map.getOrDefault(key, new Mass())).copy()));
+    public FakeDatabase() {
+        map = new HashMap<>();
     }
 
     @Override
-    public void fetchEmissionsOverInterval(UserId userId, DateInterval interval, IntervalEmissionsCallback callback) {
+    public void fetchDailyEmissions(
+            UserId userId,
+            LocalDate date,
+            Consumer<Result<Mass, DatabaseError>> callback
+    ) {
+        UserIdWithDate key = new UserIdWithDate(userId, date);
+        callback.accept(new Result.Ok<>(Objects.requireNonNull(map.getOrDefault(key, new Mass())).copy()));
+    }
+
+    @Override
+    public void fetchEmissionsOverInterval(
+            UserId userId,
+            DateInterval interval,
+            Consumer<Result<List<DatedEmissions>, DatabaseError>> callback
+    ) {
         ArrayList<DatedEmissions> emissions = new ArrayList<>();
 
         for (Map.Entry<UserIdWithDate, Mass> entry : map.entrySet()) {
@@ -34,11 +48,15 @@ public class MockDatabase implements Database {
             }
         }
 
-        callback.intervalEmissionsCallback(new Result.Ok<>(emissions));
+        callback.accept(new Result.Ok<>(emissions));
     }
 
     @Override
-    public void updateDailyEmissions(UserId userId, LocalDate date, Mass emissions) {
+    public void updateDailyEmissions(
+            UserId userId,
+            LocalDate date,
+            Mass emissions
+    ) {
         map.put(new UserIdWithDate(userId, date), emissions.copy());
     }
 }
