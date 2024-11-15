@@ -1,5 +1,7 @@
 package com.b07.planetze.util;
 
+import androidx.annotation.NonNull;
+
 /**
  * A measurement of mass.
  */
@@ -95,5 +97,11 @@ public class Mass implements Comparable<Mass> {
     @Override
     public int compareTo(Mass o) {
         return Double.compare(kg, o.kg);
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return kg + "kg";
     }
 }
