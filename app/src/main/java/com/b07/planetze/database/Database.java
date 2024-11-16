@@ -1,6 +1,7 @@
 package com.b07.planetze.database;
 
 import com.b07.planetze.util.DateInterval;
+import com.b07.planetze.util.Emissions;
 import com.b07.planetze.util.Mass;
 import com.b07.planetze.util.Result;
 
@@ -34,7 +35,7 @@ public interface Database {
     void fetchDailyEmissions(
             UserId userId,
             LocalDate date,
-            Consumer<Result<Mass, DatabaseError>> callback
+            Consumer<Result<Emissions, DatabaseError>> callback
     );
 
     /**
@@ -61,6 +62,6 @@ public interface Database {
     void updateDailyEmissions(
             UserId userId,
             LocalDate date,
-            Mass emissions
+            Emissions emissions
     );
 }
