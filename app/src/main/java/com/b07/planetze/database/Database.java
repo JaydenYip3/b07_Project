@@ -29,7 +29,7 @@ public interface Database {
      * Days with no recorded emissions are considered to have an emission mass of 0kg.
      * @param userId the user's id
      * @param date the date
-     * @param callback a callback that takes in the mass of CO2e emissions on the
+     * @param callback a callback that takes in the CO2e emissions on the
      *                 specified date if the fetch was successful, or an error otherwise
      */
     void fetchDailyEmissions(
@@ -43,9 +43,9 @@ public interface Database {
      * Days with no recorded emissions are skipped.
      * @param userId the user's id
      * @param interval the interval of dates
-     * @param callback a callback that takes in a list of the mass and date of CO2e emissions
-     *                 over the specified interval if the fetch was successful, or an error
-     *                 otherwise
+     * @param callback a callback that takes in a list of dated CO2e emissions
+     *                 over the specified interval if the fetch was successful,
+     *                 or an error otherwise
      */
     void fetchEmissionsOverInterval(
             UserId userId,
@@ -57,7 +57,7 @@ public interface Database {
      * Updates daily CO2e emissions for a specific user and date.
      * @param userId the user's id
      * @param date the date of the emissions
-     * @param emissions the mass of CO2e emitted
+     * @param emissions the emitted CO2e
      */
     void updateDailyEmissions(
             UserId userId,
