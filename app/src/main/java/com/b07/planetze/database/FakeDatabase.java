@@ -56,8 +56,10 @@ public class FakeDatabase implements Database {
     public void updateDailyEmissions(
             UserId userId,
             LocalDate date,
-            Emissions emissions
+            Emissions emissions,
+            Consumer<Result<Void, DatabaseError>> callback
     ) {
         map.put(new UserIdWithDate(userId, date), emissions.copy());
+        callback.accept(new Result.Ok<>(null));
     }
 }
