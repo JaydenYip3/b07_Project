@@ -1,4 +1,4 @@
-package com.b07.planetze.type;
+package com.b07.planetze.util;
 
 import androidx.annotation.NonNull;
 
@@ -6,9 +6,12 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 /**
- * A sum type of variants {@link Result.Ok} and {@link Result.Error}
- * representing success and failure, respectively. <br>
- * Each of these variants holds a value.
+ * Represents a success xor a failure. <br>
+ * This allows for error handling in asynchronous contexts. <br>
+ * This also provides a higher level of abstraction if used as an alternative
+ * to checked exceptions. <br>
+ * Structurally, this is a sum type of variants {@link Result.Ok} (success) and
+ * {@link Result.Error} (failure), with each variant holding a value.
  * @param <T> the type of the value stored by the {@link Result.Ok} variant
  * @param <E> the type of the error stored by the {@link Result.Error} variant
  */
@@ -16,34 +19,36 @@ public sealed class Result<T, E> {
     private Result() {}
 
     /**
-     * Calls <code>ok</code> with the value stored by the {@link Result.Ok} variant
-     * if <code>this</code> is successful; otherwise, calls <code>error</code> with
-     * the value stored by the {@link Result.Error} variant.
-     * @param ok the function to call on success
-     * @param error the function to call on failure
+     * Depending on whether this result is of variant {@link Result.Ok}
+     * or {@link Result.Error}, this method calls 1 of 2 functions with the
+     * associated stored value.
+     * @param ok the function to call if <code>this</code> is {@link Result.Ok}
+     * @param error the function to call if <code>this</code> is
+     *              {@link Result.Error}
      */
     public void match(@NonNull Consumer<T> ok, @NonNull Consumer<E> error) {
-        if (this instanceof Result.Ok<T, E> r) {
+        if (this instanceof Ok<T, E> r) {
             ok.accept(r.get());
         } else {
-            error.accept(((Result.Error<T, E>) this).error());
+            error.accept(((Error<T, E>) this).error());
         }
     }
 
     /**
-     * Calls <code>ok</code> with the value stored by the {@link Result.Ok} variant
-     * if this result is successful; otherwise, calls <code>error</code> with
-     * the value stored by the {@link Result.Error} variant.
-     * @param ok the function to call on success
-     * @param error the function to call on failure
+     * Depending on whether this result is of variant {@link Result.Ok}
+     * or {@link Result.Error}, this method calls 1 of 2 functions with the
+     * associated stored value.
+     * @param ok the function to call if <code>this</code> is {@link Result.Ok}
+     * @param error the function to call if <code>this</code> is
+     *              {@link Result.Error}
      * @param <R> the return type of both functions
      * @return the value returned by whichever function was called
      */
     public <R> R match(@NonNull Function<T, R> ok, @NonNull Function<E, R> error) {
-        if (this instanceof Result.Ok<T, E> r) {
+        if (this instanceof Ok<T, E> r) {
             return ok.apply(r.get());
         }
-        return error.apply(((Result.Error<T, E>) this).error());
+        return error.apply(((Error<T, E>) this).error());
     }
 
     /**
@@ -92,8 +97,8 @@ public sealed class Result<T, E> {
         }
 
         /**
-         * Gets the error associated with this result.
-         * @return the error associated with this result
+         * Gets the error stored by this result.
+         * @return the error stored by this result
          */
         @NonNull
         public E error() {
