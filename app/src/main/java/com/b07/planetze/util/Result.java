@@ -49,7 +49,7 @@ public sealed class Result<T, E> {
      * @param <E> the type of the <code>Error</code> variant
      */
     public static final class Ok<T, E> extends Result<T, E> {
-        T value;
+        private T value;
         private Ok() {}
 
         /**
@@ -75,7 +75,7 @@ public sealed class Result<T, E> {
      * @param <E> the type of the <code>Error</code> variant
      */
     public static final class Error<T, E> extends Result<T, E> {
-        E error;
+        private E error;
 
         private Error() {}
 
