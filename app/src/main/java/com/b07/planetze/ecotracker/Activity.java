@@ -1,7 +1,6 @@
 package com.b07.planetze.ecotracker;
 
-import com.b07.planetze.util.Emissions;
-import com.b07.planetze.util.Mass;
+import com.b07.planetze.common.Emissions;
 
 /**
  * A logged daily activity.
