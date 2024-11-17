@@ -7,7 +7,8 @@ import java.util.function.Function;
 
 /**
  * A sum type of variants {@link Result.Ok} and {@link Result.Error}
- * representing success and failure, respectively.
+ * representing success and failure, respectively. <br>
+ * Each of these variants holds a value.
  * @param <T> the type of the value stored by the {@link Result.Ok} variant
  * @param <E> the type of the error stored by the {@link Result.Error} variant
  */
