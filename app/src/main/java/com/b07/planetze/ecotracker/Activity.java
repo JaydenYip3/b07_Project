@@ -1,5 +1,6 @@
 package com.b07.planetze.ecotracker;
 
+import com.b07.planetze.util.Emissions;
 import com.b07.planetze.util.Mass;
 
 /**
@@ -10,7 +11,7 @@ public abstract class Activity {
      * Gets the CO2e emitted from this activity.
      * @return the mass of CO2e emissions
      */
-    abstract Mass emittedCo2e();
+    abstract Emissions emissions();
 
     /**
      * Gets the name of this activity.
