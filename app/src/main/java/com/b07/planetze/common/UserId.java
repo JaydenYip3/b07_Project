@@ -40,6 +40,9 @@ public class UserId {
 
     @Override
     public boolean equals(Object o) {
+        if (o == null) {
+            return false;
+        }
         if (o instanceof UserId other) {
             return id.equals(other.id);
         }
