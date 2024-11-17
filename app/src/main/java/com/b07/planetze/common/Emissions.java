@@ -22,6 +22,7 @@ public class Emissions {
      * Gets a mutable reference to transportation emissions.
      * @return a mutable reference to transportation emissions
      */
+    @NonNull
     public Mass transportation() {
         return categories[0];
     }
@@ -30,6 +31,7 @@ public class Emissions {
      * Gets a mutable reference to energy use emissions.
      * @return a mutable reference to energy use emissions
      */
+    @NonNull
     public Mass energy() {
         return categories[1];
     }
@@ -38,6 +40,7 @@ public class Emissions {
      * Gets a mutable reference to food consumption emissions.
      * @return a mutable reference to food consumption emissions
      */
+    @NonNull
     public Mass food() {
         return categories[2];
     }
@@ -46,6 +49,7 @@ public class Emissions {
      * Gets a mutable reference to shopping emissions.
      * @return a mutable reference to shopping emissions
      */
+    @NonNull
     public Mass shopping() {
         return categories[3];
     }
@@ -54,6 +58,7 @@ public class Emissions {
      * Computes the sum of emissions across all categories.
      * @return a new <code>Mass</code> - the sum of emissions across all categories
      */
+    @NonNull
     public Mass total() {
         Mass sum = new Mass();
         for (Mass category : categories) {
@@ -66,6 +71,7 @@ public class Emissions {
      * Creates a deep copy of <code>this</code>.
      * @return a new <code>Emissions</code> of the same values
      */
+    @NonNull
     public Emissions copy() {
         Emissions emissions = new Emissions();
         for (int i = 0; i < categories.length; i++) {
@@ -80,7 +86,8 @@ public class Emissions {
      * @param other the <code>Emissions</code> to set <code>this</code> to
      * @return <code>this</code>
      */
-    public Emissions set(Emissions other) {
+    @NonNull
+    public Emissions set(@NonNull Emissions other) {
         for (int i = 0; i < categories.length; i++) {
             categories[i].set(other.categories[i]);
         }
@@ -93,7 +100,8 @@ public class Emissions {
      * @param other the <code>Emissions</code> to add
      * @return <code>this</code>
      */
-    public Emissions add(Emissions other) {
+    @NonNull
+    public Emissions add(@NonNull Emissions other) {
         for (int i = 0; i < categories.length; i++) {
             categories[i].add(other.categories[i]);
         }
@@ -106,7 +114,8 @@ public class Emissions {
      * @param other the <code>Emissions</code> to subtract
      * @return <code>this</code>
      */
-    public Emissions subtract(Emissions other) {
+    @NonNull
+    public Emissions subtract(@NonNull Emissions other) {
         for (int i = 0; i < categories.length; i++) {
             categories[i].subtract(other.categories[i]);
         }
@@ -118,6 +127,7 @@ public class Emissions {
      * @param scalar the multiplication factor
      * @return <code>this</code>
      */
+    @NonNull
     public Emissions scale(double scalar) {
         for (Mass category : categories) {
             category.scale(scalar);
@@ -129,6 +139,7 @@ public class Emissions {
      * Flips the sign of the emissions of all categories.
      * @return <code>this</code>
      */
+    @NonNull
     public Emissions negate() {
         for (Mass category : categories) {
             category.negate();
@@ -140,6 +151,7 @@ public class Emissions {
      * Sets the emissions of all categories to zero.
      * @return <code>this</code>
      */
+    @NonNull
     public Emissions zero() {
         for (Mass category : categories) {
             category.zero();

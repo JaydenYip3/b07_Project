@@ -58,7 +58,7 @@ public sealed class Result<T, E> {
          * Creates a successful <code>Result</code>.
          * @param value a value for use upon success
          */
-        public Ok(T value) {
+        public Ok(@NonNull T value) {
             this.value = value;
         }
 
@@ -66,6 +66,7 @@ public sealed class Result<T, E> {
          * Gets the value stored by this result.
          * @return the value stored by this result
          */
+        @NonNull
         public T get() {
             return value;
         }
@@ -93,6 +94,7 @@ public sealed class Result<T, E> {
          * Gets the error associated with this result.
          * @return the error associated with this result
          */
+        @NonNull
         public E error() {
             return error;
         }

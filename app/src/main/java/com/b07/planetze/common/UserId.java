@@ -1,5 +1,7 @@
 package com.b07.planetze.common;
 
+import androidx.annotation.NonNull;
+
 /**
  * A user id wrapper. <br>
  * This exists to ensure that non-user-id strings
@@ -14,7 +16,7 @@ public class UserId {
      * Creates a <code>UserId</code> given a user id
      * @param id the user id
      */
-    public UserId(String id) {
+    public UserId(@NonNull String id) {
         this.id = id;
     }
 
@@ -22,6 +24,7 @@ public class UserId {
      * Creates a copy of this id.
      * @return a new <code>UserId</code> of the same value
      */
+    @NonNull
     public UserId copy() {
         return new UserId(id);
     }
@@ -30,6 +33,7 @@ public class UserId {
      * Gets the user id.
      * @return the user id
      */
+    @NonNull
     public String get() {
         return this.id;
     }
