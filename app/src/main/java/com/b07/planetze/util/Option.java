@@ -83,7 +83,7 @@ public sealed abstract class Option<T> permits Some, None {
     public abstract T getOr(@NonNull Supplier<T> supplier);
 
     /**
-     * Creates a {@link Ok} with the held value if it is present; otherwise,
+     * Creates an {@link Ok} with the held value if it is present; otherwise,
      * creates a {@link Error} with a given error.
      * @param error the error
      * @return a new {@link Result}
@@ -93,7 +93,7 @@ public sealed abstract class Option<T> permits Some, None {
     public abstract <E> Result<T, E> okOr(@NonNull E error);
 
     /**
-     * Creates a {@link Ok} with the held value if it is present; otherwise,
+     * Creates an {@link Ok} with the held value if it is present; otherwise,
      * creates a {@link Error} with an error given by the output of a function.
      * @param supplier the function
      * @return a new {@link Result}
