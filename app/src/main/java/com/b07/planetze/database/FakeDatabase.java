@@ -65,7 +65,6 @@ public class FakeDatabase implements Database {
             @NonNull Consumer<Result<Unit, DatabaseError>> callback
     ) {
         map.put(new UserIdWithDate(userId, date), emissions.copy());
-        Ok<Unit, Unit> ok = new Ok<>(Unit.unit);
-        callback.accept(new Ok<>(ok.get()));
+        callback.accept(new Ok<>(Unit.INSTANCE));
     }
 }
