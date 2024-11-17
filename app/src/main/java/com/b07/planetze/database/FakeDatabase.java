@@ -6,6 +6,7 @@ import com.b07.planetze.common.DateInterval;
 import com.b07.planetze.common.DatedEmissions;
 import com.b07.planetze.common.Emissions;
 import com.b07.planetze.common.UserId;
+import com.b07.planetze.util.Ok;
 import com.b07.planetze.util.Result;
 import com.b07.planetze.util.Unit;
 
@@ -36,7 +37,7 @@ public class FakeDatabase implements Database {
             @NonNull Consumer<Result<Emissions, DatabaseError>> callback
     ) {
         UserIdWithDate key = new UserIdWithDate(userId, date);
-        callback.accept(new Result.Ok<>(Objects.requireNonNull(map.getOrDefault(key, new Emissions())).copy()));
+        callback.accept(new Ok<>(Objects.requireNonNull(map.getOrDefault(key, new Emissions())).copy()));
     }
 
     @Override
@@ -53,7 +54,7 @@ public class FakeDatabase implements Database {
             }
         }
 
-        callback.accept(new Result.Ok<>(emissions));
+        callback.accept(new Ok<>(emissions));
     }
 
     @Override
@@ -64,7 +65,7 @@ public class FakeDatabase implements Database {
             @NonNull Consumer<Result<Unit, DatabaseError>> callback
     ) {
         map.put(new UserIdWithDate(userId, date), emissions.copy());
-        Result.Ok<Unit, Unit> ok = new Result.Ok<>(Unit.unit);
-        callback.accept(new Result.Ok<>(ok.get()));
+        Ok<Unit, Unit> ok = new Ok<>(Unit.unit);
+        callback.accept(new Ok<>(ok.get()));
     }
 }

@@ -30,7 +30,7 @@ public sealed abstract class Option<T> permits Some, None {
     }
 
     /**
-     * Applies a function to the held value if it is present.
+     * Applies a function to the held value iff it is present.
      * @param f the function
      */
     public abstract void apply(@NonNull Consumer<T> f);
@@ -77,14 +77,14 @@ public sealed abstract class Option<T> permits Some, None {
      * Returns the held value if it is present; otherwise, returns the
      * output of a function
      * @param supplier the function
-     * @return the held value or the default value
+     * @return the held value or the output of <code>supplier</code>
      */
     @NonNull
     public abstract T getOr(@NonNull Supplier<T> supplier);
 
     /**
-     * Creates a {@link Result.Ok} with the held value if it is present;
-     * otherwise, creates a {@link Result.Error} with a given error.
+     * Creates a {@link Ok} with the held value if it is present; otherwise,
+     * creates a {@link Error} with a given error.
      * @param error the error
      * @return a new {@link Result}
      * @param <E> the type of the error
@@ -93,9 +93,8 @@ public sealed abstract class Option<T> permits Some, None {
     public abstract <E> Result<T, E> okOr(@NonNull E error);
 
     /**
-     * Creates a {@link Result.Ok} with the held value if it is present;
-     * otherwise, creates a {@link Result.Error} with an error given by
-     * the output of a function.
+     * Creates a {@link Ok} with the held value if it is present; otherwise,
+     * creates a {@link Error} with an error given by the output of a function.
      * @param supplier the function
      * @return a new {@link Result}
      * @param <E> the type of the error

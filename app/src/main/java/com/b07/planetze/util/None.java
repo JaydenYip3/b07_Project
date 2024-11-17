@@ -52,13 +52,13 @@ public final class None<T> extends Option<T> {
     @NonNull
     @Override
     public <E> Result<T, E> okOr(@NonNull E error) {
-        return new Result.Error<>(error);
+        return new Error<>(error);
     }
 
     @NonNull
     @Override
     public <E> Result<T, E> okOr(@NonNull Supplier<E> supplier) {
-        return new Result.Error<>(supplier.get());
+        return new Error<>(supplier.get());
     }
 
     @Override

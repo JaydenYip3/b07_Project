@@ -70,13 +70,13 @@ public final class Some<T> extends Option<T> {
     @NonNull
     @Override
     public <E> Result<T, E> okOr(@NonNull E error) {
-        return new Result.Ok<>(value);
+        return new Ok<>(value);
     }
 
     @NonNull
     @Override
     public <E> Result<T, E> okOr(@NonNull Supplier<E> supplier) {
-        return new Result.Ok<>(value);
+        return new Ok<>(value);
     }
 
     @Override
