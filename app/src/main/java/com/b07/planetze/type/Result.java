@@ -1,4 +1,6 @@
-package com.b07.planetze.util;
+package com.b07.planetze.type;
+
+import androidx.annotation.NonNull;
 
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -83,7 +85,7 @@ public sealed class Result<T, E> {
          * Creates a failed <code>Result</code>.
          * @param error an error for use upon failure
          */
-        public Error(E error) {
+        public Error(@NonNull E error) {
             this.error = error;
         }
 

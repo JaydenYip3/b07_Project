@@ -1,6 +1,4 @@
-package com.b07.planetze.database;
-
-import com.b07.planetze.util.Emissions;
+package com.b07.planetze.common;
 
 import java.time.LocalDate;
 

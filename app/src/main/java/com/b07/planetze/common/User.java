@@ -1,4 +1,4 @@
-package com.b07.planetze.database;
+package com.b07.planetze.common;
 
 /**
  * A user.
