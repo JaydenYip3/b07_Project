@@ -8,7 +8,7 @@ import androidx.annotation.NonNull;
  */
 public final class Unit {
     /**
-     * The only instance of {@link Unit}
+     * The only instance of {@link Unit}.
      */
     @SuppressWarnings("all")
     @NonNull

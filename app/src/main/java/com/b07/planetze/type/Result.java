@@ -6,22 +6,22 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 /**
- * A sum type of variants <code>Ok</code> and <code>Error</code>
- * representing either success or failure, respectively.
- * @param <T> the type of the value stored by the <code>Ok</code> variant
- * @param <E> the type of the error stored by the <code>Error</code> variant
+ * A sum type of variants {@link Result.Ok} and {@link Result.Error}
+ * representing success and failure, respectively.
+ * @param <T> the type of the value stored by the {@link Result.Ok} variant
+ * @param <E> the type of the error stored by the {@link Result.Error} variant
  */
 public sealed class Result<T, E> {
     private Result() {}
 
     /**
-     * Calls <code>ok</code> with the value stored by the <code>Ok</code> variant
+     * Calls <code>ok</code> with the value stored by the {@link Result.Ok} variant
      * if <code>this</code> is successful; otherwise, calls <code>error</code> with
-     * the value stored by the <code>Error</code> variant.
+     * the value stored by the {@link Result.Error} variant.
      * @param ok the function to call on success
      * @param error the function to call on failure
      */
-    public void match(Consumer<T> ok, Consumer<E> error) {
+    public void match(@NonNull Consumer<T> ok, @NonNull Consumer<E> error) {
         if (this instanceof Result.Ok<T, E> r) {
             ok.accept(r.get());
         } else {
@@ -30,15 +30,15 @@ public sealed class Result<T, E> {
     }
 
     /**
-     * Calls <code>ok</code> with the value stored by the <code>Ok</code> variant
+     * Calls <code>ok</code> with the value stored by the {@link Result.Ok} variant
      * if this result is successful; otherwise, calls <code>error</code> with
-     * the value stored by the <code>Error</code> variant.
+     * the value stored by the {@link Result.Error} variant.
      * @param ok the function to call on success
      * @param error the function to call on failure
      * @param <R> the return type of both functions
      * @return the value returned by whichever function was called
      */
-    public <R> R match(Function<T, R> ok, Function<E, R> error) {
+    public <R> R match(@NonNull Function<T, R> ok, @NonNull Function<E, R> error) {
         if (this instanceof Result.Ok<T, E> r) {
             return ok.apply(r.get());
         }
@@ -47,15 +47,15 @@ public sealed class Result<T, E> {
 
     /**
      * Stores a value for use upon success.
-     * @param <T> the type of the <code>Ok</code> variant
-     * @param <E> the type of the <code>Error</code> variant
+     * @param <T> the type of the {@link Result.Ok} variant
+     * @param <E> the type of the {@link Result.Error} variant
      */
     public static final class Ok<T, E> extends Result<T, E> {
         private T value;
         private Ok() {}
 
         /**
-         * Creates a successful <code>Result</code>.
+         * Creates a successful {@link Result}.
          * @param value a value for use upon success
          */
         public Ok(@NonNull T value) {
@@ -74,8 +74,8 @@ public sealed class Result<T, E> {
 
     /**
      * Stores an error for use upon failure.
-     * @param <T> the type of the <code>Ok</code> variant
-     * @param <E> the type of the <code>Error</code> variant
+     * @param <T> the type of the {@link Result.Ok} variant
+     * @param <E> the type of the {@link Result.Error} variant
      */
     public static final class Error<T, E> extends Result<T, E> {
         private E error;
@@ -83,7 +83,7 @@ public sealed class Result<T, E> {
         private Error() {}
 
         /**
-         * Creates a failed <code>Result</code>.
+         * Creates a failed {@link Result}.
          * @param error an error for use upon failure
          */
         public Error(@NonNull E error) {

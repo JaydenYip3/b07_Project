@@ -9,7 +9,7 @@ public class Emissions {
     private Mass[] categories;
 
     /**
-     * Creates a new <code>Emissions</code> where all emission categories are zero.
+     * Creates a new {@link Emissions} where all emission categories are zero.
      */
     public Emissions() {
         categories = new Mass[4];
@@ -56,7 +56,7 @@ public class Emissions {
 
     /**
      * Computes the sum of emissions across all categories.
-     * @return a new <code>Mass</code> - the sum of emissions across all categories
+     * @return a new {@link Mass} - the sum of emissions across all categories
      */
     @NonNull
     public Mass total() {
@@ -69,7 +69,7 @@ public class Emissions {
 
     /**
      * Creates a deep copy of <code>this</code>.
-     * @return a new <code>Emissions</code> of the same values
+     * @return a new {@link Emissions} of the same values
      */
     @NonNull
     public Emissions copy() {
@@ -82,8 +82,8 @@ public class Emissions {
 
     /**
      * Sets the values of <code>this</code> to the values of
-     * another <code>Emissions</code>.
-     * @param other the <code>Emissions</code> to set <code>this</code> to
+     * another {@link Emissions}.
+     * @param other the {@link Emissions} to set <code>this</code> to
      * @return <code>this</code>
      */
     @NonNull
@@ -95,9 +95,9 @@ public class Emissions {
     }
 
     /**
-     * Adds (category-wise) another <code>Emissions</code>
+     * Adds (category-wise) another {@link Emissions}
      * to <code>this</code>.
-     * @param other the <code>Emissions</code> to add
+     * @param other the {@link Emissions} to add
      * @return <code>this</code>
      */
     @NonNull
@@ -109,9 +109,9 @@ public class Emissions {
     }
 
     /**
-     * Subtracts (category-wise) another <code>Emissions</code>
+     * Subtracts (category-wise) another {@link Emissions}
      * from <code>this</code>.
-     * @param other the <code>Emissions</code> to subtract
+     * @param other the {@link Emissions} to subtract
      * @return <code>this</code>
      */
     @NonNull
@@ -124,7 +124,7 @@ public class Emissions {
 
     /**
      * Multiplies the emissions of all categories by a scalar.
-     * @param scalar the multiplication factor
+     * @param scalar the scaling factor
      * @return <code>this</code>
      */
     @NonNull

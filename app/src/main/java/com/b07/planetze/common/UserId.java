@@ -13,7 +13,7 @@ public class UserId {
     private UserId() {}
 
     /**
-     * Creates a <code>UserId</code> given a user id
+     * Creates a {@link UserId} given a user id
      * @param id the user id
      */
     public UserId(@NonNull String id) {
@@ -22,7 +22,7 @@ public class UserId {
 
     /**
      * Creates a copy of this id.
-     * @return a new <code>UserId</code> of the same value
+     * @return a new {@link UserId} of the same value
      */
     @NonNull
     public UserId copy() {

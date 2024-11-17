@@ -4,11 +4,16 @@ import androidx.annotation.NonNull;
 
 import java.time.LocalDate;
 
+/**
+ * An interval between two dates.
+ * @param start the start of this interval
+ * @param end the end of this interval (excluded)
+ */
 public record DateInterval(@NonNull LocalDate start, @NonNull LocalDate end) {
     /**
-     * Creates a <code>DateInterval</code> from <code>start</code>
+     * Creates a {@link DateInterval} from <code>start</code>
      * up to but not including <code>end</code>. <br>
-     * Throws a <code>InvalidDateIntervalException</code>
+     * Throws an {@link InvalidDateIntervalException}
      * if <code>end</code> < <code>start</code>.
      * @param start the start of this interval
      * @param end the end of this interval (excluded)

@@ -9,16 +9,16 @@ public class Mass implements Comparable<Mass> {
     private double kg;
 
     /**
-     * Creates a new <code>Mass</code> with mass 0.
+     * Creates a new {@link Mass} with mass 0.
      */
     public Mass() {
         kg = 0;
     }
 
     /**
-     * Creates a new <code>Mass</code> given kilograms.
+     * Creates a new {@link Mass} given kilograms.
      * @param kg a value in kilograms
-     * @return a new <code>Mass</code>
+     * @return a new {@link Mass}
      */
     @NonNull
     public static Mass fromKg(double kg) {
@@ -29,7 +29,7 @@ public class Mass implements Comparable<Mass> {
 
     /**
      * Creates a deep copy of this mass.
-     * @return a new <code>Mass</code> of the same value
+     * @return a new {@link Mass} of the same value
      */
     @NonNull
     public Mass copy() {
@@ -71,7 +71,7 @@ public class Mass implements Comparable<Mass> {
 
     /**
      * Multiplies this mass by a scalar.
-     * @param scalar the multiplication factor
+     * @param scalar the scaling factor
      * @return <code>this</code>
      */
     @NonNull

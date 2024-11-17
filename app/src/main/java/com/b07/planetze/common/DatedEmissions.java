@@ -5,7 +5,7 @@ import androidx.annotation.NonNull;
 import java.time.LocalDate;
 
 /**
- * Stores an amount of CO2e emissions with the date they were emitted
+ * Stores an amount of CO2e emissions with the date they were emitted.
  * @param date the date of the emissions
  * @param emissions the mass of CO2e emissions
  */
