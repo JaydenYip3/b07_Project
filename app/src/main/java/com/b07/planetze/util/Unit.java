@@ -1,18 +1,9 @@
 package com.b07.planetze.util;
 
-import androidx.annotation.NonNull;
-
 /**
- * Represents a unit type (i.e., a type that allows only one value)
- * if null values are not permitted.
+ * Represents a unit type (i.e., a type that allows only one value
+ * and thus holds no information) if null values are not permitted.
  */
-public final class Unit {
-    /**
-     * The only instance of {@link Unit}.
-     */
-    @SuppressWarnings("all") // suppresses "Instantiation of utility class" warning
-    @NonNull
-    public static final Unit unit = new Unit();
-
-    private Unit() {}
+public enum Unit {
+    INSTANCE
 }
