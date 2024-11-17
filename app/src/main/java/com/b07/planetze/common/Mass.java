@@ -1,4 +1,4 @@
-package com.b07.planetze.util;
+package com.b07.planetze.common;
 
 import androidx.annotation.NonNull;
 
@@ -9,17 +9,18 @@ public class Mass implements Comparable<Mass> {
     private double kg;
 
     /**
-     * Creates a new <code>Mass</code> with mass 0.
+     * Creates a new {@link Mass} with mass 0.
      */
     public Mass() {
         kg = 0;
     }
 
     /**
-     * Creates a new <code>Mass</code> given kilograms.
+     * Creates a new {@link Mass} given kilograms.
      * @param kg a value in kilograms
-     * @return a new <code>Mass</code>
+     * @return a new {@link Mass}
      */
+    @NonNull
     public static Mass fromKg(double kg) {
         Mass mass = new Mass();
         mass.kg = kg;
@@ -28,8 +29,9 @@ public class Mass implements Comparable<Mass> {
 
     /**
      * Creates a deep copy of this mass.
-     * @return a new <code>Mass</code> of the same value
+     * @return a new {@link Mass} of the same value
      */
+    @NonNull
     public Mass copy() {
         return Mass.fromKg(kg);
     }
@@ -39,7 +41,8 @@ public class Mass implements Comparable<Mass> {
      * @param other the mass to set this mass to
      * @return <code>this</code>
      */
-    public Mass set(Mass other) {
+    @NonNull
+    public Mass set(@NonNull Mass other) {
         kg = other.kg;
         return this;
     }
@@ -49,7 +52,8 @@ public class Mass implements Comparable<Mass> {
      * @param other the mass to add
      * @return <code>this</code>
      */
-    public Mass add(Mass other) {
+    @NonNull
+    public Mass add(@NonNull Mass other) {
         kg += other.kg;
         return this;
     }
@@ -59,16 +63,18 @@ public class Mass implements Comparable<Mass> {
      * @param other the mass to subtract
      * @return <code>this</code>
      */
-    public Mass subtract(Mass other) {
+    @NonNull
+    public Mass subtract(@NonNull Mass other) {
         kg -= other.kg;
         return this;
     }
 
     /**
      * Multiplies this mass by a scalar.
-     * @param scalar the multiplication factor
+     * @param scalar the scaling factor
      * @return <code>this</code>
      */
+    @NonNull
     public Mass scale(double scalar) {
         kg *= scalar;
         return this;
@@ -78,6 +84,7 @@ public class Mass implements Comparable<Mass> {
      * Flips the sign of this mass.
      * @return <code>this</code>
      */
+    @NonNull
     public Mass negate() {
         kg = -kg;
         return this;
@@ -87,6 +94,7 @@ public class Mass implements Comparable<Mass> {
      * Sets this mass to zero.
      * @return <code>this</code>
      */
+    @NonNull
     public Mass zero() {
         kg = 0;
         return this;
@@ -97,6 +105,7 @@ public class Mass implements Comparable<Mass> {
      * @param kg a value in kilograms
      * @return <code>this</code>
      */
+    @NonNull
     public Mass setKg(double kg) {
         this.kg = kg;
         return this;
@@ -112,6 +121,9 @@ public class Mass implements Comparable<Mass> {
 
     @Override
     public boolean equals(Object o) {
+        if (o == null) {
+            return false;
+        }
         if (o instanceof Mass other) {
             return kg == other.kg;
         }
@@ -124,7 +136,7 @@ public class Mass implements Comparable<Mass> {
     }
 
     @Override
-    public int compareTo(Mass o) {
+    public int compareTo(@NonNull Mass o) {
         return Double.compare(kg, o.kg);
     }
 

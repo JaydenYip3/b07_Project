@@ -1,4 +1,6 @@
-package com.b07.planetze.database;
+package com.b07.planetze.common;
+
+import androidx.annotation.NonNull;
 
 /**
  * A user id wrapper. <br>
@@ -11,17 +13,18 @@ public class UserId {
     private UserId() {}
 
     /**
-     * Creates a <code>UserId</code> given a user id
+     * Creates a {@link UserId} given a user id
      * @param id the user id
      */
-    public UserId(String id) {
+    public UserId(@NonNull String id) {
         this.id = id;
     }
 
     /**
      * Creates a copy of this id.
-     * @return a new <code>UserId</code> of the same value
+     * @return a new {@link UserId} of the same value
      */
+    @NonNull
     public UserId copy() {
         return new UserId(id);
     }
@@ -30,6 +33,7 @@ public class UserId {
      * Gets the user id.
      * @return the user id
      */
+    @NonNull
     public String get() {
         return this.id;
     }

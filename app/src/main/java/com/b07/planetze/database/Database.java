@@ -1,8 +1,13 @@
 package com.b07.planetze.database;
 
-import com.b07.planetze.util.DateInterval;
-import com.b07.planetze.util.Emissions;
+import androidx.annotation.NonNull;
+
+import com.b07.planetze.common.DateInterval;
+import com.b07.planetze.common.DatedEmissions;
+import com.b07.planetze.common.Emissions;
+import com.b07.planetze.common.UserId;
 import com.b07.planetze.util.Result;
+import com.b07.planetze.util.Unit;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -33,9 +38,9 @@ public interface Database {
      *                 emissions on the specified date.
      */
     void fetchDailyEmissions(
-            UserId userId,
-            LocalDate date,
-            Consumer<Result<Emissions, DatabaseError>> callback
+            @NonNull UserId userId,
+            @NonNull LocalDate date,
+            @NonNull Consumer<Result<Emissions, DatabaseError>> callback
     );
 
     /**
@@ -48,9 +53,9 @@ public interface Database {
      *                 dated emissions over the specified interval.
      */
     void fetchEmissionsOverInterval(
-            UserId userId,
-            DateInterval interval,
-            Consumer<Result<List<DatedEmissions>, DatabaseError>> callback
+            @NonNull UserId userId,
+            @NonNull DateInterval interval,
+            @NonNull Consumer<Result<List<DatedEmissions>, DatabaseError>> callback
     );
 
     /**
@@ -61,9 +66,9 @@ public interface Database {
      * @param callback a function to be called after the update finishes
      */
     void updateDailyEmissions(
-            UserId userId,
-            LocalDate date,
-            Emissions emissions,
-            Consumer<Result<Void, DatabaseError>> callback
+            @NonNull UserId userId,
+            @NonNull LocalDate date,
+            @NonNull Emissions emissions,
+            @NonNull Consumer<Result<Unit, DatabaseError>> callback
     );
 }

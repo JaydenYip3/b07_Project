@@ -1,15 +1,13 @@
 package com.b07.planetze.database;
 
-public class DatabaseError {
-    private String message;
+import androidx.annotation.NonNull;
 
-    private DatabaseError() {}
+import java.util.Objects;
 
-    public DatabaseError(String message) {
-        this.message = message;
-    }
-
-    public String message() {
-        return this.message;
-    }
+/**
+ * An error that occurred while calling a {@link Database}.
+ */
+public interface DatabaseError {
+    @NonNull
+    String message();
 }

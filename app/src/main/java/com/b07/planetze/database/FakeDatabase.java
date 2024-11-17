@@ -1,9 +1,13 @@
 package com.b07.planetze.database;
 
-import com.b07.planetze.util.DateInterval;
-import com.b07.planetze.util.Emissions;
-import com.b07.planetze.util.Mass;
+import androidx.annotation.NonNull;
+
+import com.b07.planetze.common.DateInterval;
+import com.b07.planetze.common.DatedEmissions;
+import com.b07.planetze.common.Emissions;
+import com.b07.planetze.common.UserId;
 import com.b07.planetze.util.Result;
+import com.b07.planetze.util.Unit;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -27,9 +31,9 @@ public class FakeDatabase implements Database {
 
     @Override
     public void fetchDailyEmissions(
-            UserId userId,
-            LocalDate date,
-            Consumer<Result<Emissions, DatabaseError>> callback
+            @NonNull UserId userId,
+            @NonNull LocalDate date,
+            @NonNull Consumer<Result<Emissions, DatabaseError>> callback
     ) {
         UserIdWithDate key = new UserIdWithDate(userId, date);
         callback.accept(new Result.Ok<>(Objects.requireNonNull(map.getOrDefault(key, new Emissions())).copy()));
@@ -37,9 +41,9 @@ public class FakeDatabase implements Database {
 
     @Override
     public void fetchEmissionsOverInterval(
-            UserId userId,
-            DateInterval interval,
-            Consumer<Result<List<DatedEmissions>, DatabaseError>> callback
+            @NonNull UserId userId,
+            @NonNull DateInterval interval,
+            @NonNull Consumer<Result<List<DatedEmissions>, DatabaseError>> callback
     ) {
         ArrayList<DatedEmissions> emissions = new ArrayList<>();
 
@@ -54,12 +58,13 @@ public class FakeDatabase implements Database {
 
     @Override
     public void updateDailyEmissions(
-            UserId userId,
-            LocalDate date,
-            Emissions emissions,
-            Consumer<Result<Void, DatabaseError>> callback
+            @NonNull UserId userId,
+            @NonNull LocalDate date,
+            @NonNull Emissions emissions,
+            @NonNull Consumer<Result<Unit, DatabaseError>> callback
     ) {
         map.put(new UserIdWithDate(userId, date), emissions.copy());
-        callback.accept(new Result.Ok<>(null));
+        Result.Ok<Unit, Unit> ok = new Result.Ok<>(Unit.unit);
+        callback.accept(new Result.Ok<>(ok.get()));
     }
 }
