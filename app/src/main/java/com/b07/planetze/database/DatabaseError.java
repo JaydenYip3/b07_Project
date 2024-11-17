@@ -2,20 +2,12 @@ package com.b07.planetze.database;
 
 import androidx.annotation.NonNull;
 
+import java.util.Objects;
+
 /**
  * An error that occurred while calling a {@link Database}.
  */
-public class DatabaseError {
-    private String message;
-
-    private DatabaseError() {}
-
-    public DatabaseError(@NonNull String message) {
-        this.message = message;
-    }
-
+public interface DatabaseError {
     @NonNull
-    public String message() {
-        return this.message;
-    }
+    String message();
 }
