@@ -10,7 +10,7 @@ public final class Unit {
     /**
      * The only instance of {@link Unit}.
      */
-    @SuppressWarnings("all")
+    @SuppressWarnings("all") // suppresses "Instantiation of utility class" warning
     @NonNull
     public static final Unit unit = new Unit();
 
