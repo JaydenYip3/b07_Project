@@ -2,10 +2,12 @@ package com.b07.planetze.common;
 
 import androidx.annotation.NonNull;
 
+import com.b07.planetze.util.Copy;
+
 /**
  * Stores CO2e emissions by category.
  */
-public class Emissions {
+public class Emissions implements Copy<Emissions> {
     private Mass[] categories;
 
     /**
@@ -16,6 +18,16 @@ public class Emissions {
         for (int i = 0; i < categories.length; i++) {
             categories[i] = new Mass();
         }
+    }
+
+    @NonNull
+    @Override
+    public Emissions copy() {
+        Emissions emissions = new Emissions();
+        for (int i = 0; i < categories.length; i++) {
+            emissions.categories[i].set(categories[i]);
+        }
+        return emissions;
     }
 
     /**
@@ -65,19 +77,6 @@ public class Emissions {
             sum.add(category);
         }
         return sum;
-    }
-
-    /**
-     * Creates a deep copy of <code>this</code>.
-     * @return a new {@link Emissions} of the same values
-     */
-    @NonNull
-    public Emissions copy() {
-        Emissions emissions = new Emissions();
-        for (int i = 0; i < categories.length; i++) {
-            emissions.categories[i].set(categories[i]);
-        }
-        return emissions;
     }
 
     /**

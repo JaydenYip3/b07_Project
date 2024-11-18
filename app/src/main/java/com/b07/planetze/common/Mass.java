@@ -2,10 +2,12 @@ package com.b07.planetze.common;
 
 import androidx.annotation.NonNull;
 
+import com.b07.planetze.util.Copy;
+
 /**
  * A measurement of mass.
  */
-public class Mass implements Comparable<Mass> {
+public class Mass implements Comparable<Mass>, Copy<Mass> {
     private double kg;
 
     /**
@@ -27,11 +29,8 @@ public class Mass implements Comparable<Mass> {
         return mass;
     }
 
-    /**
-     * Creates a deep copy of this mass.
-     * @return a new {@link Mass} of the same value
-     */
     @NonNull
+    @Override
     public Mass copy() {
         return Mass.fromKg(kg);
     }
