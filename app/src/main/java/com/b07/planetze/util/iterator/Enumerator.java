@@ -1,12 +1,11 @@
-package com.b07.planetze.util.enumeration;
+package com.b07.planetze.util.iterator;
 
 import androidx.annotation.NonNull;
 
 import java.util.Iterator;
 
 public class Enumerator<T> implements Iterator<EnumeratedItem<T>> {
-    @NonNull
-    private final Iterator<T> iterator;
+    @NonNull private final Iterator<T> iterator;
     private int index;
 
     public Enumerator(@NonNull Iterator<T> iterator) {

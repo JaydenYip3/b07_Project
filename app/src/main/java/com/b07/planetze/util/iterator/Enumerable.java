@@ -1,4 +1,4 @@
-package com.b07.planetze.util.enumeration;
+package com.b07.planetze.util.iterator;
 
 import androidx.annotation.NonNull;
 
@@ -6,8 +6,7 @@ import java.util.Iterator;
 import java.util.function.BiConsumer;
 
 public class Enumerable<T> implements Iterable<EnumeratedItem<T>> {
-    @NonNull
-    private final Iterable<T> iterable;
+    @NonNull private final Iterable<T> iterable;
 
     public Enumerable(@NonNull Iterable<T> iterable) {
         this.iterable = iterable;

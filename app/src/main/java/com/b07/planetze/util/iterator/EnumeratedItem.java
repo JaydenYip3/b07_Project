@@ -1,4 +1,4 @@
-package com.b07.planetze.util.enumeration;
+package com.b07.planetze.util.iterator;
 
 import androidx.annotation.NonNull;
 
