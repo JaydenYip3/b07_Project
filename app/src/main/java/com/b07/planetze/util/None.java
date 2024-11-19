@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 /**
@@ -59,6 +60,11 @@ public final class None<T> extends Option<T> {
     @Override
     public <E> Result<T, E> okOr(@NonNull Supplier<E> supplier) {
         return new Error<>(supplier.get());
+    }
+
+    @Override
+    public boolean isSomeAnd(@NonNull Predicate<T> predicate) {
+        return false;
     }
 
     @Override

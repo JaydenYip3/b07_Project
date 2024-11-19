@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 /**
@@ -66,6 +67,16 @@ public final class Ok<T, E> extends Result<T, E> {
     @Override
     public T getOr(@NonNull Supplier<T> supplier) {
         return value;
+    }
+
+    @Override
+    public boolean isOkAnd(@NonNull Predicate<T> predicate) {
+        return predicate.test(value);
+    }
+
+    @Override
+    public boolean isErrorAnd(@NonNull Predicate<E> predicate) {
+        return false;
     }
 
     @Override

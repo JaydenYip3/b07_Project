@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 /**
@@ -103,7 +104,34 @@ public sealed abstract class Option<T> permits Some, None {
     public abstract <E> Result<T, E> okOr(@NonNull Supplier<E> supplier);
 
     /**
-     * Depending on whether this result is of variant {@link Some}
+     * Returns <code>true</code> iff <code>this</code> is {@link Some}. <br>
+     * If you require the held value, use <code>if (x instanceof Some&lt;T&gt; some)</code>
+     * or {@link Option#match}.
+     * @return <code>true</code> iff <code>this</code> is {@link Some}.
+     */
+    public boolean isSome() {
+        return this instanceof Some<T>;
+    }
+
+    /**
+     * Calls a function with the held value if <code>this</code> is {@link Some}.
+     * Returns <code>true</code> iff the function is called and outputs <code>true</code>.
+     * @param predicate the function
+     * @return <code>true</code> iff <code>this</code> is {@link Some} and
+     *         <code>predicate(value)</code> returns <code>true</code>.
+     */
+    public abstract boolean isSomeAnd(@NonNull Predicate<T> predicate);
+
+    /**
+     * Returns <code>true</code> iff <code>this</code> is {@link None}.
+     * @return <code>true</code> iff <code>this</code> is {@link None}
+     */
+    public boolean isNone() {
+        return this instanceof None<T>;
+    }
+
+    /**
+     * Depending on whether <code>this</code> is {@link Some}
      * or {@link None}, this method calls 1 of 2 functions with the
      * stored value (if present).
      * @param some the function to call if <code>this</code> is {@link Some}
@@ -112,7 +140,7 @@ public sealed abstract class Option<T> permits Some, None {
     public abstract void match(@NonNull Consumer<T> some, @NonNull Runnable none);
 
     /**
-     * Depending on whether this result is of variant {@link Some}
+     * Depending on whether <code>this</code> is {@link Some}
      * or {@link None}, this method calls 1 of 2 functions with the
      * stored value (if present).
      * @param some the function to call if <code>this</code> is {@link Some}

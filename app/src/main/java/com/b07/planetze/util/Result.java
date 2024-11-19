@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 /**
@@ -69,6 +70,44 @@ public sealed abstract class Result<T, E> permits Ok, Error {
      */
     @NonNull
     public abstract T getOr(@NonNull Supplier<T> supplier);
+
+    /**
+     * Returns <code>true</code> iff <code>this</code> is {@link Ok}. <br>
+     * If you require the held value, use <code>if (x instanceof Ok&lt;T, E&gt; ok)</code>
+     * or {@link Result#match}.
+     * @return <code>true</code> iff <code>this</code> is {@link Ok}.
+     */
+    public boolean isOk() {
+        return this instanceof Ok<T, E>;
+    }
+
+    /**
+     * Calls a function with the held value if <code>this</code> is {@link Ok}.
+     * Returns <code>true</code> iff the function is called and outputs <code>true</code>.
+     * @param predicate the function
+     * @return <code>true</code> iff <code>this</code> is {@link Ok} and
+     *         <code>predicate(value)</code> returns <code>true</code>.
+     */
+    public abstract boolean isOkAnd(@NonNull Predicate<T> predicate);
+
+    /**
+     * Returns <code>true</code> iff <code>this</code> is {@link Error}. <br>
+     * If you require the held value, use <code>if (x instanceof Error&lt;T, E&gt; ok)</code>
+     * or {@link Result#match}.
+     * @return <code>true</code> iff <code>this</code> is {@link Error}.
+     */
+    public boolean isError() {
+        return this instanceof Error<T, E>;
+    }
+
+    /**
+     * Calls a function with the held value if <code>this</code> is {@link Error}.
+     * Returns <code>true</code> iff the function is called and outputs <code>true</code>.
+     * @param predicate the function
+     * @return <code>true</code> iff <code>this</code> is {@link Error} and
+     *         <code>predicate(value)</code> returns <code>true</code>.
+     */
+    public abstract boolean isErrorAnd(@NonNull Predicate<E> predicate);
 
     /**
      * Depending on whether <code>this</code> is {@link Ok} or {@link Error},
