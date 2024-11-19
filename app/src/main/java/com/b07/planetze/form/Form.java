@@ -2,8 +2,7 @@ package com.b07.planetze.form;
 
 import androidx.annotation.NonNull;
 
-import com.b07.planetze.util.ImmutableArray;
-import com.b07.planetze.util.Ok;
+import com.b07.planetze.util.ImmutableList;
 import com.b07.planetze.util.Option;
 import com.b07.planetze.util.Result;
 import com.b07.planetze.util.Some;
@@ -13,19 +12,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Form {
-    @NonNull private final ImmutableArray<FieldDefinition<?>> fields;
-    @NonNull private final List<Option<Object>> values;
-    private final int id;
+    @NonNull private final ImmutableList<FieldDefinition<?>> fields;
+    @NonNull private final List<Option<FieldValue>> values;
+    private final int formId;
 
     /**
      * Instantiates a form given an id and fields. <br>
      * Forms with different fields must have different ids. <br>
      * Use {@link FormBuilder} instead of calling this manually.
-     * @param id the form's id
+     * @param formId the form's id
      * @param fields the form's fields
      */
-    public Form(int id, @NonNull ImmutableArray<FieldDefinition<?>> fields) {
-        this.id = id;
+    public Form(int formId, @NonNull ImmutableList<FieldDefinition<?>> fields) {
+        this.formId = formId;
         this.fields = fields;
         this.values = new ArrayList<>(fields.size());
 
@@ -39,7 +38,7 @@ public class Form {
             @NonNull FieldId<V> field,
             @NonNull V value
     ) {
-        if (field.formId() != this.id) {
+        if (field.formId() != formId) {
             throw new FieldIdException();
         }
         @SuppressWarnings("unchecked")
@@ -49,4 +48,6 @@ public class Form {
                 .validate(value)
                 .apply(x -> values.set(field.index(), new Some<>(value)));
     }
+
+
 }

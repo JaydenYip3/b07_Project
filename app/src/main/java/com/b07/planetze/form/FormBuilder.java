@@ -2,7 +2,7 @@ package com.b07.planetze.form;
 
 import androidx.annotation.NonNull;
 
-import com.b07.planetze.util.ImmutableArray;
+import com.b07.planetze.util.ImmutableList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +35,6 @@ public class FormBuilder {
         built = true;
         FieldDefinition<?>[] array = fields.toArray(new FieldDefinition<?>[0]);
 
-        return new Form(formId, new ImmutableArray<>(array));
+        return new Form(formId, new ImmutableList<>(array));
     }
 }
