@@ -38,6 +38,13 @@ public sealed abstract class Option<T> permits Some, None {
     public abstract Option<T> apply(@NonNull Consumer<T> f);
 
     /**
+     * Calls a function if <code>this</code> is {@link None}.
+     * @param f the function
+     * @return <code>this</code>
+     */
+    public abstract Option<T> applyNone(@NonNull Runnable f);
+
+    /**
      * Creates a new {@link Some} by applying a function to the held value
      * if it is present—otherwise creates a new {@link None}.
      *
