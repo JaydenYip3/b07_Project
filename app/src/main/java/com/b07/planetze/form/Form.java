@@ -15,13 +15,17 @@ import java.util.List;
 public class Form {
     @NonNull private final ImmutableArray<FieldDefinition<?>> fields;
     @NonNull private final List<Option<Object>> values;
+    private final int id;
 
     /**
-     * Instantiates a form. <br>
+     * Instantiates a form given an id and fields. <br>
+     * Forms with different fields must have different ids. <br>
      * Use {@link FormBuilder} instead of calling this manually.
+     * @param id the form's id
      * @param fields the form's fields
      */
-    public Form(@NonNull ImmutableArray<FieldDefinition<?>> fields) {
+    public Form(int id, @NonNull ImmutableArray<FieldDefinition<?>> fields) {
+        this.id = id;
         this.fields = fields;
         this.values = new ArrayList<>(fields.size());
 
@@ -31,15 +35,18 @@ public class Form {
     }
 
     public <V extends FieldValue> Result<Unit, String> set(
-            @NonNull FieldId<V> id,
+            @NonNull FieldId<V> field,
             @NonNull V value
     ) {
+        if (field.formId() != this.id) {
+            throw new FieldIdException();
+        }
         @SuppressWarnings("unchecked")
-        FieldDefinition<V> field = (FieldDefinition<V>) fields.get(id.get());
+        FieldDefinition<V> definition = (FieldDefinition<V>) fields.get(field.index());
 
-        Result<Unit, String> r = field.validate(value);
+        Result<Unit, String> r = definition.validate(value);
         if (r.isOk()) {
-            values.set(id.get(), new Some<>(value));
+            values.set(field.index(), new Some<>(value));
         }
         return r;
     }
