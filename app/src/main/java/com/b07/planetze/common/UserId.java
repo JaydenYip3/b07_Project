@@ -8,9 +8,7 @@ import androidx.annotation.NonNull;
  * aren't used where user ids are expected.
  */
 public class UserId {
-    private String id;
-
-    private UserId() {}
+    @NonNull private final String id;
 
     /**
      * Creates a {@link UserId} given a user id
@@ -18,15 +16,6 @@ public class UserId {
      */
     public UserId(@NonNull String id) {
         this.id = id;
-    }
-
-    /**
-     * Creates a copy of this id.
-     * @return a new {@link UserId} of the same value
-     */
-    @NonNull
-    public UserId copy() {
-        return new UserId(id);
     }
 
     /**

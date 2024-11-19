@@ -14,9 +14,7 @@ import java.util.function.Supplier;
  * @param <E> the type of the {@link Error} variant
  */
 public final class Ok<T, E> extends Result<T, E> {
-    private T value;
-
-    private Ok() {}
+    @NonNull private final T value;
 
     /**
      * Creates a successful {@link Result}.

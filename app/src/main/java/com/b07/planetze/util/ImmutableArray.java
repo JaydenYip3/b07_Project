@@ -9,9 +9,7 @@ import java.util.Iterator;
  * @param <T> the type of each element
  */
 public class ImmutableArray<T> implements Iterable<T> {
-    private T[] array;
-
-    private ImmutableArray() {}
+    @NonNull private final T[] array;
 
     public ImmutableArray(@NonNull T[] array) {
         this.array = array;

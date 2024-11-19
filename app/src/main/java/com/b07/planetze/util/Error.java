@@ -14,9 +14,7 @@ import java.util.function.Supplier;
  * @param <E> the type of the {@link Error} variant
  */
 public final class Error<T, E> extends Result<T, E> {
-    private E error;
-
-    private Error() {}
+    @NonNull private final E error;
 
     /**
      * Creates a failed {@link Result}.

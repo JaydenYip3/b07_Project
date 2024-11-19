@@ -12,9 +12,7 @@ import java.util.function.Supplier;
  * @param <T> the type of the value
  */
 public final class Some<T> extends Option<T> {
-    private T value;
-
-    private Some() {}
+    @NonNull private final T value;
 
     /**
      * Creates an {@link Option} with a present value.
