@@ -8,14 +8,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class FormBuilder {
+public final class FormBuilder {
+    @NonNull private final FormId formId;
     @NonNull private final List<FieldDefinition<?>> fields;
     private boolean built;
-    private final int formId;
 
     public FormBuilder() {
+        formId = new FormId();
         fields = new ArrayList<>();
-        formId = ThreadLocalRandom.current().nextInt();
         built = false;
     }
 

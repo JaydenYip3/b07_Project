@@ -11,7 +11,7 @@ import com.b07.planetze.util.Option;
 import com.b07.planetze.util.Result;
 import com.b07.planetze.util.Unit;
 
-public class ChoiceDefinition implements FieldDefinition<Choice> {
+public final class ChoiceDefinition implements FieldDefinition<Choice> {
     @NonNull private final ImmutableList<String> choices;
     @NonNull private final Option<Choice> initialSelection;
 

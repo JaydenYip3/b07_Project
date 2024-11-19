@@ -7,5 +7,5 @@ package com.b07.planetze.form;
  * @param index the index of the field
  * @param <V> the type of the field's value
  */
-public record FieldId<V extends FieldValue>(int formId, int index) {
+public record FieldId<V extends FieldValue>(FormId formId, int index) {
 }

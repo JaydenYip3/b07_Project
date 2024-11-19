@@ -2,19 +2,23 @@ package com.b07.planetze.form;
 
 import androidx.annotation.NonNull;
 
+import com.b07.planetze.util.Error;
 import com.b07.planetze.util.ImmutableList;
+import com.b07.planetze.util.Ok;
 import com.b07.planetze.util.Option;
 import com.b07.planetze.util.Result;
 import com.b07.planetze.util.Some;
 import com.b07.planetze.util.Unit;
+import com.b07.planetze.util.Util;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
-public class Form {
+public final class Form {
+    @NonNull private final FormId formId;
     @NonNull private final ImmutableList<FieldDefinition<?>> fields;
     @NonNull private final List<Option<FieldValue>> values;
-    private final int formId;
 
     /**
      * Instantiates a form given an id and fields. <br>
@@ -23,7 +27,7 @@ public class Form {
      * @param formId the form's id
      * @param fields the form's fields
      */
-    public Form(int formId, @NonNull ImmutableList<FieldDefinition<?>> fields) {
+    public Form(@NonNull FormId formId, @NonNull ImmutableList<FieldDefinition<?>> fields) {
         this.formId = formId;
         this.fields = fields;
         this.values = new ArrayList<>(fields.size());
@@ -38,7 +42,7 @@ public class Form {
             @NonNull FieldId<V> field,
             @NonNull V value
     ) {
-        if (field.formId() != formId) {
+        if (!formId.equals(field.formId())) {
             throw new FieldIdException();
         }
         @SuppressWarnings("unchecked")
@@ -49,5 +53,18 @@ public class Form {
                 .apply(x -> values.set(field.index(), new Some<>(value)));
     }
 
+    @NonNull
+    public Result<FormSubmission, List<Integer>> submit() {
+        List<Integer> invalid = new ArrayList<>();
+        List<FieldValue> presentValues = new ArrayList<>();
 
+        Util.enumerate(values).forEach((i, value) -> value
+                .apply(presentValues::add)
+                .applyNone(() -> invalid.add(i)));
+
+        if (!invalid.isEmpty()) {
+            return new Error<>(invalid);
+        }
+        return new Ok<>(new FormSubmission(formId, new ImmutableList<>(presentValues)));
+    }
 }
