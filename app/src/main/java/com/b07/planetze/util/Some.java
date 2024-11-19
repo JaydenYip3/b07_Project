@@ -32,8 +32,9 @@ public final class Some<T> extends Option<T> {
     }
 
     @Override
-    public void apply(@NonNull Consumer<T> f) {
+    public Option<T> apply(@NonNull Consumer<T> f) {
         f.accept(value);
+        return this;
     }
 
     @Override

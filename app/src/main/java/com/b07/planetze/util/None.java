@@ -18,7 +18,9 @@ public final class None<T> extends Option<T> {
     public None() {}
 
     @Override
-    public void apply(@NonNull Consumer<T> f) {}
+    public Option<T> apply(@NonNull Consumer<T> f) {
+        return this;
+    }
 
     @NonNull
     @Override

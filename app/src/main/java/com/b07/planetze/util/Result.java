@@ -21,15 +21,17 @@ public sealed abstract class Result<T, E> permits Ok, Error {
     /**
      * Applies a function to the held value iff <code>this</code> is {@link Ok}.
      * @param f the function
+     * @return <code>this</code>
      */
-    public abstract void apply(@NonNull Consumer<T> f);
+    public abstract Result<T, E> apply(@NonNull Consumer<T> f);
 
     /**
      * Applies a function to the held error value iff <code>this</code> is
      * {@link Error}.
      * @param f the function
+     * @return <code>this</code>
      */
-    public abstract void applyError(@NonNull Consumer<E> f);
+    public abstract Result<T, E> applyError(@NonNull Consumer<E> f);
 
     /**
      * If <code>this</code> is {@link Ok}, creates a new {@link Ok} by applying

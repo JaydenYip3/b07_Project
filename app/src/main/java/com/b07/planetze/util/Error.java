@@ -36,22 +36,25 @@ public final class Error<T, E> extends Result<T, E> {
     }
 
     @Override
-    public void apply(@NonNull Consumer<T> f) {}
+    public Error<T, E> apply(@NonNull Consumer<T> f) {
+        return this;
+    }
 
     @Override
-    public void applyError(@NonNull Consumer<E> f) {
+    public Error<T, E> applyError(@NonNull Consumer<E> f) {
         f.accept(error);
+        return this;
     }
 
     @NonNull
     @Override
-    public <U> Result<U, E> map(@NonNull Function<T, U> f) {
+    public <U> Error<U, E> map(@NonNull Function<T, U> f) {
         return new Error<>(error);
     }
 
     @NonNull
     @Override
-    public <F> Result<T, F> mapError(@NonNull Function<E, F> f) {
+    public <F> Error<T, F> mapError(@NonNull Function<E, F> f) {
         return new Error<>(f.apply(error));
     }
 

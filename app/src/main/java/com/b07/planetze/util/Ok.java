@@ -36,22 +36,25 @@ public final class Ok<T, E> extends Result<T, E> {
     }
 
     @Override
-    public void apply(@NonNull Consumer<T> f) {
+    public Ok<T, E> apply(@NonNull Consumer<T> f) {
         f.accept(value);
+        return this;
     }
 
     @Override
-    public void applyError(@NonNull Consumer<E> f) {}
+    public Ok<T, E> applyError(@NonNull Consumer<E> f) {
+        return this;
+    }
 
     @NonNull
     @Override
-    public <U> Result<U, E> map(@NonNull Function<T, U> f) {
+    public <U> Ok<U, E> map(@NonNull Function<T, U> f) {
         return new Ok<>(f.apply(value));
     }
 
     @NonNull
     @Override
-    public <F> Result<T, F> mapError(@NonNull Function<E, F> f) {
+    public <F> Ok<T, F> mapError(@NonNull Function<E, F> f) {
         return new Ok<>(value);
     }
 

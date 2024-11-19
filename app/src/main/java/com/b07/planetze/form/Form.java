@@ -34,6 +34,7 @@ public class Form {
         }
     }
 
+    @NonNull
     public <V extends FieldValue> Result<Unit, String> set(
             @NonNull FieldId<V> field,
             @NonNull V value
@@ -44,10 +45,8 @@ public class Form {
         @SuppressWarnings("unchecked")
         FieldDefinition<V> definition = (FieldDefinition<V>) fields.get(field.index());
 
-        Result<Unit, String> r = definition.validate(value);
-        if (r.isOk()) {
-            values.set(field.index(), new Some<>(value));
-        }
-        return r;
+        return definition
+                .validate(value)
+                .apply(x -> values.set(field.index(), new Some<>(value)));
     }
 }

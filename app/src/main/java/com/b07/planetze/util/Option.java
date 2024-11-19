@@ -33,8 +33,9 @@ public sealed abstract class Option<T> permits Some, None {
     /**
      * Applies a function to the held value iff it is present.
      * @param f the function
+     * @return <code>this</code>
      */
-    public abstract void apply(@NonNull Consumer<T> f);
+    public abstract Option<T> apply(@NonNull Consumer<T> f);
 
     /**
      * Creates a new {@link Some} by applying a function to the held value
