@@ -1,4 +1,7 @@
 package com.b07.planetze.form;
 
-public class FormViewModel {
+import androidx.lifecycle.ViewModel;
+
+public class FormViewModel extends ViewModel {
+
 }

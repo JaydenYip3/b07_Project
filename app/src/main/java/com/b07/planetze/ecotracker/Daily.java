@@ -5,7 +5,7 @@ import com.b07.planetze.common.Emissions;
 /**
  * A logged daily activity.
  */
-public abstract class Activity {
+public abstract class Daily {
     /**
      * Gets the CO2e emitted from this activity.
      * @return the mass of CO2e emissions
