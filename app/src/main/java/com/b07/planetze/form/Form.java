@@ -2,18 +2,17 @@ package com.b07.planetze.form;
 
 import androidx.annotation.NonNull;
 
-import com.b07.planetze.util.Error;
+import com.b07.planetze.util.result.Error;
 import com.b07.planetze.util.ImmutableList;
-import com.b07.planetze.util.Ok;
-import com.b07.planetze.util.Option;
-import com.b07.planetze.util.Result;
-import com.b07.planetze.util.Some;
+import com.b07.planetze.util.result.Ok;
+import com.b07.planetze.util.option.Option;
+import com.b07.planetze.util.result.Result;
+import com.b07.planetze.util.option.Some;
 import com.b07.planetze.util.Unit;
 import com.b07.planetze.util.Util;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Consumer;
 
 public final class Form {
     @NonNull private final FormId formId;

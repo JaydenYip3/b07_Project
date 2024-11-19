@@ -6,7 +6,7 @@ import com.b07.planetze.common.DateInterval;
 import com.b07.planetze.common.DatedEmissions;
 import com.b07.planetze.common.Emissions;
 import com.b07.planetze.common.UserId;
-import com.b07.planetze.util.Result;
+import com.b07.planetze.util.result.Result;
 import com.b07.planetze.util.Unit;
 
 import java.time.LocalDate;

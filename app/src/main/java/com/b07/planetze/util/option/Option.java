@@ -1,7 +1,11 @@
-package com.b07.planetze.util;
+package com.b07.planetze.util.option;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+
+import com.b07.planetze.util.result.Error;
+import com.b07.planetze.util.result.Ok;
+import com.b07.planetze.util.result.Result;
 
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -93,7 +97,7 @@ public sealed abstract class Option<T> permits Some, None {
 
     /**
      * Creates an {@link Ok} with the held value if it is present; otherwise,
-     * creates a {@link Error} with a given error.
+     * creates a {@link com.b07.planetze.util.result.Error} with a given error.
      * @param error the error
      * @return a new {@link Result}
      * @param <E> the type of the error

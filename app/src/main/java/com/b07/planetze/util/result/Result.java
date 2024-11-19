@@ -1,4 +1,4 @@
-package com.b07.planetze.util;
+package com.b07.planetze.util.result;
 
 import androidx.annotation.NonNull;
 

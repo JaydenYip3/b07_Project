@@ -4,11 +4,11 @@ import androidx.annotation.NonNull;
 
 import com.b07.planetze.form.FieldDefinition;
 import com.b07.planetze.form.FieldInitException;
-import com.b07.planetze.util.Error;
+import com.b07.planetze.util.result.Error;
 import com.b07.planetze.util.ImmutableList;
-import com.b07.planetze.util.Ok;
-import com.b07.planetze.util.Option;
-import com.b07.planetze.util.Result;
+import com.b07.planetze.util.result.Ok;
+import com.b07.planetze.util.option.Option;
+import com.b07.planetze.util.result.Result;
 import com.b07.planetze.util.Unit;
 
 public final class ChoiceDefinition implements FieldDefinition<Choice> {
