@@ -9,7 +9,6 @@ import com.b07.planetze.util.ImmutableArray;
 import com.b07.planetze.util.Ok;
 import com.b07.planetze.util.Option;
 import com.b07.planetze.util.Result;
-import com.b07.planetze.util.Some;
 import com.b07.planetze.util.Unit;
 
 public class ChoiceDefinition implements FieldDefinition<Choice> {
@@ -38,7 +37,7 @@ public class ChoiceDefinition implements FieldDefinition<Choice> {
     @Override
     public Result<Unit, String> validate(@NonNull Choice value) {
         if (choices.containsIndex(value.index())) {
-            return new Ok<>(Unit.INSTANCE);
+            return new Ok<>(Unit.UNIT);
         }
         return new Error<>("Choice index out of bounds");
     }

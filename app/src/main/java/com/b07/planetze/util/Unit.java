@@ -5,5 +5,8 @@ package com.b07.planetze.util;
  * and thus holds no information) if null values are not permitted.
  */
 public enum Unit {
-    INSTANCE
+    /**
+     * The only instance of {@link Unit}.
+     */
+    UNIT
 }
