@@ -18,6 +18,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.b07.planetze.R;
+import com.b07.planetze.WelcomeFragment;
+import com.b07.planetze.onboarding.QuestionsTransportationFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseUser;
@@ -59,6 +61,7 @@ public class AuthActivity extends AppCompatActivity implements LoginCallback, Re
                         FirebaseUser user = auth.getCurrentUser();
 
                         Toast.makeText(this, "Logged in as " + user.getEmail(), Toast.LENGTH_SHORT).show();
+                        loadFragment(new QuestionsTransportationFragment());
                     } else {
                         Exception e = task.getException();
 

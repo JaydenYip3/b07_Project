@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.view.View;
 import android.content.Intent;
 
+import com.b07.planetze.onboarding.QuestionsFoodFragment;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         //myRef.child("User").setValue(bruh);
 
         if (savedInstanceState == null) {
-            loadFragment(new WelcomeFragment());
+            loadFragment(new QuestionsFoodFragment());
         }
     }
 
