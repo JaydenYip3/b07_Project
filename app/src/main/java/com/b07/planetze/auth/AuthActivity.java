@@ -102,7 +102,7 @@ public class AuthActivity extends AppCompatActivity implements LoginCallback, Re
                         loadFragment(new ResetPasswordFragment());
                     } else {
                         Log.e(TAG, "failed to send reset email: ", task.getException());
-                        Toast.makeText(this, "Error: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                        Toast.makeText(this, "Err: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
     }

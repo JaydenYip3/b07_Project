@@ -11,9 +11,9 @@ import java.util.function.Supplier;
  * Stores an error for use upon failure.
  *
  * @param <T> the type of the {@link Ok} variant
- * @param <E> the type of the {@link Error} variant
+ * @param <E> the type of the {@link Err} variant
  */
-public final class Error<T, E> extends Result<T, E> {
+public final class Err<T, E> extends Result<T, E> {
     @NonNull private final E error;
 
     /**
@@ -21,7 +21,7 @@ public final class Error<T, E> extends Result<T, E> {
      *
      * @param error an error for use upon failure
      */
-    public Error(@NonNull E error) {
+    public Err(@NonNull E error) {
         this.error = error;
     }
 
@@ -36,26 +36,26 @@ public final class Error<T, E> extends Result<T, E> {
     }
 
     @Override
-    public Error<T, E> apply(@NonNull Consumer<T> f) {
+    public Err<T, E> apply(@NonNull Consumer<T> f) {
         return this;
     }
 
     @Override
-    public Error<T, E> applyError(@NonNull Consumer<E> f) {
+    public Err<T, E> applyError(@NonNull Consumer<E> f) {
         f.accept(error);
         return this;
     }
 
     @NonNull
     @Override
-    public <U> Error<U, E> map(@NonNull Function<T, U> f) {
-        return new Error<>(error);
+    public <U> Err<U, E> map(@NonNull Function<T, U> f) {
+        return new Err<>(error);
     }
 
     @NonNull
     @Override
-    public <F> Error<T, F> mapError(@NonNull Function<E, F> f) {
-        return new Error<>(f.apply(error));
+    public <F> Err<T, F> mapErr(@NonNull Function<E, F> f) {
+        return new Err<>(f.apply(error));
     }
 
     @NonNull
@@ -76,7 +76,7 @@ public final class Error<T, E> extends Result<T, E> {
     }
 
     @Override
-    public boolean isErrorAnd(@NonNull Predicate<E> predicate) {
+    public boolean isErrAnd(@NonNull Predicate<E> predicate) {
         return predicate.test(error);
     }
 

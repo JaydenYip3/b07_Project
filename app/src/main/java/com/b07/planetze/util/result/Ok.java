@@ -11,7 +11,7 @@ import java.util.function.Supplier;
  * Stores a value for use upon success.
  *
  * @param <T> the type of the {@link Ok} variant
- * @param <E> the type of the {@link Error} variant
+ * @param <E> the type of the {@link Err} variant
  */
 public final class Ok<T, E> extends Result<T, E> {
     @NonNull private final T value;
@@ -54,7 +54,7 @@ public final class Ok<T, E> extends Result<T, E> {
 
     @NonNull
     @Override
-    public <F> Ok<T, F> mapError(@NonNull Function<E, F> f) {
+    public <F> Ok<T, F> mapErr(@NonNull Function<E, F> f) {
         return new Ok<>(value);
     }
 
@@ -76,7 +76,7 @@ public final class Ok<T, E> extends Result<T, E> {
     }
 
     @Override
-    public boolean isErrorAnd(@NonNull Predicate<E> predicate) {
+    public boolean isErrAnd(@NonNull Predicate<E> predicate) {
         return false;
     }
 

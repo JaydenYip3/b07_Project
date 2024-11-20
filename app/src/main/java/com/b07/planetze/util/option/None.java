@@ -2,7 +2,7 @@ package com.b07.planetze.util.option;
 
 import androidx.annotation.NonNull;
 
-import com.b07.planetze.util.result.Error;
+import com.b07.planetze.util.result.Err;
 import com.b07.planetze.util.result.Result;
 
 import java.util.function.Consumer;
@@ -64,13 +64,13 @@ public final class None<T> extends Option<T> {
     @NonNull
     @Override
     public <E> Result<T, E> okOr(@NonNull E error) {
-        return new com.b07.planetze.util.result.Error<>(error);
+        return new Err<>(error);
     }
 
     @NonNull
     @Override
     public <E> Result<T, E> okOr(@NonNull Supplier<E> supplier) {
-        return new Error<>(supplier.get());
+        return new Err<>(supplier.get());
     }
 
     @Override

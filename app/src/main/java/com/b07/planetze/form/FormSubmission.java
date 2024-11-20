@@ -15,7 +15,7 @@ public final class FormSubmission {
 
     public <V extends FieldValue> V get(@NonNull FieldId<V> field) {
         if (!formId.equals(field.formId())) {
-            throw new FieldIdException();
+            throw new FormIdException();
         }
         @SuppressWarnings("unchecked")
         V value = (V) values.get(field.index());

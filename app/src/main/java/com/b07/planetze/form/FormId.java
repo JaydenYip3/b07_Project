@@ -6,9 +6,14 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public final class FormId {
     private final int id;
+    private static int counter;
+
+    static {
+        counter = 0;
+    }
 
     public FormId() {
-        id = ThreadLocalRandom.current().nextInt();
+        id = counter++;
     }
 
     @Override

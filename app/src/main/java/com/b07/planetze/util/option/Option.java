@@ -3,7 +3,7 @@ package com.b07.planetze.util.option;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.b07.planetze.util.result.Error;
+import com.b07.planetze.util.result.Err;
 import com.b07.planetze.util.result.Ok;
 import com.b07.planetze.util.result.Result;
 
@@ -97,7 +97,7 @@ public sealed abstract class Option<T> permits Some, None {
 
     /**
      * Creates an {@link Ok} with the held value if it is present; otherwise,
-     * creates a {@link com.b07.planetze.util.result.Error} with a given error.
+     * creates a {@link Err} with a given error.
      * @param error the error
      * @return a new {@link Result}
      * @param <E> the type of the error
@@ -107,7 +107,7 @@ public sealed abstract class Option<T> permits Some, None {
 
     /**
      * Creates an {@link Ok} with the held value if it is present; otherwise,
-     * creates a {@link Error} with an error given by the output of a function.
+     * creates a {@link Err} with an error given by the output of a function.
      * @param supplier the function
      * @return a new {@link Result}
      * @param <E> the type of the error

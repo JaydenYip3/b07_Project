@@ -33,8 +33,6 @@ public final class FormBuilder {
     @NonNull
     public Form build() {
         built = true;
-        FieldDefinition<?>[] array = fields.toArray(new FieldDefinition<?>[0]);
-
-        return new Form(formId, new ImmutableList<>(array));
+        return new Form(formId, new ImmutableList<>(fields));
     }
 }

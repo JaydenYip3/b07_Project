@@ -4,7 +4,7 @@ import androidx.annotation.NonNull;
 
 import com.b07.planetze.form.FieldDefinition;
 import com.b07.planetze.form.FieldInitException;
-import com.b07.planetze.util.result.Error;
+import com.b07.planetze.util.result.Err;
 import com.b07.planetze.util.ImmutableList;
 import com.b07.planetze.util.result.Ok;
 import com.b07.planetze.util.option.Option;
@@ -39,6 +39,6 @@ public final class ChoiceDefinition implements FieldDefinition<Choice> {
         if (choices.containsIndex(value.index())) {
             return new Ok<>(Unit.UNIT);
         }
-        return new Error<>("Choice index out of bounds");
+        return new Err<>("Choice index out of bounds");
     }
 }

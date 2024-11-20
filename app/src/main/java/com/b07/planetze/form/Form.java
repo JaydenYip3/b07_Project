@@ -2,7 +2,7 @@ package com.b07.planetze.form;
 
 import androidx.annotation.NonNull;
 
-import com.b07.planetze.util.result.Error;
+import com.b07.planetze.util.result.Err;
 import com.b07.planetze.util.ImmutableList;
 import com.b07.planetze.util.result.Ok;
 import com.b07.planetze.util.option.Option;
@@ -42,7 +42,7 @@ public final class Form {
             @NonNull V value
     ) {
         if (!formId.equals(field.formId())) {
-            throw new FieldIdException();
+            throw new FormIdException();
         }
         @SuppressWarnings("unchecked")
         FieldDefinition<V> definition = (FieldDefinition<V>) fields.get(field.index());
@@ -62,7 +62,7 @@ public final class Form {
                 .applyNone(() -> invalid.add(i)));
 
         if (!invalid.isEmpty()) {
-            return new Error<>(invalid);
+            return new Err<>(invalid);
         }
         return new Ok<>(new FormSubmission(formId, new ImmutableList<>(presentValues)));
     }
