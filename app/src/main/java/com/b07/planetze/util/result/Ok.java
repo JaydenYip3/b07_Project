@@ -2,6 +2,8 @@ package com.b07.planetze.util.result;
 
 import androidx.annotation.NonNull;
 
+import com.b07.planetze.util.immutability.MutableWithCopy;
+
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -88,5 +90,17 @@ public final class Ok<T, E> extends Result<T, E> {
     @Override
     public <R> R match(@NonNull Function<T, R> ok, @NonNull Function<E, R> error) {
         return ok.apply(value);
+    }
+
+    @NonNull
+    @Override
+    public Ok<T, E> copy() {
+        if (value instanceof MutableWithCopy<?> v) {
+            @SuppressWarnings("unchecked")
+            T copied = (T) v.copy();
+
+            return new Ok<>(copied);
+        }
+        return new Ok<>(value);
     }
 }

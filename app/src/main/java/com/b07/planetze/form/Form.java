@@ -4,7 +4,7 @@ import androidx.annotation.NonNull;
 
 import com.b07.planetze.form.exception.FormIdException;
 import com.b07.planetze.util.result.Err;
-import com.b07.planetze.util.ImmutableList;
+import com.b07.planetze.util.immutability.ImmutableList;
 import com.b07.planetze.util.result.Ok;
 import com.b07.planetze.util.option.Option;
 import com.b07.planetze.util.result.Result;

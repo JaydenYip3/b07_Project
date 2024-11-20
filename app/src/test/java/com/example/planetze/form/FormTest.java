@@ -12,7 +12,7 @@ import com.b07.planetze.form.FormFactoryBuilder;
 import com.b07.planetze.form.FormSubmission;
 import com.b07.planetze.form.field.ChoiceField;
 import com.b07.planetze.form.field.PositiveIntField;
-import com.b07.planetze.util.ImmutableList;
+import com.b07.planetze.util.immutability.ImmutableList;
 import com.b07.planetze.util.option.None;
 import com.b07.planetze.util.result.Result;
 

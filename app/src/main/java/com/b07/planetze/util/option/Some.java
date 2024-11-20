@@ -2,6 +2,7 @@ package com.b07.planetze.util.option;
 
 import androidx.annotation.NonNull;
 
+import com.b07.planetze.util.immutability.MutableWithCopy;
 import com.b07.planetze.util.result.Ok;
 import com.b07.planetze.util.result.Result;
 
@@ -35,31 +36,31 @@ public final class Some<T> extends Option<T> {
     }
 
     @Override
-    public Option<T> apply(@NonNull Consumer<T> f) {
+    public Some<T> apply(@NonNull Consumer<T> f) {
         f.accept(value);
         return this;
     }
 
     @Override
-    public Option<T> applyNone(@NonNull Runnable f) {
+    public Some<T> applyNone(@NonNull Runnable f) {
         return this;
     }
 
     @Override
     @NonNull
-    public <U> Option<U> map(@NonNull Function<T, U> f) {
+    public <U> Some<U> map(@NonNull Function<T, U> f) {
         return new Some<>(f.apply(value));
     }
 
     @NonNull
     @Override
-    public Option<T> or(@NonNull Option<T> other) {
+    public Some<T> or(@NonNull Option<T> other) {
         return this;
     }
 
     @NonNull
     @Override
-    public Option<T> or(@NonNull Supplier<Option<T>> supplier) {
+    public Some<T> or(@NonNull Supplier<Option<T>> supplier) {
         return this;
     }
 
@@ -77,13 +78,13 @@ public final class Some<T> extends Option<T> {
 
     @NonNull
     @Override
-    public <E> Result<T, E> okOr(@NonNull E error) {
+    public <E> Ok<T, E> okOr(@NonNull E error) {
         return new Ok<>(value);
     }
 
     @NonNull
     @Override
-    public <E> Result<T, E> okOr(@NonNull Supplier<E> supplier) {
+    public <E> Ok<T, E> okOr(@NonNull Supplier<E> supplier) {
         return new Ok<>(value);
     }
 
@@ -98,7 +99,22 @@ public final class Some<T> extends Option<T> {
     }
 
     @Override
-    public <R> R match(@NonNull Function<T, R> some, @NonNull Supplier<R> none) {
+    public <R> R match(
+            @NonNull Function<T, R> some,
+            @NonNull Supplier<R> none
+    ) {
         return some.apply(value);
+    }
+
+    @NonNull
+    @Override
+    public Some<T> copy() {
+        if (value instanceof MutableWithCopy<?> v) {
+            @SuppressWarnings("unchecked")
+            T copied = (T) v.copy();
+
+            return new Some<>(copied);
+        }
+        return new Some<>(value);
     }
 }

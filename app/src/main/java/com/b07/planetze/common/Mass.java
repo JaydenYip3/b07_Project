@@ -2,12 +2,12 @@ package com.b07.planetze.common;
 
 import androidx.annotation.NonNull;
 
-import com.b07.planetze.util.Copy;
+import com.b07.planetze.util.immutability.MutableWithCopy;
 
 /**
  * A measurement of mass.
  */
-public class Mass implements Comparable<Mass>, Copy<Mass> {
+public class Mass implements Comparable<Mass>, MutableWithCopy<Mass> {
     private double kg;
 
     /**

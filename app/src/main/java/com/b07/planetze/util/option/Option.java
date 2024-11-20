@@ -3,6 +3,7 @@ package com.b07.planetze.util.option;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.b07.planetze.util.immutability.MutableWithCopy;
 import com.b07.planetze.util.result.Err;
 import com.b07.planetze.util.result.Ok;
 import com.b07.planetze.util.result.Result;
@@ -19,7 +20,9 @@ import java.util.function.Supplier;
  * representing the presence and absence of the value, respectively.
  * @param <T> the type of the value
  */
-public sealed abstract class Option<T> permits Some, None {
+public sealed abstract class Option<T>
+        implements MutableWithCopy<Option<T>>
+        permits Some, None {
     /**
      * Creates an {@link Option} from a nullable value.
      * @param value the value
@@ -126,7 +129,8 @@ public sealed abstract class Option<T> permits Some, None {
     }
 
     /**
-     * Calls a function with the held value if <code>this</code> is {@link Some}.
+     * Calls a function with the held value if <code>this</code> is
+     * {@link Some}.
      * Returns <code>true</code> iff the function is called and outputs <code>true</code>.
      * @param predicate the function
      * @return <code>true</code> iff <code>this</code> is {@link Some} and
@@ -149,7 +153,10 @@ public sealed abstract class Option<T> permits Some, None {
      * @param some the function to call if <code>this</code> is {@link Some}
      * @param none the function to call if <code>this</code> is {@link None}
      */
-    public abstract void match(@NonNull Consumer<T> some, @NonNull Runnable none);
+    public abstract void match(
+            @NonNull Consumer<T> some,
+            @NonNull Runnable none
+    );
 
     /**
      * Depending on whether <code>this</code> is {@link Some}
@@ -160,5 +167,8 @@ public sealed abstract class Option<T> permits Some, None {
      * @param <R> the return type of both functions
      * @return the value returned by whichever function was called
      */
-    public abstract <R> R match(@NonNull Function<T, R> some, @NonNull Supplier<R> none);
+    public abstract <R> R match(
+            @NonNull Function<T, R> some,
+            @NonNull Supplier<R> none
+    );
 }

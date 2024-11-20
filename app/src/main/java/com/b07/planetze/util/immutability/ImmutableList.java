@@ -1,4 +1,4 @@
-package com.b07.planetze.util;
+package com.b07.planetze.util.immutability;
 
 import androidx.annotation.NonNull;
 
@@ -14,7 +14,7 @@ import java.util.List;
  * A list wrapper that prevents mutation of the list.
  * @param <T> the type of each element
  */
-public class ImmutableList<T> implements Iterable<T> {
+public final class ImmutableList<T> implements Iterable<T> {
     @NonNull private final List<T> list;
 
     public ImmutableList(@NonNull T[] array) {

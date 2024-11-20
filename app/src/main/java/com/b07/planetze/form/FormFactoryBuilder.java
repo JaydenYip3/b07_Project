@@ -3,7 +3,7 @@ package com.b07.planetze.form;
 import androidx.annotation.NonNull;
 
 import com.b07.planetze.form.exception.FormBuilderBuiltException;
-import com.b07.planetze.util.ImmutableList;
+import com.b07.planetze.util.immutability.ImmutableList;
 
 import java.util.ArrayList;
 import java.util.List;

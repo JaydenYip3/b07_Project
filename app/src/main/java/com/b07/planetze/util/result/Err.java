@@ -2,6 +2,8 @@ package com.b07.planetze.util.result;
 
 import androidx.annotation.NonNull;
 
+import com.b07.planetze.util.immutability.MutableWithCopy;
+
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -88,5 +90,17 @@ public final class Err<T, E> extends Result<T, E> {
     @Override
     public <R> R match(@NonNull Function<T, R> ok, @NonNull Function<E, R> error) {
         return error.apply(this.error);
+    }
+
+    @NonNull
+    @Override
+    public Err<T, E> copy() {
+        if (error instanceof MutableWithCopy<?> e) {
+            @SuppressWarnings("unchecked")
+            E copied = (E) e.copy();
+
+            return new Err<>(copied);
+        }
+        return new Err<>(error);
     }
 }

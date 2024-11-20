@@ -2,6 +2,7 @@ package com.b07.planetze.util.option;
 
 import androidx.annotation.NonNull;
 
+import com.b07.planetze.util.immutability.MutableWithCopy;
 import com.b07.planetze.util.result.Err;
 import com.b07.planetze.util.result.Result;
 
@@ -21,19 +22,19 @@ public final class None<T> extends Option<T> {
     public None() {}
 
     @Override
-    public Option<T> apply(@NonNull Consumer<T> f) {
+    public None<T> apply(@NonNull Consumer<T> f) {
         return this;
     }
 
     @Override
-    public Option<T> applyNone(@NonNull Runnable f) {
+    public None<T> applyNone(@NonNull Runnable f) {
         f.run();
         return this;
     }
 
     @NonNull
     @Override
-    public <U> Option<U> map(@NonNull Function<T, U> f) {
+    public <U> None<U> map(@NonNull Function<T, U> f) {
         return new None<>();
     }
 
@@ -63,13 +64,13 @@ public final class None<T> extends Option<T> {
 
     @NonNull
     @Override
-    public <E> Result<T, E> okOr(@NonNull E error) {
+    public <E> Err<T, E> okOr(@NonNull E error) {
         return new Err<>(error);
     }
 
     @NonNull
     @Override
-    public <E> Result<T, E> okOr(@NonNull Supplier<E> supplier) {
+    public <E> Err<T, E> okOr(@NonNull Supplier<E> supplier) {
         return new Err<>(supplier.get());
     }
 
@@ -84,7 +85,16 @@ public final class None<T> extends Option<T> {
     }
 
     @Override
-    public <R> R match(@NonNull Function<T, R> some, @NonNull Supplier<R> none) {
+    public <R> R match(
+            @NonNull Function<T, R> some,
+            @NonNull Supplier<R> none
+    ) {
         return none.get();
+    }
+
+    @NonNull
+    @Override
+    public None<T> copy() {
+        return new None<>();
     }
 }

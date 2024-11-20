@@ -2,6 +2,8 @@ package com.b07.planetze.util.result;
 
 import androidx.annotation.NonNull;
 
+import com.b07.planetze.util.immutability.MutableWithCopy;
+
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -17,7 +19,9 @@ import java.util.function.Supplier;
  * @param <T> the type of the value stored by the {@link Ok} variant
  * @param <E> the type of the error stored by the {@link Err} variant
  */
-public sealed abstract class Result<T, E> permits Ok, Err {
+public sealed abstract class Result<T, E>
+        implements MutableWithCopy<Result<T, E>>
+        permits Ok, Err {
     /**
      * Applies a function to the held value iff <code>this</code> is {@link Ok}.
      * @param f the function

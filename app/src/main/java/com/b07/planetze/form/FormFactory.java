@@ -2,7 +2,7 @@ package com.b07.planetze.form;
 
 import androidx.annotation.NonNull;
 
-import com.b07.planetze.util.ImmutableList;
+import com.b07.planetze.util.immutability.ImmutableList;
 
 public class FormFactory {
     @NonNull private final FormId formId;

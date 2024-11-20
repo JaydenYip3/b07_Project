@@ -2,12 +2,12 @@ package com.b07.planetze.common;
 
 import androidx.annotation.NonNull;
 
-import com.b07.planetze.util.Copy;
+import com.b07.planetze.util.immutability.MutableWithCopy;
 
 /**
  * Stores CO2e emissions by category.
  */
-public class Emissions implements Copy<Emissions> {
+public class Emissions implements MutableWithCopy<Emissions> {
     private Mass[] categories;
 
     /**
