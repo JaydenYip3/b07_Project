@@ -3,7 +3,7 @@ package com.b07.planetze.form.field;
 import androidx.annotation.NonNull;
 
 import com.b07.planetze.form.Field;
-import com.b07.planetze.form.FieldInitException;
+import com.b07.planetze.form.exception.FieldInitException;
 import com.b07.planetze.util.ImmutableList;
 import com.b07.planetze.util.Unit;
 import com.b07.planetze.util.option.Option;
@@ -12,10 +12,8 @@ import com.b07.planetze.util.result.Ok;
 import com.b07.planetze.util.result.Result;
 
 public final class ChoiceField implements Field<Integer> {
-    @NonNull
-    private final ImmutableList<String> choices;
-    @NonNull
-    private final Option<Integer> initialValue;
+    @NonNull private final ImmutableList<String> choices;
+    @NonNull private final Option<Integer> initialValue;
 
     public ChoiceField(
             @NonNull ImmutableList<String> choices,

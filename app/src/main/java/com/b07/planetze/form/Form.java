@@ -2,6 +2,7 @@ package com.b07.planetze.form;
 
 import androidx.annotation.NonNull;
 
+import com.b07.planetze.form.exception.FormIdException;
 import com.b07.planetze.util.result.Err;
 import com.b07.planetze.util.ImmutableList;
 import com.b07.planetze.util.result.Ok;
@@ -22,7 +23,7 @@ public final class Form {
     /**
      * Instantiates a form given an id and fields. <br>
      * Forms with different fields must have different ids. <br>
-     * Use {@link FormBuilder} instead of calling this manually.
+     * Use {@link FormFactoryBuilder} instead of calling this manually.
      * @param formId the form's id
      * @param fields the form's fields
      */

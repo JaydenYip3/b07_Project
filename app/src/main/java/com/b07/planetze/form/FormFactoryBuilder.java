@@ -2,17 +2,18 @@ package com.b07.planetze.form;
 
 import androidx.annotation.NonNull;
 
+import com.b07.planetze.form.exception.FormBuilderBuiltException;
 import com.b07.planetze.util.ImmutableList;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public final class FormBuilder {
+public final class FormFactoryBuilder {
     @NonNull private final FormId formId;
     @NonNull private final List<Field<?>> fields;
     private boolean built;
 
-    public FormBuilder() {
+    public FormFactoryBuilder() {
         formId = new FormId();
         fields = new ArrayList<>();
         built = false;
@@ -30,8 +31,12 @@ public final class FormBuilder {
     }
 
     @NonNull
-    public Form build() {
+    public FormFactory build() {
+        if (built) {
+            throw new FormBuilderBuiltException();
+        }
         built = true;
-        return new Form(formId, new ImmutableList<>(fields));
+
+        return new FormFactory(formId, new ImmutableList<>(fields));
     }
 }
