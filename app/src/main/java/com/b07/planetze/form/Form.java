@@ -16,8 +16,8 @@ import java.util.List;
 
 public final class Form {
     @NonNull private final FormId formId;
-    @NonNull private final ImmutableList<FieldDefinition<?>> fields;
-    @NonNull private final List<Option<FieldValue>> values;
+    @NonNull private final ImmutableList<Field<?>> fields;
+    @NonNull private final List<Option<Object>> values;
 
     /**
      * Instantiates a form given an id and fields. <br>
@@ -26,26 +26,26 @@ public final class Form {
      * @param formId the form's id
      * @param fields the form's fields
      */
-    public Form(@NonNull FormId formId, @NonNull ImmutableList<FieldDefinition<?>> fields) {
+    public Form(@NonNull FormId formId, @NonNull ImmutableList<Field<?>> fields) {
         this.formId = formId;
         this.fields = fields;
         this.values = new ArrayList<>(fields.size());
 
-        for (FieldDefinition<?> field : fields) {
+        for (Field<?> field : fields) {
             values.add(field.initialValue().map(v -> v));
         }
     }
 
     @NonNull
-    public <V extends FieldValue> Result<Unit, String> set(
-            @NonNull FieldId<V> field,
-            @NonNull V value
+    public <T> Result<Unit, String> set(
+            @NonNull FieldId<T> field,
+            @NonNull T value
     ) {
         if (!formId.equals(field.formId())) {
             throw new FormIdException();
         }
         @SuppressWarnings("unchecked")
-        FieldDefinition<V> definition = (FieldDefinition<V>) fields.get(field.index());
+        Field<T> definition = (Field<T>) fields.get(field.index());
 
         return definition
                 .validate(value)
@@ -55,7 +55,7 @@ public final class Form {
     @NonNull
     public Result<FormSubmission, List<Integer>> submit() {
         List<Integer> invalid = new ArrayList<>();
-        List<FieldValue> presentValues = new ArrayList<>();
+        List<Object> presentValues = new ArrayList<>();
 
         Util.enumerate(values).forEach((i, value) -> value
                 .apply(presentValues::add)

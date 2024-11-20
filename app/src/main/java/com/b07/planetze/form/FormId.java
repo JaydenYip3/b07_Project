@@ -2,8 +2,6 @@ package com.b07.planetze.form;
 
 import androidx.annotation.Nullable;
 
-import java.util.concurrent.ThreadLocalRandom;
-
 public final class FormId {
     private final int id;
     private static int counter;

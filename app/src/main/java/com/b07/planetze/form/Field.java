@@ -9,10 +9,10 @@ import com.b07.planetze.util.Unit;
 /**
  * An input field.
  */
-public interface FieldDefinition<V extends FieldValue> {
+public interface Field<T> {
     @NonNull
-    Option<V> initialValue();
+    Option<T> initialValue();
 
     @NonNull
-    Result<Unit, String> validate(@NonNull V value);
+    Result<Unit, String> validate(@NonNull T value);
 }

@@ -6,11 +6,10 @@ import com.b07.planetze.util.ImmutableList;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 
 public final class FormBuilder {
     @NonNull private final FormId formId;
-    @NonNull private final List<FieldDefinition<?>> fields;
+    @NonNull private final List<Field<?>> fields;
     private boolean built;
 
     public FormBuilder() {
@@ -20,7 +19,7 @@ public final class FormBuilder {
     }
 
     @NonNull
-    public <V extends FieldValue> FieldId<V> addField(@NonNull FieldDefinition<V> field) {
+    public <T> FieldId<T> add(@NonNull Field<T> field) {
         if (built) {
             throw new FormBuilderBuiltException();
         }

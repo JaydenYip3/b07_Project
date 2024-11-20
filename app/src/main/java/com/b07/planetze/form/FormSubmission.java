@@ -6,19 +6,19 @@ import com.b07.planetze.util.ImmutableList;
 
 public final class FormSubmission {
     @NonNull private final FormId formId;
-    @NonNull private final ImmutableList<FieldValue> values;
+    @NonNull private final ImmutableList<Object> values;
 
-    public FormSubmission(@NonNull FormId formId, @NonNull ImmutableList<FieldValue> values) {
+    public FormSubmission(@NonNull FormId formId, @NonNull ImmutableList<Object> values) {
         this.formId = formId;
         this.values = values;
     }
 
-    public <V extends FieldValue> V get(@NonNull FieldId<V> field) {
+    public <T> T get(@NonNull FieldId<T> field) {
         if (!formId.equals(field.formId())) {
             throw new FormIdException();
         }
         @SuppressWarnings("unchecked")
-        V value = (V) values.get(field.index());
+        T value = (T) values.get(field.index());
 
         return value;
     }

@@ -5,7 +5,7 @@ package com.b07.planetze.form;
  * Use {@link FormBuilder} instead of creating these manually.
  * @param formId the id of the associated {@link Form}
  * @param index the index of the field
- * @param <V> the type of the field's value
+ * @param <T> the type of the field's value
  */
-public record FieldId<V extends FieldValue>(FormId formId, int index) {
+public record FieldId<T>(FormId formId, int index) {
 }
