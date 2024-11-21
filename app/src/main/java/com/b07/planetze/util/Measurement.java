@@ -21,7 +21,6 @@ public abstract class Measurement<T extends Measurement<T>>
      */
     protected abstract void setValue(double value);
 
-
     /**
      * Sets this measurement to another measurement.
      * @param other the other measurement

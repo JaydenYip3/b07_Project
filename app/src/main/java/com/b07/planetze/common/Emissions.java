@@ -167,4 +167,10 @@ public class Emissions implements MutableWithCopy<Emissions> {
                 food(),
                 shopping());
     }
+
+    @NonNull
+    @Override
+    public Emissions self() {
+        return this;
+    }
 }

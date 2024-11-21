@@ -3,7 +3,6 @@ package com.b07.planetze.common;
 import androidx.annotation.NonNull;
 
 import com.b07.planetze.util.Measurement;
-import com.b07.planetze.util.immutability.MutableWithCopy;
 
 /**
  * A measurement of mass.
@@ -12,26 +11,27 @@ public final class Mass extends Measurement<Mass> {
     private double kg;
 
     /**
-     * Creates a new mass with mass 0.
+     * Instantiates a zero-mass.
      */
     public Mass() {
-        kg = 0;
+        this(0);
+    }
+
+    private Mass(double kg) {
+        this.kg = kg;
     }
 
     /**
-     * {@return a new mass given a value in kilograms}
+     * {@return a new mass given kilograms}
      * @param kg a value in kilograms
      */
     @NonNull
     public static Mass kg(double kg) {
-        Mass mass = new Mass();
-        mass.kg = kg;
-        return mass;
+        return new Mass(kg);
     }
 
     /**
-     * Gets the value of <code>this</code> in kilograms.
-     * @return the value of <code>this</code> in kilograms
+     * {@return this mass in kilograms}
      */
     public double kg() {
         return kg;
@@ -61,7 +61,7 @@ public final class Mass extends Measurement<Mass> {
     @NonNull
     @Override
     public Mass copy() {
-        return Mass.kg(kg);
+        return new Mass(kg);
     }
 
     @NonNull
