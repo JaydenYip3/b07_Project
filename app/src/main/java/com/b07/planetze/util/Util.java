@@ -5,9 +5,9 @@ import androidx.annotation.NonNull;
 import com.b07.planetze.util.iterator.Enumerable;
 import com.b07.planetze.util.iterator.ZipIterable;
 
-import java.util.Arrays;
-
 public final class Util {
+    private Util() {}
+
     @NonNull
     public static <T> Enumerable<T> enumerate(@NonNull Iterable<T> iterable) {
         return new Enumerable<>(iterable);

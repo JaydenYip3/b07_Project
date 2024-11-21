@@ -7,7 +7,7 @@ import androidx.annotation.Nullable;
  * An immutable wrapper for objects that are {@link MutableWithCopy}.
  * @param <T>
  */
-public class ImmutableCopy<T extends MutableWithCopy<T>> {
+public final class ImmutableCopy<T extends MutableWithCopy<T>> {
     @NonNull private final T object;
 
     /**

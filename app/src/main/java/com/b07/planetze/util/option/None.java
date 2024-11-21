@@ -108,4 +108,10 @@ public final class None<T> extends Option<T> {
     public None<T> copy() {
         return new None<>();
     }
+
+    @NonNull
+    @Override
+    public None<T> self() {
+        return this;
+    }
 }

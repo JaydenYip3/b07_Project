@@ -3,6 +3,7 @@ package com.b07.planetze.util.option;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.b07.planetze.util.Self;
 import com.b07.planetze.util.immutability.MutableWithCopy;
 import com.b07.planetze.util.result.Ok;
 import com.b07.planetze.util.result.Result;
@@ -127,5 +128,11 @@ public final class Some<T> extends Option<T> {
             return new Some<>(copied);
         }
         return new Some<>(value);
+    }
+
+    @NonNull
+    @Override
+    public Some<T> self() {
+        return this;
     }
 }

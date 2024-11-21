@@ -109,4 +109,10 @@ public final class Err<T, E> extends Result<T, E> {
         }
         return new Err<>(error);
     }
+
+    @NonNull
+    @Override
+    public Err<T, E> self() {
+        return this;
+    }
 }

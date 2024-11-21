@@ -109,4 +109,10 @@ public final class Ok<T, E> extends Result<T, E> {
         }
         return new Ok<>(value);
     }
+
+    @NonNull
+    @Override
+    public Ok<T, E> self() {
+        return this;
+    }
 }
