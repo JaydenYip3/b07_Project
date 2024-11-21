@@ -1,6 +1,7 @@
 package com.b07.planetze.util.immutability;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.b07.planetze.util.option.None;
 import com.b07.planetze.util.option.Option;
@@ -71,5 +72,10 @@ public final class ImmutableList<T> implements Iterable<T> {
     @Override
     public Iterator<T> iterator() {
         return list.iterator();
+    }
+
+    @Override
+    public boolean equals(@Nullable Object o) {
+        return (o instanceof ImmutableList<?> l) && list.equals(l.list);
     }
 }
