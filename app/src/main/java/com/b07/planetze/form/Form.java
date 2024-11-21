@@ -16,25 +16,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class Form {
-    @NonNull private final FormId formId;
-    @NonNull private final ImmutableList<Field<?>> fields;
+    @NonNull private final FormDefinition definition;
     @NonNull private final List<Option<Object>> values;
 
     /**
      * Instantiates a form given an id and fields. <br>
      * Forms with different fields must have different ids. <br>
-     * Use {@link FormFactoryBuilder} instead of calling this manually.
-     * @param formId the form's id
-     * @param fields the form's fields
+     * Use {@link FormBuilder} instead of calling this manually.
+     * @param definition the form's definition
      */
-    public Form(@NonNull FormId formId, @NonNull ImmutableList<Field<?>> fields) {
-        this.formId = formId;
-        this.fields = fields;
-        this.values = new ArrayList<>(fields.size());
+    public Form(@NonNull FormDefinition definition) {
+        this.definition = definition;
+        this.values = new ArrayList<>(definition.fields().size());
 
-        for (Field<?> field : fields) {
-            values.add(field.initialValue().map(v -> v));
-        }
+        definition
+                .fields()
+                .forEach(f -> values.add(f.initialValue().map(v -> v)));
     }
 
     @NonNull
@@ -42,13 +39,10 @@ public final class Form {
             @NonNull FieldId<T> field,
             @NonNull T value
     ) {
-        if (!formId.equals(field.formId())) {
-            throw new FormIdException();
-        }
-        @SuppressWarnings("unchecked")
-        Field<T> definition = (Field<T>) fields.get(field.index());
+        definition.id().assertEquals(field.formId());
 
         return definition
+                .field(field)
                 .validate(value)
                 .apply(x -> values.set(field.index(), new Some<>(value)));
     }
@@ -65,6 +59,9 @@ public final class Form {
         if (!invalid.isEmpty()) {
             return new Err<>(invalid);
         }
-        return new Ok<>(new FormSubmission(formId, new ImmutableList<>(presentValues)));
+        return new Ok<>(new FormSubmission(
+                definition.id(),
+                new ImmutableList<>(presentValues)
+        ));
     }
 }

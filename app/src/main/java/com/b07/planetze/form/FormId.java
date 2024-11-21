@@ -2,6 +2,8 @@ package com.b07.planetze.form;
 
 import androidx.annotation.Nullable;
 
+import com.b07.planetze.form.exception.FormIdException;
+
 public final class FormId {
     private final int id;
     private static int counter;
@@ -12,6 +14,12 @@ public final class FormId {
 
     public FormId() {
         id = counter++;
+    }
+
+    public void assertEquals(FormId other) {
+        if (id != other.id) {
+            throw new FormIdException();
+        }
     }
 
     @Override

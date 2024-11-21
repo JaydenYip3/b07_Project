@@ -8,12 +8,12 @@ import com.b07.planetze.util.immutability.ImmutableList;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class FormFactoryBuilder {
+public final class FormBuilder {
     @NonNull private final FormId formId;
     @NonNull private final List<Field<?>> fields;
     private boolean built;
 
-    public FormFactoryBuilder() {
+    public FormBuilder() {
         formId = new FormId();
         fields = new ArrayList<>();
         built = false;
@@ -31,12 +31,12 @@ public final class FormFactoryBuilder {
     }
 
     @NonNull
-    public FormFactory build() {
+    public FormDefinition build() {
         if (built) {
             throw new FormBuilderBuiltException();
         }
         built = true;
 
-        return new FormFactory(formId, new ImmutableList<>(fields));
+        return new FormDefinition(formId, new ImmutableList<>(fields));
     }
 }
