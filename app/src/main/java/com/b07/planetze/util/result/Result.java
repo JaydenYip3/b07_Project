@@ -1,6 +1,7 @@
 package com.b07.planetze.util.result;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.b07.planetze.util.immutability.MutableWithCopy;
 
@@ -132,4 +133,7 @@ public sealed abstract class Result<T, E>
      * @return the value returned by whichever function was called
      */
     public abstract <R> R match(@NonNull Function<T, R> ok, @NonNull Function<E, R> error);
+
+    @Override
+    public abstract boolean equals(@Nullable Object o);
 }

@@ -171,4 +171,10 @@ public sealed abstract class Option<T>
             @NonNull Function<T, R> some,
             @NonNull Supplier<R> none
     );
+
+    @Override
+    public abstract boolean equals(@Nullable Object o);
+
+    @Override
+    public abstract int hashCode();
 }

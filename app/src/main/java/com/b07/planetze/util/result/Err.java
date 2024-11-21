@@ -1,6 +1,7 @@
 package com.b07.planetze.util.result;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.b07.planetze.util.immutability.MutableWithCopy;
 
@@ -90,6 +91,11 @@ public final class Err<T, E> extends Result<T, E> {
     @Override
     public <R> R match(@NonNull Function<T, R> ok, @NonNull Function<E, R> error) {
         return error.apply(this.error);
+    }
+
+    @Override
+    public boolean equals(@Nullable Object o) {
+        return (o instanceof Err<?, ?> e) && error.equals(e.error);
     }
 
     @NonNull

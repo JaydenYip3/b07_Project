@@ -1,6 +1,7 @@
 package com.b07.planetze.util.option;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.b07.planetze.util.immutability.MutableWithCopy;
 import com.b07.planetze.util.result.Err;
@@ -90,6 +91,16 @@ public final class None<T> extends Option<T> {
             @NonNull Supplier<R> none
     ) {
         return none.get();
+    }
+
+    @Override
+    public boolean equals(@Nullable Object o) {
+        return o instanceof None;
+    }
+
+    @Override
+    public int hashCode() {
+        return 0;
     }
 
     @NonNull
