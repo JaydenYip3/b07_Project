@@ -11,9 +11,10 @@ import com.b07.planetze.form.definition.FormDefinition;
 import com.b07.planetze.form.definition.FormBuilder;
 import com.b07.planetze.form.FormSubmission;
 import com.b07.planetze.form.field.ChoiceField;
-import com.b07.planetze.form.field.PositiveIntField;
+import com.b07.planetze.form.field.IntField;
 import com.b07.planetze.util.immutability.ImmutableList;
 import com.b07.planetze.util.option.None;
+import com.b07.planetze.util.option.Some;
 import com.b07.planetze.util.result.Result;
 
 import org.junit.Test;
@@ -25,16 +26,14 @@ public class FormTest {
     public void test() {
         FormBuilder fb = new FormBuilder();
 
-        ImmutableList<String> choices = new ImmutableList<>(new String[] {
-                "c1", "c2", "c3"
-        });
+        FieldId<Integer> f1 = fb.add(ChoiceField
+                .withChoices("c1", "c2", "c3")
+                .initially(new Some<>(1)));
 
-        FieldId<Integer> f1 = fb.add(new ChoiceField(choices, new None<>()));
-
-        PositiveIntField d = new PositiveIntField(new None<>());
-
-        FieldId<Integer> f2 = fb.add(d);
-        FieldId<Integer> f3 = fb.add(d);
+        FieldId<Integer> f2 = fb.add(IntField
+                .POSITIVE
+                .initially(new Some<>(3)));
+        FieldId<Integer> f3 = fb.add(IntField.POSITIVE);
 
         FormDefinition def = fb.build();
         Form form = def.createForm();

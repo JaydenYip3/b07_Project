@@ -2,28 +2,35 @@ package com.b07.planetze.form.field;
 
 import androidx.annotation.NonNull;
 
-import com.b07.planetze.form.definition.Field;
-import com.b07.planetze.form.exception.FieldInitException;
 import com.b07.planetze.util.immutability.ImmutableList;
 import com.b07.planetze.util.Unit;
-import com.b07.planetze.util.option.Option;
 import com.b07.planetze.util.result.Error;
 import com.b07.planetze.util.result.Ok;
 import com.b07.planetze.util.result.Result;
 
 /**
  * Holds the index (starting from 0) of a single selection of choices.
- * @param choices the choice names
- * @param initialValue an initial choice selection index
  */
-public record ChoiceField(
-        @NonNull ImmutableList<String> choices,
-        @NonNull Option<Integer> initialValue
-) implements Field<Integer> {
-    public ChoiceField {
-        initialValue.apply(v -> validate(v)
-                .mapError(FieldInitException::new)
-                .expect());
+public final class ChoiceField implements Field<Integer> {
+    private final @NonNull ImmutableList<String> choices;
+
+    private ChoiceField(@NonNull ImmutableList<String> choices) {
+        this.choices = choices;
+    }
+
+    public static ChoiceField withChoices(
+            @NonNull ImmutableList<String> choices
+    ) {
+        return new ChoiceField(choices);
+    }
+
+    public static ChoiceField withChoices(@NonNull String... choices) {
+        return new ChoiceField(new ImmutableList<>(choices));
+    }
+
+    @NonNull
+    public ImmutableList<String> choices() {
+        return choices;
     }
 
     @NonNull
