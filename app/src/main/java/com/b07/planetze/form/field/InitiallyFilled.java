@@ -23,7 +23,7 @@ public record InitiallyFilled<T>(
         }
         initialValue.apply(v -> validate(v)
                 .mapError(FieldInitException::new)
-                .expect());
+                .getOrThrowError());
     }
 
     @NonNull

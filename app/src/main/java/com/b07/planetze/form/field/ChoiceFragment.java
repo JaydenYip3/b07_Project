@@ -2,6 +2,8 @@ package com.b07.planetze.form.field;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -9,30 +11,28 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.b07.planetze.R;
+import com.b07.planetze.form.definition.FieldId;
+import com.b07.planetze.form.exception.FieldFormException;
+import com.b07.planetze.util.option.None;
+import com.b07.planetze.util.option.Option;
+import com.b07.planetze.util.option.Some;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ChoiceFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class ChoiceFragment extends Fragment {
+    @NonNull private static final String FIELD_ID_KEY = "field";
 
-    public ChoiceFragment() {
-        // Required empty public constructor
-    }
+    @NonNull private Option<FieldId<Integer>> field;
 
     /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ChoiceFragment.
+     * Use {@link ChoiceFragment#create} instead of calling this manually.
      */
-    // TODO: Rename and change types and number of parameters
-    public static ChoiceFragment create(FormId) {
+    public ChoiceFragment() {
+        field = new None<>();
+    }
+
+    public static ChoiceFragment create(@NonNull FieldId<?> field) {
         ChoiceFragment fragment = new ChoiceFragment();
         Bundle args = new Bundle();
+        args.putParcelable(FIELD_ID_KEY, field);
         fragment.setArguments(args);
         return fragment;
     }
@@ -40,10 +40,16 @@ public class ChoiceFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
+        Bundle args = Option.mapNull(getArguments())
+                .getOrThrow(new FieldFormException("No arguments provided"));
+
+        @SuppressWarnings("unchecked")
+        FieldId<Integer> f = Option
+                .mapNull(args.getParcelable(FIELD_ID_KEY, FieldId.class))
+                .getOrThrow(new FieldFormException("Invalid arguments"));
+
+        field = new Some<>(f);
     }
 
     @Override
