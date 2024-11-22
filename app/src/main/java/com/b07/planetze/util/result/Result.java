@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.b07.planetze.util.immutability.MutableWithCopy;
+import com.b07.planetze.util.option.Option;
 
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -89,9 +90,21 @@ public sealed abstract class Result<T, E>
     public abstract T expect();
 
     /**
+     * {@return the held success value if it is present}
+     */
+    @NonNull
+    public abstract Option<T> ok();
+
+    /**
+     * {@return the held error value if it is present}
+     */
+    @NonNull
+    public abstract Option<E> error();
+
+    /**
      * Returns <code>true</code> iff <code>this</code> is {@link Ok}. <br>
      * If you require the held value, use <code>if (x instanceof Ok&lt;T, E&gt; ok)</code>
-     * or {@link Result#match}.
+     * or {@link Result#resolve}.
      * @return <code>true</code> iff <code>this</code> is {@link Ok}.
      */
     public boolean isOk() {
@@ -110,7 +123,7 @@ public sealed abstract class Result<T, E>
     /**
      * Returns <code>true</code> iff <code>this</code> is {@link Error}. <br>
      * If you require the held value, use <code>if (x instanceof Error&lt;T, E&gt; ok)</code>
-     * or {@link Result#match}.
+     * or {@link Result#resolve}.
      * @return <code>true</code> iff <code>this</code> is {@link Error}.
      */
     public boolean isError() {
@@ -142,7 +155,7 @@ public sealed abstract class Result<T, E>
      * @param <R> the return type of both functions
      * @return the value returned by whichever function was called
      */
-    public abstract <R> R match(@NonNull Function<T, R> ok, @NonNull Function<E, R> error);
+    public abstract <R> R resolve(@NonNull Function<T, R> ok, @NonNull Function<E, R> error);
 
     @Override
     public abstract boolean equals(@Nullable Object o);

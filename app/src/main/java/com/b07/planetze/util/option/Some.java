@@ -101,7 +101,7 @@ public final class Some<T> extends Option<T> {
     }
 
     @Override
-    public <R> R match(
+    public <R> R resolve(
             @NonNull Function<T, R> some,
             @NonNull Supplier<R> none
     ) {

@@ -121,7 +121,7 @@ public sealed abstract class Option<T>
     /**
      * Returns <code>true</code> iff <code>this</code> is {@link Some}. <br>
      * If you require the held value, use <code>if (x instanceof Some&lt;T&gt; some)</code>
-     * or {@link Option#match}.
+     * or {@link Option#resolve}.
      * @return <code>true</code> iff <code>this</code> is {@link Some}.
      */
     public boolean isSome() {
@@ -167,7 +167,7 @@ public sealed abstract class Option<T>
      * @param <R> the return type of both functions
      * @return the value returned by whichever function was called
      */
-    public abstract <R> R match(
+    public abstract <R> R resolve(
             @NonNull Function<T, R> some,
             @NonNull Supplier<R> none
     );

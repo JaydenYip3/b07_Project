@@ -4,6 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.b07.planetze.util.immutability.MutableWithCopy;
+import com.b07.planetze.util.option.None;
+import com.b07.planetze.util.option.Option;
+import com.b07.planetze.util.option.Some;
 
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -79,6 +82,18 @@ public final class Ok<T, E> extends Result<T, E> {
         return value;
     }
 
+    @NonNull
+    @Override
+    public Option<T> ok() {
+        return new Some<>(value);
+    }
+
+    @NonNull
+    @Override
+    public Option<E> error() {
+        return new None<>();
+    }
+
     @Override
     public boolean isOkAnd(@NonNull Predicate<T> predicate) {
         return predicate.test(value);
@@ -95,7 +110,7 @@ public final class Ok<T, E> extends Result<T, E> {
     }
 
     @Override
-    public <R> R match(@NonNull Function<T, R> ok, @NonNull Function<E, R> error) {
+    public <R> R resolve(@NonNull Function<T, R> ok, @NonNull Function<E, R> error) {
         return ok.apply(value);
     }
 

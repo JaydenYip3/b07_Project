@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import com.b07.planetze.form.definition.FieldId;
 import com.b07.planetze.form.definition.FormBuilder;
 import com.b07.planetze.form.definition.FormDefinition;
+import com.b07.planetze.util.option.None;
 import com.b07.planetze.util.result.Error;
 import com.b07.planetze.util.immutability.ImmutableList;
 import com.b07.planetze.util.result.Ok;
@@ -36,7 +37,8 @@ public final class Form {
     }
 
     /**
-     * Sets the value of a field if the provided value is valid.
+     * Sets the value of a field. <br>
+     * Sets the field to {@link None} If the provided value is invalid.
      * @param field the field's id
      * @param value the value to set
      * @return an error message (if the provided value is invalid)
@@ -49,10 +51,20 @@ public final class Form {
     ) {
         definition.id().assertEquals(field.formId());
 
-        return definition
-                .field(field)
-                .validate(value)
-                .apply(x -> values.set(field.index(), new Some<>(value)));
+        Result<Unit, String> r = definition.field(field).validate(value);
+
+        values.set(field.index(), r.ok().map(x -> value));
+        return r;
+    }
+
+    @NonNull
+    public <T> Option<T> get(@NonNull FieldId<T> field) {
+        definition.id().assertEquals(field.formId());
+
+        @SuppressWarnings("unchecked")
+        Option<T> value = values.get(field.index()).map(v -> (T) v);
+
+        return value;
     }
 
     /**

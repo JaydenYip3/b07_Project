@@ -4,6 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.b07.planetze.util.immutability.MutableWithCopy;
+import com.b07.planetze.util.option.None;
+import com.b07.planetze.util.option.Option;
+import com.b07.planetze.util.option.Some;
 
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -17,15 +20,15 @@ import java.util.function.Supplier;
  * @param <E> the type of the {@link Error} variant
  */
 public final class Error<T, E> extends Result<T, E> {
-    @NonNull private final E error;
+    @NonNull private final E value;
 
     /**
      * Creates a failed {@link Result}.
      *
-     * @param error an error for use upon failure
+     * @param value a value for use upon failure
      */
-    public Error(@NonNull E error) {
-        this.error = error;
+    public Error(@NonNull E value) {
+        this.value = value;
     }
 
     /**
@@ -34,8 +37,8 @@ public final class Error<T, E> extends Result<T, E> {
      * @return the error stored by this result
      */
     @NonNull
-    public E error() {
-        return error;
+    public E get() {
+        return value;
     }
 
     @Override
@@ -45,20 +48,20 @@ public final class Error<T, E> extends Result<T, E> {
 
     @Override
     public Error<T, E> applyError(@NonNull Consumer<E> f) {
-        f.accept(error);
+        f.accept(value);
         return this;
     }
 
     @NonNull
     @Override
     public <U> Error<U, E> map(@NonNull Function<T, U> f) {
-        return new Error<>(error);
+        return new Error<>(value);
     }
 
     @NonNull
     @Override
     public <F> Error<T, F> mapError(@NonNull Function<E, F> f) {
-        return new Error<>(f.apply(error));
+        return new Error<>(f.apply(value));
     }
 
     @NonNull
@@ -76,10 +79,22 @@ public final class Error<T, E> extends Result<T, E> {
     @NonNull
     @Override
     public T expect() {
-        if (error instanceof RuntimeException e) {
+        if (value instanceof RuntimeException e) {
             throw e;
         }
         throw new ResultException("held error is not a RuntimeException");
+    }
+
+    @NonNull
+    @Override
+    public Option<T> ok() {
+        return new None<>();
+    }
+
+    @NonNull
+    @Override
+    public Option<E> error() {
+        return new Some<>(value);
     }
 
     @Override
@@ -89,34 +104,34 @@ public final class Error<T, E> extends Result<T, E> {
 
     @Override
     public boolean isErrorAnd(@NonNull Predicate<E> predicate) {
-        return predicate.test(error);
+        return predicate.test(value);
     }
 
     @Override
     public void match(@NonNull Consumer<T> ok, @NonNull Consumer<E> error) {
-        error.accept(this.error);
+        error.accept(this.value);
     }
 
     @Override
-    public <R> R match(@NonNull Function<T, R> ok, @NonNull Function<E, R> error) {
-        return error.apply(this.error);
+    public <R> R resolve(@NonNull Function<T, R> ok, @NonNull Function<E, R> error) {
+        return error.apply(this.value);
     }
 
     @Override
     public boolean equals(@Nullable Object o) {
-        return (o instanceof Error<?, ?> e) && error.equals(e.error);
+        return (o instanceof Error<?, ?> e) && value.equals(e.value);
     }
 
     @NonNull
     @Override
     public Error<T, E> copy() {
-        if (error instanceof MutableWithCopy<?> e) {
+        if (value instanceof MutableWithCopy<?> e) {
             @SuppressWarnings("unchecked")
             E copied = (E) e.copy();
 
             return new Error<>(copied);
         }
-        return new Error<>(error);
+        return new Error<>(value);
     }
 
     @NonNull

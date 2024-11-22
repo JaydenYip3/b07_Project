@@ -84,7 +84,7 @@ public final class None<T> extends Option<T> {
     }
 
     @Override
-    public <R> R match(
+    public <R> R resolve(
             @NonNull Function<T, R> some,
             @NonNull Supplier<R> none
     ) {

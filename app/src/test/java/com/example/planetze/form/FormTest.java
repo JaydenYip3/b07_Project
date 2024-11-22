@@ -36,8 +36,8 @@ public class FormTest {
         FieldId<Integer> f2 = fb.add(d);
         FieldId<Integer> f3 = fb.add(d);
 
-        FormDefinition factory = fb.build();
-        Form form = factory.createForm();
+        FormDefinition def = fb.build();
+        Form form = def.createForm();
 
         form.set(f2, 2);
         form.set(f1, 1);
