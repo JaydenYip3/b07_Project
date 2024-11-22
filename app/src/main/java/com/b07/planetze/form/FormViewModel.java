@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.b07.planetze.form.definition.FieldId;
 import com.b07.planetze.form.definition.FormDefinition;
+import com.b07.planetze.form.exception.FormFragmentException;
 import com.b07.planetze.util.Unit;
 import com.b07.planetze.util.option.None;
 import com.b07.planetze.util.option.Option;
@@ -14,33 +15,17 @@ import com.b07.planetze.util.option.Some;
 import com.b07.planetze.util.result.Result;
 
 public class FormViewModel extends ViewModel {
-    private MutableLiveData<Option<FormDefinition>> definition;
-    private Form form;
+    @NonNull private final MutableLiveData<Option<Form>> form;
 
-    public void setDefinition(@NonNull FormDefinition definition) {
-        form = definition.createForm();
-        if (this.definition == null) {
-            this.definition = new MutableLiveData<>(new Some<>(definition));
-        } else {
-            this.definition.setValue(new Some<>(definition));
-        }
+    public FormViewModel() {
+        this.form = new MutableLiveData<>(new None<>());
     }
 
-    public LiveData<Option<FormDefinition>> getDefinition() {
-        if (this.definition == null) {
-            this.definition = new MutableLiveData<>(new None<>());
-        }
-        return this.definition;
+    public void setForm(@NonNull Form form) {
+        this.form.setValue(new Some<>(form));
     }
 
-    public <T> Result<Unit, String> setValue(
-            @NonNull FieldId<T> id,
-            @NonNull T value
-    ) {
-        return form.set(id, value);
-    }
-
-    public <T> Option<T> getValue(@NonNull FieldId<T> id) {
-        return form.get(id);
+    public LiveData<Option<Form>> getForm() {
+        return form;
     }
 }

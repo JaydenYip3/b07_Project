@@ -3,6 +3,7 @@ package com.b07.planetze.form.definition;
 import androidx.annotation.NonNull;
 
 import com.b07.planetze.form.Form;
+import com.b07.planetze.form.exception.FormIdException;
 import com.b07.planetze.form.field.Field;
 import com.b07.planetze.util.immutability.ImmutableList;
 
@@ -14,6 +15,21 @@ import com.b07.planetze.util.immutability.ImmutableList;
  */
 public record FormDefinition(@NonNull FormId id,
                              @NonNull ImmutableList<Field<?>> fields) {
+    public boolean containsField(@NonNull FieldId<?> field) {
+        return id.equals(field.formId());
+    }
+
+    /**
+     * Throws a {@link FormIdException} if this definition does not contain a
+     * given field
+     * @param field the given field
+     */
+    public void assertContainsField(@NonNull FieldId<?> field) {
+        if (!containsField(field)) {
+            throw new FormIdException();
+        }
+    }
+
     /**
      * {@return the field associated with a field id}
      * @param field the field's id
@@ -21,7 +37,7 @@ public record FormDefinition(@NonNull FormId id,
      */
     @NonNull
     public <T> Field<T> field(@NonNull FieldId<T> field) {
-        id.assertEquals(field.formId());
+        assertContainsField(field);
 
         @SuppressWarnings("unchecked")
         Field<T> f = (Field<T>) fields.get(field.index());

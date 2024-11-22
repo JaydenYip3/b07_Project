@@ -5,31 +5,38 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import com.b07.planetze.R;
+import com.b07.planetze.form.Form;
+import com.b07.planetze.form.FormViewModel;
 import com.b07.planetze.form.definition.FieldId;
-import com.b07.planetze.form.exception.FieldFormException;
-import com.b07.planetze.util.option.None;
+import com.b07.planetze.form.definition.FormDefinition;
+import com.b07.planetze.form.exception.FormFragmentException;
+import com.b07.planetze.util.Util;
 import com.b07.planetze.util.option.Option;
 import com.b07.planetze.util.option.Some;
 
 public class ChoiceFragment extends Fragment {
     @NonNull private static final String FIELD_ID_KEY = "field";
+    @NonNull private static final String TAG = "ChoiceFragment";
 
-    @NonNull private Option<FieldId<Integer>> field;
+    private FieldId<Integer> fieldId;
 
     /**
-     * Use {@link ChoiceFragment#create} instead of calling this manually.
+     * Use {@link ChoiceFragment#newInstance} instead of calling this manually.
      */
-    public ChoiceFragment() {
-        field = new None<>();
-    }
+    public ChoiceFragment() {}
 
-    public static ChoiceFragment create(@NonNull FieldId<?> field) {
+    public static ChoiceFragment newInstance(@NonNull FieldId<?> field) {
         ChoiceFragment fragment = new ChoiceFragment();
         Bundle args = new Bundle();
         args.putParcelable(FIELD_ID_KEY, field);
@@ -38,24 +45,63 @@ public class ChoiceFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         Bundle args = Option.mapNull(getArguments())
-                .getOrThrow(new FieldFormException("No arguments provided"));
+                .getOrThrow(new FormFragmentException("No arguments provided"));
 
         @SuppressWarnings("unchecked")
         FieldId<Integer> f = Option
                 .mapNull(args.getParcelable(FIELD_ID_KEY, FieldId.class))
-                .getOrThrow(new FieldFormException("Invalid arguments"));
+                .getOrThrow(new FormFragmentException("Invalid arguments"));
 
-        field = new Some<>(f);
+        fieldId = f;
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_choice, container, false);
+    public void onViewCreated(@NonNull View view,
+                              @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        FormViewModel model = new ViewModelProvider(requireActivity())
+                .get(FormViewModel.class);
+
+        model.getForm().observe(getViewLifecycleOwner(), formOption -> {
+            if (!(formOption instanceof Some<Form> some)) {
+                return;
+            }
+            Form form = some.get();
+
+            if (!form.definition().containsField(fieldId)) {
+                Log.w(TAG, "field and form mismatch");
+                return;
+            }
+            ChoiceField field = (ChoiceField) form.definition().field(fieldId);
+
+            RadioGroup group = view.findViewById(R.id.choiceFieldGroup);
+            TextView name = view.findViewById(R.id.choiceFieldName);
+            TextView error = view.findViewById(R.id.choiceFieldError);
+
+            group.removeAllViews();
+            Util.enumerate(field.choices()).forEach((i, choice) -> {
+                RadioButton button = new RadioButton(group.getContext());
+                button.setText(choice);
+                button.setId(i);
+                group.addView(button);
+            });
+
+            group.setOnCheckedChangeListener((radioGroup, checkedId) ->
+                    form.set(fieldId, checkedId).applyError(error::setText));
+        });
+    }
+
+    @Override
+    @NonNull
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(
+                R.layout.fragment_choice, container, false);
     }
 }

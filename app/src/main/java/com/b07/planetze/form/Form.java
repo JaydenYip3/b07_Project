@@ -23,7 +23,7 @@ public final class Form {
     @NonNull private final List<Option<Object>> values;
 
     /**
-     * Instantiates a form given a definition. <br>
+     * Instantiates a form given a definition.
      * @param definition the form's definition
      * @see FormBuilder
      */
@@ -36,9 +36,14 @@ public final class Form {
                 .forEach(f -> values.add(f.initialValue().map(v -> v)));
     }
 
+    public FormDefinition definition() {
+        return definition;
+    }
+
     /**
      * Sets the value of a field. <br>
-     * Sets the field to {@link None} If the provided value is invalid.
+     * Sets the field to {@link None} If the provided value is invalid. <br>
+     * Throws {@link com.b07.planetze.form.exception.FormIdException}.
      * @param field the field's id
      * @param value the value to set
      * @return an error message (if the provided value is invalid)
@@ -49,17 +54,22 @@ public final class Form {
             @NonNull FieldId<T> field,
             @NonNull T value
     ) {
-        definition.id().assertEquals(field.formId());
-
+        // this calls assertContainsField
         Result<Unit, String> r = definition.field(field).validate(value);
 
         values.set(field.index(), r.ok().map(x -> value));
         return r;
     }
 
+    /**
+     * {@return the value of a field} <br>
+     * Throws {@link com.b07.planetze.form.exception.FormIdException}.
+     * @param field the field to get
+     * @param <T> the type of the field's value
+     */
     @NonNull
     public <T> Option<T> get(@NonNull FieldId<T> field) {
-        definition.id().assertEquals(field.formId());
+        definition.assertContainsField(field);
 
         @SuppressWarnings("unchecked")
         Option<T> value = values.get(field.index()).map(v -> (T) v);

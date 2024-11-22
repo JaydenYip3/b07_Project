@@ -42,16 +42,6 @@ public final class FormId implements Parcelable {
         }
     };
 
-    /**
-     * Throws a {@link FormIdException} if this id is not equal to a given id.
-     * @param other the given id
-     */
-    public void assertEquals(FormId other) {
-        if (id != other.id) {
-            throw new FormIdException();
-        }
-    }
-
     @Override
     public boolean equals(@Nullable Object o) {
         return (o instanceof FormId other) && id == other.id;
