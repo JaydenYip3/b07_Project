@@ -26,14 +26,14 @@ public class FormTest {
     public void test() {
         FormBuilder fb = new FormBuilder();
 
-        FieldId<Integer> f1 = fb.add(ChoiceField
+        FieldId<Integer> f1 = fb.add("f1", ChoiceField
                 .withChoices("c1", "c2", "c3")
                 .initially(new Some<>(1)));
 
-        FieldId<Integer> f2 = fb.add(IntField
+        FieldId<Integer> f2 = fb.add("f2", IntField
                 .POSITIVE
                 .initially(new Some<>(3)));
-        FieldId<Integer> f3 = fb.add(IntField.POSITIVE);
+        FieldId<Integer> f3 = fb.add("f3", IntField.POSITIVE);
 
         FormDefinition def = fb.build();
         Form form = def.createForm();

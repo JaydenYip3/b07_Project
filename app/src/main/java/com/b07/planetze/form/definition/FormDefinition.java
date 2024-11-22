@@ -14,7 +14,7 @@ import com.b07.planetze.util.immutability.ImmutableList;
  * @param fields the form's fields
  */
 public record FormDefinition(@NonNull FormId id,
-                             @NonNull ImmutableList<Field<?>> fields) {
+                             @NonNull ImmutableList<NamedField<?>> fields) {
     public boolean containsField(@NonNull FieldId<?> field) {
         return id.equals(field.formId());
     }
@@ -36,11 +36,11 @@ public record FormDefinition(@NonNull FormId id,
      * @param <T> the type of value held by the field
      */
     @NonNull
-    public <T> Field<T> field(@NonNull FieldId<T> field) {
+    public <T> NamedField<T> field(@NonNull FieldId<T> field) {
         assertContainsField(field);
 
         @SuppressWarnings("unchecked")
-        Field<T> f = (Field<T>) fields.get(field.index());
+        NamedField<T> f = (NamedField<T>) fields.get(field.index());
 
         return f;
     }

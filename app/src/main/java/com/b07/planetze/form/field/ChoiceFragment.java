@@ -20,7 +20,7 @@ import com.b07.planetze.form.Form;
 import com.b07.planetze.form.FormViewModel;
 import com.b07.planetze.form.definition.FieldId;
 import com.b07.planetze.form.definition.FormDefinition;
-import com.b07.planetze.form.exception.FormFragmentException;
+import com.b07.planetze.form.exception.FormException;
 import com.b07.planetze.util.Util;
 import com.b07.planetze.util.option.Option;
 import com.b07.planetze.util.option.Some;
@@ -49,12 +49,12 @@ public class ChoiceFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         Bundle args = Option.mapNull(getArguments())
-                .getOrThrow(new FormFragmentException("No arguments provided"));
+                .getOrThrow(new FormException("No arguments provided"));
 
         @SuppressWarnings("unchecked")
         FieldId<Integer> f = Option
                 .mapNull(args.getParcelable(FIELD_ID_KEY, FieldId.class))
-                .getOrThrow(new FormFragmentException("Invalid arguments"));
+                .getOrThrow(new FormException("Invalid arguments"));
 
         fieldId = f;
     }
@@ -72,17 +72,19 @@ public class ChoiceFragment extends Fragment {
                 return;
             }
             Form form = some.get();
+            FormDefinition def = form.definition();
 
-            if (!form.definition().containsField(fieldId)) {
+            if (!def.containsField(fieldId)) {
                 Log.w(TAG, "field and form mismatch");
                 return;
             }
-            ChoiceField field = (ChoiceField) form.definition().field(fieldId);
+            ChoiceField field = (ChoiceField) def.field(fieldId).get();
+            String fieldName = def.field(fieldId).name();
+
+            TextView name = view.findViewById(R.id.choiceFieldName);
+            name.setText(fieldName);
 
             RadioGroup group = view.findViewById(R.id.choiceFieldGroup);
-            TextView name = view.findViewById(R.id.choiceFieldName);
-            TextView error = view.findViewById(R.id.choiceFieldError);
-
             group.removeAllViews();
             Util.enumerate(field.choices()).forEach((i, choice) -> {
                 RadioButton button = new RadioButton(group.getContext());
@@ -91,6 +93,7 @@ public class ChoiceFragment extends Fragment {
                 group.addView(button);
             });
 
+            TextView error = view.findViewById(R.id.choiceFieldError);
             group.setOnCheckedChangeListener((radioGroup, checkedId) ->
                     form.set(fieldId, checkedId).applyError(error::setText));
         });

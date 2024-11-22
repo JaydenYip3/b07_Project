@@ -37,6 +37,11 @@ public sealed abstract class Option<T>
         return new Some<>(value);
     }
 
+    @NonNull
+    public static <T> Option<T> flattenNull(@Nullable Option<T> value) {
+        return mapNull(value).resolve(x -> x, None::new);
+    }
+
     /**
      * Applies a function to the held value iff it is present.
      * @param f the function

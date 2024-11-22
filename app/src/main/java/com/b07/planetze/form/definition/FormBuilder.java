@@ -14,7 +14,7 @@ import java.util.List;
  */
 public final class FormBuilder {
     @NonNull private final FormId formId;
-    @NonNull private final List<Field<?>> fields;
+    @NonNull private final List<NamedField<?>> fields;
     private boolean built;
 
     public FormBuilder() {
@@ -31,12 +31,12 @@ public final class FormBuilder {
      * @param <T> the type of the field value
      */
     @NonNull
-    public <T> FieldId<T> add(@NonNull Field<T> field) {
+    public <T> FieldId<T> add(@NonNull String name, @NonNull Field<T> field) {
         if (built) {
             throw new FormBuilderBuiltException();
         }
         int index = fields.size();
-        fields.add(field);
+        fields.add(new NamedField<>(name, field));
 
         return new FieldId<>(formId, index);
     }
