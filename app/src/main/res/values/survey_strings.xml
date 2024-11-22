@@ -93,7 +93,7 @@
     <string name="survey_answer144">Propane</string>
     <string name="survey_answer145">Wood</string>
     <string name="survey_answer146">Other</string>
-    <string name="survey_question15">14. What is your average monthly electricity bill?</string>
+    <string name="survey_question15">15. What is your average monthly electricity bill?</string>
     <string name="survey_answer151">Under $50</string>
     <string name="survey_answer152">$50-$100</string>
     <string name="survey_answer153">$100-$150</string>
@@ -123,7 +123,8 @@
     <string name="survey_answer201">Yes, regularly</string>
     <string name="survey_answer202">1</string>
     <string name="survey_answer203">2</string>
-    <string name="survey_answer204">3 or more</string>
+    <string name="survey_answer204">3</string>
+    <string name="survey_answer205">4 or more</string>
     <string name="survey_question21">21. How often do you recycle?</string>
     <string name="survey_answer211">Never</string>
     <string name="survey_answer212">Occasionally</string>

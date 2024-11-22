@@ -1,12 +1,10 @@
 package com.b07.planetze.onboarding;
 
+import android.os.Build;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import android.view.ViewTreeObserver;
 
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -19,6 +17,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import androidx.annotation.RequiresApi;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.constraintlayout.widget.ConstraintSet;
 
@@ -26,18 +25,31 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.b07.planetze.R;
-import com.b07.planetze.WelcomeFragment;
+import com.b07.planetze.common.Emissions;
+import com.b07.planetze.common.Mass;
+import com.b07.planetze.database.FakeDatabase;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 
+@RequiresApi(api = Build.VERSION_CODES.O)
 public class QuestionsTransportationFragment extends Fragment implements AdapterView.OnItemSelectedListener{
-
-    float bruh = 0;
+    private FirebaseAuth auth;
+    FirebaseUser user = auth.getCurrentUser();
+    String userUid = user.getUid();
+    FakeDatabase db = new FakeDatabase();
+    Emissions transportEmissions = new Emissions();
+    Mass transportMass = new Mass();
+    Mass operandMass = Mass.fromKg(0);
+    public LocalDate dateAdded= LocalDate.now();
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_questions_transportation, container, false);
-
 
         Spinner spinner = view.findViewById(R.id.countries);
     // Create an ArrayAdapter using the string array and a default spinner layout.
@@ -135,140 +147,158 @@ public class QuestionsTransportationFragment extends Fragment implements Adapter
         buttonSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadFragment(new QuestionsFoodFragment());
-
-            }
-        });
-
-        //gathering data from radio buttons selected--------------------------
-
-        RadioGroup answer1 = view.findViewById(R.id.radioGroup1);
-        answer1.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener(){
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId)
-            {
-                if (checkedId == R.id.radioButton11) {
-                    bruh = 4;
-                } else if (checkedId == R.id.radioButton12) {
-                    bruh = 3;
-                }
-            }
-        });
-        RadioGroup answer2 = view.findViewById(R.id.radioGroup2);
-        answer2.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener(){
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId)
-            {
-                if (checkedId == R.id.radioButton21) {
-                    bruh = 4;
-                } else if (checkedId == R.id.radioButton22) {
-                    bruh = 3;
-                } else if (checkedId == R.id.radioButton23) {
-                    bruh = 2;
-                } else if (checkedId == R.id.radioButton24) {
-                    bruh = 1;
-                } else if (checkedId == R.id.radioButton25) {
-                    bruh = 0;
-                }
-            }
-        });
-        RadioGroup answer3 = view.findViewById(R.id.radioGroup3);
-        answer3.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener(){
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId)
-            {
-                if (checkedId == R.id.radioButton31) {
-                    bruh = 4;
-                } else if (checkedId == R.id.radioButton32) {
-                    bruh = 3;
-                } else if (checkedId == R.id.radioButton33) {
-                    bruh = 2;
-                } else if (checkedId == R.id.radioButton34) {
-                    bruh = 1;
-                } else if (checkedId == R.id.radioButton35) {
-                    bruh = 0;
-                } else if (checkedId == R.id.radioButton36) {
-                    bruh = 0;
-                }
-            }
-        });
-        RadioGroup answer4 = view.findViewById(R.id.radioGroup4);
-        answer4.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener(){
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId)
-            {
-                if (checkedId == R.id.radioButton41) {
-                    bruh = 4;
-                } else if (checkedId == R.id.radioButton42) {
-                    bruh = 3;
-                } else if (checkedId == R.id.radioButton43) {
-                    bruh = 2;
-                } else if (checkedId == R.id.radioButton44) {
-                    bruh = 1;
-                }
-            }
-        });
-        RadioGroup answer5 = view.findViewById(R.id.radioGroup5);
-        answer5.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener(){
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId)
-            {
-                if (checkedId == R.id.radioButton51) {
-                    bruh = 4;
-                } else if (checkedId == R.id.radioButton52) {
-                    bruh = 3;
-                } else if (checkedId == R.id.radioButton53) {
-                    bruh = 2;
-                } else if (checkedId == R.id.radioButton54) {
-                    bruh = 1;
-                } else if (checkedId == R.id.radioButton55) {
-                    bruh = 1;
-                }
-            }
-        });
-        RadioGroup answer6 = view.findViewById(R.id.radioGroup6);
-        answer6.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener(){
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId)
-            {
-                if (checkedId == R.id.radioButton61) {
-                    bruh = 4;
-                } else if (checkedId == R.id.radioButton62) {
-                    bruh = 3;
-                } else if (checkedId == R.id.radioButton63) {
-                    bruh = 2;
-                } else if (checkedId == R.id.radioButton64) {
-                    bruh = 1;
-                } else if (checkedId == R.id.radioButton65) {
-                    bruh = 1;
-                }
-            }
-        });
-        RadioGroup answer7 = view.findViewById(R.id.radioGroup7);
-        answer7.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener(){
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId)
-            {
-                if (checkedId == R.id.radioButton71) {
-                    bruh = 4;
-                } else if (checkedId == R.id.radioButton72) {
-                    bruh = 3;
-                } else if (checkedId == R.id.radioButton73) {
-                    bruh = 2;
-                } else if (checkedId == R.id.radioButton74) {
-                    bruh = 1;
-                } else if (checkedId == R.id.radioButton75) {
-                    bruh = 1;
-                }
+                onSubmit(view);
             }
         });
 
         return view;
     }
+
+    public void onSubmit(@NonNull View v) {
+        RadioButton b12 = v.findViewById(R.id.radioButton12);
+        RadioButton b21 = v.findViewById(R.id.radioButton21);
+        RadioButton b22 = v.findViewById(R.id.radioButton22);
+        RadioButton b23 = v.findViewById(R.id.radioButton23);
+        RadioButton b24 = v.findViewById(R.id.radioButton24);
+        RadioButton b31 = v.findViewById(R.id.radioButton31);
+        RadioButton b32 = v.findViewById(R.id.radioButton32);
+        RadioButton b33 = v.findViewById(R.id.radioButton33);
+        RadioButton b34 = v.findViewById(R.id.radioButton34);
+        RadioButton b35 = v.findViewById(R.id.radioButton35);
+        RadioButton b36 = v.findViewById(R.id.radioButton36);
+        RadioButton b42 = v.findViewById(R.id.radioButton42);
+        RadioButton b43 = v.findViewById(R.id.radioButton43);
+        RadioButton b44 = v.findViewById(R.id.radioButton44);
+        RadioButton b51 = v.findViewById(R.id.radioButton51);
+        RadioButton b52 = v.findViewById(R.id.radioButton52);
+        RadioButton b53 = v.findViewById(R.id.radioButton53);
+        RadioButton b54 = v.findViewById(R.id.radioButton54);
+        RadioButton b55 = v.findViewById(R.id.radioButton55);
+        RadioButton b61 = v.findViewById(R.id.radioButton61);
+        RadioButton b62 = v.findViewById(R.id.radioButton62);
+        RadioButton b63 = v.findViewById(R.id.radioButton63);
+        RadioButton b64 = v.findViewById(R.id.radioButton64);
+        RadioButton b71 = v.findViewById(R.id.radioButton71);
+        RadioButton b72 = v.findViewById(R.id.radioButton72);
+        RadioButton b73 = v.findViewById(R.id.radioButton73);
+        RadioButton b74 = v.findViewById(R.id.radioButton74);
+        if(b12.isChecked()){
+            if(b21.isChecked()){
+                operandMass.setKg(0.24);
+                transportMass.add(operandMass);
+            }
+            if(b22.isChecked()){
+                operandMass.setKg(0.27);
+                transportMass.add(operandMass);
+            }
+            if(b23.isChecked()){
+                operandMass.setKg(0.16);
+                transportMass.add(operandMass);
+            }
+            if(b24.isChecked()){
+                operandMass.setKg(0.05);
+                transportMass.add(operandMass);
+            }
+        }
+        if(b31.isChecked()) transportMass.scale(5000);
+        if(b32.isChecked()) transportMass.scale(10000);
+        if(b33.isChecked()) transportMass.scale(15000);
+        if(b34.isChecked()) transportMass.scale(20000);
+        if(b35.isChecked()) transportMass.scale(25000);
+        if(b36.isChecked()) transportMass.scale(35000);
+        if(b42.isChecked()){
+            if(b51.isChecked()){
+                operandMass.setKg(246);
+                transportMass.add(operandMass);
+            }
+            if(b52.isChecked()){
+                operandMass.setKg(819);
+                transportMass.add(operandMass);
+            }
+            if(b53.isChecked()){
+                operandMass.setKg(1638);
+                transportMass.add(operandMass);
+            }
+            if(b54.isChecked()){
+                operandMass.setKg(3071);
+                transportMass.add(operandMass);
+            }
+            if(b55.isChecked()){
+                operandMass.setKg(4095);
+                transportMass.add(operandMass);
+            }
+        }
+        if(b43.isChecked() || b44.isChecked()){
+            if(b51.isChecked()){
+                operandMass.setKg(573);
+                transportMass.add(operandMass);
+            }
+            if(b52.isChecked()){
+                operandMass.setKg(1911);
+                transportMass.add(operandMass);
+            }
+            if(b53.isChecked()){
+                operandMass.setKg(3822);
+                transportMass.add(operandMass);
+            }
+            if(b54.isChecked()){
+                operandMass.setKg(7166);
+                transportMass.add(operandMass);
+            }
+            if(b55.isChecked()){
+                operandMass.setKg(9555);
+                transportMass.add(operandMass);
+            }
+        }
+        if(b61.isChecked()){
+            operandMass.setKg(225);
+            transportMass.add(operandMass);
+        }
+        if(b62.isChecked()){
+            operandMass.setKg(600);
+            transportMass.add(operandMass);
+        }
+        if(b63.isChecked()){
+            operandMass.setKg(1200);
+            transportMass.add(operandMass);
+        }
+        if(b64.isChecked()){
+            operandMass.setKg(1800);
+            transportMass.add(operandMass);
+        }
+        if(b71.isChecked()){
+            operandMass.setKg(825);
+            transportMass.add(operandMass);
+        }
+        if(b72.isChecked()){
+            operandMass.setKg(2200);
+            transportMass.add(operandMass);
+        }
+        if(b73.isChecked()){
+            operandMass.setKg(4400);
+            transportMass.add(operandMass);
+        }
+        if(b74.isChecked()){
+            operandMass.setKg(6600);
+            transportMass.add(operandMass);
+        }
+        operandMass = transportEmissions.transportation();
+        operandMass.set(transportMass);
+        /*db.updateDailyEmissions(userUid, dateAdded, transportEmissions, result -> {
+ *         result.match(unit -> {
+ *             Log.d(TAG, unit.toString());
+ *         }, error -> {
+ *             Log.e(TAG, error.message());
+ *         });
+ *     });*/
+        loadFragment(new QuestionsFoodFragment());
+    }
     public void onItemSelected(AdapterView<?> parent, View view,
                                int pos, long id) {
         //String country_selected = parent.getItemAtPosition(pos).toString();
         //System.out.println(country_selected);
+
+        //update country/region field of user in database!
     }
 
     public void onNothingSelected(AdapterView<?> parent) {
