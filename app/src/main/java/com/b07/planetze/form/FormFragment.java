@@ -19,7 +19,8 @@ import android.view.ViewGroup;
 
 import com.b07.planetze.R;
 
-public class FormFragment extends Fragment implements LifecycleEventObserver {
+public final class FormFragment extends Fragment
+        implements LifecycleEventObserver {
 
     private FormViewModel model;
 

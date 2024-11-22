@@ -14,7 +14,7 @@ import com.b07.planetze.util.result.Result;
 
 import java.util.List;
 
-public class FormViewModel extends ViewModel {
+public final class FormViewModel extends ViewModel {
     @NonNull private final MutableLiveData<Option<Form>> form;
     @NonNull private final MutableLiveData<Option<FormSubmission>> submission;
 

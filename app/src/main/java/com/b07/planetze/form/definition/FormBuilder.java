@@ -26,6 +26,7 @@ public final class FormBuilder {
     /**
      * Adds a field. <br>
      * Fields cannot be added after calling {@link FormBuilder#build()}.
+     * @param name the field's title (possibly non-unique)
      * @param field the field to add
      * @return an id that refers to the added field
      * @param <T> the type of the field value
