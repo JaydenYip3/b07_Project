@@ -75,16 +75,6 @@ public abstract class Measurement<T extends Measurement<T>>
         return self();
     }
 
-    /**
-     * Sets this measurement to zero.
-     * @return <code>this</code>
-     */
-    @NonNull
-    public T zero() {
-        setValue(0);
-        return self();
-    }
-
     @Override
     public abstract boolean equals(@Nullable Object o);
 

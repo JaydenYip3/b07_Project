@@ -2,31 +2,33 @@ package com.b07.planetze.common;
 
 import androidx.annotation.NonNull;
 
+import com.b07.planetze.common.measurement.Mass;
+import com.b07.planetze.util.Measurement;
+import com.b07.planetze.util.Util;
+import com.b07.planetze.util.immutability.ImmutableList;
 import com.b07.planetze.util.immutability.MutableWithCopy;
+
+import java.util.List;
 
 /**
  * Stores CO2e emissions by category.
  */
 public class Emissions implements MutableWithCopy<Emissions> {
-    private Mass[] categories;
+    @NonNull private final ImmutableList<Mass> categories;
 
     /**
      * Creates a new {@link Emissions} where all emission categories are zero.
      */
     public Emissions() {
-        categories = new Mass[4];
-        for (int i = 0; i < categories.length; i++) {
-            categories[i] = new Mass();
-        }
+        List<Mass> list = Util.filledArrayList(4, Mass::zero);
+        categories = new ImmutableList<>(list);
     }
 
     @NonNull
     @Override
     public Emissions copy() {
         Emissions emissions = new Emissions();
-        for (int i = 0; i < categories.length; i++) {
-            emissions.categories[i].set(categories[i]);
-        }
+        Util.zip(emissions.categories, categories).forEach(Mass::set);
         return emissions;
     }
 
@@ -36,7 +38,7 @@ public class Emissions implements MutableWithCopy<Emissions> {
      */
     @NonNull
     public Mass transportation() {
-        return categories[0];
+        return categories.get(0);
     }
 
     /**
@@ -45,7 +47,7 @@ public class Emissions implements MutableWithCopy<Emissions> {
      */
     @NonNull
     public Mass energy() {
-        return categories[1];
+        return categories.get(1);
     }
 
     /**
@@ -54,7 +56,7 @@ public class Emissions implements MutableWithCopy<Emissions> {
      */
     @NonNull
     public Mass food() {
-        return categories[2];
+        return categories.get(2);
     }
 
     /**
@@ -63,7 +65,7 @@ public class Emissions implements MutableWithCopy<Emissions> {
      */
     @NonNull
     public Mass shopping() {
-        return categories[3];
+        return categories.get(3);
     }
 
     /**
@@ -72,10 +74,8 @@ public class Emissions implements MutableWithCopy<Emissions> {
      */
     @NonNull
     public Mass total() {
-        Mass sum = new Mass();
-        for (Mass category : categories) {
-            sum.add(category);
-        }
+        Mass sum = Mass.zero();
+        categories.forEach(sum::add);
         return sum;
     }
 
@@ -87,9 +87,7 @@ public class Emissions implements MutableWithCopy<Emissions> {
      */
     @NonNull
     public Emissions set(@NonNull Emissions other) {
-        for (int i = 0; i < categories.length; i++) {
-            categories[i].set(other.categories[i]);
-        }
+        Util.zip(categories, other.categories).forEach(Mass::set);
         return this;
     }
 
@@ -101,9 +99,7 @@ public class Emissions implements MutableWithCopy<Emissions> {
      */
     @NonNull
     public Emissions add(@NonNull Emissions other) {
-        for (int i = 0; i < categories.length; i++) {
-            categories[i].add(other.categories[i]);
-        }
+        Util.zip(categories, other.categories).forEach(Mass::add);
         return this;
     }
 
@@ -115,9 +111,7 @@ public class Emissions implements MutableWithCopy<Emissions> {
      */
     @NonNull
     public Emissions subtract(@NonNull Emissions other) {
-        for (int i = 0; i < categories.length; i++) {
-            categories[i].subtract(other.categories[i]);
-        }
+        Util.zip(categories, other.categories).forEach(Mass::subtract);
         return this;
     }
 
@@ -128,9 +122,7 @@ public class Emissions implements MutableWithCopy<Emissions> {
      */
     @NonNull
     public Emissions scale(double scalar) {
-        for (Mass category : categories) {
-            category.scale(scalar);
-        }
+        categories.forEach(c -> c.scale(scalar));
         return this;
     }
 
@@ -140,9 +132,7 @@ public class Emissions implements MutableWithCopy<Emissions> {
      */
     @NonNull
     public Emissions negate() {
-        for (Mass category : categories) {
-            category.negate();
-        }
+        categories.forEach(Mass::negate);
         return this;
     }
 
@@ -152,9 +142,7 @@ public class Emissions implements MutableWithCopy<Emissions> {
      */
     @NonNull
     public Emissions zero() {
-        for (Mass category : categories) {
-            category.zero();
-        }
+        categories.forEach(c -> c.set(Mass.zero()));
         return this;
     }
 

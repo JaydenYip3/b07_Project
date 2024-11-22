@@ -1,4 +1,4 @@
-package com.b07.planetze.common;
+package com.b07.planetze.common.measurement;
 
 import androidx.annotation.NonNull;
 
@@ -10,15 +10,16 @@ import com.b07.planetze.util.Measurement;
 public final class Mass extends Measurement<Mass> {
     private double kg;
 
-    /**
-     * Instantiates a zero-mass.
-     */
-    public Mass() {
-        this(0);
-    }
-
     private Mass(double kg) {
         this.kg = kg;
+    }
+
+    /**
+     * {@return a zero-mass}
+     */
+    @NonNull
+    public static Mass zero() {
+        return new Mass(0);
     }
 
     /**

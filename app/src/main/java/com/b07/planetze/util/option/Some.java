@@ -62,7 +62,7 @@ public final class Some<T> extends Option<T> {
 
     @NonNull
     @Override
-    public Some<T> or(@NonNull Supplier<Option<T>> supplier) {
+    public Some<T> orElse(@NonNull Supplier<Option<T>> supplier) {
         return this;
     }
 
@@ -74,7 +74,19 @@ public final class Some<T> extends Option<T> {
 
     @NonNull
     @Override
-    public T getOr(@NonNull Supplier<T> supplier) {
+    public T getOrElse(@NonNull Supplier<T> supplier) {
+        return value;
+    }
+
+    @NonNull
+    @Override
+    public T getOrThrow(@NonNull RuntimeException exception) {
+        return value;
+    }
+
+    @NonNull
+    @Override
+    public T getOrThrow(@NonNull Supplier<RuntimeException> supplier) {
         return value;
     }
 

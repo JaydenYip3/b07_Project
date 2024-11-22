@@ -1,4 +1,4 @@
-package com.b07.planetze.common;
+package com.b07.planetze.common.measurement;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -9,25 +9,21 @@ import com.b07.planetze.util.Measurement;
  * A measurement of distance.
  */
 public class Distance extends Measurement<Distance> {
-    private static final double milesToMetres;
-    private static final double metresToMiles;
-
-    static {
-        milesToMetres = 1609.344;
-        metresToMiles = 1 / milesToMetres;
-    }
+    private static final double MILES_TO_METRES = 1609.344;
+    private static final double METRES_TO_MILES = 1 / MILES_TO_METRES;
 
     private double m;
 
-    /**
-     * Instantiates a zero-distance.
-     */
-    public Distance() {
-        this(0);
-    }
-
     private Distance(double m) {
         this.m = m;
+    }
+
+    /**
+     * {@return a zero-distance}
+     */
+    @NonNull
+    public static Distance zero() {
+        return new Distance(0);
     }
 
     /**
@@ -54,7 +50,7 @@ public class Distance extends Measurement<Distance> {
      */
     @NonNull
     public static Distance mi(double mi) {
-        return new Distance(mi * milesToMetres);
+        return new Distance(mi * MILES_TO_METRES);
     }
 
     /**
@@ -72,7 +68,7 @@ public class Distance extends Measurement<Distance> {
     }
 
     public double mi() {
-        return metresToMiles * m;
+        return METRES_TO_MILES * m;
     }
 
     @Override

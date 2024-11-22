@@ -77,7 +77,7 @@ public sealed abstract class Result<T, E>
      * @return the held value or the output of <code>supplier</code>
      */
     @NonNull
-    public abstract T getOr(@NonNull Supplier<T> supplier);
+    public abstract T getOrElse(@NonNull Supplier<T> supplier);
 
     /**
      * Returns the held value if <code>this</code> is {@link Ok}. <br>
@@ -87,7 +87,7 @@ public sealed abstract class Result<T, E>
      * @return the held value
      */
     @NonNull
-    public abstract T expect();
+    public abstract T getOrThrowError();
 
     /**
      * {@return the held success value if it is present}

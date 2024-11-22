@@ -1,4 +1,4 @@
-package com.b07.planetze.common;
+package com.b07.planetze.common.measurement;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -11,15 +11,16 @@ import com.b07.planetze.util.Measurement;
 public class Duration extends Measurement<Duration> {
     private double s;
 
-    /**
-     * Instantiates a zero-duration.
-     */
-    public Duration() {
-        this(0);
-    }
-
     private Duration(double s) {
         this.s = s;
+    }
+
+    /**
+     * {@return a zero-duration}
+     */
+    @NonNull
+    public static Duration zero() {
+        return new Duration(0);
     }
 
     /**

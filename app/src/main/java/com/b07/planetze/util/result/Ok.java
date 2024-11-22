@@ -72,13 +72,13 @@ public final class Ok<T, E> extends Result<T, E> {
 
     @NonNull
     @Override
-    public T getOr(@NonNull Supplier<T> supplier) {
+    public T getOrElse(@NonNull Supplier<T> supplier) {
         return value;
     }
 
     @NonNull
     @Override
-    public T expect() {
+    public T getOrThrowError() {
         return value;
     }
 

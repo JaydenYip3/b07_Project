@@ -45,7 +45,7 @@ public final class None<T> extends Option<T> {
 
     @NonNull
     @Override
-    public Option<T> or(@NonNull Supplier<Option<T>> supplier) {
+    public Option<T> orElse(@NonNull Supplier<Option<T>> supplier) {
         return supplier.get();
     }
 
@@ -57,8 +57,20 @@ public final class None<T> extends Option<T> {
 
     @NonNull
     @Override
-    public T getOr(@NonNull Supplier<T> supplier) {
+    public T getOrElse(@NonNull Supplier<T> supplier) {
         return supplier.get();
+    }
+
+    @NonNull
+    @Override
+    public T getOrThrow(@NonNull RuntimeException exception) {
+        throw exception;
+    }
+
+    @NonNull
+    @Override
+    public T getOrThrow(@NonNull Supplier<RuntimeException> supplier) {
+        throw supplier.get();
     }
 
     @NonNull

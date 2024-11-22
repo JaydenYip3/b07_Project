@@ -72,13 +72,13 @@ public final class Error<T, E> extends Result<T, E> {
 
     @NonNull
     @Override
-    public T getOr(@NonNull Supplier<T> supplier) {
+    public T getOrElse(@NonNull Supplier<T> supplier) {
         return supplier.get();
     }
 
     @NonNull
     @Override
-    public T expect() {
+    public T getOrThrowError() {
         if (value instanceof RuntimeException e) {
             throw e;
         }

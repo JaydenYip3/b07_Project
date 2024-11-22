@@ -30,7 +30,7 @@ public sealed abstract class Option<T>
      * @param <T> the type of the value
      */
     @NonNull
-    public static <T> Option<T> fromNullable(@Nullable T value) {
+    public static <T> Option<T> mapNull(@Nullable T value) {
         if (value == null) {
             return new None<>();
         }
@@ -78,25 +78,37 @@ public sealed abstract class Option<T>
      * @return <code>this</code> or the output of <code>supplier</code>
      */
     @NonNull
-    public abstract Option<T> or(@NonNull Supplier<Option<T>> supplier);
+    public abstract Option<T> orElse(@NonNull Supplier<Option<T>> supplier);
 
     /**
-     * Returns the held value if it is present; otherwise, returns a
-     * default value.
+     * {@return the held value, or if absent, a default value}
      * @param defaultValue the default value
-     * @return the held value or the default value
      */
     @NonNull
     public abstract T getOr(@NonNull T defaultValue);
 
     /**
-     * Returns the held value if it is present; otherwise, returns the
-     * output of a function
+     * {@return the held value, or if absent, the output of a function}
      * @param supplier the function
-     * @return the held value or the output of <code>supplier</code>
      */
     @NonNull
-    public abstract T getOr(@NonNull Supplier<T> supplier);
+    public abstract T getOrElse(@NonNull Supplier<T> supplier);
+
+    /**
+     * {@return the held value}
+     * If this is absent, throws an exception.
+     * @param exception the exception
+     */
+    @NonNull
+    public abstract T getOrThrow(@NonNull RuntimeException exception);
+
+    /**
+     * {@return the held value}
+     * If this is absent, throws an exception given by a function.
+     * @param supplier the function
+     */
+    @NonNull
+    public abstract T getOrThrow(@NonNull Supplier<RuntimeException> supplier);
 
     /**
      * Creates an {@link Ok} with the held value if it is present; otherwise,
