@@ -13,13 +13,6 @@
         android:theme="@style/Theme.Planetze"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity2"
-            android:exported="false" />
-        <activity
-            android:name=".auth.MainActivity"
-            android:exported="false"
-            android:theme="@style/Theme.Planetze" /> <!-- Main Activity -->
-        <activity
             android:name=".auth.AuthActivity"
             android:exported="false" />
         <activity

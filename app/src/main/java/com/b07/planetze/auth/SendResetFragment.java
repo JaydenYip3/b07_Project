@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -38,7 +39,7 @@ public class SendResetFragment extends Fragment {
 
         textBoxEmail = view.findViewById(R.id.textBoxEmail);
         buttonReset = view.findViewById(R.id.buttonReset);
-        buttonSignIn = view.findViewById(R.id.buttonSignIn);
+        ImageButton btnPrevious = view.findViewById(R.id.previousPage);
 
         buttonReset.setOnClickListener(v -> {
             String email = textBoxEmail.getText().toString().trim();
@@ -46,7 +47,7 @@ public class SendResetFragment extends Fragment {
             ((SendResetCallback) requireActivity()).sendPasswordResetEmail(email);
         });
 
-        buttonSignIn.setOnClickListener(v -> {
+        btnPrevious.setOnClickListener(v -> {
             ((AuthScreenSwitch) requireActivity()).switchScreens(AuthScreen.LOGIN);
         });
 
