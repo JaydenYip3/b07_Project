@@ -1,4 +1,6 @@
-package com.b07.planetze.form;
+package com.b07.planetze.form.definition;
+
+import com.b07.planetze.form.Form;
 
 /**
  * Identifies a field associated with a {@link Form}. <br>

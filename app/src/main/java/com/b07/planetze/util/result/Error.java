@@ -14,9 +14,9 @@ import java.util.function.Supplier;
  * Stores an error for use upon failure.
  *
  * @param <T> the type of the {@link Ok} variant
- * @param <E> the type of the {@link Err} variant
+ * @param <E> the type of the {@link Error} variant
  */
-public final class Err<T, E> extends Result<T, E> {
+public final class Error<T, E> extends Result<T, E> {
     @NonNull private final E error;
 
     /**
@@ -24,7 +24,7 @@ public final class Err<T, E> extends Result<T, E> {
      *
      * @param error an error for use upon failure
      */
-    public Err(@NonNull E error) {
+    public Error(@NonNull E error) {
         this.error = error;
     }
 
@@ -39,26 +39,26 @@ public final class Err<T, E> extends Result<T, E> {
     }
 
     @Override
-    public Err<T, E> apply(@NonNull Consumer<T> f) {
+    public Error<T, E> apply(@NonNull Consumer<T> f) {
         return this;
     }
 
     @Override
-    public Err<T, E> applyError(@NonNull Consumer<E> f) {
+    public Error<T, E> applyError(@NonNull Consumer<E> f) {
         f.accept(error);
         return this;
     }
 
     @NonNull
     @Override
-    public <U> Err<U, E> map(@NonNull Function<T, U> f) {
-        return new Err<>(error);
+    public <U> Error<U, E> map(@NonNull Function<T, U> f) {
+        return new Error<>(error);
     }
 
     @NonNull
     @Override
-    public <F> Err<T, F> mapErr(@NonNull Function<E, F> f) {
-        return new Err<>(f.apply(error));
+    public <F> Error<T, F> mapError(@NonNull Function<E, F> f) {
+        return new Error<>(f.apply(error));
     }
 
     @NonNull
@@ -73,13 +73,22 @@ public final class Err<T, E> extends Result<T, E> {
         return supplier.get();
     }
 
+    @NonNull
+    @Override
+    public T expect() {
+        if (error instanceof RuntimeException e) {
+            throw e;
+        }
+        throw new ResultException("held error is not a RuntimeException");
+    }
+
     @Override
     public boolean isOkAnd(@NonNull Predicate<T> predicate) {
         return false;
     }
 
     @Override
-    public boolean isErrAnd(@NonNull Predicate<E> predicate) {
+    public boolean isErrorAnd(@NonNull Predicate<E> predicate) {
         return predicate.test(error);
     }
 
@@ -95,24 +104,24 @@ public final class Err<T, E> extends Result<T, E> {
 
     @Override
     public boolean equals(@Nullable Object o) {
-        return (o instanceof Err<?, ?> e) && error.equals(e.error);
+        return (o instanceof Error<?, ?> e) && error.equals(e.error);
     }
 
     @NonNull
     @Override
-    public Err<T, E> copy() {
+    public Error<T, E> copy() {
         if (error instanceof MutableWithCopy<?> e) {
             @SuppressWarnings("unchecked")
             E copied = (E) e.copy();
 
-            return new Err<>(copied);
+            return new Error<>(copied);
         }
-        return new Err<>(error);
+        return new Error<>(error);
     }
 
     @NonNull
     @Override
-    public Err<T, E> self() {
+    public Error<T, E> self() {
         return this;
     }
 }

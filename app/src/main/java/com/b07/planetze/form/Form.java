@@ -2,8 +2,10 @@ package com.b07.planetze.form;
 
 import androidx.annotation.NonNull;
 
-import com.b07.planetze.form.exception.FormIdException;
-import com.b07.planetze.util.result.Err;
+import com.b07.planetze.form.definition.FieldId;
+import com.b07.planetze.form.definition.FormBuilder;
+import com.b07.planetze.form.definition.FormDefinition;
+import com.b07.planetze.util.result.Error;
 import com.b07.planetze.util.immutability.ImmutableList;
 import com.b07.planetze.util.result.Ok;
 import com.b07.planetze.util.option.Option;
@@ -20,10 +22,9 @@ public final class Form {
     @NonNull private final List<Option<Object>> values;
 
     /**
-     * Instantiates a form given an id and fields. <br>
-     * Forms with different fields must have different ids. <br>
-     * Use {@link FormBuilder} instead of calling this manually.
+     * Instantiates a form given a definition. <br>
      * @param definition the form's definition
+     * @see FormBuilder
      */
     public Form(@NonNull FormDefinition definition) {
         this.definition = definition;
@@ -34,6 +35,13 @@ public final class Form {
                 .forEach(f -> values.add(f.initialValue().map(v -> v)));
     }
 
+    /**
+     * Sets the value of a field if the provided value is valid.
+     * @param field the field's id
+     * @param value the value to set
+     * @return an error message (if the provided value is invalid)
+     * @param <T> the type of the field's value
+     */
     @NonNull
     public <T> Result<Unit, String> set(
             @NonNull FieldId<T> field,
@@ -47,6 +55,9 @@ public final class Form {
                 .apply(x -> values.set(field.index(), new Some<>(value)));
     }
 
+    /**
+     * {@return a form submission or a list of missing field indices}
+     */
     @NonNull
     public Result<FormSubmission, List<Integer>> submit() {
         List<Integer> invalid = new ArrayList<>();
@@ -57,7 +68,7 @@ public final class Form {
                 .applyNone(() -> invalid.add(i)));
 
         if (!invalid.isEmpty()) {
-            return new Err<>(invalid);
+            return new Error<>(invalid);
         }
         return new Ok<>(new FormSubmission(
                 definition.id(),

@@ -1,6 +1,6 @@
 package com.b07.planetze.form.exception;
 
-import com.b07.planetze.form.FormBuilder;
+import com.b07.planetze.form.definition.FormBuilder;
 
 /**
  * Thrown when using a {@link FormBuilder}

@@ -3,9 +3,7 @@ package com.b07.planetze.util.option;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.b07.planetze.util.immutability.MutableWithCopy;
-import com.b07.planetze.util.result.Err;
-import com.b07.planetze.util.result.Result;
+import com.b07.planetze.util.result.Error;
 
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -65,14 +63,14 @@ public final class None<T> extends Option<T> {
 
     @NonNull
     @Override
-    public <E> Err<T, E> okOr(@NonNull E error) {
-        return new Err<>(error);
+    public <E> Error<T, E> okOr(@NonNull E error) {
+        return new Error<>(error);
     }
 
     @NonNull
     @Override
-    public <E> Err<T, E> okOr(@NonNull Supplier<E> supplier) {
-        return new Err<>(supplier.get());
+    public <E> Error<T, E> okOr(@NonNull Supplier<E> supplier) {
+        return new Error<>(supplier.get());
     }
 
     @Override

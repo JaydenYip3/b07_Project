@@ -5,10 +5,10 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
-import com.b07.planetze.form.FieldId;
+import com.b07.planetze.form.definition.FieldId;
 import com.b07.planetze.form.Form;
-import com.b07.planetze.form.FormDefinition;
-import com.b07.planetze.form.FormBuilder;
+import com.b07.planetze.form.definition.FormDefinition;
+import com.b07.planetze.form.definition.FormBuilder;
 import com.b07.planetze.form.FormSubmission;
 import com.b07.planetze.form.field.ChoiceField;
 import com.b07.planetze.form.field.PositiveIntField;
@@ -42,7 +42,7 @@ public class FormTest {
         form.set(f2, 2);
         form.set(f1, 1);
 
-        assertTrue(form.submit().isErr());
+        assertTrue(form.submit().isError());
 
         form.set(f3, 5);
 
