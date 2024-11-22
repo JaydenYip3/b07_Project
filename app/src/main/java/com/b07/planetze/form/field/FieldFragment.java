@@ -91,6 +91,6 @@ public abstract class FieldFragment<F extends Field<V>, V> extends Fragment {
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         return inflater.inflate(
-                R.layout.fragment_choice, container, false);
+                R.layout.fragment_form_choice, container, false);
     }
 }

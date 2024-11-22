@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="int_hint">Integer</string>
+    <string name="int_error">Enter a number</string>
+    <string name="submit">Log</string>
+</resources>

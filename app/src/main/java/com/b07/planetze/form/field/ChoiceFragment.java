@@ -33,6 +33,7 @@ public final class ChoiceFragment extends FieldFragment<ChoiceField, Integer> {
      */
     public ChoiceFragment() {}
 
+    @NonNull
     public static ChoiceFragment newInstance(@NonNull FieldId<?> field) {
         ChoiceFragment fragment = new ChoiceFragment();
         Bundle args = new Bundle();
@@ -52,10 +53,15 @@ public final class ChoiceFragment extends FieldFragment<ChoiceField, Integer> {
 
         RadioGroup group = view.findViewById(R.id.choiceFieldGroup);
         group.removeAllViews();
+
         Util.enumerate(field.choices()).forEach((i, choice) -> {
             RadioButton button = new RadioButton(group.getContext());
             button.setText(choice);
             button.setId(i);
+
+            if (form.get(id).isSomeAnd(i::equals)) {
+                button.toggle();
+            }
             group.addView(button);
         });
 
