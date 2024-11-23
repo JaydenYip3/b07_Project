@@ -1,5 +1,7 @@
 package com.b07.planetze.ecotracker;
 
+import static com.b07.planetze.util.option.Option.some;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -55,10 +57,10 @@ public class EcotrackerActivity extends AppCompatActivity {
 
         FieldId<Integer> f3 = fb.add("f3", ChoiceField
                 .withChoices("c3", "c4", "c5")
-                .initially(2));
+                .initially(some(2)));
 
         FieldId<Integer> f4 = fb.add("f4", IntField.POSITIVE
-                .initially(3));
+                .initially(some(3)));
 
         Form form = fb.build().createForm();
 

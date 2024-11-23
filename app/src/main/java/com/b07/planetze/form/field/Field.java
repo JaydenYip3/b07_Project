@@ -5,9 +5,7 @@ import static com.b07.planetze.util.option.Option.none;
 import androidx.annotation.NonNull;
 
 import com.b07.planetze.form.definition.FieldId;
-import com.b07.planetze.util.option.None;
 import com.b07.planetze.util.option.Option;
-import com.b07.planetze.util.option.Some;
 import com.b07.planetze.util.result.Result;
 import com.b07.planetze.util.Unit;
 
@@ -44,6 +42,6 @@ public interface Field<T> {
 
     @NonNull
     default InitiallyFilled<T> initially(@NonNull Option<T> value) {
-        return new InitiallyFilled<>(this, value);
+        return InitiallyFilled.create(this, value);
     }
 }

@@ -59,15 +59,12 @@ public sealed abstract class Option<T>
      */
     @NonNull
     public static <T> Option<T> mapNull(@Nullable T value) {
-        if (value == null) {
-            return none();
-        }
-        return some(value);
+        return value == null ? none() : some(value);
     }
 
     @NonNull
     public static <T> Option<T> flattenNull(@Nullable Option<T> value) {
-        return mapNull(value).resolve(x -> x, Option::none);
+        return value == null ? none() : value;
     }
 
     /**

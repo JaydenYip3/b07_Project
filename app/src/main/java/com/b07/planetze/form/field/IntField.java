@@ -17,12 +17,9 @@ import java.util.function.Function;
  * Holds a positive integer.
  */
 public final class IntField implements Field<Integer> {
-    public static final IntField POSITIVE = IntField.withValidator(v -> {
-        if (v > 0) {
-            return ok();
-        }
-        return error("Value must be positive");
-    });
+    public static final IntField POSITIVE = IntField.withValidator(v ->
+        v > 0 ? ok() : error("Value must be positive")
+    );
 
     @NonNull private final Function<Integer, Result<Unit, String>> validator;
 

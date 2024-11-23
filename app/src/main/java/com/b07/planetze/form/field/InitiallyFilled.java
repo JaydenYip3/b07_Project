@@ -8,13 +8,10 @@ import com.b07.planetze.form.definition.FieldId;
 import com.b07.planetze.form.exception.FieldInitException;
 import com.b07.planetze.util.Unit;
 import com.b07.planetze.util.option.Option;
-import com.b07.planetze.util.result.Ok;
 import com.b07.planetze.util.result.Result;
 
 /**
  * Wraps a field, giving it an initial value.
- * @param field a field
- * @param initialValue an initial value
  * @param <T> the field value type
  */
 public class InitiallyFilled<T> implements Field<T> {
@@ -30,9 +27,6 @@ public class InitiallyFilled<T> implements Field<T> {
         }
         this.field = field;
         this.initialValue = initialValue;
-        initialValue.apply(v -> validate(v)
-                .mapError(FieldInitException::new)
-                .getOrThrowError());
     }
 
     public static <T> InitiallyFilled<T> create(
@@ -41,9 +35,12 @@ public class InitiallyFilled<T> implements Field<T> {
     ) {
         InitiallyFilled<T> f = new InitiallyFilled<>(field, initialValue);
         f.initialValue
-                .apply(f::validate)
-                .resolve(x -> x, Result::ok)
+                .map(f::validate)
+                .apply(r -> r
+                        .mapError(FieldInitException::new)
+                        .getOrThrowError());
 
+        return f;
     }
 
     @NonNull
