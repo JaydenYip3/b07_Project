@@ -2,6 +2,7 @@ package com.b07.planetze.form.field;
 
 import androidx.annotation.NonNull;
 
+import com.b07.planetze.form.definition.FieldId;
 import com.b07.planetze.util.immutability.ImmutableList;
 import com.b07.planetze.util.Unit;
 import com.b07.planetze.util.result.Error;
@@ -40,5 +41,11 @@ public final class ChoiceField implements Field<Integer> {
             return new Ok<>(Unit.UNIT);
         }
         return new Error<>("Integer index out of bounds");
+    }
+
+    @NonNull
+    @Override
+    public ChoiceFragment createFragment(@NonNull FieldId<?> fieldId) {
+        return ChoiceFragment.newInstance(fieldId);
     }
 }

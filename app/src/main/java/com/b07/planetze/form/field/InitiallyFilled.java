@@ -2,6 +2,7 @@ package com.b07.planetze.form.field;
 
 import androidx.annotation.NonNull;
 
+import com.b07.planetze.form.definition.FieldId;
 import com.b07.planetze.form.exception.FieldInitException;
 import com.b07.planetze.util.Unit;
 import com.b07.planetze.util.option.Option;
@@ -30,5 +31,13 @@ public record InitiallyFilled<T>(
     @Override
     public Result<Unit, String> validate(@NonNull T value) {
         return field.validate(value);
+    }
+
+    @NonNull
+    @Override
+    public FieldFragment<? extends Field<T>, T> createFragment(
+            @NonNull FieldId<?> fieldId
+    ) {
+        return field.createFragment(fieldId);
     }
 }

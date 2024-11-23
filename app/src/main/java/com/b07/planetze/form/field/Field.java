@@ -2,6 +2,7 @@ package com.b07.planetze.form.field;
 
 import androidx.annotation.NonNull;
 
+import com.b07.planetze.form.definition.FieldId;
 import com.b07.planetze.util.option.None;
 import com.b07.planetze.util.option.Option;
 import com.b07.planetze.util.option.Some;
@@ -21,6 +22,15 @@ public interface Field<T> {
      */
     @NonNull
     Result<Unit, String> validate(@NonNull T value);
+
+    /**
+     * {@return a new instance of the fragment associated with this field}
+     * @param fieldId this field's id
+     */
+    @NonNull
+    FieldFragment<? extends Field<T>, T> createFragment(
+            @NonNull FieldId<?> fieldId
+    );
 
     /**
      * {@return the initial value of the field}

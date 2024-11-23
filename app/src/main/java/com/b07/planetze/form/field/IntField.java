@@ -2,6 +2,7 @@ package com.b07.planetze.form.field;
 
 import androidx.annotation.NonNull;
 
+import com.b07.planetze.form.definition.FieldId;
 import com.b07.planetze.util.Unit;
 import com.b07.planetze.util.result.Error;
 import com.b07.planetze.util.result.Ok;
@@ -38,5 +39,11 @@ public final class IntField implements Field<Integer> {
     @Override
     public Result<Unit, String> validate(@NonNull Integer value) {
         return validator.apply(value);
+    }
+
+    @NonNull
+    @Override
+    public IntFragment createFragment(@NonNull FieldId<?> fieldId) {
+        return IntFragment.newInstance(fieldId);
     }
 }

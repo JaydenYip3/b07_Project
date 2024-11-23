@@ -12,15 +12,22 @@ import com.b07.planetze.util.option.Option;
 import com.b07.planetze.util.option.Some;
 import com.b07.planetze.util.result.Result;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public final class FormViewModel extends ViewModel {
     @NonNull private final MutableLiveData<Option<Form>> form;
     @NonNull private final MutableLiveData<Option<FormSubmission>> submission;
 
+    private int fragmentTagCounter;
+    private int previousTagCounter;
+
     public FormViewModel() {
         this.form = new MutableLiveData<>(new None<>());
         this.submission = new MutableLiveData<>(new None<>());
+
+        fragmentTagCounter = 0;
+        previousTagCounter = 0;
     }
 
     public void setForm(@NonNull Form form) {
@@ -29,6 +36,19 @@ public final class FormViewModel extends ViewModel {
 
     public LiveData<Option<Form>> getForm() {
         return form;
+    }
+
+    public void setTagCounter(int count) {
+        previousTagCounter = fragmentTagCounter;
+        fragmentTagCounter = count;
+    }
+
+    public int getPreviousTagCounter() {
+        return previousTagCounter;
+    }
+
+    public int getTagCounter() {
+        return fragmentTagCounter;
     }
 
     public LiveData<Option<FormSubmission>> getSubmission() {

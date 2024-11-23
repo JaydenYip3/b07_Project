@@ -64,8 +64,8 @@ public abstract class FieldFragment<F extends Field<V>, V> extends Fragment {
         FormViewModel model = new ViewModelProvider(requireActivity())
                 .get(FormViewModel.class);
 
-        model.getForm().observe(getViewLifecycleOwner(), formOption -> {
-            if (!(formOption instanceof Some<Form> some)) {
+        model.getForm().observe(getViewLifecycleOwner(), maybeForm -> {
+            if (!(maybeForm instanceof Some<Form> some)) {
                 return;
             }
             Form form = some.get();
