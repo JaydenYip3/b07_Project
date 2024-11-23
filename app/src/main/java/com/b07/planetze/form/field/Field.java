@@ -1,5 +1,7 @@
 package com.b07.planetze.form.field;
 
+import static com.b07.planetze.util.option.Option.none;
+
 import androidx.annotation.NonNull;
 
 import com.b07.planetze.form.definition.FieldId;
@@ -37,11 +39,11 @@ public interface Field<T> {
      */
     @NonNull
     default Option<T> initialValue() {
-        return new None<>();
+        return none();
     }
 
     @NonNull
-    default InitiallyFilled<T> initially(Option<T> value) {
+    default InitiallyFilled<T> initially(@NonNull Option<T> value) {
         return new InitiallyFilled<>(this, value);
     }
 }

@@ -1,5 +1,8 @@
 package com.b07.planetze.form.field;
 
+import static com.b07.planetze.util.result.Result.error;
+import static com.b07.planetze.util.result.Result.ok;
+
 import androidx.annotation.NonNull;
 
 import com.b07.planetze.form.definition.FieldId;
@@ -16,9 +19,9 @@ import java.util.function.Function;
 public final class IntField implements Field<Integer> {
     public static final IntField POSITIVE = IntField.withValidator(v -> {
         if (v > 0) {
-            return new Ok<>(Unit.UNIT);
+            return ok();
         }
-        return new Error<>("Value must be positive");
+        return error("Value must be positive");
     });
 
     @NonNull private final Function<Integer, Result<Unit, String>> validator;

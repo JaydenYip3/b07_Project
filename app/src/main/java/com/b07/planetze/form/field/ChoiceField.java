@@ -1,5 +1,8 @@
 package com.b07.planetze.form.field;
 
+import static com.b07.planetze.util.result.Result.error;
+import static com.b07.planetze.util.result.Result.ok;
+
 import androidx.annotation.NonNull;
 
 import com.b07.planetze.form.definition.FieldId;
@@ -19,14 +22,14 @@ public final class ChoiceField implements Field<Integer> {
         this.choices = choices;
     }
 
+    public static ChoiceField withChoices(@NonNull String... choices) {
+        return new ChoiceField(new ImmutableList<>(choices));
+    }
+
     public static ChoiceField withChoices(
             @NonNull ImmutableList<String> choices
     ) {
         return new ChoiceField(choices);
-    }
-
-    public static ChoiceField withChoices(@NonNull String... choices) {
-        return new ChoiceField(new ImmutableList<>(choices));
     }
 
     @NonNull
@@ -38,9 +41,9 @@ public final class ChoiceField implements Field<Integer> {
     @Override
     public Result<Unit, String> validate(@NonNull Integer value) {
         if (choices.containsIndex(value)) {
-            return new Ok<>(Unit.UNIT);
+            return ok(Unit.UNIT);
         }
-        return new Error<>("Integer index out of bounds");
+        return error("Integer index out of bounds");
     }
 
     @NonNull

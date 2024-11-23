@@ -1,5 +1,8 @@
 package com.b07.planetze.form;
 
+import static com.b07.planetze.util.result.Result.error;
+import static com.b07.planetze.util.result.Result.ok;
+
 import androidx.annotation.NonNull;
 
 import com.b07.planetze.form.definition.FieldId;
@@ -11,7 +14,6 @@ import com.b07.planetze.util.immutability.ImmutableList;
 import com.b07.planetze.util.result.Ok;
 import com.b07.planetze.util.option.Option;
 import com.b07.planetze.util.result.Result;
-import com.b07.planetze.util.option.Some;
 import com.b07.planetze.util.Unit;
 import com.b07.planetze.util.Util;
 
@@ -57,7 +59,7 @@ public final class Form {
         // this calls assertContainsField
         Result<Unit, String> r = definition.field(field).get().validate(value);
 
-        values.set(field.index(), r.ok().map(x -> value));
+        values.set(field.index(), r.getOption().map(x -> value));
         return r;
     }
 
@@ -90,9 +92,9 @@ public final class Form {
                 .applyNone(() -> invalid.add(i)));
 
         if (!invalid.isEmpty()) {
-            return new Error<>(invalid);
+            return error(invalid);
         }
-        return new Ok<>(new FormSubmission(
+        return ok(new FormSubmission(
                 definition.id(),
                 new ImmutableList<>(presentValues)
         ));

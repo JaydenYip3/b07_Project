@@ -1,5 +1,7 @@
 package com.b07.planetze.database;
 
+import static com.b07.planetze.util.result.Result.ok;
+
 import androidx.annotation.NonNull;
 
 import com.b07.planetze.common.DateInterval;
@@ -37,7 +39,7 @@ public class FakeDatabase implements Database {
             @NonNull Consumer<Result<Emissions, DatabaseError>> callback
     ) {
         UserIdWithDate key = new UserIdWithDate(userId, date);
-        callback.accept(new Ok<>(Objects.requireNonNull(map.getOrDefault(key, new Emissions())).copy()));
+        callback.accept(ok(Objects.requireNonNull(map.getOrDefault(key, new Emissions())).copy()));
     }
 
     @Override
@@ -54,7 +56,7 @@ public class FakeDatabase implements Database {
             }
         }
 
-        callback.accept(new Ok<>(emissions));
+        callback.accept(ok(emissions));
     }
 
     @Override
@@ -65,6 +67,6 @@ public class FakeDatabase implements Database {
             @NonNull Consumer<Result<Unit, DatabaseError>> callback
     ) {
         map.put(new UserIdWithDate(userId, date), emissions.copy());
-        callback.accept(new Ok<>(Unit.UNIT));
+        callback.accept(ok());
     }
 }

@@ -1,4 +1,6 @@
 package com.b07.planetze.ecotracker;
 
-public class EcotrackerViewModel {
+import androidx.lifecycle.ViewModel;
+
+public class EcotrackerViewModel extends ViewModel {
 }

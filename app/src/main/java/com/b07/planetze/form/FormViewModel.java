@@ -1,5 +1,8 @@
 package com.b07.planetze.form;
 
+import static com.b07.planetze.util.option.Option.none;
+import static com.b07.planetze.util.option.Option.some;
+
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -23,15 +26,15 @@ public final class FormViewModel extends ViewModel {
     private int previousTagCounter;
 
     public FormViewModel() {
-        this.form = new MutableLiveData<>(new None<>());
-        this.submission = new MutableLiveData<>(new None<>());
+        this.form = new MutableLiveData<>(none());
+        this.submission = new MutableLiveData<>(none());
 
         fragmentTagCounter = 0;
         previousTagCounter = 0;
     }
 
     public void setForm(@NonNull Form form) {
-        this.form.setValue(new Some<>(form));
+        this.form.setValue(some(form));
     }
 
     public LiveData<Option<Form>> getForm() {
@@ -61,7 +64,7 @@ public final class FormViewModel extends ViewModel {
                 .getOrThrow(new FormException("submit called before setForm"));
 
         return f.submit()
-                .map(Some::new)
+                .map(Option::some)
                 .apply(submission::setValue)
                 .map(x -> Unit.UNIT);
     }

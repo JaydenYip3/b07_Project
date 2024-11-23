@@ -7,4 +7,10 @@
     android:layout_height="match_parent"
     tools:context=".ecotracker.EcotrackerActivity">
 
+    <FrameLayout
+        android:id="@+id/ecotracker_fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

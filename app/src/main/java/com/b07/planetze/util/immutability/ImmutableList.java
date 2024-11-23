@@ -1,5 +1,8 @@
 package com.b07.planetze.util.immutability;
 
+import static com.b07.planetze.util.option.Option.none;
+import static com.b07.planetze.util.option.Option.some;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -45,9 +48,9 @@ public final class ImmutableList<T> implements Iterable<T> {
     @NonNull
     public Option<T> getOption(int index) {
         try {
-            return new Some<>(list.get(index));
+            return some(list.get(index));
         } catch (IndexOutOfBoundsException e) {
-            return new None<>();
+            return none();
         }
     }
 

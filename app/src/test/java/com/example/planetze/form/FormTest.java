@@ -1,5 +1,6 @@
 package com.example.planetze.form;
 
+import static com.b07.planetze.util.option.Option.some;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -28,11 +29,11 @@ public class FormTest {
 
         FieldId<Integer> f1 = fb.add("f1", ChoiceField
                 .withChoices("c1", "c2", "c3")
-                .initially(new Some<>(1)));
+                .initially(some(1)));
 
         FieldId<Integer> f2 = fb.add("f2", IntField
                 .POSITIVE
-                .initially(new Some<>(3)));
+                .initially(some(3)));
         FieldId<Integer> f3 = fb.add("f3", IntField.POSITIVE);
 
         FormDefinition def = fb.build();
