@@ -57,10 +57,10 @@ public class EcotrackerActivity extends AppCompatActivity {
 
         FieldId<Integer> f3 = fb.add("f3", ChoiceField
                 .withChoices("c3", "c4", "c5")
-                .initially(some(2)));
+                .initially(2));
 
         FieldId<Integer> f4 = fb.add("f4", IntField.POSITIVE
-                .initially(some(3)));
+                .initially(2));
 
         Form form = fb.build().createForm();
 

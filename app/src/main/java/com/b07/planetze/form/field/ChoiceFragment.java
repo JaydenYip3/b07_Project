@@ -69,4 +69,13 @@ public final class ChoiceFragment extends FieldFragment<ChoiceField, Integer> {
         group.setOnCheckedChangeListener((radioGroup, checkedId) ->
                 form.set(id, checkedId).applyError(error::setText));
     }
+
+    @Override
+    @NonNull
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(
+                R.layout.fragment_form_choice, container, false);
+    }
 }

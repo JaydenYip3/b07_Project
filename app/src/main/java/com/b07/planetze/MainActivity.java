@@ -36,9 +36,9 @@ public class MainActivity extends AppCompatActivity {
 
         EcotrackerActivity.start(this);
 
-        if (savedInstanceState == null) {
-            loadFragment(new WelcomeFragment());
-        }
+//        if (savedInstanceState == null) {
+//            loadFragment(new WelcomeFragment());
+//        }
     }
 
     private void loadFragment(Fragment fragment) {

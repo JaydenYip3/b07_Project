@@ -46,4 +46,12 @@ public record FieldId<T>(FormId formId, int index) implements Parcelable {
         dest.writeParcelable(formId, flags);
         dest.writeInt(index);
     }
+
+    @Override
+    @NonNull
+    public String toString() {
+        return String.format("FieldId[formId=%s, index=%s]",
+                formId.toString(),
+                index);
+    }
 }

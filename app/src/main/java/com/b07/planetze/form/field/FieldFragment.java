@@ -72,14 +72,14 @@ public abstract class FieldFragment<F extends Field<V>, V> extends Fragment {
             FormDefinition def = form.definition();
 
             if (!def.containsField(fieldId)) {
-                Log.w(TAG, "field-form mismatch");
+                Log.w(TAG, "field-form mismatch: " + fieldId.toString());
                 return;
             }
 
             @SuppressWarnings("unchecked")
-            F field = (F) def.field(fieldId).get();
+            F field = (F) def.field(fieldId);
 
-            String name = def.field(fieldId).name();
+            String name = def.name(fieldId);
 
             initializeField(view, form, fieldId, field, name);
         });
@@ -87,10 +87,7 @@ public abstract class FieldFragment<F extends Field<V>, V> extends Fragment {
 
     @Override
     @NonNull
-    public View onCreateView(@NonNull LayoutInflater inflater,
+    public abstract View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(
-                R.layout.fragment_form_choice, container, false);
-    }
+                             @Nullable Bundle savedInstanceState);
 }

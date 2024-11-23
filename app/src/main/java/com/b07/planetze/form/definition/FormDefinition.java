@@ -6,6 +6,7 @@ import com.b07.planetze.form.Form;
 import com.b07.planetze.form.exception.FormIdException;
 import com.b07.planetze.form.field.Field;
 import com.b07.planetze.util.immutability.ImmutableList;
+import com.b07.planetze.util.option.Option;
 
 /**
  * Defines the fields of a {@link Form}. <br>
@@ -14,7 +15,7 @@ import com.b07.planetze.util.immutability.ImmutableList;
  * @param fields the form's fields
  */
 public record FormDefinition(@NonNull FormId id,
-                             @NonNull ImmutableList<NamedField<?>> fields) {
+                             @NonNull ImmutableList<FieldDefinition<?>> fields) {
     public boolean containsField(@NonNull FieldId<?> field) {
         return id.equals(field.formId());
     }
@@ -30,19 +31,29 @@ public record FormDefinition(@NonNull FormId id,
         }
     }
 
-    /**
-     * {@return the field associated with a field id}
-     * @param field the field's id
-     * @param <T> the type of value held by the field
-     */
     @NonNull
-    public <T> NamedField<T> field(@NonNull FieldId<T> field) {
+    private <T> FieldDefinition<T> fieldDefinition(@NonNull FieldId<T> field) {
         assertContainsField(field);
 
         @SuppressWarnings("unchecked")
-        NamedField<T> f = (NamedField<T>) fields.get(field.index());
+        FieldDefinition<T> f = (FieldDefinition<T>) fields.get(field.index());
 
         return f;
+    }
+
+    @NonNull
+    public <T> Field<T> field(@NonNull FieldId<T> field) {
+        return fieldDefinition(field).field();
+    }
+
+    @NonNull
+    public String name(@NonNull FieldId<?> field) {
+        return fieldDefinition(field).name();
+    }
+
+    @NonNull
+    public <T> Option<T> initialValue(@NonNull FieldId<T> field) {
+        return fieldDefinition(field).initialValue();
     }
 
     /**

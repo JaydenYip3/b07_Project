@@ -11,20 +11,18 @@ import com.b07.planetze.util.option.Option;
 import com.b07.planetze.util.result.Result;
 
 /**
- * Wraps a field, giving it an initial value.
+ * Wraps a field, giving it an initial value. <br>
+ * This validates the initial value.
  * @param <T> the field value type
  */
-public class InitiallyFilled<T> implements Field<T> {
-    @NonNull private final Option<T> initialValue;
+public class InitiallyFilled<T> {
     @NonNull private final Field<T> field;
+    @NonNull private final Option<T> initialValue;
 
     private InitiallyFilled(
         @NonNull Field<T> field,
         @NonNull Option<T> initialValue
     ) {
-        if (field instanceof InitiallyFilled) {
-            throw new FieldInitException("Field is already initially filled");
-        }
         this.field = field;
         this.initialValue = initialValue;
     }
@@ -35,7 +33,7 @@ public class InitiallyFilled<T> implements Field<T> {
     ) {
         InitiallyFilled<T> f = new InitiallyFilled<>(field, initialValue);
         f.initialValue
-                .map(f::validate)
+                .map(f.field::validate)
                 .apply(r -> r
                         .mapError(FieldInitException::new)
                         .getOrThrowError());
@@ -44,22 +42,12 @@ public class InitiallyFilled<T> implements Field<T> {
     }
 
     @NonNull
-    @Override
+    public Field<T> field() {
+        return field;
+    }
+
+    @NonNull
     public Option<T> initialValue() {
         return initialValue;
-    }
-
-    @NonNull
-    @Override
-    public Result<Unit, String> validate(@NonNull T value) {
-        return field.validate(value);
-    }
-
-    @NonNull
-    @Override
-    public FieldFragment<? extends Field<T>, T> createFragment(
-            @NonNull FieldId<?> fieldId
-    ) {
-        return field.createFragment(fieldId);
     }
 }

@@ -35,7 +35,7 @@ public final class Form {
 
         definition
                 .fields()
-                .forEach(f -> values.add(f.get().initialValue().map(v -> v)));
+                .forEach(f -> values.add(f.initialValue().map(v -> v)));
     }
 
     public FormDefinition definition() {
@@ -57,7 +57,7 @@ public final class Form {
             @NonNull T value
     ) {
         // this calls assertContainsField
-        Result<Unit, String> r = definition.field(field).get().validate(value);
+        Result<Unit, String> r = definition.field(field).validate(value);
 
         values.set(field.index(), r.getOption().map(x -> value));
         return r;

@@ -1,6 +1,7 @@
 package com.b07.planetze.form.field;
 
 import static com.b07.planetze.util.option.Option.none;
+import static com.b07.planetze.util.option.Option.some;
 
 import androidx.annotation.NonNull;
 
@@ -33,15 +34,11 @@ public interface Field<T> {
     );
 
     /**
-     * {@return the initial value of the field}
+     * {@return a field with an added initial value}
+     * @param value the initial value
      */
     @NonNull
-    default Option<T> initialValue() {
-        return none();
-    }
-
-    @NonNull
-    default InitiallyFilled<T> initially(@NonNull Option<T> value) {
-        return InitiallyFilled.create(this, value);
+    default InitiallyFilled<T> initially(@NonNull T value) {
+        return InitiallyFilled.create(this, some(value));
     }
 }

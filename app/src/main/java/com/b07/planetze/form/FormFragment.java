@@ -66,9 +66,9 @@ public final class FormFragment extends Fragment {
 
             int count = model.getTagCounter();
 
-            Util.enumerate(def.fields()).forEach((i, field) -> {
+            Util.enumerate(def.fields()).forEach((i, fieldDef) -> {
                 FieldId<?> id = new FieldId<>(form.definition().id(), i);
-                Fragment frag = field.get().createFragment(id);
+                Fragment frag = fieldDef.field().createFragment(id);
                 String tag = fragmentTag(count + i);
 
                 ft.add(R.id.formFragmentContainer, frag, tag);
@@ -85,6 +85,6 @@ public final class FormFragment extends Fragment {
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         return inflater.inflate(
-                R.layout.fragment_form_int, container, false);
+                R.layout.fragment_form, container, false);
     }
 }

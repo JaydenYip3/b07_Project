@@ -5,8 +5,13 @@ import static com.b07.planetze.form.field.FieldFragment.FIELD_ID_KEY;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.os.Parcelable;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -51,26 +56,36 @@ public class IntFragment extends FieldFragment<IntField, Integer> {
         EditText input = view.findViewById(R.id.intFieldInput);
         form.get(id).map(Object::toString).apply(input::setText);
 
-        input.setOnEditorActionListener((
-                TextView v, int actionId, KeyEvent event) -> {
-            switch (actionId) {
-                case EditorInfo.IME_ACTION_DONE,
-                     EditorInfo.IME_ACTION_NEXT,
-                     EditorInfo.IME_ACTION_PREVIOUS -> {
-                    String text = (String) v.getText();
-                    int value;
-                    try {
-                        value = Integer.parseInt(text);
-                    } catch (NumberFormatException e) {
-                        error.setText(R.string.int_error);
-                        return true;
-                    }
+        input.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(
+                    @NonNull CharSequence s, int start, int count, int after) {}
 
-                    form.set(id, value).applyError(error::setText);
-                    return true;
+            @Override
+            public void onTextChanged(
+                    @NonNull CharSequence s, int start, int before, int count) {
+                int value;
+                try {
+                    value = Integer.parseInt(s.toString());
+                } catch (NumberFormatException e) {
+                    error.setText(R.string.int_error);
+                    return;
                 }
+                form.set(id, value)
+                        .match(ok -> error.setText(""), error::setText);
             }
-            return false;
+
+            @Override
+            public void afterTextChanged(@NonNull Editable s) {}
         });
+    }
+
+    @Override
+    @NonNull
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(
+                R.layout.fragment_form_int, container, false);
     }
 }

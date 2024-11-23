@@ -29,11 +29,12 @@ public class FormTest {
 
         FieldId<Integer> f1 = fb.add("f1", ChoiceField
                 .withChoices("c1", "c2", "c3")
-                .initially(some(1)));
+                .initially(1));
 
         FieldId<Integer> f2 = fb.add("f2", IntField
                 .POSITIVE
-                .initially(some(3)));
+                .initially(3));
+
         FieldId<Integer> f3 = fb.add("f3", IntField.POSITIVE);
 
         FormDefinition def = fb.build();
