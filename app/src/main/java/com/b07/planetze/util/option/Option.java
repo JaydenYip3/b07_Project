@@ -3,6 +3,7 @@ package com.b07.planetze.util.option;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.b07.planetze.util.Unit;
 import com.b07.planetze.util.immutability.MutableWithCopy;
 import com.b07.planetze.util.result.Error;
 import com.b07.planetze.util.result.Ok;
@@ -24,6 +25,33 @@ public sealed abstract class Option<T>
         implements MutableWithCopy<Option<T>>
         permits Some, None {
     /**
+     * {@return a new <code>Some</code> containing a value}
+     * @param value the value
+     * @param <T> the type of the value
+     */
+    public static <T> Some<T> some(T value) {
+        return new Some<>(value);
+    }
+
+    /**
+     * {@return a new <code>Some(Unit.UNIT)</code>}
+     */
+    public static Some<Unit> some() {
+        return Some.UNIT_INSTANCE;
+    }
+
+    /**
+     * {@return an instance of <code>None</code>}
+     * @param <T> the type of the <code>Option</code>
+     */
+    public static <T> None<T> none() {
+        @SuppressWarnings("unchecked")
+        None<T> none = (None<T>) None.INSTANCE;
+
+        return none;
+    }
+
+    /**
      * Creates an {@link Option} from a nullable value.
      * @param value the value
      * @return {@link Some} if the value is non-null; {@link None} otherwise.
@@ -32,14 +60,14 @@ public sealed abstract class Option<T>
     @NonNull
     public static <T> Option<T> mapNull(@Nullable T value) {
         if (value == null) {
-            return new None<>();
+            return none();
         }
-        return new Some<>(value);
+        return some(value);
     }
 
     @NonNull
     public static <T> Option<T> flattenNull(@Nullable Option<T> value) {
-        return mapNull(value).resolve(x -> x, None::new);
+        return mapNull(value).resolve(x -> x, Option::none);
     }
 
     /**

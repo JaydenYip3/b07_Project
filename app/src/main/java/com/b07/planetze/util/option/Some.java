@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.b07.planetze.util.Self;
+import com.b07.planetze.util.Unit;
 import com.b07.planetze.util.immutability.MutableWithCopy;
 import com.b07.planetze.util.result.Ok;
 import com.b07.planetze.util.result.Result;
@@ -18,13 +19,16 @@ import java.util.function.Supplier;
  * @param <T> the type of the value
  */
 public final class Some<T> extends Option<T> {
+
+    // Intentionally package-private
+    @NonNull static final Some<Unit> UNIT_INSTANCE = new Some<>(Unit.UNIT);
+
     @NonNull private final T value;
 
     /**
-     * Creates an {@link Option} with a present value.
-     * @param value the value
+     * Intentionally package-private; use {@link Option#some} to instantiate.
      */
-    public Some(@NonNull T value) {
+    Some(@NonNull T value) {
         this.value = value;
     }
 
@@ -93,13 +97,13 @@ public final class Some<T> extends Option<T> {
     @NonNull
     @Override
     public <E> Ok<T, E> okOr(@NonNull E error) {
-        return new Ok<>(value);
+        return Result.ok(value);
     }
 
     @NonNull
     @Override
     public <E> Ok<T, E> okOr(@NonNull Supplier<E> supplier) {
-        return new Ok<>(value);
+        return Result.ok(value);
     }
 
     @Override

@@ -3,6 +3,7 @@ package com.b07.planetze.util.result;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.b07.planetze.util.Unit;
 import com.b07.planetze.util.immutability.MutableWithCopy;
 import com.b07.planetze.util.option.Option;
 
@@ -19,11 +20,53 @@ import java.util.function.Supplier;
  * Structurally, this is a sum type of variants {@link Ok} (success) and
  * {@link Error} (failure), with each variant holding a value.
  * @param <T> the type of the value stored by the {@link Ok} variant
- * @param <E> the type of the error stored by the {@link Error} variant
+ * @param <E> the type of the value stored by the {@link Error} variant
  */
 public sealed abstract class Result<T, E>
         implements MutableWithCopy<Result<T, E>>
         permits Ok, Error {
+    /**
+     * {@return a new <code>Ok(value)</code>}
+     * @param value the value
+     * @param <T> the {@link Ok} type
+     * @param <E> the {@link Error} type
+     */
+    public static <T, E> Ok<T, E> ok(T value) {
+        return new Ok<>(value);
+    }
+
+    /**
+     * {@return an instance of <code>Ok(Unit.UNIT)</code>}
+     * @param <E> the {@link Error} type
+     */
+    public static <E> Ok<Unit, E> ok() {
+        @SuppressWarnings("unchecked")
+        Ok<Unit, E> ok = (Ok<Unit, E>) Ok.UNIT_INSTANCE;
+
+        return ok;
+    }
+
+    /**
+     * {@return a new <code>Error(value)</code>}
+     * @param value the value
+     * @param <T> the {@link Ok} type
+     * @param <E> the {@link Error} type
+     */
+    public static <T, E> Error<T, E> error(E value) {
+        return new Error<>(value);
+    }
+
+    /**
+     * {@return an instance of <code>Ok(Unit.UNIT)</code>}
+     * @param <T> the {@link Ok} type
+     */
+    public static <T> Error<T, Unit> error() {
+        @SuppressWarnings("unchecked")
+        Error<T, Unit> error = (Error<T, Unit>) Error.UNIT_INSTANCE;
+
+        return error;
+    }
+
     /**
      * Applies a function to the held value iff <code>this</code> is {@link Ok}.
      * @param f the function
@@ -93,13 +136,13 @@ public sealed abstract class Result<T, E>
      * {@return the held success value if it is present}
      */
     @NonNull
-    public abstract Option<T> ok();
+    public abstract Option<T> getOption();
 
     /**
      * {@return the held error value if it is present}
      */
     @NonNull
-    public abstract Option<E> error();
+    public abstract Option<E> getErrorOption();
 
     /**
      * Returns <code>true</code> iff <code>this</code> is {@link Ok}. <br>

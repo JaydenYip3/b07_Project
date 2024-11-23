@@ -3,6 +3,7 @@ package com.b07.planetze.util.result;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.b07.planetze.util.Unit;
 import com.b07.planetze.util.immutability.MutableWithCopy;
 import com.b07.planetze.util.option.None;
 import com.b07.planetze.util.option.Option;
@@ -20,14 +21,16 @@ import java.util.function.Supplier;
  * @param <E> the type of the {@link Error} variant
  */
 public final class Error<T, E> extends Result<T, E> {
+
+    // Intentionally package-private
+    @NonNull static final Error<?, Unit> UNIT_INSTANCE = new Error<>(Unit.UNIT);
+
     @NonNull private final E value;
 
     /**
-     * Creates a failed {@link Result}.
-     *
-     * @param value a value for use upon failure
+     * Intentionally package-private; use {@link Result#error}
      */
-    public Error(@NonNull E value) {
+    Error(@NonNull E value) {
         this.value = value;
     }
 
@@ -87,14 +90,14 @@ public final class Error<T, E> extends Result<T, E> {
 
     @NonNull
     @Override
-    public Option<T> ok() {
-        return new None<>();
+    public None<T> getOption() {
+        return Option.none();
     }
 
     @NonNull
     @Override
-    public Option<E> error() {
-        return new Some<>(value);
+    public Some<E> getErrorOption() {
+        return Option.some(value);
     }
 
     @Override

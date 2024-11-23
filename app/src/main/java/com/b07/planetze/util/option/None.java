@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.b07.planetze.util.result.Error;
+import com.b07.planetze.util.result.Result;
 
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -16,9 +17,11 @@ import java.util.function.Supplier;
  */
 public final class None<T> extends Option<T> {
     /**
-     * Creates an {@link Option} with an absent value.
+     * Intentionally package-private; use {@link Option#none}.
      */
-    public None() {}
+    @NonNull static final None<?> INSTANCE = new None<>();
+
+    private None() {}
 
     @Override
     public None<T> apply(@NonNull Consumer<T> f) {
@@ -76,13 +79,13 @@ public final class None<T> extends Option<T> {
     @NonNull
     @Override
     public <E> Error<T, E> okOr(@NonNull E error) {
-        return new Error<>(error);
+        return Result.error(error);
     }
 
     @NonNull
     @Override
     public <E> Error<T, E> okOr(@NonNull Supplier<E> supplier) {
-        return new Error<>(supplier.get());
+        return Result.error(supplier.get());
     }
 
     @Override
