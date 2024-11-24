@@ -5,6 +5,7 @@ import static com.b07.planetze.util.option.Option.some;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -34,6 +35,10 @@ public final class EcoTrackerActivity extends AppCompatActivity {
     private record Model(@NonNull EcoTrackerViewModel ecoTracker,
                          @NonNull FormViewModel form) {}
 
+    private void startSelectForm(@NonNull Model model,
+                                 @NonNull EcoTrackerState.SelectForm state) {
+        Log.d(TAG, "test");
+    }
     private void startForm(@NonNull Model model,
                            @NonNull EcoTrackerState.Form state) {
         model.form.getSubmission().removeObservers(this);
@@ -73,6 +78,8 @@ public final class EcoTrackerActivity extends AppCompatActivity {
         model.ecoTracker.getState().observe(this, state -> {
             if (state instanceof EcoTrackerState.Form form) {
                 startForm(model, form);
+            } else if (state instanceof EcoTrackerState.SelectForm selectForm) {
+                startSelectForm(model, selectForm);
             }
         });
     }

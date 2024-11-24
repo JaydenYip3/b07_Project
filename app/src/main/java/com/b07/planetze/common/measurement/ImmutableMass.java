@@ -13,11 +13,24 @@ public final class ImmutableMass extends ImmutableCopy<Mass> {
         super(object);
     }
 
+    /**
+     * {@return this mass in kilograms}
+     */
     public double kg() {
         return object.kg();
     }
 
+    /**
+     * {@return this mass in grams}
+     */
     public double g() {
         return object.g();
+    }
+
+    /**
+     * {@return this mass in pounds}
+     */
+    public double lb() {
+        return object.lb();
     }
 }

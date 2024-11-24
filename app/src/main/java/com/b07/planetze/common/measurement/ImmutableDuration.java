@@ -13,10 +13,16 @@ public final class ImmutableDuration extends ImmutableCopy<Duration> {
         super(object);
     }
 
+    /**
+     * {@return this duration in hours}
+     */
     public double h() {
         return object.h();
     }
 
+    /**
+     * {@return this duration in seconds}
+     */
     public double s() {
         return object.s();
     }

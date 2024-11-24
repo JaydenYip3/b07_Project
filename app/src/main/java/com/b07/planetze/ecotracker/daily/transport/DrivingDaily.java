@@ -1,32 +1,34 @@
-package com.b07.planetze.ecotracker.daily;
+package com.b07.planetze.ecotracker.daily.transport;
 
 import androidx.annotation.NonNull;
 
 import com.b07.planetze.common.Emissions;
-import com.b07.planetze.common.measurement.Distance;
 import com.b07.planetze.common.measurement.ImmutableDistance;
 import com.b07.planetze.common.measurement.Mass;
-import com.b07.planetze.util.immutability.ImmutableCopy;
+import com.b07.planetze.ecotracker.daily.Daily;
+import com.b07.planetze.ecotracker.daily.DailyType;
 
 public record DrivingDaily(
         @NonNull Vehicle vehicle,
         @NonNull ImmutableDistance distance
 ) implements Daily {
-    public enum Vehicle {
-        CAR
-    }
+    private static final double CAR_G_CO2E_PER_KM = 192;
 
     @NonNull
     @Override
     public Emissions emissions() {
-        return switch(vehicle) {
-            case CAR -> Emissions.transport(Mass.g(192).scale(distance.km()));
-        };
+        return Emissions.transport(switch(vehicle) {
+            case CAR -> Mass.g(CAR_G_CO2E_PER_KM * distance.km());
+        });
     }
 
     @NonNull
     @Override
     public DailyType type() {
         return DailyType.DRIVING;
+    }
+
+    public enum Vehicle {
+        CAR
     }
 }

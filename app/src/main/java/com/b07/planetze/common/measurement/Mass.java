@@ -1,6 +1,7 @@
 package com.b07.planetze.common.measurement;
 
 import androidx.annotation.NonNull;
+import androidx.privacysandbox.ads.adservices.java.appsetid.AppSetIdManagerFutures;
 
 import com.b07.planetze.util.Measurement;
 
@@ -8,6 +9,9 @@ import com.b07.planetze.util.Measurement;
  * A measurement of mass.
  */
 public final class Mass extends Measurement<Mass> {
+    private static final double POUNDS_TO_KG = 	0.45359237;
+    private static final double KG_TO_POUNDS = 1 / POUNDS_TO_KG;
+
     private double kg;
 
     private Mass(double kg) {
@@ -41,6 +45,15 @@ public final class Mass extends Measurement<Mass> {
     }
 
     /**
+     * {@return a new mass given pounds}
+     * @param lb a value in pounds
+     */
+    @NonNull
+    public static Mass lb(double lb) {
+        return new Mass(lb * POUNDS_TO_KG);
+    }
+
+    /**
      * {@return this mass in kilograms}
      */
     public double kg() {
@@ -52,6 +65,13 @@ public final class Mass extends Measurement<Mass> {
      */
     public double g() {
         return kg * 1000;
+    }
+
+    /**
+     * {@return this mass in pounds}
+     */
+    public double lb() {
+        return kg * KG_TO_POUNDS;
     }
 
     @Override
