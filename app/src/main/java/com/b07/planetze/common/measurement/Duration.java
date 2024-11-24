@@ -38,7 +38,7 @@ public class Duration extends Measurement<Duration> {
      */
     @NonNull
     public static Duration h(double h) {
-        return new Duration(h / 3600);
+        return new Duration(3600 * h);
     }
 
     /**
@@ -52,7 +52,7 @@ public class Duration extends Measurement<Duration> {
      * {@return this duration in hours}
      */
     public double h() {
-        return 3600 * s;
+        return s / 3600;
     }
 
     @Override
@@ -80,5 +80,11 @@ public class Duration extends Measurement<Duration> {
     @Override
     public Duration self() {
         return this;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return s + "s";
     }
 }

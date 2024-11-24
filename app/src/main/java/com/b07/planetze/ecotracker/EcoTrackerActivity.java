@@ -20,6 +20,8 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.b07.planetze.R;
 import com.b07.planetze.common.measurement.Distance;
+import com.b07.planetze.common.measurement.Duration;
+import com.b07.planetze.common.measurement.Mass;
 import com.b07.planetze.form.Form;
 import com.b07.planetze.form.FormFragment;
 import com.b07.planetze.form.FormSubmission;
@@ -28,7 +30,9 @@ import com.b07.planetze.form.definition.FieldId;
 import com.b07.planetze.form.definition.FormBuilder;
 import com.b07.planetze.form.field.ChoiceField;
 import com.b07.planetze.form.field.DistanceField;
+import com.b07.planetze.form.field.DurationField;
 import com.b07.planetze.form.field.IntField;
+import com.b07.planetze.form.field.MassField;
 import com.b07.planetze.util.immutability.ImmutableCopy;
 import com.b07.planetze.util.option.Some;
 
@@ -60,8 +64,8 @@ public final class EcoTrackerActivity extends AppCompatActivity {
         FieldId<Integer> f1 = fb.add("f1", ChoiceField
                 .withChoices("c1", "c2"));
 
-        FieldId<ImmutableCopy<Distance>> f2 = fb.add("f2",
-                DistanceField.create());
+        FieldId<ImmutableCopy<Duration>> f2 = fb.add("f2",
+                DurationField.create());
 
         FieldId<Integer> f3 = fb.add("f3", ChoiceField
                 .withChoices("c3", "c4", "c5")
