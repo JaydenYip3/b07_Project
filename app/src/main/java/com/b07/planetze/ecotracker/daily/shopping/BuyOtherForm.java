@@ -11,7 +11,7 @@ import com.b07.planetze.form.definition.FormDefinition;
 import com.b07.planetze.form.field.ChoiceField;
 import com.b07.planetze.form.field.IntField;
 
-public final class BuyOtherForm implements DailyForm {
+public final class BuyOtherForm implements DailyForm<BuyOtherDaily> {
     @NonNull public static final BuyOtherForm INSTANCE = new BuyOtherForm();
 
     @NonNull private final FieldId<Integer> type;

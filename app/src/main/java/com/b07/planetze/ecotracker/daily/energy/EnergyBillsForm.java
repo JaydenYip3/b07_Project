@@ -13,7 +13,7 @@ import com.b07.planetze.form.field.ChoiceField;
 import com.b07.planetze.form.field.IntField;
 import com.b07.planetze.form.field.MoneyField;
 
-public final class EnergyBillsForm implements DailyForm {
+public final class EnergyBillsForm implements DailyForm<EnergyBillsDaily> {
     @NonNull public static final EnergyBillsForm INSTANCE
             = new EnergyBillsForm();
 

@@ -9,7 +9,7 @@ import com.b07.planetze.form.definition.FormBuilder;
 import com.b07.planetze.form.definition.FormDefinition;
 import com.b07.planetze.form.field.IntField;
 
-public final class BuyClothesForm implements DailyForm {
+public final class BuyClothesForm implements DailyForm<BuyClothesDaily> {
     @NonNull public static final BuyClothesForm INSTANCE = new BuyClothesForm();
 
     @NonNull private final FieldId<Integer> numberItems;

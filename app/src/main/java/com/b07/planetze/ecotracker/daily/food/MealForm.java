@@ -12,7 +12,7 @@ import com.b07.planetze.form.definition.FormDefinition;
 import com.b07.planetze.form.field.ChoiceField;
 import com.b07.planetze.form.field.IntField;
 
-public final class MealForm implements DailyForm {
+public final class MealForm implements DailyForm<MealDaily> {
     @NonNull public static final MealForm INSTANCE = new MealForm();
 
     @NonNull private final FieldId<Integer> type;

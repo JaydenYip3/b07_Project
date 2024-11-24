@@ -11,7 +11,8 @@ import com.b07.planetze.form.definition.FormDefinition;
 import com.b07.planetze.form.field.ChoiceField;
 import com.b07.planetze.form.field.IntField;
 
-public final class BuyElectronicsForm implements DailyForm {
+public final class BuyElectronicsForm
+        implements DailyForm<BuyElectronicsDaily> {
     @NonNull public static final BuyElectronicsForm INSTANCE
             = new BuyElectronicsForm();
 

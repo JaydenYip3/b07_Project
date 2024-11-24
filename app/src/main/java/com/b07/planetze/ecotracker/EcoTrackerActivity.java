@@ -43,7 +43,7 @@ public final class EcoTrackerActivity extends AppCompatActivity {
                            @NonNull EcoTrackerState.Form state) {
         model.form.getSubmission().removeObservers(this);
 
-        DailyForm df = state.dailyType().form();
+        DailyForm<?> df = state.dailyType().form();
         Form f = df.definition().createForm();
 
         model.form.getSubmission().observe(this, maybeSub -> {

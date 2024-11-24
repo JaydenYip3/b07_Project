@@ -26,14 +26,14 @@ public enum DailyType {
     BUY_OTHER(BuyOtherForm.INSTANCE),
     ENERGY_BILLS(EnergyBillsForm.INSTANCE);
 
-    @NonNull private final DailyForm form;
+    @NonNull private final DailyForm<?> form;
 
-    DailyType(@NonNull DailyForm form) {
+    DailyType(@NonNull DailyForm<?> form) {
         this.form = form;
     }
 
     @NonNull
-    public DailyForm form() {
+    public DailyForm<?> form() {
         return form;
     }
 }

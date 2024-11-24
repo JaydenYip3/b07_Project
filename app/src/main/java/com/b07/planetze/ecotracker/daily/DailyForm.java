@@ -8,10 +8,10 @@ import com.b07.planetze.form.definition.FormDefinition;
 /**
  * The form associated with a logged daily activity.
  */
-public interface DailyForm {
+public interface DailyForm<T extends Daily> {
     @NonNull
     FormDefinition definition();
 
     @NonNull
-    Daily createDaily(@NonNull FormSubmission form);
+    T createDaily(@NonNull FormSubmission form);
 }
