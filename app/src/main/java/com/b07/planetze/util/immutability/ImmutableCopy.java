@@ -23,7 +23,7 @@ public final class ImmutableCopy<T extends MutableWithCopy<T>> {
      * This calls {@link MutableWithCopy#copy()}.
      */
     @NonNull
-    public T mutableCopy() {
+    public T copy() {
         return object.copy();
     }
 

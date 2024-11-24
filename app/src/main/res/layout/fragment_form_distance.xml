@@ -2,27 +2,27 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".form.field.IntFragment">
+    tools:context=".form.field.DistanceFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:id="@+id/form_int_name"
+        android:id="@+id/form_distance_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <TextView
-        android:id="@+id/form_int_error"
+        android:id="@+id/form_distance_error"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <EditText
-        android:id="@+id/form_int_input"
+        android:id="@+id/form_distance_input"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:ems="10"
-        android:hint="@string/int_hint"
-        android:inputType="number" />
+        android:hint="@string/distance_hint"
+        android:inputType="numberDecimal" />
 
 </LinearLayout>

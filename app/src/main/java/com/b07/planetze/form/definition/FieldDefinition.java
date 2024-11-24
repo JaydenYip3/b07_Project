@@ -6,7 +6,7 @@ import com.b07.planetze.form.field.Field;
 import com.b07.planetze.form.field.InitiallyFilled;
 import com.b07.planetze.util.option.Option;
 
-public class FieldDefinition<T> {
+public final class FieldDefinition<T> {
     @NonNull private final String name;
     @NonNull private final InitiallyFilled<T> field;
 

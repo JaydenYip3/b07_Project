@@ -19,6 +19,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.b07.planetze.R;
+import com.b07.planetze.common.measurement.Distance;
 import com.b07.planetze.form.Form;
 import com.b07.planetze.form.FormFragment;
 import com.b07.planetze.form.FormSubmission;
@@ -26,11 +27,13 @@ import com.b07.planetze.form.FormViewModel;
 import com.b07.planetze.form.definition.FieldId;
 import com.b07.planetze.form.definition.FormBuilder;
 import com.b07.planetze.form.field.ChoiceField;
+import com.b07.planetze.form.field.DistanceField;
 import com.b07.planetze.form.field.IntField;
+import com.b07.planetze.util.immutability.ImmutableCopy;
 import com.b07.planetze.util.option.Some;
 
-public class EcoTrackerActivity extends AppCompatActivity {
-    @NonNull private static String TAG = "EcoTrackerActivity";
+public final class EcoTrackerActivity extends AppCompatActivity {
+    @NonNull private static final String TAG = "EcoTrackerActivity";
     private FormViewModel formModel;
     private EcoTrackerViewModel ecoModel;
 
@@ -57,7 +60,8 @@ public class EcoTrackerActivity extends AppCompatActivity {
         FieldId<Integer> f1 = fb.add("f1", ChoiceField
                 .withChoices("c1", "c2"));
 
-        FieldId<Integer> f2 = fb.add("f2", IntField.POSITIVE);
+        FieldId<ImmutableCopy<Distance>> f2 = fb.add("f2",
+                DistanceField.create());
 
         FieldId<Integer> f3 = fb.add("f3", ChoiceField
                 .withChoices("c3", "c4", "c5")
@@ -75,7 +79,7 @@ public class EcoTrackerActivity extends AppCompatActivity {
             }
             FormSubmission sub = some.get();
 
-            Log.d(TAG, sub.get(f2).toString());
+            Log.d(TAG, sub.get(f2).copy().toString());
         });
 
         loadFragment(FormFragment.newInstance());

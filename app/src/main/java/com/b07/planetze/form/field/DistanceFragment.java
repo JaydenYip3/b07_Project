@@ -3,7 +3,6 @@ package com.b07.planetze.form.field;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -14,20 +13,22 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.b07.planetze.R;
+import com.b07.planetze.common.measurement.Distance;
 import com.b07.planetze.form.Form;
 import com.b07.planetze.form.definition.FieldId;
+import com.b07.planetze.util.immutability.ImmutableCopy;
 
-public final class IntFragment extends FieldFragment<IntField, Integer> {
-    @NonNull private static final String TAG = "IntFragment";
-
+public class DistanceFragment
+        extends FieldFragment<DistanceField, ImmutableCopy<Distance>> {
     /**
-     * Use {@link ChoiceFragment#newInstance} instead of calling this manually.
+     * Use {@link DistanceFragment#newInstance} instead of calling this
+     * manually.
      */
-    public IntFragment() {}
+    public DistanceFragment() {}
 
     @NonNull
-    public static IntFragment newInstance(@NonNull FieldId<?> field) {
-        IntFragment fragment = new IntFragment();
+    public static DistanceFragment newInstance(@NonNull FieldId<?> field) {
+        DistanceFragment fragment = new DistanceFragment();
         Bundle args = new Bundle();
         args.putParcelable(FIELD_ID_KEY, field);
         fragment.setArguments(args);
@@ -36,24 +37,26 @@ public final class IntFragment extends FieldFragment<IntField, Integer> {
 
     @Override
     protected void displayMissingField(@NonNull View view) {
-        TextView error = view.findViewById(R.id.form_int_error);
+        TextView error = view.findViewById(R.id.form_distance_error);
         if (error.getText().length() == 0) {
             error.setText(R.string.field_required);
         }
     }
 
     @Override
-    public void initializeField(@NonNull View view,
-                                @NonNull Form form,
-                                @NonNull FieldId<Integer> id,
-                                @NonNull IntField field,
-                                @NonNull String fieldName) {
-        TextView name = view.findViewById(R.id.form_int_name);
+    public void initializeField(
+            @NonNull View view,
+            @NonNull Form form,
+            @NonNull FieldId<ImmutableCopy<Distance>> id,
+            @NonNull DistanceField field,
+            @NonNull String fieldName
+    ) {
+        TextView name = view.findViewById(R.id.form_distance_name);
         name.setText(fieldName);
 
-        TextView error = view.findViewById(R.id.form_int_error);
+        TextView error = view.findViewById(R.id.form_distance_error);
 
-        EditText input = view.findViewById(R.id.form_int_input);
+        EditText input = view.findViewById(R.id.form_distance_input);
         form.get(id).map(Object::toString).apply(input::setText);
 
         input.addTextChangedListener(new TextWatcher() {
@@ -64,14 +67,14 @@ public final class IntFragment extends FieldFragment<IntField, Integer> {
             @Override
             public void onTextChanged(
                     @NonNull CharSequence s, int start, int before, int count) {
-                int value;
+                double value;
                 try {
-                    value = Integer.parseInt(s.toString());
+                    value = Double.parseDouble(s.toString());
                 } catch (NumberFormatException e) {
-                    error.setText(R.string.int_error);
+                    error.setText(R.string.distance_error);
                     return;
                 }
-                form.set(id, value)
+                form.set(id, new ImmutableCopy<>(Distance.m(value)))
                         .match(ok -> error.setText(""), error::setText);
             }
 
@@ -80,12 +83,11 @@ public final class IntFragment extends FieldFragment<IntField, Integer> {
         });
     }
 
-    @Override
     @NonNull
-    public View onCreateView(@NonNull LayoutInflater inflater,
-                             @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(
-                R.layout.fragment_form_int, container, false);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_form_distance, container, false);
     }
 }

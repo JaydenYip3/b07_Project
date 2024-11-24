@@ -36,7 +36,7 @@ public final class ChoiceFragment extends FieldFragment<ChoiceField, Integer> {
 
     @Override
     protected void displayMissingField(@NonNull View view) {
-        TextView error = view.findViewById(R.id.choice_field_error);
+        TextView error = view.findViewById(R.id.form_choice_error);
         if (error.getText().length() == 0) {
             error.setText(R.string.field_required);
         }
@@ -48,10 +48,10 @@ public final class ChoiceFragment extends FieldFragment<ChoiceField, Integer> {
                                 @NonNull FieldId<Integer> id,
                                 @NonNull ChoiceField field,
                                 @NonNull String fieldName) {
-        TextView name = view.findViewById(R.id.choice_field_name);
+        TextView name = view.findViewById(R.id.form_choice_name);
         name.setText(fieldName);
 
-        RadioGroup group = view.findViewById(R.id.choice_field_group);
+        RadioGroup group = view.findViewById(R.id.form_choice_group);
         group.removeAllViews();
 
         Util.enumerate(field.choices()).forEach((i, choice) -> {
@@ -65,7 +65,7 @@ public final class ChoiceFragment extends FieldFragment<ChoiceField, Integer> {
             group.addView(button);
         });
 
-        TextView error = view.findViewById(R.id.choice_field_error);
+        TextView error = view.findViewById(R.id.form_choice_error);
         group.setOnCheckedChangeListener(
                 (radioGroup, checkedId) -> error.setText(
                         form.set(id, checkedId).resolve(ok -> "", e -> e)));

@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="int_hint">Value</string>
+    <string name="int_hint">e.g., 2</string>
     <string name="int_error">Enter an integer</string>
+
+    <string name="distance_hint">e.g., 2.5</string>
+    <string name="distance_error">Enter a number</string>
+
+    <string name="mass_hint">e.g., 2.5</string>
+    <string name="mass_error">Enter a number</string>
+
+    <string name="duration_hint">e.g., 2.5</string>
+    <string name="duration_error">Enter a number</string>
+
     <string name="field_required">Field is required</string>
     <string name="form_submit">Submit</string>
 </resources>
