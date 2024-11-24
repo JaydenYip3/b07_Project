@@ -14,12 +14,13 @@ import android.widget.TextView;
 
 import com.b07.planetze.R;
 import com.b07.planetze.common.measurement.Distance;
+import com.b07.planetze.common.measurement.ImmutableDistance;
 import com.b07.planetze.form.Form;
 import com.b07.planetze.form.definition.FieldId;
 import com.b07.planetze.util.immutability.ImmutableCopy;
 
 public class DistanceFragment
-        extends FieldFragment<DistanceField, ImmutableCopy<Distance>> {
+        extends FieldFragment<DistanceField, ImmutableDistance> {
     /**
      * Use {@link DistanceFragment#newInstance} instead of calling this
      * manually.
@@ -47,7 +48,7 @@ public class DistanceFragment
     public void initializeField(
             @NonNull View view,
             @NonNull Form form,
-            @NonNull FieldId<ImmutableCopy<Distance>> id,
+            @NonNull FieldId<ImmutableDistance> id,
             @NonNull DistanceField field,
             @NonNull String fieldName
     ) {
@@ -74,7 +75,7 @@ public class DistanceFragment
                     error.setText(R.string.distance_error);
                     return;
                 }
-                form.set(id, new ImmutableCopy<>(Distance.m(value)))
+                form.set(id, Distance.m(value).immutableCopy())
                         .match(ok -> error.setText(""), error::setText);
             }
 

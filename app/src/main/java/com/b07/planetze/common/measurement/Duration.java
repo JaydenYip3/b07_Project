@@ -78,6 +78,12 @@ public class Duration extends Measurement<Duration> {
 
     @NonNull
     @Override
+    public ImmutableDuration immutableCopy() {
+        return new ImmutableDuration(this);
+    }
+
+    @NonNull
+    @Override
     public Duration self() {
         return this;
     }

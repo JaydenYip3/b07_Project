@@ -15,12 +15,13 @@ import android.widget.TextView;
 
 import com.b07.planetze.R;
 import com.b07.planetze.common.measurement.Duration;
+import com.b07.planetze.common.measurement.ImmutableDuration;
 import com.b07.planetze.form.Form;
 import com.b07.planetze.form.definition.FieldId;
 import com.b07.planetze.util.immutability.ImmutableCopy;
 
 public class DurationFragment
-        extends FieldFragment<DurationField, ImmutableCopy<Duration>> {
+        extends FieldFragment<DurationField, ImmutableDuration> {
     /**
      * Use {@link DurationFragment#newInstance} instead of calling this
      * manually.
@@ -48,7 +49,7 @@ public class DurationFragment
     public void initializeField(
             @NonNull View view,
             @NonNull Form form,
-            @NonNull FieldId<ImmutableCopy<Duration>> id,
+            @NonNull FieldId<ImmutableDuration> id,
             @NonNull DurationField field,
             @NonNull String fieldName
     ) {
@@ -75,7 +76,7 @@ public class DurationFragment
                     error.setText(R.string.mass_error);
                     return;
                 }
-                form.set(id, new ImmutableCopy<>(Duration.h(value)))
+                form.set(id, Duration.h(value).immutableCopy())
                         .match(ok -> error.setText(""), error::setText);
             }
 

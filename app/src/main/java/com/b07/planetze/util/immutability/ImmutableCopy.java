@@ -4,16 +4,13 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 /**
- * An immutable wrapper for objects that are {@link MutableWithCopy}.
- * @param <T>
+ * An immutable wrapper for objects that are {@link MutableWithCopy}. <br>
+ * Consider instantiating this with {@link MutableWithCopy#immutableCopy()}.
+ * @param <T> the type of the object
  */
-public final class ImmutableCopy<T extends MutableWithCopy<T>> {
-    @NonNull private final T object;
+public class ImmutableCopy<T extends MutableWithCopy<T>> {
+    @NonNull protected final T object;
 
-    /**
-     * Immutably stores a copy of a given object.
-     * @param object the object
-     */
     public ImmutableCopy(@NonNull T object) {
         this.object = object.copy();
     }
@@ -35,5 +32,11 @@ public final class ImmutableCopy<T extends MutableWithCopy<T>> {
     @Override
     public int hashCode() {
         return object.hashCode();
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return object.toString();
     }
 }

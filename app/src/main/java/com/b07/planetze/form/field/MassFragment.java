@@ -12,13 +12,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import com.b07.planetze.R;
+import com.b07.planetze.common.measurement.ImmutableMass;
 import com.b07.planetze.common.measurement.Mass;
 import com.b07.planetze.form.Form;
 import com.b07.planetze.form.definition.FieldId;
 import com.b07.planetze.util.immutability.ImmutableCopy;
 
-public class MassFragment
-        extends FieldFragment<MassField, ImmutableCopy<Mass>> {
+public class MassFragment extends FieldFragment<MassField, ImmutableMass> {
     /**
      * Use {@link MassFragment#newInstance} instead of calling this
      * manually.
@@ -46,7 +46,7 @@ public class MassFragment
     public void initializeField(
             @NonNull View view,
             @NonNull Form form,
-            @NonNull FieldId<ImmutableCopy<Mass>> id,
+            @NonNull FieldId<ImmutableMass> id,
             @NonNull MassField field,
             @NonNull String fieldName
     ) {
@@ -73,7 +73,7 @@ public class MassFragment
                     error.setText(R.string.mass_error);
                     return;
                 }
-                form.set(id, new ImmutableCopy<>(Mass.kg(value)))
+                form.set(id, Mass.kg(value).immutableCopy())
                         .match(ok -> error.setText(""), error::setText);
             }
 

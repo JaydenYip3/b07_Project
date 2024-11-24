@@ -3,7 +3,6 @@ package com.b07.planetze.common;
 import androidx.annotation.NonNull;
 
 import com.b07.planetze.common.measurement.Mass;
-import com.b07.planetze.util.Measurement;
 import com.b07.planetze.util.Util;
 import com.b07.planetze.util.immutability.ImmutableList;
 import com.b07.planetze.util.immutability.MutableWithCopy;
@@ -16,34 +15,77 @@ import java.util.List;
 public class Emissions implements MutableWithCopy<Emissions> {
     @NonNull private final ImmutableList<Mass> categories;
 
-    /**
-     * Creates a new {@link Emissions} where all emission categories are zero.
-     */
-    public Emissions() {
+    private Emissions() {
         List<Mass> list = Util.filledArrayList(4, Mass::zero);
         categories = new ImmutableList<>(list);
     }
 
+    /**
+     * {@return a new <code>Emissions</code> where all categories are zero}
+     */
     @NonNull
-    @Override
-    public Emissions copy() {
-        Emissions emissions = new Emissions();
-        Util.zip(emissions.categories, categories).forEach(Mass::set);
-        return emissions;
+    public static Emissions zero() {
+        return new Emissions();
     }
 
     /**
-     * Gets a mutable reference to transportation emissions.
-     * @return a mutable reference to transportation emissions
+     * {@return a new <code>Emissions</code> with specified transportation
+     *          emissions (and zero for everything else)}
+     * @param mass the mass of transportation emissions
      */
     @NonNull
-    public Mass transportation() {
+    public static Emissions transport(Mass mass) {
+        Emissions e = zero();
+        e.transport().set(mass);
+        return e;
+    }
+
+    /**
+     * {@return a new <code>Emissions</code> with specified energy emissions
+     *          (and zero for everything else)}
+     * @param mass the mass of energy emissions
+     */
+    @NonNull
+    public static Emissions energy(Mass mass) {
+        Emissions e = zero();
+        e.energy().set(mass);
+        return e;
+    }
+
+    /**
+     * {@return a new <code>Emissions</code> with specified food emissions
+     *          (and zero for everything else)}
+     * @param mass the mass of food emissions
+     */
+    @NonNull
+    public static Emissions food(Mass mass) {
+        Emissions e = zero();
+        e.food().set(mass);
+        return e;
+    }
+
+    /**
+     * {@return a new <code>Emissions</code> with specified shopping emissions
+     *          (and zero for everything else)}
+     * @param mass the mass of shopping emissions
+     */
+    @NonNull
+    public static Emissions shopping(Mass mass) {
+        Emissions e = zero();
+        e.shopping().set(mass);
+        return e;
+    }
+
+    /**
+     * {@return a mutable reference to transportation emissions}
+     */
+    @NonNull
+    public Mass transport() {
         return categories.get(0);
     }
 
     /**
-     * Gets a mutable reference to energy use emissions.
-     * @return a mutable reference to energy use emissions
+     * {@return a mutable reference to energy use emissions}
      */
     @NonNull
     public Mass energy() {
@@ -51,8 +93,7 @@ public class Emissions implements MutableWithCopy<Emissions> {
     }
 
     /**
-     * Gets a mutable reference to food consumption emissions.
-     * @return a mutable reference to food consumption emissions
+     * {@return a mutable reference to food consumption emissions}
      */
     @NonNull
     public Mass food() {
@@ -60,8 +101,7 @@ public class Emissions implements MutableWithCopy<Emissions> {
     }
 
     /**
-     * Gets a mutable reference to shopping emissions.
-     * @return a mutable reference to shopping emissions
+     * {@return a mutable reference to shopping emissions}
      */
     @NonNull
     public Mass shopping() {
@@ -69,8 +109,8 @@ public class Emissions implements MutableWithCopy<Emissions> {
     }
 
     /**
-     * Computes the sum of emissions across all categories.
-     * @return a new {@link Mass} - the sum of emissions across all categories
+     * {@return a new <code>Mass</code> - the sum of emissions across all
+     *          categories}
      */
     @NonNull
     public Mass total() {
@@ -136,21 +176,19 @@ public class Emissions implements MutableWithCopy<Emissions> {
         return this;
     }
 
-    /**
-     * Sets the emissions of all categories to zero.
-     * @return <code>this</code>
-     */
     @NonNull
-    public Emissions zero() {
-        categories.forEach(c -> c.set(Mass.zero()));
-        return this;
+    @Override
+    public Emissions copy() {
+        Emissions emissions = new Emissions();
+        Util.zip(emissions.categories, categories).forEach(Mass::set);
+        return emissions;
     }
 
     @NonNull
     @Override
     public String toString() {
         return String.format("Emissions[transportation=%s, energy=%s, food=%s, shopping=%s]",
-                transportation(),
+                transport(),
                 energy(),
                 food(),
                 shopping());

@@ -32,10 +32,26 @@ public final class Mass extends Measurement<Mass> {
     }
 
     /**
+     * {@return a new mass given grams}
+     * @param g a value in grams
+     */
+    @NonNull
+    public static Mass g(double g) {
+        return new Mass(g / 1000);
+    }
+
+    /**
      * {@return this mass in kilograms}
      */
     public double kg() {
         return kg;
+    }
+
+    /**
+     * {@return this mass in grams}
+     */
+    public double g() {
+        return kg * 1000;
     }
 
     @Override
@@ -55,19 +71,25 @@ public final class Mass extends Measurement<Mass> {
 
     @NonNull
     @Override
-    public String toString() {
-        return kg + "kg";
-    }
-
-    @NonNull
-    @Override
     public Mass copy() {
         return new Mass(kg);
     }
 
     @NonNull
     @Override
+    public ImmutableMass immutableCopy() {
+        return new ImmutableMass(this);
+    }
+
+    @NonNull
+    @Override
     public Mass self() {
         return this;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return kg + "kg";
     }
 }

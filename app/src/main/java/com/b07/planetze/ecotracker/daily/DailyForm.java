@@ -10,5 +10,5 @@ public interface DailyForm {
     FormDefinition formDefinition();
 
     @NonNull
-    Daily createDaily(@NonNull FormSubmission submission);
+    Daily createDaily(@NonNull FormSubmission form);
 }

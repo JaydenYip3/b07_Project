@@ -100,6 +100,12 @@ public class Distance extends Measurement<Distance> {
 
     @NonNull
     @Override
+    public ImmutableDistance immutableCopy() {
+        return new ImmutableDistance(this);
+    }
+
+    @NonNull
+    @Override
     public Distance self() {
         return this;
     }

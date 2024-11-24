@@ -39,7 +39,7 @@ public class FakeDatabase implements Database {
             @NonNull Consumer<Result<Emissions, DatabaseError>> callback
     ) {
         UserIdWithDate key = new UserIdWithDate(userId, date);
-        callback.accept(ok(Objects.requireNonNull(map.getOrDefault(key, new Emissions())).copy()));
+        callback.accept(ok(Objects.requireNonNull(map.getOrDefault(key, Emissions.zero())).copy()));
     }
 
     @Override
