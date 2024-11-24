@@ -2,5 +2,6 @@
 <resources>
     <string name="int_hint">Value</string>
     <string name="int_error">Enter an integer</string>
-    <string name="submit">Log</string>
+    <string name="field_required">Field is required</string>
+    <string name="form_submit">Submit</string>
 </resources>

@@ -5,8 +5,10 @@ import static com.b07.planetze.util.option.Option.some;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
@@ -19,6 +21,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.b07.planetze.R;
 import com.b07.planetze.form.Form;
 import com.b07.planetze.form.FormFragment;
+import com.b07.planetze.form.FormSubmission;
 import com.b07.planetze.form.FormViewModel;
 import com.b07.planetze.form.definition.FieldId;
 import com.b07.planetze.form.definition.FormBuilder;
@@ -26,12 +29,13 @@ import com.b07.planetze.form.field.ChoiceField;
 import com.b07.planetze.form.field.IntField;
 import com.b07.planetze.util.option.Some;
 
-public class EcotrackerActivity extends AppCompatActivity {
+public class EcoTrackerActivity extends AppCompatActivity {
+    @NonNull private static String TAG = "EcoTrackerActivity";
     private FormViewModel formModel;
-    private EcotrackerViewModel ecoModel;
+    private EcoTrackerViewModel ecoModel;
 
     public static void start(Context context) {
-        Intent intent = new Intent(context, EcotrackerActivity.class);
+        Intent intent = new Intent(context, EcoTrackerActivity.class);
         context.startActivity(intent);
     }
 
@@ -47,7 +51,7 @@ public class EcotrackerActivity extends AppCompatActivity {
         });
 
         formModel = new ViewModelProvider(this).get(FormViewModel.class);
-        ecoModel = new ViewModelProvider(this).get(EcotrackerViewModel.class);
+        ecoModel = new ViewModelProvider(this).get(EcoTrackerViewModel.class);
 
         FormBuilder fb = new FormBuilder();
         FieldId<Integer> f1 = fb.add("f1", ChoiceField
@@ -65,6 +69,14 @@ public class EcotrackerActivity extends AppCompatActivity {
         Form form = fb.build().createForm();
 
         formModel.setForm(form);
+        formModel.getSubmission().observe(this, submission -> {
+            if (!(submission instanceof Some<FormSubmission> some)) {
+                return;
+            }
+            FormSubmission sub = some.get();
+
+            Log.d(TAG, sub.get(f2).toString());
+        });
 
         loadFragment(FormFragment.newInstance());
     }

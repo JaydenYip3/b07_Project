@@ -18,6 +18,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 
 import com.b07.planetze.R;
@@ -55,6 +56,9 @@ public final class FormFragment extends Fragment {
             Form form = some.get();
             FormDefinition def = form.definition();
 
+            Button submit = view.findViewById(R.id.form_submit);
+            submit.setOnClickListener(btn -> model.submit());
+
             FragmentManager mgr = requireActivity().getSupportFragmentManager();
             FragmentTransaction ft = mgr.beginTransaction();
 
@@ -71,7 +75,7 @@ public final class FormFragment extends Fragment {
                 Fragment frag = fieldDef.field().createFragment(id);
                 String tag = fragmentTag(count + i);
 
-                ft.add(R.id.formFragmentContainer, frag, tag);
+                ft.add(R.id.form_fragment_container, frag, tag);
             });
 
             model.setTagCounter(count + def.fields().size());

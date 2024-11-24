@@ -1,24 +1,16 @@
 package com.b07.planetze.form.field;
 
-import static com.b07.planetze.form.field.FieldFragment.FIELD_ID_KEY;
-
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
-import android.os.Parcelable;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.b07.planetze.R;
@@ -43,17 +35,25 @@ public class IntFragment extends FieldFragment<IntField, Integer> {
     }
 
     @Override
+    protected void displayMissingField(@NonNull View view) {
+        TextView error = view.findViewById(R.id.int_field_error);
+        if (error.getText().length() == 0) {
+            error.setText(R.string.field_required);
+        }
+    }
+
+    @Override
     public void initializeField(@NonNull View view,
                                 @NonNull Form form,
                                 @NonNull FieldId<Integer> id,
                                 @NonNull IntField field,
                                 @NonNull String fieldName) {
-        TextView name = view.findViewById(R.id.intFieldName);
+        TextView name = view.findViewById(R.id.int_field_name);
         name.setText(fieldName);
 
-        TextView error = view.findViewById(R.id.intFieldError);
+        TextView error = view.findViewById(R.id.int_field_error);
 
-        EditText input = view.findViewById(R.id.intFieldInput);
+        EditText input = view.findViewById(R.id.int_field_input);
         form.get(id).map(Object::toString).apply(input::setText);
 
         input.addTextChangedListener(new TextWatcher() {

@@ -11,7 +11,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.b07.planetze.R;
 import com.b07.planetze.form.Form;
 import com.b07.planetze.form.FormViewModel;
 import com.b07.planetze.form.definition.FieldId;
@@ -30,6 +29,8 @@ public abstract class FieldFragment<F extends Field<V>, V> extends Fragment {
     @NonNull private static final String TAG = "FieldFragment";
 
     @Nullable private FieldId<V> fieldId;
+
+    protected abstract void displayMissingField(@NonNull View view);
 
     public abstract void initializeField(@NonNull View view,
                                          @NonNull Form form,
@@ -63,6 +64,12 @@ public abstract class FieldFragment<F extends Field<V>, V> extends Fragment {
 
         FormViewModel model = new ViewModelProvider(requireActivity())
                 .get(FormViewModel.class);
+
+        model.getMissingFields().observe(getViewLifecycleOwner(), missing -> {
+            if (missing.contains(fieldId.index())) {
+                displayMissingField(view);
+            }
+        });
 
         model.getForm().observe(getViewLifecycleOwner(), maybeForm -> {
             if (!(maybeForm instanceof Some<Form> some)) {

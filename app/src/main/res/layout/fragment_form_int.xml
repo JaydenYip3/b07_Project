@@ -8,17 +8,17 @@
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:id="@+id/intFieldName"
+        android:id="@+id/int_field_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <TextView
-        android:id="@+id/intFieldError"
+        android:id="@+id/int_field_error"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <EditText
-        android:id="@+id/intFieldInput"
+        android:id="@+id/int_field_input"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:ems="10"

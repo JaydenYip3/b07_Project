@@ -21,6 +21,7 @@ import com.b07.planetze.util.result.Result;
 import org.junit.Test;
 
 import java.util.List;
+import java.util.Set;
 
 public class FormTest {
     @Test
@@ -47,7 +48,7 @@ public class FormTest {
 
         form.set(f3, 5);
 
-        Result<FormSubmission, List<Integer>> r = form.submit();
+        Result<FormSubmission, Set<Integer>> r = form.submit();
 
         r.match(sub -> {
             assertEquals(sub.get(f1), Integer.valueOf(1));

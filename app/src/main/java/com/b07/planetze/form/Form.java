@@ -18,7 +18,9 @@ import com.b07.planetze.util.Unit;
 import com.b07.planetze.util.Util;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public final class Form {
     @NonNull private final FormDefinition definition;
@@ -80,19 +82,18 @@ public final class Form {
     }
 
     /**
-     * {@return a form submission or a list of missing field indices}
+     * {@return a form submission or a set of missing field indices}
      */
     @NonNull
-    public Result<FormSubmission, List<Integer>> submit() {
-        List<Integer> invalid = new ArrayList<>();
+    public Result<FormSubmission, Set<Integer>> submit() {
+        Set<Integer> missing = new HashSet<>();
         List<Object> presentValues = new ArrayList<>();
 
-        Util.enumerate(values).forEach((i, value) -> value
-                .apply(presentValues::add)
-                .applyNone(() -> invalid.add(i)));
+        Util.enumerate(values).forEach(
+                (i, v) -> v.match(presentValues::add, () -> missing.add(i)));
 
-        if (!invalid.isEmpty()) {
-            return error(invalid);
+        if (!missing.isEmpty()) {
+            return error(missing);
         }
         return ok(new FormSubmission(
                 definition.id(),

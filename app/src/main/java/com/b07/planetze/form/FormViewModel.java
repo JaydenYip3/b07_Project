@@ -16,11 +16,17 @@ import com.b07.planetze.util.option.Some;
 import com.b07.planetze.util.result.Result;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public final class FormViewModel extends ViewModel {
-    @NonNull private final MutableLiveData<Option<Form>> form;
-    @NonNull private final MutableLiveData<Option<FormSubmission>> submission;
+    @NonNull
+    private final MutableLiveData<Option<Form>> form;
+    @NonNull
+    private final MutableLiveData<Option<FormSubmission>> submission;
+    @NonNull
+    private final MutableLiveData<Set<Integer>> missingFields;
 
     private int fragmentTagCounter;
     private int previousTagCounter;
@@ -28,6 +34,7 @@ public final class FormViewModel extends ViewModel {
     public FormViewModel() {
         this.form = new MutableLiveData<>(none());
         this.submission = new MutableLiveData<>(none());
+        this.missingFields = new MutableLiveData<>(new HashSet<>(0));
 
         fragmentTagCounter = 0;
         previousTagCounter = 0;
@@ -39,6 +46,14 @@ public final class FormViewModel extends ViewModel {
 
     public LiveData<Option<Form>> getForm() {
         return form;
+    }
+
+    public LiveData<Option<FormSubmission>> getSubmission() {
+        return submission;
+    }
+
+    public LiveData<Set<Integer>> getMissingFields() {
+        return missingFields;
     }
 
     public void setTagCounter(int count) {
@@ -54,18 +69,13 @@ public final class FormViewModel extends ViewModel {
         return fragmentTagCounter;
     }
 
-    public LiveData<Option<FormSubmission>> getSubmission() {
-        return submission;
-    }
-
-    public Result<Unit, List<Integer>> submit() {
+    public void submit() {
         Form f = Option
                 .flattenNull(form.getValue())
                 .getOrThrow(new FormException("submit called before setForm"));
 
-        return f.submit()
+        f.submit()
                 .map(Option::some)
-                .apply(submission::setValue)
-                .map(x -> Unit.UNIT);
+                .match(submission::setValue, missingFields::setValue);
     }
 }

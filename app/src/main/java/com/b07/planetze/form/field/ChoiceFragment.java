@@ -4,10 +4,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProvider;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,13 +14,8 @@ import android.widget.TextView;
 
 import com.b07.planetze.R;
 import com.b07.planetze.form.Form;
-import com.b07.planetze.form.FormViewModel;
 import com.b07.planetze.form.definition.FieldId;
-import com.b07.planetze.form.definition.FormDefinition;
-import com.b07.planetze.form.exception.FormException;
 import com.b07.planetze.util.Util;
-import com.b07.planetze.util.option.Option;
-import com.b07.planetze.util.option.Some;
 
 public final class ChoiceFragment extends FieldFragment<ChoiceField, Integer> {
     @NonNull private static final String TAG = "ChoiceFragment";
@@ -43,15 +35,23 @@ public final class ChoiceFragment extends FieldFragment<ChoiceField, Integer> {
     }
 
     @Override
+    protected void displayMissingField(@NonNull View view) {
+        TextView error = view.findViewById(R.id.choice_field_error);
+        if (error.getText().length() == 0) {
+            error.setText(R.string.field_required);
+        }
+    }
+
+    @Override
     public void initializeField(@NonNull View view,
                                 @NonNull Form form,
                                 @NonNull FieldId<Integer> id,
                                 @NonNull ChoiceField field,
                                 @NonNull String fieldName) {
-        TextView name = view.findViewById(R.id.choiceFieldName);
+        TextView name = view.findViewById(R.id.choice_field_name);
         name.setText(fieldName);
 
-        RadioGroup group = view.findViewById(R.id.choiceFieldGroup);
+        RadioGroup group = view.findViewById(R.id.choice_field_group);
         group.removeAllViews();
 
         Util.enumerate(field.choices()).forEach((i, choice) -> {
@@ -65,9 +65,10 @@ public final class ChoiceFragment extends FieldFragment<ChoiceField, Integer> {
             group.addView(button);
         });
 
-        TextView error = view.findViewById(R.id.choiceFieldError);
-        group.setOnCheckedChangeListener((radioGroup, checkedId) ->
-                form.set(id, checkedId).applyError(error::setText));
+        TextView error = view.findViewById(R.id.choice_field_error);
+        group.setOnCheckedChangeListener(
+                (radioGroup, checkedId) -> error.setText(
+                        form.set(id, checkedId).resolve(ok -> "", e -> e)));
     }
 
     @Override
