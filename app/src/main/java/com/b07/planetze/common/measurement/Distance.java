@@ -8,7 +8,7 @@ import com.b07.planetze.util.Measurement;
 /**
  * A measurement of distance.
  */
-public class Distance extends Measurement<Distance> {
+public final class Distance extends Measurement<Distance> {
     private static final double MILES_TO_METRES = 1609.344;
     private static final double METRES_TO_MILES = 1 / MILES_TO_METRES;
 

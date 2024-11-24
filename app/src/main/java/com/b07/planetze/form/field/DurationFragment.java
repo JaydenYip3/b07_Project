@@ -20,7 +20,7 @@ import com.b07.planetze.form.Form;
 import com.b07.planetze.form.definition.FieldId;
 import com.b07.planetze.util.immutability.ImmutableCopy;
 
-public class DurationFragment
+public final class DurationFragment
         extends FieldFragment<DurationField, ImmutableDuration> {
     /**
      * Use {@link DurationFragment#newInstance} instead of calling this

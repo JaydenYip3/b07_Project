@@ -13,7 +13,7 @@ import com.b07.planetze.form.field.ChoiceField;
 import com.b07.planetze.form.field.DistanceField;
 import com.b07.planetze.util.immutability.ImmutableCopy;
 
-public class DrivingForm implements DailyForm {
+public final class DrivingForm implements DailyForm {
     @NonNull private final FieldId<ImmutableDistance> distance;
     @NonNull private final FieldId<Integer> vehicle;
     @NonNull private final FormDefinition definition;

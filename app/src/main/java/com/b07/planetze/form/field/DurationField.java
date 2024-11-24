@@ -12,7 +12,7 @@ import com.b07.planetze.util.Unit;
 import com.b07.planetze.util.immutability.ImmutableCopy;
 import com.b07.planetze.util.result.Result;
 
-public class DurationField implements Field<ImmutableDuration> {
+public final class DurationField implements Field<ImmutableDuration> {
     @NonNull private static final DurationField INSTANCE = new DurationField();
     private DurationField() {}
 

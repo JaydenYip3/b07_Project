@@ -15,7 +15,7 @@ import com.b07.planetze.util.result.Result;
  * This validates the initial value.
  * @param <T> the field value type
  */
-public class InitiallyFilled<T> {
+public final class InitiallyFilled<T> {
     @NonNull private final Field<T> field;
     @NonNull private final Option<T> initialValue;
 

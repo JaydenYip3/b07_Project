@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Stores CO2e emissions by category.
  */
-public class Emissions implements MutableWithCopy<Emissions> {
+public final class Emissions implements MutableWithCopy<Emissions> {
     @NonNull private final ImmutableList<Mass> categories;
 
     private Emissions() {

@@ -23,7 +23,7 @@ import java.util.function.Consumer;
 /**
  * A local "database" for the purpose of testing.
  */
-public class FakeDatabase implements Database {
+public final class FakeDatabase implements Database {
     private final HashMap<UserIdWithDate, Emissions> map;
 
     private record UserIdWithDate(UserId userId, LocalDate date) {}

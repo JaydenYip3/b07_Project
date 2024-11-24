@@ -8,7 +8,7 @@ import com.b07.planetze.util.immutability.ImmutableCopy;
  * Immutably stores a copy of a {@link Distance}. <br>
  * Consider instantiating this with {@link Distance#immutableCopy()}.
  */
-public class ImmutableDistance extends ImmutableCopy<Distance> {
+public final class ImmutableDistance extends ImmutableCopy<Distance> {
     public ImmutableDistance(@NonNull Distance object) {
         super(object);
     }

@@ -7,7 +7,7 @@ import androidx.annotation.NonNull;
  * This exists to ensure that non-user-id strings
  * aren't used where user ids are expected.
  */
-public class UserId {
+public final class UserId {
     @NonNull private final String id;
 
     /**
@@ -29,13 +29,7 @@ public class UserId {
 
     @Override
     public boolean equals(Object o) {
-        if (o == null) {
-            return false;
-        }
-        if (o instanceof UserId other) {
-            return id.equals(other.id);
-        }
-        return false;
+        return (o instanceof UserId other) && id.equals(other.id);
     }
 
     @Override

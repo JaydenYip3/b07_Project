@@ -18,7 +18,8 @@ import com.b07.planetze.form.Form;
 import com.b07.planetze.form.definition.FieldId;
 import com.b07.planetze.util.immutability.ImmutableCopy;
 
-public class MassFragment extends FieldFragment<MassField, ImmutableMass> {
+public final class MassFragment
+        extends FieldFragment<MassField, ImmutableMass> {
     /**
      * Use {@link MassFragment#newInstance} instead of calling this
      * manually.

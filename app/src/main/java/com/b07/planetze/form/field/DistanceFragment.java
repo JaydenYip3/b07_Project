@@ -19,7 +19,7 @@ import com.b07.planetze.form.Form;
 import com.b07.planetze.form.definition.FieldId;
 import com.b07.planetze.util.immutability.ImmutableCopy;
 
-public class DistanceFragment
+public final class DistanceFragment
         extends FieldFragment<DistanceField, ImmutableDistance> {
     /**
      * Use {@link DistanceFragment#newInstance} instead of calling this

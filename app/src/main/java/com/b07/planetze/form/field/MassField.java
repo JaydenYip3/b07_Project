@@ -12,7 +12,7 @@ import com.b07.planetze.util.Unit;
 import com.b07.planetze.util.immutability.ImmutableCopy;
 import com.b07.planetze.util.result.Result;
 
-public class MassField implements Field<ImmutableMass> {
+public final class MassField implements Field<ImmutableMass> {
     @NonNull private static final MassField INSTANCE = new MassField();
     private MassField() {}
 

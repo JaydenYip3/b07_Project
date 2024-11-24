@@ -8,7 +8,7 @@ import com.b07.planetze.util.Measurement;
 /**
  * A measurement of duration.
  */
-public class Duration extends Measurement<Duration> {
+public final class Duration extends Measurement<Duration> {
     private double s;
 
     private Duration(double s) {

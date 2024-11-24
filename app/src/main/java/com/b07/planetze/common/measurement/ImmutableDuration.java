@@ -8,7 +8,7 @@ import com.b07.planetze.util.immutability.ImmutableCopy;
  * Immutably stores a copy of a {@link Duration}. <br>
  * Consider instantiating this with {@link Duration#immutableCopy()}.
  */
-public class ImmutableDuration extends ImmutableCopy<Duration> {
+public final class ImmutableDuration extends ImmutableCopy<Duration> {
     public ImmutableDuration(@NonNull Duration object) {
         super(object);
     }
