@@ -2,7 +2,6 @@ package com.b07.planetze.ecotracker.daily;
 
 import androidx.annotation.NonNull;
 
-import com.b07.planetze.common.measurement.Distance;
 import com.b07.planetze.common.measurement.ImmutableDistance;
 import com.b07.planetze.ecotracker.exception.DailyFormException;
 import com.b07.planetze.form.FormSubmission;
@@ -11,14 +10,15 @@ import com.b07.planetze.form.definition.FormBuilder;
 import com.b07.planetze.form.definition.FormDefinition;
 import com.b07.planetze.form.field.ChoiceField;
 import com.b07.planetze.form.field.DistanceField;
-import com.b07.planetze.util.immutability.ImmutableCopy;
 
 public final class DrivingForm implements DailyForm {
+    @NonNull public static final DrivingForm INSTANCE = new DrivingForm();
+
     @NonNull private final FieldId<ImmutableDistance> distance;
     @NonNull private final FieldId<Integer> vehicle;
     @NonNull private final FormDefinition definition;
 
-    public DrivingForm() {
+    private DrivingForm() {
         FormBuilder fb = new FormBuilder();
         distance = fb.add("Distance travelled", DistanceField.create());
         vehicle = fb.add("Vehicle", ChoiceField
@@ -29,7 +29,7 @@ public final class DrivingForm implements DailyForm {
 
     @NonNull
     @Override
-    public FormDefinition formDefinition() {
+    public FormDefinition definition() {
         return definition;
     }
 

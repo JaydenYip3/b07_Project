@@ -5,7 +5,6 @@ import static com.b07.planetze.util.option.Option.some;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -19,32 +18,37 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.b07.planetze.R;
-import com.b07.planetze.common.measurement.Distance;
-import com.b07.planetze.common.measurement.Duration;
-import com.b07.planetze.common.measurement.ImmutableDuration;
-import com.b07.planetze.common.measurement.Mass;
+import com.b07.planetze.ecotracker.daily.DailyForm;
 import com.b07.planetze.form.Form;
 import com.b07.planetze.form.FormFragment;
-import com.b07.planetze.form.FormSubmission;
 import com.b07.planetze.form.FormViewModel;
-import com.b07.planetze.form.definition.FieldId;
-import com.b07.planetze.form.definition.FormBuilder;
-import com.b07.planetze.form.field.ChoiceField;
-import com.b07.planetze.form.field.DistanceField;
-import com.b07.planetze.form.field.DurationField;
-import com.b07.planetze.form.field.IntField;
-import com.b07.planetze.form.field.MassField;
-import com.b07.planetze.util.immutability.ImmutableCopy;
-import com.b07.planetze.util.option.Some;
 
 public final class EcoTrackerActivity extends AppCompatActivity {
     @NonNull private static final String TAG = "EcoTrackerActivity";
-    private FormViewModel formModel;
-    private EcoTrackerViewModel ecoModel;
 
     public static void start(Context context) {
         Intent intent = new Intent(context, EcoTrackerActivity.class);
         context.startActivity(intent);
+    }
+
+    private record Model(@NonNull EcoTrackerViewModel ecoTracker,
+                         @NonNull FormViewModel form) {}
+
+    private void startForm(@NonNull Model model,
+                           @NonNull EcoTrackerState.Form state) {
+        model.form.getSubmission().removeObservers(this);
+
+        DailyForm df = state.dailyType().form();
+        Form f = df.definition().createForm();
+
+        model.form.getSubmission().observe(this, maybeSub -> {
+            maybeSub.apply(sub -> {
+                model.ecoTracker.submitDaily(df.createDaily(sub));
+            });
+        });
+
+        loadFragment(FormFragment.newInstance());
+        model.form.setForm(f);
     }
 
     @Override
@@ -52,45 +56,28 @@ public final class EcoTrackerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_ecotracker);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main),
+                (v, insets) -> {
+            Insets systemBars = insets.getInsets(
+                    WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right,
+                    systemBars.bottom);
             return insets;
         });
 
-        formModel = new ViewModelProvider(this).get(FormViewModel.class);
-        ecoModel = new ViewModelProvider(this).get(EcoTrackerViewModel.class);
+        Model model = new Model(
+                new ViewModelProvider(this).get(EcoTrackerViewModel.class),
+                new ViewModelProvider(this).get(FormViewModel.class)
+        );
 
-        FormBuilder fb = new FormBuilder();
-        FieldId<Integer> f1 = fb.add("f1", ChoiceField
-                .withChoices("c1", "c2"));
-
-        FieldId<ImmutableDuration> f2 = fb.add("f2",
-                DurationField.create());
-
-        FieldId<Integer> f3 = fb.add("f3", ChoiceField
-                .withChoices("c3", "c4", "c5")
-                .initially(2));
-
-        FieldId<Integer> f4 = fb.add("f4", IntField.POSITIVE
-                .initially(2));
-
-        Form form = fb.build().createForm();
-
-        formModel.setForm(form);
-        formModel.getSubmission().observe(this, submission -> {
-            if (!(submission instanceof Some<FormSubmission> some)) {
-                return;
+        model.ecoTracker.getState().observe(this, state -> {
+            if (state instanceof EcoTrackerState.Form form) {
+                startForm(model, form);
             }
-            FormSubmission sub = some.get();
-
-            Log.d(TAG, sub.get(f2).copy().toString());
         });
-
-        loadFragment(FormFragment.newInstance());
     }
 
-    private void loadFragment(Fragment fragment) {
+    private void loadFragment(@NonNull Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.ecotracker_fragment_container, fragment);
         transaction.addToBackStack(null);

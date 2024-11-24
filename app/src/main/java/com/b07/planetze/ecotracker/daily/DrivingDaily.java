@@ -26,7 +26,7 @@ public record DrivingDaily(
 
     @NonNull
     @Override
-    public String type() {
-        return "driving";
+    public DailyType type() {
+        return DailyType.DRIVING;
     }
 }

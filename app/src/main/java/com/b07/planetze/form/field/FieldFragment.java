@@ -1,5 +1,7 @@
 package com.b07.planetze.form.field;
 
+import static com.b07.planetze.util.option.Option.none;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -28,7 +30,11 @@ public abstract class FieldFragment<F extends Field<V>, V> extends Fragment {
     @NonNull protected static final String FIELD_ID_KEY = "field";
     @NonNull private static final String TAG = "FieldFragment";
 
-    @Nullable private FieldId<V> fieldId;
+    @NonNull private Option<FieldId<V>> fieldId;
+
+    protected FieldFragment() {
+        fieldId = none();
+    }
 
     protected abstract void displayMissingField(@NonNull View view);
 
@@ -46,9 +52,8 @@ public abstract class FieldFragment<F extends Field<V>, V> extends Fragment {
                 .getOrThrow(new FormException("No arguments provided"));
 
         @SuppressWarnings("unchecked")
-        FieldId<V> f = Option
-                .mapNull(args.getParcelable(FIELD_ID_KEY, FieldId.class))
-                .getOrThrow(new FormException("Invalid arguments"));
+        Option<FieldId<V>> f = Option.mapNull(
+                args.getParcelable(FIELD_ID_KEY, FieldId.class));
 
         fieldId = f;
     }
@@ -58,15 +63,14 @@ public abstract class FieldFragment<F extends Field<V>, V> extends Fragment {
                               @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        if (fieldId == null) {
-            throw new FormException("Field id improperly initialized");
-        }
+        FieldId<V> id = fieldId.getOrThrow(
+                new FormException("Field id argument not provided"));
 
         FormViewModel model = new ViewModelProvider(requireActivity())
                 .get(FormViewModel.class);
 
         model.getMissingFields().observe(getViewLifecycleOwner(), missing -> {
-            if (missing.contains(fieldId.index())) {
+            if (missing.contains(id.index())) {
                 displayMissingField(view);
             }
         });
@@ -78,17 +82,16 @@ public abstract class FieldFragment<F extends Field<V>, V> extends Fragment {
             Form form = some.get();
             FormDefinition def = form.definition();
 
-            if (!def.containsField(fieldId)) {
-                Log.w(TAG, "field-form mismatch: " + fieldId.toString());
+            if (!def.containsField(id)) {
+                Log.w(TAG, "field-form mismatch: " + id);
                 return;
             }
 
             @SuppressWarnings("unchecked")
-            F field = (F) def.field(fieldId);
+            F field = (F) def.field(id);
 
-            String name = def.name(fieldId);
-
-            initializeField(view, form, fieldId, field, name);
+            String name = def.name(id);
+            initializeField(view, form, id, field, name);
         });
     }
 

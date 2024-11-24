@@ -30,9 +30,6 @@ import com.b07.planetze.util.option.Option;
 import com.b07.planetze.util.option.Some;
 
 public final class FormFragment extends Fragment {
-
-    private FormViewModel model;
-
     public FormFragment() {}
 
     public static FormFragment newInstance() {
@@ -46,7 +43,7 @@ public final class FormFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view,
                               @Nullable Bundle savedInstanceState) {
-        model = new ViewModelProvider(requireActivity())
+        FormViewModel model = new ViewModelProvider(requireActivity())
                 .get(FormViewModel.class);
 
         model.getForm().observe(getViewLifecycleOwner(), maybeForm -> {

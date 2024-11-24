@@ -8,6 +8,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.b07.planetze.form.definition.FieldId;
 import com.b07.planetze.form.exception.FormException;
 import com.b07.planetze.util.Unit;
 import com.b07.planetze.util.option.None;

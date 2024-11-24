@@ -18,5 +18,5 @@ public interface Daily {
      * {@return the type of this activity}
      */
     @NonNull
-    String type();
+    DailyType type();
 }

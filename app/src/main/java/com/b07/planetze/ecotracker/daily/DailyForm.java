@@ -7,7 +7,7 @@ import com.b07.planetze.form.definition.FormDefinition;
 
 public interface DailyForm {
     @NonNull
-    FormDefinition formDefinition();
+    FormDefinition definition();
 
     @NonNull
     Daily createDaily(@NonNull FormSubmission form);

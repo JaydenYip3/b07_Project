@@ -67,7 +67,8 @@ public final class Form {
 
     /**
      * {@return the value of a field} <br>
-     * Throws {@link com.b07.planetze.form.exception.FormIdException}.
+     * Throws {@link com.b07.planetze.form.exception.FormIdException}. <br>
+     * Use {@link FormSubmission} if you require all fields to be filled.
      * @param field the field to get
      * @param <T> the type of the field's value
      */
