@@ -24,12 +24,17 @@ import com.b07.planetze.WelcomeFragment;
 import com.b07.planetze.common.Emissions;
 import com.b07.planetze.common.Mass;
 import com.b07.planetze.database.FakeDatabase;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.time.LocalDate;
 import java.util.Objects;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class QuestionsHousingFragment extends Fragment{
+    private FirebaseAuth auth = FirebaseAuth.getInstance();
+    FirebaseUser user = auth.getCurrentUser();
+    String userUid = user.getUid();
     FakeDatabase db = new FakeDatabase();
     Emissions housingEmissions = new Emissions();
     Mass housingMass = new Mass();
@@ -136,7 +141,7 @@ public class QuestionsHousingFragment extends Fragment{
         int result = surveyProcessor.getResult(userKey);
         operandMass.setKg(result);
         housingMass.add(operandMass);
-        if(!(q14Answer.equals(q16Answer))){
+        if(q14Answer!=null && q16Answer!=null && !(q14Answer.equals(q16Answer))){
             if(q16Answer.equals("E") || q16Answer.equals("B")){
                 operandMass.setKg(233);
                 housingMass.subtract(operandMass);
@@ -156,7 +161,7 @@ public class QuestionsHousingFragment extends Fragment{
     }
     private void loadFragment(Fragment fragment) {
         FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, fragment);
+        transaction.replace(R.id.fragmentContainer, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
     }

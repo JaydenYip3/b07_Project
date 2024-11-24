@@ -12,7 +12,7 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="55dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="40dp"
         android:background="@drawable/shape"
         android:text="Back"
         app:layout_constraintEnd_toEndOf="parent"
@@ -27,7 +27,7 @@
         android:layout_marginStart="16dp"
         android:background="#22000000"
         android:gravity="center"
-        android:text="@string/survey_category4"
+        android:text="@string/survey_category6"
         android:textColor="@color/dark_bluegray"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -37,7 +37,7 @@
         android:id="@+id/scrollView"
         android:layout_width="411dp"
         android:layout_height="530dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="120dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.666"
         app:layout_constraintStart_toStartOf="parent"
@@ -67,6 +67,17 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="@id/textView18"
                 app:layout_constraintTop_toBottomOf="@id/textView18">
+
+                <RadioButton
+                    android:id="@+id/radioButton192"
+                    android:layout_width="320dp"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/teal"
+                    android:text="@string/survey_answer192"
+                    android:textColor="@color/dark_bluegray"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/radioButton191" />
 
                 <RadioButton
                     android:id="@+id/radioButton181"
@@ -143,17 +154,6 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/textView19" />
-
-                <RadioButton
-                    android:id="@+id/radioButton192"
-                    android:layout_width="320dp"
-                    android:layout_height="wrap_content"
-                    android:buttonTint="@color/teal"
-                    android:text="@string/survey_answer192"
-                    android:textColor="@color/dark_bluegray"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/radioButton191" />
 
                 <RadioButton
                     android:id="@+id/radioButton193"

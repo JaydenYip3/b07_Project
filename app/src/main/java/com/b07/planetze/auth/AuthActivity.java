@@ -61,7 +61,7 @@ public class AuthActivity extends AppCompatActivity implements LoginCallback, Re
                         FirebaseUser user = auth.getCurrentUser();
 
                         Toast.makeText(this, "Logged in as " + user.getEmail(), Toast.LENGTH_SHORT).show();
-                        loadFragment(new QuestionsTransportationFragment());
+                        loadFragment(new QuestionsTransportationFragment()); //replace w ecotracker
                     } else {
                         Exception e = task.getException();
 
@@ -81,6 +81,7 @@ public class AuthActivity extends AppCompatActivity implements LoginCallback, Re
                 auth.getCurrentUser().sendEmailVerification().addOnCompleteListener(this, verificationTask -> {
                     if (task.isSuccessful()) {
                         Toast.makeText(this, "User registered successfully; Please verify your email address", Toast.LENGTH_LONG).show();
+                        loadFragment(new QuestionsTransportationFragment());
                     } else {
                         Toast.makeText(this, verificationTask.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     }

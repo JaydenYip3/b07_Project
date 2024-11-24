@@ -28,11 +28,16 @@ import com.b07.planetze.WelcomeFragment;
 import com.b07.planetze.common.Emissions;
 import com.b07.planetze.common.Mass;
 import com.b07.planetze.database.FakeDatabase;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.time.LocalDate;
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class QuestionsFoodFragment extends Fragment{
+    private FirebaseAuth auth = FirebaseAuth.getInstance();
+    FirebaseUser user = auth.getCurrentUser();
+    String userUid = user.getUid();
     FakeDatabase db = new FakeDatabase();
     Emissions foodEmissions = new Emissions();
     Mass foodMass = new Mass();
@@ -45,49 +50,10 @@ public class QuestionsFoodFragment extends Fragment{
         View view = inflater.inflate(R.layout.fragment_questions_food, container, false);
 
         Button buttonMeat = view.findViewById(R.id.radioButton84);
-        TextView question10 = (TextView)view.findViewById(R.id.textView10);
         buttonMeat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                view.findViewById(R.id.textView9).setVisibility(View.VISIBLE);
-                view.findViewById(R.id.textView9beef).setVisibility(View.VISIBLE);
-                view.findViewById(R.id.textView9pork).setVisibility(View.VISIBLE);
-                view.findViewById(R.id.textView9chkn).setVisibility(View.VISIBLE);
-                view.findViewById(R.id.textView9fs).setVisibility(View.VISIBLE);
-                view.findViewById(R.id.radioGroup9beef).setVisibility(View.VISIBLE);
-                view.findViewById(R.id.radioGroup9pork).setVisibility(View.VISIBLE);
-                view.findViewById(R.id.radioGroup9chkn).setVisibility(View.VISIBLE);
-                view.findViewById(R.id.radioGroup9fs).setVisibility(View.VISIBLE);
-                question10.setText(R.string.survey_question10);
-                ConstraintLayout constraintLayout = view.findViewById(R.id.parentLayout);
-
-                // Create a ConstraintSet and clone the current layout constraints
-                ConstraintSet constraintSet = new ConstraintSet();
-                constraintSet.clone(constraintLayout);
-
-                // Clear any existing constraints that might prevent repositioning
-                constraintSet.clear(R.id.textView10, ConstraintSet.TOP);
-                constraintSet.clear(R.id.textView10, ConstraintSet.START);
-                constraintSet.clear(R.id.textView10, ConstraintSet.END);
-
-                // Set new constraints to move the TextView to the bottom-center of the parent
-                constraintSet.connect(R.id.textView10, ConstraintSet.TOP, R.id.radioGroup9fs, ConstraintSet.BOTTOM, 16);
-                constraintSet.connect(R.id.textView10, ConstraintSet.START, R.id.radioGroup9fs, ConstraintSet.START, 0);
-                constraintSet.connect(R.id.textView10, ConstraintSet.END, R.id.radioGroup9fs, ConstraintSet.END, 0);
-
-                //constraintSet.clear(R.id.textView9chkn, ConstraintSet.TOP);
-                // Set new constraints to move the TextView to the bottom-center of the parent
-                constraintSet.connect(R.id.textView9chkn, ConstraintSet.TOP, R.id.radioGroup9pork, ConstraintSet.BOTTOM, 16);
-                // Apply the new constraints to the layout
-
-                //constraintSet.clear(R.id.textView9, ConstraintSet.TOP);
-                // Set new constraints to move the TextView to the bottom-center of the parent
-                constraintSet.connect(R.id.textView9, ConstraintSet.TOP, R.id.radioGroup8, ConstraintSet.BOTTOM, 16);
-                // Apply the new constraints to the layout
-
-                constraintSet.applyTo(constraintLayout);
-
+                eatMeat(view);
             }
         });
 
@@ -135,6 +101,47 @@ public class QuestionsFoodFragment extends Fragment{
         });
 
         return view;
+    }
+
+    public void eatMeat(View view){
+        TextView question10 = (TextView)view.findViewById(R.id.textView10);
+        view.findViewById(R.id.textView9).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.textView9beef).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.textView9pork).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.textView9chkn).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.textView9fs).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.radioGroup9beef).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.radioGroup9pork).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.radioGroup9chkn).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.radioGroup9fs).setVisibility(View.VISIBLE);
+        question10.setText(R.string.survey_question10);
+        ConstraintLayout constraintLayout = view.findViewById(R.id.parentLayout);
+
+        // Create a ConstraintSet and clone the current layout constraints
+        ConstraintSet constraintSet = new ConstraintSet();
+        constraintSet.clone(constraintLayout);
+
+        // Clear any existing constraints that might prevent repositioning
+        constraintSet.clear(R.id.textView10, ConstraintSet.TOP);
+        constraintSet.clear(R.id.textView10, ConstraintSet.START);
+        constraintSet.clear(R.id.textView10, ConstraintSet.END);
+
+        // Set new constraints to move the TextView to the bottom-center of the parent
+        constraintSet.connect(R.id.textView10, ConstraintSet.TOP, R.id.radioGroup9fs, ConstraintSet.BOTTOM, 16);
+        constraintSet.connect(R.id.textView10, ConstraintSet.START, R.id.radioGroup9fs, ConstraintSet.START, 0);
+        constraintSet.connect(R.id.textView10, ConstraintSet.END, R.id.radioGroup9fs, ConstraintSet.END, 0);
+
+        //constraintSet.clear(R.id.textView9chkn, ConstraintSet.TOP);
+        // Set new constraints to move the TextView to the bottom-center of the parent
+        constraintSet.connect(R.id.textView9chkn, ConstraintSet.TOP, R.id.radioGroup9pork, ConstraintSet.BOTTOM, 16);
+        // Apply the new constraints to the layout
+
+        //constraintSet.clear(R.id.textView9, ConstraintSet.TOP);
+        // Set new constraints to move the TextView to the bottom-center of the parent
+        constraintSet.connect(R.id.textView9, ConstraintSet.TOP, R.id.radioGroup8, ConstraintSet.BOTTOM, 16);
+        // Apply the new constraints to the layout
+
+        constraintSet.applyTo(constraintLayout);
     }
     public void onSubmit(View v) {
         RadioButton b81 = v.findViewById(R.id.radioButton81);
@@ -278,7 +285,7 @@ public class QuestionsFoodFragment extends Fragment{
 
     private void loadFragment(Fragment fragment) {
         FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, fragment);
+        transaction.replace(R.id.fragmentContainer, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
     }

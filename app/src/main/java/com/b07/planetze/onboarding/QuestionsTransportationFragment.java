@@ -25,6 +25,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.b07.planetze.R;
+
 import com.b07.planetze.common.Emissions;
 import com.b07.planetze.common.Mass;
 import com.b07.planetze.database.FakeDatabase;
@@ -32,12 +33,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 import java.time.LocalDate;
-import java.time.LocalTime;
 
 
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class QuestionsTransportationFragment extends Fragment implements AdapterView.OnItemSelectedListener{
-    private FirebaseAuth auth;
+    private FirebaseAuth auth = FirebaseAuth.getInstance();
     FirebaseUser user = auth.getCurrentUser();
     String userUid = user.getUid();
     FakeDatabase db = new FakeDatabase();
@@ -51,6 +51,7 @@ public class QuestionsTransportationFragment extends Fragment implements Adapter
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_questions_transportation, container, false);
 
+
         Spinner spinner = view.findViewById(R.id.countries);
     // Create an ArrayAdapter using the string array and a default spinner layout.
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
@@ -62,47 +63,17 @@ public class QuestionsTransportationFragment extends Fragment implements Adapter
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
     // Apply the adapter to the spinner.
         spinner.setAdapter(adapter);
-
         spinner.setOnItemSelectedListener(this);
 
 
         //changing constraints (whether or not a question is showed) based off of answers --------------------------
 
         Button buttonOwnCar = view.findViewById(R.id.radioButton11);
-        TextView question4 = (TextView)view.findViewById(R.id.textView4);
-        TextView question5 = (TextView)view.findViewById(R.id.textView5);
-        TextView question6 = (TextView)view.findViewById(R.id.textView6);
-        TextView question7 = (TextView)view.findViewById(R.id.textView7);
+
         buttonOwnCar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                view.findViewById(R.id.textView2).setVisibility(View.VISIBLE);
-                view.findViewById(R.id.radioGroup2).setVisibility(View.VISIBLE);
-                view.findViewById(R.id.textView3).setVisibility(View.VISIBLE);
-                view.findViewById(R.id.radioGroup3).setVisibility(View.VISIBLE);
-                question4.setText(R.string.survey_question4);
-                question5.setText(R.string.survey_question5);
-                question6.setText(R.string.survey_question6);
-                question7.setText(R.string.survey_question7);
-                ConstraintLayout constraintLayout = view.findViewById(R.id.parentLayout);
-
-                // Create a ConstraintSet and clone the current layout constraints
-                ConstraintSet constraintSet = new ConstraintSet();
-                constraintSet.clone(constraintLayout);
-
-                // Clear any existing constraints that might prevent repositioning
-                constraintSet.clear(R.id.textView4, ConstraintSet.TOP);
-                constraintSet.clear(R.id.textView4, ConstraintSet.START);
-                constraintSet.clear(R.id.textView4, ConstraintSet.END);
-
-                // Set new constraints to move the TextView to the bottom-center of the parent
-                constraintSet.connect(R.id.textView4, ConstraintSet.TOP, R.id.radioGroup3, ConstraintSet.BOTTOM, 16);
-                constraintSet.connect(R.id.textView4, ConstraintSet.START, R.id.radioGroup3, ConstraintSet.START, 0);
-                constraintSet.connect(R.id.textView4, ConstraintSet.END, R.id.radioGroup3, ConstraintSet.END, 0);
-
-                // Apply the new constraints to the layout
-                constraintSet.applyTo(constraintLayout);
+                ownCar(view);
 
             }
         });
@@ -111,35 +82,7 @@ public class QuestionsTransportationFragment extends Fragment implements Adapter
         buttonNotOwnCar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                view.findViewById(R.id.textView2).setVisibility(View.INVISIBLE);
-                view.findViewById(R.id.radioGroup2).setVisibility(View.INVISIBLE);
-                view.findViewById(R.id.textView3).setVisibility(View.INVISIBLE);
-                view.findViewById(R.id.radioGroup3).setVisibility(View.INVISIBLE);
-                question4.setText(R.string.survey_question4alt);
-                question5.setText(R.string.survey_question5alt);
-                question6.setText(R.string.survey_question6alt);
-                question7.setText(R.string.survey_question7alt);
-
-                ConstraintLayout constraintLayout = view.findViewById(R.id.parentLayout);
-
-                // Create a ConstraintSet and clone the current layout constraints
-                ConstraintSet constraintSet = new ConstraintSet();
-                constraintSet.clone(constraintLayout);
-
-                // Clear any existing constraints that might prevent repositioning
-                constraintSet.clear(R.id.textView4, ConstraintSet.TOP);
-                constraintSet.clear(R.id.textView4, ConstraintSet.START);
-                constraintSet.clear(R.id.textView4, ConstraintSet.END);
-
-                // Set new constraints to move the TextView to the bottom-center of the parent
-                constraintSet.connect(R.id.textView4, ConstraintSet.TOP, R.id.radioGroup1, ConstraintSet.BOTTOM, 16);
-                constraintSet.connect(R.id.textView4, ConstraintSet.START, R.id.radioGroup1, ConstraintSet.START, 0);
-                constraintSet.connect(R.id.textView4, ConstraintSet.END, R.id.radioGroup1, ConstraintSet.END, 0);
-
-                // Apply the new constraints to the layout
-                constraintSet.applyTo(constraintLayout);
-
+                notOwnCar(view);
             }
         });
 
@@ -152,6 +95,72 @@ public class QuestionsTransportationFragment extends Fragment implements Adapter
         });
 
         return view;
+    }
+
+    public void ownCar(@NonNull View view) {
+        TextView question4 = view.findViewById(R.id.textView4);
+        TextView question5 = view.findViewById(R.id.textView5);
+        TextView question6 = view.findViewById(R.id.textView6);
+        TextView question7 = view.findViewById(R.id.textView7);
+        view.findViewById(R.id.textView2).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.radioGroup2).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.textView3).setVisibility(View.VISIBLE);
+        view.findViewById(R.id.radioGroup3).setVisibility(View.VISIBLE);
+        question4.setText(R.string.survey_question4);
+        question5.setText(R.string.survey_question5);
+        question6.setText(R.string.survey_question6);
+        question7.setText(R.string.survey_question7);
+        ConstraintLayout constraintLayout = view.findViewById(R.id.parentLayout);
+
+        // Create a ConstraintSet and clone the current layout constraints
+        ConstraintSet constraintSet = new ConstraintSet();
+        constraintSet.clone(constraintLayout);
+
+        // Clear any existing constraints that might prevent repositioning
+        constraintSet.clear(R.id.textView4, ConstraintSet.TOP);
+        constraintSet.clear(R.id.textView4, ConstraintSet.START);
+        constraintSet.clear(R.id.textView4, ConstraintSet.END);
+
+        // Set new constraints to move the TextView to the bottom-center of the parent
+        constraintSet.connect(R.id.textView4, ConstraintSet.TOP, R.id.radioGroup3, ConstraintSet.BOTTOM, 16);
+        constraintSet.connect(R.id.textView4, ConstraintSet.START, R.id.radioGroup3, ConstraintSet.START, 0);
+        constraintSet.connect(R.id.textView4, ConstraintSet.END, R.id.radioGroup3, ConstraintSet.END, 0);
+
+        // Apply the new constraints to the layout
+        constraintSet.applyTo(constraintLayout);
+    }
+    public void notOwnCar(@NonNull View view) {
+        TextView question4 = view.findViewById(R.id.textView4);
+        TextView question5 = view.findViewById(R.id.textView5);
+        TextView question6 = view.findViewById(R.id.textView6);
+        TextView question7 = view.findViewById(R.id.textView7);
+        view.findViewById(R.id.textView2).setVisibility(View.INVISIBLE);
+        view.findViewById(R.id.radioGroup2).setVisibility(View.INVISIBLE);
+        view.findViewById(R.id.textView3).setVisibility(View.INVISIBLE);
+        view.findViewById(R.id.radioGroup3).setVisibility(View.INVISIBLE);
+        question4.setText(R.string.survey_question4alt);
+        question5.setText(R.string.survey_question5alt);
+        question6.setText(R.string.survey_question6alt);
+        question7.setText(R.string.survey_question7alt);
+
+        ConstraintLayout constraintLayout = view.findViewById(R.id.parentLayout);
+
+        // Create a ConstraintSet and clone the current layout constraints
+        ConstraintSet constraintSet = new ConstraintSet();
+        constraintSet.clone(constraintLayout);
+
+        // Clear any existing constraints that might prevent repositioning
+        constraintSet.clear(R.id.textView4, ConstraintSet.TOP);
+        constraintSet.clear(R.id.textView4, ConstraintSet.START);
+        constraintSet.clear(R.id.textView4, ConstraintSet.END);
+
+        // Set new constraints to move the TextView to the bottom-center of the parent
+        constraintSet.connect(R.id.textView4, ConstraintSet.TOP, R.id.radioGroup1, ConstraintSet.BOTTOM, 16);
+        constraintSet.connect(R.id.textView4, ConstraintSet.START, R.id.radioGroup1, ConstraintSet.START, 0);
+        constraintSet.connect(R.id.textView4, ConstraintSet.END, R.id.radioGroup1, ConstraintSet.END, 0);
+
+        // Apply the new constraints to the layout
+        constraintSet.applyTo(constraintLayout);
     }
 
     public void onSubmit(@NonNull View v) {
@@ -282,6 +291,7 @@ public class QuestionsTransportationFragment extends Fragment implements Adapter
             operandMass.setKg(6600);
             transportMass.add(operandMass);
         }
+
         operandMass = transportEmissions.transportation();
         operandMass.set(transportMass);
         /*db.updateDailyEmissions(userUid, dateAdded, transportEmissions, result -> {
@@ -306,7 +316,7 @@ public class QuestionsTransportationFragment extends Fragment implements Adapter
     }
     private void loadFragment(Fragment fragment) {
         FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, fragment);
+        transaction.replace(R.id.fragmentContainer, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
     }

@@ -24,10 +24,15 @@ import com.b07.planetze.WelcomeFragment;
 import com.b07.planetze.common.Emissions;
 import com.b07.planetze.common.Mass;
 import com.b07.planetze.database.FakeDatabase;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import java.time.LocalDate;
 @RequiresApi(api = Build.VERSION_CODES.O)
 public class QuestionsConsumptionFragment extends Fragment{
+    private FirebaseAuth auth = FirebaseAuth.getInstance();
+    FirebaseUser user = auth.getCurrentUser();
+    String userUid = user.getUid();
     FakeDatabase db = new FakeDatabase();
     Emissions consumptionEmissions = new Emissions();
     Mass consumptionMass = new Mass();
@@ -216,16 +221,16 @@ public class QuestionsConsumptionFragment extends Fragment{
             if (b214.isChecked()) {
                 operandMass.setKg(360);
                 consumptionMass.add(operandMass);
-                loadFragment(new QuestionsFoodFragment());
             }
         }
         operandMass = consumptionEmissions.transportation();
         operandMass.set(consumptionMass);
+        loadFragment(new CalcDisplayFragment());
 
     }
     private void loadFragment(Fragment fragment) {
         FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, fragment);
+        transaction.replace(R.id.fragmentContainer, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
     }

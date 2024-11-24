@@ -25,7 +25,7 @@
         android:id="@+id/scrollView"
         android:layout_width="411dp"
         android:layout_height="530dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="120dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.666"
         app:layout_constraintStart_toStartOf="parent"
@@ -69,6 +69,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_width="320dp"
                 android:layout_height="wrap_content"
+
                 app:layout_constraintStart_toStartOf="@id/regionText"
                 app:layout_constraintEnd_toEndOf="@id/regionText"
                 app:layout_constraintTop_toBottomOf="@id/regionText" />
@@ -313,9 +314,9 @@
                     android:text="@string/survey_answer41"
                     android:textColor="@color/dark_bluegray"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.637"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/textView4" />
-
                 <RadioButton
                     android:id="@+id/radioButton42"
                     android:layout_width="320dp"
@@ -590,6 +591,7 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/radioGroup7" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
