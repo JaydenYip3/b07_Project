@@ -1,4 +1,4 @@
-package EcoGauge;
+package com.b07.planetze.EcoGauge;
 
 import android.widget.ArrayAdapter;
 import android.os.Bundle;
