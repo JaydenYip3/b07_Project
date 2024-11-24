@@ -3,7 +3,7 @@ package com.b07.planetze.ecotracker.daily.food;
 import androidx.annotation.NonNull;
 
 import com.b07.planetze.common.Emissions;
-import com.b07.planetze.common.measurement.Mass;
+import com.b07.planetze.util.measurement.Mass;
 import com.b07.planetze.ecotracker.daily.Daily;
 import com.b07.planetze.ecotracker.daily.DailyType;
 

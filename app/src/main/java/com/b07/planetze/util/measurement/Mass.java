@@ -1,9 +1,6 @@
-package com.b07.planetze.common.measurement;
+package com.b07.planetze.util.measurement;
 
 import androidx.annotation.NonNull;
-import androidx.privacysandbox.ads.adservices.java.appsetid.AppSetIdManagerFutures;
-
-import com.b07.planetze.util.Measurement;
 
 /**
  * A measurement of mass.

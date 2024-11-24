@@ -12,6 +12,9 @@
     <string name="duration_hint">e.g., 2.5</string>
     <string name="duration_error">Enter a number</string>
 
+    <string name="money_hint">e.g., 150</string>
+    <string name="money_error">Enter a number</string>
+
     <string name="field_required">Field is required</string>
     <string name="form_submit">Submit</string>
 </resources>

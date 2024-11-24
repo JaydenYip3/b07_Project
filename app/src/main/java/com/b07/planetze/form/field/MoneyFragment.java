@@ -12,22 +12,21 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import com.b07.planetze.R;
-import com.b07.planetze.util.measurement.ImmutableMass;
-import com.b07.planetze.util.measurement.Mass;
 import com.b07.planetze.form.Form;
 import com.b07.planetze.form.definition.FieldId;
+import com.b07.planetze.util.measurement.ImmutableMass;
+import com.b07.planetze.util.measurement.Mass;
 
-public final class MassFragment
-        extends FieldFragment<MassField, ImmutableMass> {
+public final class MoneyFragment extends FieldFragment<MoneyField, Double> {
     /**
-     * Use {@link MassFragment#newInstance} instead of calling this
+     * Use {@link MoneyFragment#newInstance} instead of calling this
      * manually.
      */
-    public MassFragment() {}
+    public MoneyFragment() {}
 
     @NonNull
-    public static MassFragment newInstance(@NonNull FieldId<?> field) {
-        MassFragment fragment = new MassFragment();
+    public static MoneyFragment newInstance(@NonNull FieldId<?> field) {
+        MoneyFragment fragment = new MoneyFragment();
         Bundle args = new Bundle();
         args.putParcelable(FIELD_ID_KEY, field);
         fragment.setArguments(args);
@@ -36,7 +35,7 @@ public final class MassFragment
 
     @Override
     protected void displayMissingField(@NonNull View view) {
-        TextView error = view.findViewById(R.id.form_mass_error);
+        TextView error = view.findViewById(R.id.form_money_error);
         if (error.getText().length() == 0) {
             error.setText(R.string.field_required);
         }
@@ -46,16 +45,16 @@ public final class MassFragment
     public void initializeField(
             @NonNull View view,
             @NonNull Form form,
-            @NonNull FieldId<ImmutableMass> id,
-            @NonNull MassField field,
+            @NonNull FieldId<Double> id,
+            @NonNull MoneyField field,
             @NonNull String fieldName
     ) {
-        TextView name = view.findViewById(R.id.form_mass_name);
+        TextView name = view.findViewById(R.id.form_money_name);
         name.setText(fieldName);
 
-        TextView error = view.findViewById(R.id.form_mass_error);
+        TextView error = view.findViewById(R.id.form_money_error);
 
-        EditText input = view.findViewById(R.id.form_mass_input);
+        EditText input = view.findViewById(R.id.form_money_input);
         form.get(id).map(Object::toString).apply(input::setText);
 
         input.addTextChangedListener(new TextWatcher() {
@@ -73,7 +72,7 @@ public final class MassFragment
                     error.setText(R.string.mass_error);
                     return;
                 }
-                form.set(id, Mass.kg(value).immutableCopy())
+                form.set(id, value)
                         .match(ok -> error.setText(""), error::setText);
             }
 
@@ -87,6 +86,6 @@ public final class MassFragment
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_form_mass, container, false);
+        return inflater.inflate(R.layout.fragment_form_money, container, false);
     }
 }

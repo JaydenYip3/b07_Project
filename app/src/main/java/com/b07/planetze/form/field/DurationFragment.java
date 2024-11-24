@@ -3,7 +3,6 @@ package com.b07.planetze.form.field;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
 
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -14,11 +13,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.b07.planetze.R;
-import com.b07.planetze.common.measurement.Duration;
-import com.b07.planetze.common.measurement.ImmutableDuration;
+import com.b07.planetze.util.measurement.Duration;
+import com.b07.planetze.util.measurement.ImmutableDuration;
 import com.b07.planetze.form.Form;
 import com.b07.planetze.form.definition.FieldId;
-import com.b07.planetze.util.immutability.ImmutableCopy;
 
 public final class DurationFragment
         extends FieldFragment<DurationField, ImmutableDuration> {

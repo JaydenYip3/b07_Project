@@ -2,6 +2,7 @@ package com.b07.planetze.ecotracker.daily;
 
 import androidx.annotation.NonNull;
 
+import com.b07.planetze.ecotracker.daily.energy.EnergyBillsForm;
 import com.b07.planetze.ecotracker.daily.food.MealForm;
 import com.b07.planetze.ecotracker.daily.shopping.BuyClothesForm;
 import com.b07.planetze.ecotracker.daily.shopping.BuyElectronicsForm;
@@ -23,7 +24,7 @@ public enum DailyType {
     BUY_CLOTHES(BuyClothesForm.INSTANCE),
     BUY_ELECTRONICS(BuyElectronicsForm.INSTANCE),
     BUY_OTHER(BuyOtherForm.INSTANCE),
-    ENERGY_BILLS;
+    ENERGY_BILLS(EnergyBillsForm.INSTANCE);
 
     @NonNull private final DailyForm form;
 

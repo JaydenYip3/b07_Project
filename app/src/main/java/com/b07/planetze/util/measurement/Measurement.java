@@ -1,8 +1,9 @@
-package com.b07.planetze.util;
+package com.b07.planetze.util.measurement;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.b07.planetze.util.Self;
 import com.b07.planetze.util.immutability.MutableWithCopy;
 
 /**

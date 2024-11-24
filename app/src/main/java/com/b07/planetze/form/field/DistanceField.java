@@ -5,11 +5,9 @@ import static com.b07.planetze.util.result.Result.ok;
 
 import androidx.annotation.NonNull;
 
-import com.b07.planetze.common.measurement.Distance;
-import com.b07.planetze.common.measurement.ImmutableDistance;
+import com.b07.planetze.util.measurement.ImmutableDistance;
 import com.b07.planetze.form.definition.FieldId;
 import com.b07.planetze.util.Unit;
-import com.b07.planetze.util.immutability.ImmutableCopy;
 import com.b07.planetze.util.result.Result;
 
 public final class DistanceField implements Field<ImmutableDistance> {

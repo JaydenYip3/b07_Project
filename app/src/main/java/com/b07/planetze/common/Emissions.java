@@ -2,7 +2,7 @@ package com.b07.planetze.common;
 
 import androidx.annotation.NonNull;
 
-import com.b07.planetze.common.measurement.Mass;
+import com.b07.planetze.util.measurement.Mass;
 import com.b07.planetze.util.Util;
 import com.b07.planetze.util.immutability.ImmutableList;
 import com.b07.planetze.util.immutability.MutableWithCopy;

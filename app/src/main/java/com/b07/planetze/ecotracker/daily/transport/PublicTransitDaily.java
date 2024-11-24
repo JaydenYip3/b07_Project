@@ -3,8 +3,8 @@ package com.b07.planetze.ecotracker.daily.transport;
 import androidx.annotation.NonNull;
 
 import com.b07.planetze.common.Emissions;
-import com.b07.planetze.common.measurement.ImmutableDuration;
-import com.b07.planetze.common.measurement.Mass;
+import com.b07.planetze.util.measurement.ImmutableDuration;
+import com.b07.planetze.util.measurement.Mass;
 import com.b07.planetze.ecotracker.daily.Daily;
 import com.b07.planetze.ecotracker.daily.DailyType;
 

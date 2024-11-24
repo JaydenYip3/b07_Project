@@ -13,11 +13,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.b07.planetze.R;
-import com.b07.planetze.common.measurement.Distance;
-import com.b07.planetze.common.measurement.ImmutableDistance;
+import com.b07.planetze.util.measurement.Distance;
+import com.b07.planetze.util.measurement.ImmutableDistance;
 import com.b07.planetze.form.Form;
 import com.b07.planetze.form.definition.FieldId;
-import com.b07.planetze.util.immutability.ImmutableCopy;
 
 public final class DistanceFragment
         extends FieldFragment<DistanceField, ImmutableDistance> {

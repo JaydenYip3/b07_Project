@@ -4,11 +4,10 @@ import static com.b07.planetze.util.result.Result.ok;
 
 import androidx.annotation.NonNull;
 
-import com.b07.planetze.common.DateInterval;
+import com.b07.planetze.util.DateInterval;
 import com.b07.planetze.common.DatedEmissions;
 import com.b07.planetze.common.Emissions;
 import com.b07.planetze.common.UserId;
-import com.b07.planetze.util.result.Ok;
 import com.b07.planetze.util.result.Result;
 import com.b07.planetze.util.Unit;
 

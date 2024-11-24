@@ -1,4 +1,4 @@
-package com.b07.planetze.common.measurement;
+package com.b07.planetze.util.measurement;
 
 import androidx.annotation.NonNull;
 
