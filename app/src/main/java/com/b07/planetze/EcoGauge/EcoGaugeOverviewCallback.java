@@ -1,4 +1,4 @@
-package com.b07.planetze.auth;
+package EcoGauge;
 
 public interface EcoGaugeOverviewCallback {
 }
