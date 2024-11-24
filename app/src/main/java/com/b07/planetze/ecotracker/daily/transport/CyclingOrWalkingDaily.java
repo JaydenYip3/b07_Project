@@ -17,8 +17,7 @@ implements Daily {
     @NonNull
     @Override
     public Emissions emissions() {
-        return Emissions.transport(
-                Mass.g(G_CO2E_PER_KM * distance().km()));
+        return Emissions.transport(Mass.g(G_CO2E_PER_KM * distance.km()));
     }
 
     @NonNull

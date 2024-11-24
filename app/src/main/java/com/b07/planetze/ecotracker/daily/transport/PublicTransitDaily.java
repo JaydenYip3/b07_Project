@@ -24,20 +24,17 @@ public record PublicTransitDaily(
     @NonNull
     @Override
     public Emissions emissions() {
-        return Emissions.transport(switch(transitType) {
-            case BUS -> Mass.kg(
-                    BUS_KG_CO2E_PER_MILE * BUS_MPH * duration.h());
-            case TRAIN -> Mass.kg(
-                    TRAIN_KG_CO2E_PER_MILE * TRAIN_MPH * duration.h());
-            case SUBWAY -> Mass.kg(
-                    SUBWAY_KG_CO2E_PER_MILE * SUBWAY_MPH * duration.h());
-        });
+        return Emissions.transport(Mass.kg(switch(transitType) {
+            case BUS -> BUS_KG_CO2E_PER_MILE * BUS_MPH * duration.h();
+            case TRAIN -> TRAIN_KG_CO2E_PER_MILE * TRAIN_MPH * duration.h();
+            case SUBWAY -> SUBWAY_KG_CO2E_PER_MILE * SUBWAY_MPH * duration.h();
+        }));
     }
 
     @NonNull
     @Override
     public DailyType type() {
-        return null;
+        return DailyType.PUBLIC_TRANSIT;
     }
 
     public enum TransitType {

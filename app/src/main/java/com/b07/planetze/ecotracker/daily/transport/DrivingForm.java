@@ -23,7 +23,7 @@ public final class DrivingForm implements DailyForm {
         FormBuilder fb = new FormBuilder();
         distance = fb.add("Distance travelled", DistanceField.create());
         vehicle = fb.add("Vehicle", ChoiceField
-                .withChoices("car")
+                .withChoices("Gas car", "Electric car", "Motorbike")
                 .initially(0));
         definition = fb.build();
     }
@@ -38,7 +38,9 @@ public final class DrivingForm implements DailyForm {
     @Override
     public DrivingDaily createDaily(@NonNull FormSubmission form) {
         DrivingDaily.Vehicle v = switch(form.get(vehicle)) {
-            case 0 -> DrivingDaily.Vehicle.CAR;
+            case 0 -> DrivingDaily.Vehicle.GAS_CAR;
+            case 1 -> DrivingDaily.Vehicle.ELECTRIC_CAR;
+            case 2 -> DrivingDaily.Vehicle.MOTORBIKE;
             default -> throw new DailyFormException();
         };
 

@@ -12,14 +12,18 @@ public record DrivingDaily(
         @NonNull Vehicle vehicle,
         @NonNull ImmutableDistance distance
 ) implements Daily {
-    private static final double CAR_G_CO2E_PER_KM = 192;
+    private static final double GAS_CAR_G_CO2E_PER_KM = 170;
+    private static final double ELECTRIC_CAR_G_CO2E_PER_KM = 47;
+    private static final double MOTORBIKE_G_CO2E_PER_KM = 113;
 
     @NonNull
     @Override
     public Emissions emissions() {
-        return Emissions.transport(switch(vehicle) {
-            case CAR -> Mass.g(CAR_G_CO2E_PER_KM * distance.km());
-        });
+        return Emissions.transport(Mass.g(switch(vehicle) {
+            case GAS_CAR -> GAS_CAR_G_CO2E_PER_KM * distance.km();
+            case ELECTRIC_CAR -> ELECTRIC_CAR_G_CO2E_PER_KM * distance.km();
+            case MOTORBIKE -> MOTORBIKE_G_CO2E_PER_KM * distance.km();
+        }));
     }
 
     @NonNull
@@ -29,6 +33,8 @@ public record DrivingDaily(
     }
 
     public enum Vehicle {
-        CAR
+        GAS_CAR,
+        ELECTRIC_CAR,
+        MOTORBIKE,
     }
 }

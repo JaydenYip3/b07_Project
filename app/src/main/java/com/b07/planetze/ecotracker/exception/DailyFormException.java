@@ -1,8 +1,9 @@
 package com.b07.planetze.ecotracker.exception;
 
 /**
- * Thrown if a catastrophic error happens during the creation of
- * {@link com.b07.planetze.ecotracker.daily.Daily} with forms.
+ * Thrown when a {@link com.b07.planetze.ecotracker.daily.DailyForm} failed to
+ * create a {@link com.b07.planetze.form.Form}. <br>
+ * This indicates an error in the form's definition.
  */
 public class DailyFormException extends RuntimeException {
     public DailyFormException() {

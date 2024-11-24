@@ -4,12 +4,10 @@ import androidx.annotation.NonNull;
 
 import com.b07.planetze.common.measurement.ImmutableDistance;
 import com.b07.planetze.ecotracker.daily.DailyForm;
-import com.b07.planetze.ecotracker.exception.DailyFormException;
 import com.b07.planetze.form.FormSubmission;
 import com.b07.planetze.form.definition.FieldId;
 import com.b07.planetze.form.definition.FormBuilder;
 import com.b07.planetze.form.definition.FormDefinition;
-import com.b07.planetze.form.field.ChoiceField;
 import com.b07.planetze.form.field.DistanceField;
 
 public final class CyclingOrWalkingForm implements DailyForm {
