@@ -5,11 +5,10 @@ import static com.b07.planetze.util.result.Result.ok;
 
 import androidx.annotation.NonNull;
 
+import com.b07.planetze.form.definition.Field;
 import com.b07.planetze.form.definition.FieldId;
 import com.b07.planetze.util.immutability.ImmutableList;
 import com.b07.planetze.util.Unit;
-import com.b07.planetze.util.result.Error;
-import com.b07.planetze.util.result.Ok;
 import com.b07.planetze.util.result.Result;
 
 /**

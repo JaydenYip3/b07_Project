@@ -1,14 +1,11 @@
-package com.b07.planetze.form.field;
+package com.b07.planetze.form.definition;
 
 import static com.b07.planetze.util.result.Result.ok;
 
 import androidx.annotation.NonNull;
 
-import com.b07.planetze.form.definition.FieldId;
 import com.b07.planetze.form.exception.FieldInitException;
-import com.b07.planetze.util.Unit;
 import com.b07.planetze.util.option.Option;
-import com.b07.planetze.util.result.Result;
 
 /**
  * Wraps a field, giving it an initial value. <br>

@@ -59,6 +59,7 @@ public final class FormFragment extends Fragment {
             FragmentManager mgr = requireActivity().getSupportFragmentManager();
             FragmentTransaction ft = mgr.beginTransaction();
 
+            // Remove previous field fragments
             for (int i = model.getPreviousTagCounter();
                  i < model.getTagCounter(); i++) {
                 Option.mapNull(mgr.findFragmentByTag(fragmentTag(i)))
@@ -67,6 +68,7 @@ public final class FormFragment extends Fragment {
 
             int count = model.getTagCounter();
 
+            // Add new field fragments
             Util.enumerate(def.fields()).forEach((i, fieldDef) -> {
                 FieldId<?> id = new FieldId<>(form.definition().id(), i);
                 Fragment frag = fieldDef.field().createFragment(id);

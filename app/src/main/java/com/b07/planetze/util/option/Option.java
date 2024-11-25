@@ -15,8 +15,8 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 /**
- * Holds an optional value—useful for code explicitness and
- * for avoiding <code>null</code>. <br>
+ * Holds an optional value—useful for code explicitness
+ * and for building abstractions around null values. <br>
  * Structurally, this is a sum type of variants {@link Some} and {@link None},
  * representing the presence and absence of the value, respectively.
  * @param <T> the type of the value
@@ -54,7 +54,8 @@ public sealed abstract class Option<T>
     /**
      * Creates an {@link Option} from a nullable value.
      * @param value the value
-     * @return {@link Some} if the value is non-null; {@link None} otherwise.
+     * @return a {@link Some} containing the value if it is non-null;
+     * {@link None} otherwise.
      * @param <T> the type of the value
      */
     @NonNull
@@ -62,13 +63,20 @@ public sealed abstract class Option<T>
         return value == null ? none() : some(value);
     }
 
+    /**
+     * Creates an {@link Option} from a nullable {@link Option}.
+     * @param value the value
+     * @return the value if it is non-null; {@link None} otherwise.
+     * @param <T> the inner type of the value
+     */
     @NonNull
     public static <T> Option<T> flattenNull(@Nullable Option<T> value) {
         return value == null ? none() : value;
     }
 
     /**
-     * Applies a function to the held value iff it is present.
+     * Applies a function to the held value if <code>this</code> is
+     * {@link Some}; does nothing otherwise.
      * @param f the function
      * @return <code>this</code>
      */
@@ -82,10 +90,10 @@ public sealed abstract class Option<T>
     public abstract Option<T> applyNone(@NonNull Runnable f);
 
     /**
-     * Creates a new {@link Some} by applying a function to the held value
-     * if it is present—otherwise creates a new {@link None}.
-     *
-     * @param f the function
+     * {@return a new <code>Some</code> holding the output of a given function
+     * if <code>this</code> is <code>Some</code>—otherwise returns a new
+     * <code>None</code>.
+     * @param f the given function
      * @return a new {@link Option}
      * @param <U> the return type of the function
      */
@@ -94,8 +102,8 @@ public sealed abstract class Option<T>
 
     /**
      * Returns <code>this</code> if <code>this</code> is {@link Some};
-     * otherwise, returns another {@link Option}.
-     * @param other the other {@link Option}
+     * otherwise, returns a given {@link Option}.
+     * @param other the given {@link Option}
      * @return <code>this</code> or <code>other</code>
      */
     @NonNull
@@ -103,46 +111,49 @@ public sealed abstract class Option<T>
 
     /**
      * Returns <code>this</code> if <code>this</code> is {@link Some};
-     * otherwise, returns the output of a function.
-     * @param supplier the function
+     * otherwise, returns the output of a given function.
+     * @param supplier the given function
      * @return <code>this</code> or the output of <code>supplier</code>
      */
     @NonNull
     public abstract Option<T> orElse(@NonNull Supplier<Option<T>> supplier);
 
     /**
-     * {@return the held value, or if absent, a default value}
+     * {@return the held value if <code>this</code> is <code>Some</code>;
+     *          otherwise returns a default value}
      * @param defaultValue the default value
      */
     @NonNull
     public abstract T getOr(@NonNull T defaultValue);
 
     /**
-     * {@return the held value, or if absent, the output of a function}
+     * {@return the held value if <code>this</code> is <code>Some</code>;
+     *          otherwise returns the output of a function}
      * @param supplier the function
      */
     @NonNull
     public abstract T getOrElse(@NonNull Supplier<T> supplier);
 
     /**
-     * {@return the held value}
-     * If this is absent, throws an exception.
-     * @param exception the exception
+     * {@return the held value if <code>this</code> is <code>Some</code>} <br>
+     * Throws a given exception if <code>this</code> is <code>None</code>.
+     * @param exception the given exception
      */
     @NonNull
     public abstract T getOrThrow(@NonNull RuntimeException exception);
 
     /**
-     * {@return the held value}
-     * If this is absent, throws an exception given by a function.
-     * @param supplier the function
+     * {@return the held value if <code>this</code> is <code>Some</code>} <br>
+     * Throws an exception given by a function if <code>this</code> is
+     * <code>None</code>.
+     * @param supplier the given function
      */
     @NonNull
     public abstract T getOrThrow(@NonNull Supplier<RuntimeException> supplier);
 
     /**
-     * Creates an {@link Ok} with the held value if it is present; otherwise,
-     * creates a {@link Error} with a given error.
+     * Creates an {@link Ok} with the held value if <code>this</code> is
+     * <code>Some</code>; otherwise, creates a {@link Error} with a given error.
      * @param error the error
      * @return a new {@link Result}
      * @param <E> the type of the error
@@ -151,8 +162,9 @@ public sealed abstract class Option<T>
     public abstract <E> Result<T, E> okOr(@NonNull E error);
 
     /**
-     * Creates an {@link Ok} with the held value if it is present; otherwise,
-     * creates a {@link Error} with an error given by the output of a function.
+     * Creates an {@link Ok} with the held value if <code>this</code> is
+     * <code>Some</code>; otherwise, creates a {@link Error} with an error given
+     * by the output of a function.
      * @param supplier the function
      * @return a new {@link Result}
      * @param <E> the type of the error
@@ -162,7 +174,8 @@ public sealed abstract class Option<T>
 
     /**
      * Returns <code>true</code> iff <code>this</code> is {@link Some}. <br>
-     * If you require the held value, use <code>if (x instanceof Some&lt;T&gt; some)</code>
+     * If you require the held value, use
+     * <code>if (x instanceof Some&lt;T&gt; some)</code>
      * or {@link Option#resolve}.
      * @return <code>true</code> iff <code>this</code> is {@link Some}.
      */
@@ -173,7 +186,8 @@ public sealed abstract class Option<T>
     /**
      * Calls a function with the held value if <code>this</code> is
      * {@link Some}.
-     * Returns <code>true</code> iff the function is called and outputs <code>true</code>.
+     * Returns <code>true</code> iff the function is called and outputs
+     * <code>true</code>.
      * @param predicate the function
      * @return <code>true</code> iff <code>this</code> is {@link Some} and
      *         <code>predicate(value)</code> returns <code>true</code>.

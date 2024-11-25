@@ -22,6 +22,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+/**
+ * An editable form.
+ * @see FormBuilder
+ */
 public final class Form {
     @NonNull private final FormDefinition definition;
     @NonNull private final List<Option<Object>> values;
@@ -47,7 +51,8 @@ public final class Form {
     /**
      * Sets the value of a field. <br>
      * Sets the field to {@link None} If the provided value is invalid. <br>
-     * Throws {@link com.b07.planetze.form.exception.FormIdException}.
+     * Throws {@link com.b07.planetze.form.exception.FormIdException} if the
+     * given field id is not attached to this form.
      * @param field the field's id
      * @param value the value to set
      * @return an error message (if the provided value is invalid)
@@ -67,8 +72,9 @@ public final class Form {
 
     /**
      * {@return the value of a field} <br>
-     * Throws {@link com.b07.planetze.form.exception.FormIdException}. <br>
-     * Use {@link FormSubmission} if you require all fields to be filled.
+     * Throws {@link com.b07.planetze.form.exception.FormIdException} if the
+     * given field id is not attached to this form. <br>
+     * Use {@link Form#submit()} if you require all fields to be filled.
      * @param field the field to get
      * @param <T> the type of the field's value
      */
@@ -83,7 +89,8 @@ public final class Form {
     }
 
     /**
-     * {@return a form submission or a set of missing field indices}
+     * {@return a form submission if all fields were set, or the indices of the
+     *          missing fields otherwise.}
      */
     @NonNull
     public Result<FormSubmission, Set<Integer>> submit() {

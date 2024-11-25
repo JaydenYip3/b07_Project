@@ -12,10 +12,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import com.b07.planetze.R;
+import com.b07.planetze.form.FieldFragment;
 import com.b07.planetze.form.Form;
 import com.b07.planetze.form.definition.FieldId;
-import com.b07.planetze.util.measurement.ImmutableMass;
-import com.b07.planetze.util.measurement.Mass;
 
 public final class MoneyFragment extends FieldFragment<MoneyField, Double> {
     /**

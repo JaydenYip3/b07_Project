@@ -22,8 +22,10 @@ public record FlightDaily(
     @Override
     public Emissions emissions() {
         return Emissions.transport(Mass.g(switch(flightType) {
-            case SHORT_HAUL -> SHORT_G_CO2E_PER_KM * SHORT_DISTANCE_KM;
-            case LONG_HAUL -> LONG_G_CO2E_PER_KM * LONG_DISTANCE_KM;
+            case SHORT_HAUL ->
+                    SHORT_G_CO2E_PER_KM * SHORT_DISTANCE_KM * numberFlights;
+            case LONG_HAUL ->
+                    LONG_G_CO2E_PER_KM * LONG_DISTANCE_KM * numberFlights;
         }));
     }
 

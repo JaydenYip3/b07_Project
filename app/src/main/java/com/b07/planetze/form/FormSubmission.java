@@ -6,6 +6,9 @@ import com.b07.planetze.form.definition.FieldId;
 import com.b07.planetze.form.definition.FormId;
 import com.b07.planetze.util.immutability.ImmutableList;
 
+/**
+ * Stores the values of a submitted form. All fields are filled.
+ */
 public final class FormSubmission {
     @NonNull private final FormId formId;
     @NonNull private final ImmutableList<Object> values;

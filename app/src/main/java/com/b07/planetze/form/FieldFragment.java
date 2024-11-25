@@ -1,4 +1,4 @@
-package com.b07.planetze.form.field;
+package com.b07.planetze.form;
 
 import static com.b07.planetze.util.option.Option.none;
 
@@ -13,8 +13,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.b07.planetze.form.Form;
-import com.b07.planetze.form.FormViewModel;
+import com.b07.planetze.form.definition.Field;
 import com.b07.planetze.form.definition.FieldId;
 import com.b07.planetze.form.definition.FormDefinition;
 import com.b07.planetze.form.exception.FormException;

@@ -12,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import com.b07.planetze.R;
+import com.b07.planetze.form.FieldFragment;
 import com.b07.planetze.util.measurement.ImmutableMass;
 import com.b07.planetze.util.measurement.Mass;
 import com.b07.planetze.form.Form;
