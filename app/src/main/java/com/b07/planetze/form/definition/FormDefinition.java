@@ -4,13 +4,14 @@ import androidx.annotation.NonNull;
 
 import com.b07.planetze.form.Form;
 import com.b07.planetze.form.exception.FormIdException;
-import com.b07.planetze.form.field.Field;
 import com.b07.planetze.util.immutability.ImmutableList;
 import com.b07.planetze.util.option.Option;
 
 /**
- * Defines the fields of a {@link Form}. <br>
- * Use {@link FormBuilder} instead of creating this manually.
+ * Describes the fields of a {@link Form} (i.e., stores the name, initial value,
+ * and validators of all fields). <br>
+ * This is used for creating forms. <br>
+ * Use {@link FormBuilder} instead of creating this manually. <br>
  * @param id the form's id
  * @param fields the form's fields
  */

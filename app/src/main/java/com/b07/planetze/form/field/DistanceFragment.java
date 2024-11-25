@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.b07.planetze.R;
+import com.b07.planetze.form.FieldFragment;
 import com.b07.planetze.util.measurement.Distance;
 import com.b07.planetze.util.measurement.ImmutableDistance;
 import com.b07.planetze.form.Form;

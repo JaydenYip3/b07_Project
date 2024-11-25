@@ -2,10 +2,12 @@ package com.b07.planetze.form.definition;
 
 import androidx.annotation.NonNull;
 
-import com.b07.planetze.form.field.Field;
-import com.b07.planetze.form.field.InitiallyFilled;
 import com.b07.planetze.util.option.Option;
 
+/**
+ * Stores the name, initial value, and validator of a field.
+ * @param <T> the value held by the field
+ */
 public final class FieldDefinition<T> {
     @NonNull private final String name;
     @NonNull private final InitiallyFilled<T> field;

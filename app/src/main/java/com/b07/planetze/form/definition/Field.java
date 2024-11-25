@@ -1,12 +1,10 @@
-package com.b07.planetze.form.field;
+package com.b07.planetze.form.definition;
 
-import static com.b07.planetze.util.option.Option.none;
 import static com.b07.planetze.util.option.Option.some;
 
 import androidx.annotation.NonNull;
 
-import com.b07.planetze.form.definition.FieldId;
-import com.b07.planetze.util.option.Option;
+import com.b07.planetze.form.FieldFragment;
 import com.b07.planetze.util.result.Result;
 import com.b07.planetze.util.Unit;
 

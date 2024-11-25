@@ -1,7 +1,9 @@
 package com.b07.planetze.form.exception;
 
+import com.b07.planetze.form.definition.Field;
+
 /**
- * Thrown when a {@link com.b07.planetze.form.field.Field} is improperly
+ * Thrown when a {@link Field} is improperly
  * initialized.
  */
 public class FieldInitException extends RuntimeException {

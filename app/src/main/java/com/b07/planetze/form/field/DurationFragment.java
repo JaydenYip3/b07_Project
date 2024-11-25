@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.b07.planetze.R;
+import com.b07.planetze.form.FieldFragment;
 import com.b07.planetze.util.measurement.Duration;
 import com.b07.planetze.util.measurement.ImmutableDuration;
 import com.b07.planetze.form.Form;

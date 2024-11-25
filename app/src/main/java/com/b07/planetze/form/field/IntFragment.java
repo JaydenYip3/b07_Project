@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.b07.planetze.R;
+import com.b07.planetze.form.FieldFragment;
 import com.b07.planetze.form.Form;
 import com.b07.planetze.form.definition.FieldId;
 
