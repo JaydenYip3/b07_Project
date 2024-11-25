@@ -26,26 +26,17 @@ public class MainActivity extends AppCompatActivity {
         //User bruh = new User("Caleb", "passwordthatneedstobeencrypted", "bruh.com");
         //myRef.child("User").setValue(bruh);
 
-        EcoTrackerActivity.start(this);
+//        EcoTrackerActivity.start(this);
 
-//        if (savedInstanceState == null) {
-//            loadFragment(new WelcomeFragment());
-//        }
+        if (savedInstanceState == null) {
+            loadFragment(new WelcomeFragment());
+        }
     }
 
     private void loadFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, fragment);
-        transaction.addToBackStack(null);
+        transaction.addToBackStack(fragment.getClass().getName());
         transaction.commit();
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
-            getSupportFragmentManager().popBackStack();
-        } else {
-            super.onBackPressed();
-        }
     }
 }
