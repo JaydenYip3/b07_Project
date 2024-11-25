@@ -107,6 +107,8 @@ public class QuestionsHousingFragment extends Fragment{
         RadioButton b165 = v.findViewById(R.id.radioButton165);
         RadioButton b166 = v.findViewById(R.id.radioButton166);
         RadioButton b171 = v.findViewById(R.id.radioButton171);
+        RadioButton b172 = v.findViewById(R.id.radioButton172);
+        RadioButton b173 = v.findViewById(R.id.radioButton173);
         if(b111.isChecked()) q11Answer = "A";
         if(b112.isChecked()) q11Answer = "B";
         if(b113.isChecked() || b115.isChecked()) q11Answer = "C";
@@ -135,29 +137,30 @@ public class QuestionsHousingFragment extends Fragment{
         if(b164.isChecked()) q16Answer = "D";
         if(b165.isChecked()) q16Answer = "E";
         if(b166.isChecked()) q16Answer = "F";
-
-        String userKey = String.join("-", q11Answer, q12Answer, q13Answer, q14Answer, q15Answer);
-        SurveyProcessor surveyProcessor = new SurveyProcessor(v.getContext(), "housing.json");
-        int result = surveyProcessor.getResult(userKey);
-        operandMass.setKg(result);
-        housingMass.add(operandMass);
-        if(q14Answer!=null && q16Answer!=null && !(q14Answer.equals(q16Answer))){
-            if(q16Answer.equals("E") || q16Answer.equals("B")){
-                operandMass.setKg(233);
+        if (q11Answer!=null && q12Answer!=null && q13Answer!=null && q14Answer!=null && q15Answer!=null && q16Answer!=null
+                && (b171.isChecked() || b172.isChecked() || b173.isChecked())) {
+            String userKey = String.join("-", q11Answer, q12Answer, q13Answer, q14Answer, q15Answer);
+            SurveyProcessor surveyProcessor = new SurveyProcessor(v.getContext(), "housing.json");
+            int result = surveyProcessor.getResult(userKey);
+            operandMass.setKg(result);
+            housingMass.add(operandMass);
+            if (q14Answer != null && q16Answer != null && !(q14Answer.equals(q16Answer))) {
+                if (q16Answer.equals("E") || q16Answer.equals("B")) {
+                    operandMass.setKg(233);
+                    housingMass.subtract(operandMass);
+                } else {
+                    operandMass.setKg(233);
+                    housingMass.add(operandMass);
+                }
+            }
+            if (b171.isChecked()) {
+                operandMass.setKg(6000);
                 housingMass.subtract(operandMass);
             }
-            else{
-                operandMass.setKg(233);
-                housingMass.add(operandMass);
-            }
+            operandMass = housingEmissions.transportation();
+            operandMass.set(housingMass);
+            loadFragment(new QuestionsConsumptionFragment());
         }
-        if(b171.isChecked()){
-            operandMass.setKg(6000);
-            housingMass.subtract(operandMass);
-        }
-        operandMass = housingEmissions.transportation();
-        operandMass.set(housingMass);
-        loadFragment(new QuestionsConsumptionFragment());
     }
     private void loadFragment(Fragment fragment) {
         FragmentTransaction transaction = getParentFragmentManager().beginTransaction();

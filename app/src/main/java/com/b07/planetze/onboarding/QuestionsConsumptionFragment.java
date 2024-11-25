@@ -74,159 +74,167 @@ public class QuestionsConsumptionFragment extends Fragment{
         RadioButton b184 = v.findViewById(R.id.radioButton184);
         RadioButton b191 = v.findViewById(R.id.radioButton191);
         RadioButton b192 = v.findViewById(R.id.radioButton192);
+        RadioButton b193 = v.findViewById(R.id.radioButton193);
+        RadioButton b201 = v.findViewById(R.id.radioButton201);
         RadioButton b202 = v.findViewById(R.id.radioButton202);
         RadioButton b203 = v.findViewById(R.id.radioButton203);
         RadioButton b204 = v.findViewById(R.id.radioButton204);
         RadioButton b205 = v.findViewById(R.id.radioButton205);
+        RadioButton b211 = v.findViewById(R.id.radioButton211);
         RadioButton b212 = v.findViewById(R.id.radioButton212);
         RadioButton b213 = v.findViewById(R.id.radioButton213);
         RadioButton b214 = v.findViewById(R.id.radioButton214);
-        if (b181.isChecked()) {
-            operandMass.setKg(360);
-            consumptionMass.add(operandMass);
-            if (b191.isChecked()) consumptionMass.scale(0.5);
-            if (b192.isChecked()) consumptionMass.scale(0.3);
-            if (b212.isChecked()) {
-                operandMass.setKg(54);
-                consumptionMass.add(operandMass);
-            }
-            if (b213.isChecked()) {
-                operandMass.setKg(108);
-                consumptionMass.add(operandMass);
-            }
-            if (b214.isChecked()) {
-                operandMass.setKg(180);
-                consumptionMass.add(operandMass);
-            }
-        }
-        if (b182.isChecked()) {
-            operandMass.setKg(120);
-            consumptionMass.add(operandMass);
-            if (b191.isChecked()) consumptionMass.scale(0.5);
-            if (b192.isChecked()) consumptionMass.scale(0.3);
-            if (b212.isChecked()) {
-                operandMass.setKg(18);      //based on annual (100) * 1.2 = 120 (quarterly)
-                consumptionMass.add(operandMass);
-            }
-            if (b213.isChecked()) {
-                operandMass.setKg(36);      //based on annual (100) * 1.2 = 120 (quarterly)
-                consumptionMass.add(operandMass);
-            }
-            if (b214.isChecked()) {
-                operandMass.setKg(60);      //based on annual (100) * 1.2 = 120 (quarterly)
-                consumptionMass.add(operandMass);
-            }
-        }
-        if (b183.isChecked()) {
-            operandMass.setKg(100);
-            consumptionMass.add(operandMass);
-            if (b191.isChecked()) consumptionMass.scale(0.5);
-            if (b192.isChecked()) consumptionMass.scale(0.3);
-            if (b212.isChecked()) {
-                operandMass.setKg(15);
-                consumptionMass.add(operandMass);
-            }
-            if (b213.isChecked()) {
-                operandMass.setKg(30);
-                consumptionMass.add(operandMass);
-            }
-            if (b214.isChecked()) {
-                operandMass.setKg(50);
-                consumptionMass.add(operandMass);
-            }
-        }
-        if (b184.isChecked()) {
-            operandMass.setKg(5);
-            consumptionMass.add(operandMass);
-            if (b191.isChecked()) consumptionMass.scale(0.5);
-            if (b192.isChecked()) consumptionMass.scale(0.3);
-            if (b212.isChecked()) {
-                operandMass.setKg(0.75);
-                consumptionMass.add(operandMass);
-            }
-            if (b213.isChecked()) {
-                operandMass.setKg(1.5);
-                consumptionMass.add(operandMass);
-            }
-            if (b214.isChecked()) {
-                operandMass.setKg(2.5);
-                consumptionMass.add(operandMass);
-            }
-        }
-        if (b202.isChecked()) {
-            operandMass.setKg(300);
-            consumptionMass.add(operandMass);
-            if (b212.isChecked()) {
-                operandMass.setKg(45);
-                consumptionMass.add(operandMass);
-            }
-            if (b213.isChecked()) {
-                operandMass.setKg(60);
-                consumptionMass.add(operandMass);
-            }
-            if (b214.isChecked()) {
-                operandMass.setKg(90);
-                consumptionMass.add(operandMass);
-            }
-        }
-        if (b203.isChecked()) {
-            operandMass.setKg(600);
-            consumptionMass.add(operandMass);
-            if (b191.isChecked()) consumptionMass.scale(0.5);
-            if (b192.isChecked()) consumptionMass.scale(0.3);
-            if (b212.isChecked()) {
-                operandMass.setKg(60);
-                consumptionMass.add(operandMass);
-            }
-            if (b213.isChecked()) {
-                operandMass.setKg(120);
-                consumptionMass.add(operandMass);
-            }
-            if (b214.isChecked()) {
-                operandMass.setKg(180);
-                consumptionMass.add(operandMass);
-            }
-        }
-        if (b204.isChecked()) {
-            operandMass.setKg(900);
-            consumptionMass.add(operandMass);
-            if (b191.isChecked()) consumptionMass.scale(0.5);
-            if (b192.isChecked()) consumptionMass.scale(0.3);
-            if (b212.isChecked()) {
-                operandMass.setKg(90);
-                consumptionMass.add(operandMass);
-            }
-            if (b213.isChecked()) {
-                operandMass.setKg(180);
-                consumptionMass.add(operandMass);
-            }
-            if (b214.isChecked()) {
-                operandMass.setKg(270);
-                consumptionMass.add(operandMass);
-            }
-        }
-        if (b205.isChecked()) {
-            operandMass.setKg(1200);
-            consumptionMass.add(operandMass);
-            if (b191.isChecked()) consumptionMass.scale(0.5);
-            if (b192.isChecked()) consumptionMass.scale(0.3);
-            if (b212.isChecked()) {
-                operandMass.setKg(120);
-                consumptionMass.add(operandMass);
-            }
-            if (b213.isChecked()) {
-                operandMass.setKg(240);
-                consumptionMass.add(operandMass);
-            }
-            if (b214.isChecked()) {
+        if((b181.isChecked() || b182.isChecked() || b183.isChecked() || b184.isChecked())
+                && (b191.isChecked() || b192.isChecked() || b193.isChecked())
+                && (b201.isChecked() || b202.isChecked() || b203.isChecked()|| b204.isChecked() || b205.isChecked())
+                && (b211.isChecked() || b212.isChecked() || b213.isChecked()|| b214.isChecked())) {
+            consumptionMass.setKg(0);
+            if (b181.isChecked()) {
                 operandMass.setKg(360);
                 consumptionMass.add(operandMass);
+                if (b191.isChecked()) consumptionMass.scale(0.5);
+                if (b192.isChecked()) consumptionMass.scale(0.3);
+                if (b212.isChecked()) {
+                    operandMass.setKg(54);
+                    consumptionMass.add(operandMass);
+                }
+                if (b213.isChecked()) {
+                    operandMass.setKg(108);
+                    consumptionMass.add(operandMass);
+                }
+                if (b214.isChecked()) {
+                    operandMass.setKg(180);
+                    consumptionMass.add(operandMass);
+                }
             }
+            if (b182.isChecked()) {
+                operandMass.setKg(120);
+                consumptionMass.add(operandMass);
+                if (b191.isChecked()) consumptionMass.scale(0.5);
+                if (b192.isChecked()) consumptionMass.scale(0.3);
+                if (b212.isChecked()) {
+                    operandMass.setKg(18);      //based on annual (100) * 1.2 = 120 (quarterly)
+                    consumptionMass.add(operandMass);
+                }
+                if (b213.isChecked()) {
+                    operandMass.setKg(36);      //based on annual (100) * 1.2 = 120 (quarterly)
+                    consumptionMass.add(operandMass);
+                }
+                if (b214.isChecked()) {
+                    operandMass.setKg(60);      //based on annual (100) * 1.2 = 120 (quarterly)
+                    consumptionMass.add(operandMass);
+                }
+            }
+            if (b183.isChecked()) {
+                operandMass.setKg(100);
+                consumptionMass.add(operandMass);
+                if (b191.isChecked()) consumptionMass.scale(0.5);
+                if (b192.isChecked()) consumptionMass.scale(0.3);
+                if (b212.isChecked()) {
+                    operandMass.setKg(15);
+                    consumptionMass.add(operandMass);
+                }
+                if (b213.isChecked()) {
+                    operandMass.setKg(30);
+                    consumptionMass.add(operandMass);
+                }
+                if (b214.isChecked()) {
+                    operandMass.setKg(50);
+                    consumptionMass.add(operandMass);
+                }
+            }
+            if (b184.isChecked()) {
+                operandMass.setKg(5);
+                consumptionMass.add(operandMass);
+                if (b191.isChecked()) consumptionMass.scale(0.5);
+                if (b192.isChecked()) consumptionMass.scale(0.3);
+                if (b212.isChecked()) {
+                    operandMass.setKg(0.75);
+                    consumptionMass.add(operandMass);
+                }
+                if (b213.isChecked()) {
+                    operandMass.setKg(1.5);
+                    consumptionMass.add(operandMass);
+                }
+                if (b214.isChecked()) {
+                    operandMass.setKg(2.5);
+                    consumptionMass.add(operandMass);
+                }
+            }
+            if (b202.isChecked()) {
+                operandMass.setKg(300);
+                consumptionMass.add(operandMass);
+                if (b212.isChecked()) {
+                    operandMass.setKg(45);
+                    consumptionMass.add(operandMass);
+                }
+                if (b213.isChecked()) {
+                    operandMass.setKg(60);
+                    consumptionMass.add(operandMass);
+                }
+                if (b214.isChecked()) {
+                    operandMass.setKg(90);
+                    consumptionMass.add(operandMass);
+                }
+            }
+            if (b203.isChecked()) {
+                operandMass.setKg(600);
+                consumptionMass.add(operandMass);
+                if (b191.isChecked()) consumptionMass.scale(0.5);
+                if (b192.isChecked()) consumptionMass.scale(0.3);
+                if (b212.isChecked()) {
+                    operandMass.setKg(60);
+                    consumptionMass.add(operandMass);
+                }
+                if (b213.isChecked()) {
+                    operandMass.setKg(120);
+                    consumptionMass.add(operandMass);
+                }
+                if (b214.isChecked()) {
+                    operandMass.setKg(180);
+                    consumptionMass.add(operandMass);
+                }
+            }
+            if (b204.isChecked()) {
+                operandMass.setKg(900);
+                consumptionMass.add(operandMass);
+                if (b191.isChecked()) consumptionMass.scale(0.5);
+                if (b192.isChecked()) consumptionMass.scale(0.3);
+                if (b212.isChecked()) {
+                    operandMass.setKg(90);
+                    consumptionMass.add(operandMass);
+                }
+                if (b213.isChecked()) {
+                    operandMass.setKg(180);
+                    consumptionMass.add(operandMass);
+                }
+                if (b214.isChecked()) {
+                    operandMass.setKg(270);
+                    consumptionMass.add(operandMass);
+                }
+            }
+            if (b205.isChecked()) {
+                operandMass.setKg(1200);
+                consumptionMass.add(operandMass);
+                if (b191.isChecked()) consumptionMass.scale(0.5);
+                if (b192.isChecked()) consumptionMass.scale(0.3);
+                if (b212.isChecked()) {
+                    operandMass.setKg(120);
+                    consumptionMass.add(operandMass);
+                }
+                if (b213.isChecked()) {
+                    operandMass.setKg(240);
+                    consumptionMass.add(operandMass);
+                }
+                if (b214.isChecked()) {
+                    operandMass.setKg(360);
+                    consumptionMass.add(operandMass);
+                }
+            }
+            operandMass = consumptionEmissions.transportation();
+            operandMass.set(consumptionMass);
+            loadFragment(new CalcDisplayFragment());
         }
-        operandMass = consumptionEmissions.transportation();
-        operandMass.set(consumptionMass);
-        loadFragment(new CalcDisplayFragment());
-
     }
     private void loadFragment(Fragment fragment) {
         FragmentTransaction transaction = getParentFragmentManager().beginTransaction();

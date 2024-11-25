@@ -164,17 +164,20 @@ public class QuestionsTransportationFragment extends Fragment implements Adapter
     }
 
     public void onSubmit(@NonNull View v) {
+        RadioButton b11 = v.findViewById(R.id.radioButton11);
         RadioButton b12 = v.findViewById(R.id.radioButton12);
         RadioButton b21 = v.findViewById(R.id.radioButton21);
         RadioButton b22 = v.findViewById(R.id.radioButton22);
         RadioButton b23 = v.findViewById(R.id.radioButton23);
         RadioButton b24 = v.findViewById(R.id.radioButton24);
+        RadioButton b25 = v.findViewById(R.id.radioButton25);
         RadioButton b31 = v.findViewById(R.id.radioButton31);
         RadioButton b32 = v.findViewById(R.id.radioButton32);
         RadioButton b33 = v.findViewById(R.id.radioButton33);
         RadioButton b34 = v.findViewById(R.id.radioButton34);
         RadioButton b35 = v.findViewById(R.id.radioButton35);
         RadioButton b36 = v.findViewById(R.id.radioButton36);
+        RadioButton b41 = v.findViewById(R.id.radioButton41);
         RadioButton b42 = v.findViewById(R.id.radioButton42);
         RadioButton b43 = v.findViewById(R.id.radioButton43);
         RadioButton b44 = v.findViewById(R.id.radioButton44);
@@ -187,121 +190,126 @@ public class QuestionsTransportationFragment extends Fragment implements Adapter
         RadioButton b62 = v.findViewById(R.id.radioButton62);
         RadioButton b63 = v.findViewById(R.id.radioButton63);
         RadioButton b64 = v.findViewById(R.id.radioButton64);
+        RadioButton b65 = v.findViewById(R.id.radioButton65);
         RadioButton b71 = v.findViewById(R.id.radioButton71);
         RadioButton b72 = v.findViewById(R.id.radioButton72);
         RadioButton b73 = v.findViewById(R.id.radioButton73);
         RadioButton b74 = v.findViewById(R.id.radioButton74);
-        if(b12.isChecked()){
-            if(b21.isChecked()){
-                operandMass.setKg(0.24);
+        RadioButton b75 = v.findViewById(R.id.radioButton75);
+        if((b11.isChecked() || b12.isChecked())
+                && (b41.isChecked() || b42.isChecked() || b43.isChecked() || b44.isChecked())
+                && (b51.isChecked() || b52.isChecked() || b53.isChecked() || b54.isChecked() || b55.isChecked())
+                && (b61.isChecked() || b62.isChecked() || b63.isChecked() || b64.isChecked() || b65.isChecked())
+                && (b71.isChecked() || b72.isChecked() || b73.isChecked() || b74.isChecked() || b75.isChecked())
+                && (b12.isChecked() || ((b21.isChecked() || b22.isChecked() || b23.isChecked() || b24.isChecked() || b25.isChecked())
+                    && b31.isChecked() || b32.isChecked() || b33.isChecked() || b34.isChecked() || b35.isChecked() || b36.isChecked()))) {
+            transportMass.setKg(0);
+            if (b12.isChecked()) {
+                if (b21.isChecked()) {
+                    operandMass.setKg(0.24);
+                    transportMass.add(operandMass);
+                }
+                if (b22.isChecked()) {
+                    operandMass.setKg(0.27);
+                    transportMass.add(operandMass);
+                }
+                if (b23.isChecked()) {
+                    operandMass.setKg(0.16);
+                    transportMass.add(operandMass);
+                }
+                if (b24.isChecked()) {
+                    operandMass.setKg(0.05);
+                    transportMass.add(operandMass);
+                }
+                if (b31.isChecked()) transportMass.scale(5000);
+                if (b32.isChecked()) transportMass.scale(10000);
+                if (b33.isChecked()) transportMass.scale(15000);
+                if (b34.isChecked()) transportMass.scale(20000);
+                if (b35.isChecked()) transportMass.scale(25000);
+                if (b36.isChecked()) transportMass.scale(35000);
+            }
+            if (b42.isChecked()) {
+                if (b51.isChecked()) {
+                    operandMass.setKg(246);
+                    transportMass.add(operandMass);
+                }
+                if (b52.isChecked()) {
+                    operandMass.setKg(819);
+                    transportMass.add(operandMass);
+                }
+                if (b53.isChecked()) {
+                    operandMass.setKg(1638);
+                    transportMass.add(operandMass);
+                }
+                if (b54.isChecked()) {
+                    operandMass.setKg(3071);
+                    transportMass.add(operandMass);
+                }
+                if (b55.isChecked()) {
+                    operandMass.setKg(4095);
+                    transportMass.add(operandMass);
+                }
+            }
+            if (b43.isChecked() || b44.isChecked()) {
+                if (b51.isChecked()) {
+                    operandMass.setKg(573);
+                    transportMass.add(operandMass);
+                }
+                if (b52.isChecked()) {
+                    operandMass.setKg(1911);
+                    transportMass.add(operandMass);
+                }
+                if (b53.isChecked()) {
+                    operandMass.setKg(3822);
+                    transportMass.add(operandMass);
+                }
+                if (b54.isChecked()) {
+                    operandMass.setKg(7166);
+                    transportMass.add(operandMass);
+                }
+                if (b55.isChecked()) {
+                    operandMass.setKg(9555);
+                    transportMass.add(operandMass);
+                }
+            }
+            if (b61.isChecked()) {
+                operandMass.setKg(225);
                 transportMass.add(operandMass);
             }
-            if(b22.isChecked()){
-                operandMass.setKg(0.27);
+            if (b62.isChecked()) {
+                operandMass.setKg(600);
                 transportMass.add(operandMass);
             }
-            if(b23.isChecked()){
-                operandMass.setKg(0.16);
+            if (b63.isChecked()) {
+                operandMass.setKg(1200);
                 transportMass.add(operandMass);
             }
-            if(b24.isChecked()){
-                operandMass.setKg(0.05);
+            if (b64.isChecked()) {
+                operandMass.setKg(1800);
                 transportMass.add(operandMass);
             }
-        }
-        if(b31.isChecked()) transportMass.scale(5000);
-        if(b32.isChecked()) transportMass.scale(10000);
-        if(b33.isChecked()) transportMass.scale(15000);
-        if(b34.isChecked()) transportMass.scale(20000);
-        if(b35.isChecked()) transportMass.scale(25000);
-        if(b36.isChecked()) transportMass.scale(35000);
-        if(b42.isChecked()){
-            if(b51.isChecked()){
-                operandMass.setKg(246);
+            if (b71.isChecked()) {
+                operandMass.setKg(825);
                 transportMass.add(operandMass);
             }
-            if(b52.isChecked()){
-                operandMass.setKg(819);
+            if (b72.isChecked()) {
+                operandMass.setKg(2200);
                 transportMass.add(operandMass);
             }
-            if(b53.isChecked()){
-                operandMass.setKg(1638);
+            if (b73.isChecked()) {
+                operandMass.setKg(4400);
                 transportMass.add(operandMass);
             }
-            if(b54.isChecked()){
-                operandMass.setKg(3071);
+            if (b74.isChecked()) {
+                operandMass.setKg(6600);
                 transportMass.add(operandMass);
             }
-            if(b55.isChecked()){
-                operandMass.setKg(4095);
-                transportMass.add(operandMass);
-            }
-        }
-        if(b43.isChecked() || b44.isChecked()){
-            if(b51.isChecked()){
-                operandMass.setKg(573);
-                transportMass.add(operandMass);
-            }
-            if(b52.isChecked()){
-                operandMass.setKg(1911);
-                transportMass.add(operandMass);
-            }
-            if(b53.isChecked()){
-                operandMass.setKg(3822);
-                transportMass.add(operandMass);
-            }
-            if(b54.isChecked()){
-                operandMass.setKg(7166);
-                transportMass.add(operandMass);
-            }
-            if(b55.isChecked()){
-                operandMass.setKg(9555);
-                transportMass.add(operandMass);
-            }
-        }
-        if(b61.isChecked()){
-            operandMass.setKg(225);
-            transportMass.add(operandMass);
-        }
-        if(b62.isChecked()){
-            operandMass.setKg(600);
-            transportMass.add(operandMass);
-        }
-        if(b63.isChecked()){
-            operandMass.setKg(1200);
-            transportMass.add(operandMass);
-        }
-        if(b64.isChecked()){
-            operandMass.setKg(1800);
-            transportMass.add(operandMass);
-        }
-        if(b71.isChecked()){
-            operandMass.setKg(825);
-            transportMass.add(operandMass);
-        }
-        if(b72.isChecked()){
-            operandMass.setKg(2200);
-            transportMass.add(operandMass);
-        }
-        if(b73.isChecked()){
-            operandMass.setKg(4400);
-            transportMass.add(operandMass);
-        }
-        if(b74.isChecked()){
-            operandMass.setKg(6600);
-            transportMass.add(operandMass);
-        }
 
-        operandMass = transportEmissions.transportation();
-        operandMass.set(transportMass);
-        /*db.updateDailyEmissions(userUid, dateAdded, transportEmissions, result -> {
- *         result.match(unit -> {
- *             Log.d(TAG, unit.toString());
- *         }, error -> {
- *             Log.e(TAG, error.message());
- *         });
- *     });*/
-        loadFragment(new QuestionsFoodFragment());
+            operandMass = transportEmissions.transportation();
+            operandMass.set(transportMass);
+
+            loadFragment(new QuestionsFoodFragment());
+        }
     }
     public void onItemSelected(AdapterView<?> parent, View view,
                                int pos, long id) {

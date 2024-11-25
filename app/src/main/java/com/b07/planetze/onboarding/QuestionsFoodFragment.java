@@ -151,95 +151,109 @@ public class QuestionsFoodFragment extends Fragment{
         RadioButton b91b = v.findViewById(R.id.radioButton91beef);
         RadioButton b92b = v.findViewById(R.id.radioButton92beef);
         RadioButton b93b = v.findViewById(R.id.radioButton93beef);
+        RadioButton b94b = v.findViewById(R.id.radioButton94beef);
         RadioButton b91p = v.findViewById(R.id.radioButton91pork);
         RadioButton b92p = v.findViewById(R.id.radioButton92pork);
         RadioButton b93p = v.findViewById(R.id.radioButton93pork);
+        RadioButton b94p = v.findViewById(R.id.radioButton94pork);
         RadioButton b91c = v.findViewById(R.id.radioButton91chkn);
         RadioButton b92c = v.findViewById(R.id.radioButton92chkn);
         RadioButton b93c = v.findViewById(R.id.radioButton93chkn);
+        RadioButton b94c = v.findViewById(R.id.radioButton94chkn);
         RadioButton b91fs = v.findViewById(R.id.radioButton91fs);
         RadioButton b92fs = v.findViewById(R.id.radioButton92fs);
         RadioButton b93fs = v.findViewById(R.id.radioButton93fs);
+        RadioButton b94fs = v.findViewById(R.id.radioButton94fs);
+        RadioButton b101 = v.findViewById(R.id.radioButton101);
         RadioButton b102 = v.findViewById(R.id.radioButton102);
         RadioButton b103 = v.findViewById(R.id.radioButton103);
         RadioButton b104 = v.findViewById(R.id.radioButton104);
-        if(b81.isChecked()){
-            operandMass.setKg(1000);
-            foodMass.add(operandMass);
-        }
-        if(b82.isChecked()){
-            operandMass.setKg(500);
-            foodMass.add(operandMass);
-        }
-        if(b83.isChecked()){
-            operandMass.setKg(1500);
-            foodMass.add(operandMass);
-        }
-        if(b84.isChecked()){
-            if(b91b.isChecked()){
-                operandMass.setKg(2500);
+        if((b81.isChecked() || b82.isChecked() || b83.isChecked() || b84.isChecked())
+                && (b101.isChecked() || b102.isChecked() || b103.isChecked()|| b104.isChecked())
+                && (b81.isChecked() || b82.isChecked() || b83.isChecked()
+                    || ((b91b.isChecked() || b92b.isChecked() || b93b.isChecked()|| b94b.isChecked())
+                    && (b91p.isChecked() || b92p.isChecked() || b93p.isChecked()|| b94p.isChecked())
+                    && (b91c.isChecked() || b92c.isChecked() || b93c.isChecked()|| b94c.isChecked())
+                    && (b91fs.isChecked() || b92fs.isChecked() || b93fs.isChecked()|| b94fs.isChecked())))) {
+            foodMass.setKg(0);
+            if (b81.isChecked()) {
+                operandMass.setKg(1000);
                 foodMass.add(operandMass);
             }
-            if(b92b.isChecked()){
-                operandMass.setKg(1900);
-                foodMass.add(operandMass);
-            }
-            if(b93b.isChecked()){
-                operandMass.setKg(1300);
-                foodMass.add(operandMass);
-            }
-            if(b91p.isChecked()){
-                operandMass.setKg(1450);
-                foodMass.add(operandMass);
-            }
-            if(b92p.isChecked()){
-                operandMass.setKg(860);
-                foodMass.add(operandMass);
-            }
-            if(b93p.isChecked()){
-                operandMass.setKg(450);
-                foodMass.add(operandMass);
-            }
-            if(b91c.isChecked()){
-                operandMass.setKg(950);
-                foodMass.add(operandMass);
-            }
-            if(b92c.isChecked()){
-                operandMass.setKg(600);
-                foodMass.add(operandMass);
-            }
-            if(b93c.isChecked()){
-                operandMass.setKg(200);
-                foodMass.add(operandMass);
-            }
-            if(b91fs.isChecked()){
-                operandMass.setKg(800);
-                foodMass.add(operandMass);
-            }
-            if(b92fs.isChecked()){
+            if (b82.isChecked()) {
                 operandMass.setKg(500);
                 foodMass.add(operandMass);
             }
-            if(b93fs.isChecked()){
-                operandMass.setKg(150);
+            if (b83.isChecked()) {
+                operandMass.setKg(1500);
                 foodMass.add(operandMass);
             }
+            if (b84.isChecked()) {
+                if (b91b.isChecked()) {
+                    operandMass.setKg(2500);
+                    foodMass.add(operandMass);
+                }
+                if (b92b.isChecked()) {
+                    operandMass.setKg(1900);
+                    foodMass.add(operandMass);
+                }
+                if (b93b.isChecked()) {
+                    operandMass.setKg(1300);
+                    foodMass.add(operandMass);
+                }
+                if (b91p.isChecked()) {
+                    operandMass.setKg(1450);
+                    foodMass.add(operandMass);
+                }
+                if (b92p.isChecked()) {
+                    operandMass.setKg(860);
+                    foodMass.add(operandMass);
+                }
+                if (b93p.isChecked()) {
+                    operandMass.setKg(450);
+                    foodMass.add(operandMass);
+                }
+                if (b91c.isChecked()) {
+                    operandMass.setKg(950);
+                    foodMass.add(operandMass);
+                }
+                if (b92c.isChecked()) {
+                    operandMass.setKg(600);
+                    foodMass.add(operandMass);
+                }
+                if (b93c.isChecked()) {
+                    operandMass.setKg(200);
+                    foodMass.add(operandMass);
+                }
+                if (b91fs.isChecked()) {
+                    operandMass.setKg(800);
+                    foodMass.add(operandMass);
+                }
+                if (b92fs.isChecked()) {
+                    operandMass.setKg(500);
+                    foodMass.add(operandMass);
+                }
+                if (b93fs.isChecked()) {
+                    operandMass.setKg(150);
+                    foodMass.add(operandMass);
+                }
+            }
+            if (b102.isChecked()) {
+                operandMass.setKg(23.4);
+                foodMass.add(operandMass);
+            }
+            if (b103.isChecked()) {
+                operandMass.setKg(70.2);
+                foodMass.add(operandMass);
+            }
+            if (b104.isChecked()) {
+                operandMass.setKg(140.4);
+                foodMass.add(operandMass);
+            }
+            operandMass = foodEmissions.transportation();
+            operandMass.set(foodMass);
+            loadFragment(new QuestionsHousingFragment());
         }
-        if(b102.isChecked()){
-            operandMass.setKg(23.4);
-            foodMass.add(operandMass);
-        }
-        if(b103.isChecked()){
-            operandMass.setKg(70.2);
-            foodMass.add(operandMass);
-        }
-        if(b104.isChecked()){
-            operandMass.setKg(140.4);
-            foodMass.add(operandMass);
-        }
-        operandMass = foodEmissions.transportation();
-        operandMass.set(foodMass);
-        loadFragment(new QuestionsHousingFragment());
     }
     public void NoMeat(@NonNull View v) {
 
