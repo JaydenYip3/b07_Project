@@ -2,82 +2,121 @@ package com.b07.planetze.common;
 
 import androidx.annotation.NonNull;
 
+import com.b07.planetze.util.measurement.Mass;
+import com.b07.planetze.util.Util;
+import com.b07.planetze.util.immutability.ImmutableList;
+import com.b07.planetze.util.immutability.MutableWithCopy;
+
+import java.util.List;
+
 /**
  * Stores CO2e emissions by category.
  */
-public class Emissions {
-    private Mass[] categories;
+public final class Emissions implements MutableWithCopy<Emissions> {
+    @NonNull private final ImmutableList<Mass> categories;
 
-    /**
-     * Creates a new {@link Emissions} where all emission categories are zero.
-     */
-    public Emissions() {
-        categories = new Mass[4];
-        for (int i = 0; i < categories.length; i++) {
-            categories[i] = new Mass();
-        }
+    private Emissions() {
+        List<Mass> list = Util.filledArrayList(4, Mass::zero);
+        categories = new ImmutableList<>(list);
     }
 
     /**
-     * Gets a mutable reference to transportation emissions.
-     * @return a mutable reference to transportation emissions
+     * {@return a new <code>Emissions</code> where all categories are zero}
      */
     @NonNull
-    public Mass transportation() {
-        return categories[0];
+    public static Emissions zero() {
+        return new Emissions();
     }
 
     /**
-     * Gets a mutable reference to energy use emissions.
-     * @return a mutable reference to energy use emissions
+     * {@return a new <code>Emissions</code> with specified transportation
+     *          emissions (and zero for everything else)}
+     * @param mass the mass of transportation emissions
+     */
+    @NonNull
+    public static Emissions transport(Mass mass) {
+        Emissions e = zero();
+        e.transport().set(mass);
+        return e;
+    }
+
+    /**
+     * {@return a new <code>Emissions</code> with specified energy emissions
+     *          (and zero for everything else)}
+     * @param mass the mass of energy emissions
+     */
+    @NonNull
+    public static Emissions energy(Mass mass) {
+        Emissions e = zero();
+        e.energy().set(mass);
+        return e;
+    }
+
+    /**
+     * {@return a new <code>Emissions</code> with specified food emissions
+     *          (and zero for everything else)}
+     * @param mass the mass of food emissions
+     */
+    @NonNull
+    public static Emissions food(Mass mass) {
+        Emissions e = zero();
+        e.food().set(mass);
+        return e;
+    }
+
+    /**
+     * {@return a new <code>Emissions</code> with specified shopping emissions
+     *          (and zero for everything else)}
+     * @param mass the mass of shopping emissions
+     */
+    @NonNull
+    public static Emissions shopping(Mass mass) {
+        Emissions e = zero();
+        e.shopping().set(mass);
+        return e;
+    }
+
+    /**
+     * {@return a mutable reference to transportation emissions}
+     */
+    @NonNull
+    public Mass transport() {
+        return categories.get(0);
+    }
+
+    /**
+     * {@return a mutable reference to energy use emissions}
      */
     @NonNull
     public Mass energy() {
-        return categories[1];
+        return categories.get(1);
     }
 
     /**
-     * Gets a mutable reference to food consumption emissions.
-     * @return a mutable reference to food consumption emissions
+     * {@return a mutable reference to food consumption emissions}
      */
     @NonNull
     public Mass food() {
-        return categories[2];
+        return categories.get(2);
     }
 
     /**
-     * Gets a mutable reference to shopping emissions.
-     * @return a mutable reference to shopping emissions
+     * {@return a mutable reference to shopping emissions}
      */
     @NonNull
     public Mass shopping() {
-        return categories[3];
+        return categories.get(3);
     }
 
     /**
-     * Computes the sum of emissions across all categories.
-     * @return a new {@link Mass} - the sum of emissions across all categories
+     * {@return a new <code>Mass</code> - the sum of emissions across all
+     *          categories}
      */
     @NonNull
     public Mass total() {
-        Mass sum = new Mass();
-        for (Mass category : categories) {
-            sum.add(category);
-        }
+        Mass sum = Mass.zero();
+        categories.forEach(sum::add);
         return sum;
-    }
-
-    /**
-     * Creates a deep copy of <code>this</code>.
-     * @return a new {@link Emissions} of the same values
-     */
-    @NonNull
-    public Emissions copy() {
-        Emissions emissions = new Emissions();
-        for (int i = 0; i < categories.length; i++) {
-            emissions.categories[i].set(categories[i]);
-        }
-        return emissions;
     }
 
     /**
@@ -88,9 +127,7 @@ public class Emissions {
      */
     @NonNull
     public Emissions set(@NonNull Emissions other) {
-        for (int i = 0; i < categories.length; i++) {
-            categories[i].set(other.categories[i]);
-        }
+        Util.zip(categories, other.categories).forEach(Mass::set);
         return this;
     }
 
@@ -102,9 +139,7 @@ public class Emissions {
      */
     @NonNull
     public Emissions add(@NonNull Emissions other) {
-        for (int i = 0; i < categories.length; i++) {
-            categories[i].add(other.categories[i]);
-        }
+        Util.zip(categories, other.categories).forEach(Mass::add);
         return this;
     }
 
@@ -116,9 +151,7 @@ public class Emissions {
      */
     @NonNull
     public Emissions subtract(@NonNull Emissions other) {
-        for (int i = 0; i < categories.length; i++) {
-            categories[i].subtract(other.categories[i]);
-        }
+        Util.zip(categories, other.categories).forEach(Mass::subtract);
         return this;
     }
 
@@ -129,9 +162,7 @@ public class Emissions {
      */
     @NonNull
     public Emissions scale(double scalar) {
-        for (Mass category : categories) {
-            category.scale(scalar);
-        }
+        categories.forEach(c -> c.scale(scalar));
         return this;
     }
 
@@ -141,31 +172,31 @@ public class Emissions {
      */
     @NonNull
     public Emissions negate() {
-        for (Mass category : categories) {
-            category.negate();
-        }
+        categories.forEach(Mass::negate);
         return this;
     }
 
-    /**
-     * Sets the emissions of all categories to zero.
-     * @return <code>this</code>
-     */
     @NonNull
-    public Emissions zero() {
-        for (Mass category : categories) {
-            category.zero();
-        }
-        return this;
+    @Override
+    public Emissions copy() {
+        Emissions emissions = new Emissions();
+        Util.zip(emissions.categories, categories).forEach(Mass::set);
+        return emissions;
     }
 
     @NonNull
     @Override
     public String toString() {
         return String.format("Emissions[transportation=%s, energy=%s, food=%s, shopping=%s]",
-                transportation(),
+                transport(),
                 energy(),
                 food(),
                 shopping());
+    }
+
+    @NonNull
+    @Override
+    public Emissions self() {
+        return this;
     }
 }

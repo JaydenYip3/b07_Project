@@ -13,6 +13,9 @@
         android:theme="@style/Theme.Planetze"
         tools:targetApi="31">
         <activity
+            android:name=".ecotracker.EcoTrackerActivity"
+            android:exported="false" />
+        <activity
             android:name=".auth.AuthActivity"
             android:exported="false" />
         <activity
@@ -24,8 +27,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity> <!-- Register Activity -->
+<<<<<<< HEAD
 <!--        <activity-->
 <!--            android:name=".auth.RegisterFragment" />-->
+=======
+>>>>>>> 530657ac43e56038e8c55cce6b01412fb9b13c22
     </application>
 
 </manifest>

@@ -7,10 +7,8 @@ import androidx.annotation.NonNull;
  * This exists to ensure that non-user-id strings
  * aren't used where user ids are expected.
  */
-public class UserId {
-    private String id;
-
-    private UserId() {}
+public final class UserId {
+    @NonNull private final String id;
 
     /**
      * Creates a {@link UserId} given a user id
@@ -18,15 +16,6 @@ public class UserId {
      */
     public UserId(@NonNull String id) {
         this.id = id;
-    }
-
-    /**
-     * Creates a copy of this id.
-     * @return a new {@link UserId} of the same value
-     */
-    @NonNull
-    public UserId copy() {
-        return new UserId(id);
     }
 
     /**
@@ -40,13 +29,7 @@ public class UserId {
 
     @Override
     public boolean equals(Object o) {
-        if (o == null) {
-            return false;
-        }
-        if (o instanceof UserId other) {
-            return id.equals(other.id);
-        }
-        return false;
+        return (o instanceof UserId other) && id.equals(other.id);
     }
 
     @Override

@@ -1,13 +1,14 @@
 package com.b07.planetze.database;
 
+import static com.b07.planetze.util.result.Result.ok;
+
 import androidx.annotation.NonNull;
 
-import com.b07.planetze.common.DateInterval;
+import com.b07.planetze.util.DateInterval;
 import com.b07.planetze.common.DatedEmissions;
 import com.b07.planetze.common.Emissions;
 import com.b07.planetze.common.UserId;
-import com.b07.planetze.util.Ok;
-import com.b07.planetze.util.Result;
+import com.b07.planetze.util.result.Result;
 import com.b07.planetze.util.Unit;
 
 import java.time.LocalDate;
@@ -21,7 +22,7 @@ import java.util.function.Consumer;
 /**
  * A local "database" for the purpose of testing.
  */
-public class FakeDatabase implements Database {
+public final class FakeDatabase implements Database {
     private final HashMap<UserIdWithDate, Emissions> map;
 
     private record UserIdWithDate(UserId userId, LocalDate date) {}
@@ -37,7 +38,7 @@ public class FakeDatabase implements Database {
             @NonNull Consumer<Result<Emissions, DatabaseError>> callback
     ) {
         UserIdWithDate key = new UserIdWithDate(userId, date);
-        callback.accept(new Ok<>(Objects.requireNonNull(map.getOrDefault(key, new Emissions())).copy()));
+        callback.accept(ok(Objects.requireNonNull(map.getOrDefault(key, Emissions.zero())).copy()));
     }
 
     @Override
@@ -54,7 +55,7 @@ public class FakeDatabase implements Database {
             }
         }
 
-        callback.accept(new Ok<>(emissions));
+        callback.accept(ok(emissions));
     }
 
     @Override
@@ -65,6 +66,6 @@ public class FakeDatabase implements Database {
             @NonNull Consumer<Result<Unit, DatabaseError>> callback
     ) {
         map.put(new UserIdWithDate(userId, date), emissions.copy());
-        callback.accept(new Ok<>(Unit.INSTANCE));
+        callback.accept(ok());
     }
 }
