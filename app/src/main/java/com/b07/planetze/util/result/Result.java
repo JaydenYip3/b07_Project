@@ -13,12 +13,11 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 /**
- * Represents a success xor a failure. <br>
+ * Represents the output of a function that can result in either success or
+ * failure.<br>
  * This allows for error handling in asynchronous contexts. <br>
- * This also allows for a higher level of abstraction if used as an alternative
- * to checked exceptions. <br>
  * Structurally, this is a sum type of variants {@link Ok} (success) and
- * {@link Error} (failure), with each variant holding a value.
+ * {@link Error} (failure), where each variant stores a value.
  * @param <T> the type of the value stored by the {@link Ok} variant
  * @param <E> the type of the value stored by the {@link Error} variant
  */
@@ -31,7 +30,8 @@ public sealed abstract class Result<T, E>
      * @param <T> the {@link Ok} type
      * @param <E> the {@link Error} type
      */
-    public static <T, E> Ok<T, E> ok(T value) {
+    @NonNull
+    public static <T, E> Ok<T, E> ok(@NonNull T value) {
         return new Ok<>(value);
     }
 
@@ -39,6 +39,7 @@ public sealed abstract class Result<T, E>
      * {@return an instance of <code>Ok(Unit.UNIT)</code>}
      * @param <E> the {@link Error} type
      */
+    @NonNull
     public static <E> Ok<Unit, E> ok() {
         @SuppressWarnings("unchecked")
         Ok<Unit, E> ok = (Ok<Unit, E>) Ok.UNIT_INSTANCE;
@@ -52,7 +53,8 @@ public sealed abstract class Result<T, E>
      * @param <T> the {@link Ok} type
      * @param <E> the {@link Error} type
      */
-    public static <T, E> Error<T, E> error(E value) {
+    @NonNull
+    public static <T, E> Error<T, E> error(@NonNull E value) {
         return new Error<>(value);
     }
 
@@ -60,6 +62,7 @@ public sealed abstract class Result<T, E>
      * {@return an instance of <code>Ok(Unit.UNIT)</code>}
      * @param <T> the {@link Ok} type
      */
+    @NonNull
     public static <T> Error<T, Unit> error() {
         @SuppressWarnings("unchecked")
         Error<T, Unit> error = (Error<T, Unit>) Error.UNIT_INSTANCE;
@@ -72,6 +75,7 @@ public sealed abstract class Result<T, E>
      * @param f the function
      * @return <code>this</code>
      */
+    @NonNull
     public abstract Result<T, E> apply(@NonNull Consumer<T> f);
 
     /**
@@ -80,6 +84,7 @@ public sealed abstract class Result<T, E>
      * @param f the function
      * @return <code>this</code>
      */
+    @NonNull
     public abstract Result<T, E> applyError(@NonNull Consumer<E> f);
 
     /**

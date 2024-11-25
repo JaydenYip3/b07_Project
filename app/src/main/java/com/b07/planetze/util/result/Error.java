@@ -44,11 +44,13 @@ public final class Error<T, E> extends Result<T, E> {
         return value;
     }
 
+    @NonNull
     @Override
     public Error<T, E> apply(@NonNull Consumer<T> f) {
         return this;
     }
 
+    @NonNull
     @Override
     public Error<T, E> applyError(@NonNull Consumer<E> f) {
         f.accept(value);
