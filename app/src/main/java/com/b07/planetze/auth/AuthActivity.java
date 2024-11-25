@@ -20,10 +20,21 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.b07.planetze.R;
 import com.b07.planetze.WelcomeFragment;
+import com.b07.planetze.common.Emissions;
+import com.b07.planetze.common.User;
+import com.b07.planetze.common.UserId;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * An activity that deals with user authentication.
@@ -84,7 +95,7 @@ public class AuthActivity extends AppCompatActivity implements LoginCallback, Re
     }
 
     @Override
-    public void register(@NonNull String email, @NonNull String password, @NonNull String confirmPassword) {
+    public void register(@NonNull String email, @NonNull String password, @NonNull String confirmPassword, @NonNull String username) {
         if (!password.equals(confirmPassword)){
             Toast.makeText(this, "Passwords do not match", Toast.LENGTH_LONG).show();
             return;
@@ -95,6 +106,25 @@ public class AuthActivity extends AppCompatActivity implements LoginCallback, Re
                     if (task.isSuccessful()) {
                         Toast.makeText(this, "User registered successfully; Please verify your email address", Toast.LENGTH_LONG).show();
                         FirebaseUser user = auth.getCurrentUser();
+                        FirebaseDatabase db = FirebaseDatabase.getInstance();
+                        User a = new User(new UserId(user.getUid()), username);
+
+                        db.getReference("Users").child(a.getUserId()).setValue(a);
+//                        Map<String, Object> emptyActivities = new TreeMap<>();
+//                        emptyActivities.put("00-00-0000", "Activity Object");
+
+
+//                        db.getReference("Activities").child(a.getUserId()).setValue(pLikeduserId)
+//                                .addOnCompleteListener(task2 -> {
+//                                    if (task2.isSuccessful()) {
+//                                        Toast.makeText(this, "Successfully wrote Activity object to Activities.",Toast.LENGTH_LONG).show();
+//                                    } else {
+//                                        Toast.makeText(this, "Failed to write Activity object: " + task.getException(), Toast.LENGTH_LONG).show();
+//                                    }
+//                                });
+
+
+
                         switchScreens(AuthScreen.EMAIL_CONFIRMATION);
                         confirmEmail();
                     } else {

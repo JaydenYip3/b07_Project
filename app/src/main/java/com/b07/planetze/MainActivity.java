@@ -10,6 +10,7 @@ import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Log;
 import android.widget.Button;
 import android.view.View;
 import android.content.Intent;
@@ -27,7 +28,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         db = FirebaseDatabase.getInstance("https://planetze-3cc9d-default-rtdb.firebaseio.com/");
-        DatabaseReference myRef = db.getReference("testDemo");
+        View container = findViewById(R.id.fragment_container);
+        if (container == null) {
+            throw new IllegalStateException("Fragment container not found in the layout!");
+        } else {
+            Log.d("DEBUG", "Fragment container found.");
+        }
+        //DatabaseReference myRef = db.getReference("testDemo");
 
         //myRef.setValue("B07 Demo!");
         //User bruh = new User("Caleb", "passwordthatneedstobeencrypted", "bruh.com");
@@ -36,12 +43,16 @@ public class MainActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             loadFragment(new WelcomeFragment());
         }
+
+
     }
 
     private void loadFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, fragment);
-        transaction.addToBackStack(fragment.getClass().getName());
+        transaction.addToBackStack(null);
         transaction.commit();
     }
+
+
 }

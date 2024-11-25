@@ -24,9 +24,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity> <!-- Register Activity -->
-        <activity
-            android:name=".auth.RegisterFragment"
-            android:exported="true" />
+<!--        <activity-->
+<!--            android:name=".auth.RegisterFragment" />-->
     </application>
 
 </manifest>

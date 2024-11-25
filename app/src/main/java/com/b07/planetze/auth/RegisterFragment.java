@@ -40,6 +40,7 @@ public class RegisterFragment extends Fragment {
         EditText editEmailRegister = view.findViewById(R.id.editTextTextEmailAddress);
         EditText editPasswordRegister = view.findViewById(R.id.editTextTextPassword);
         EditText editConfirmPasswordRegister = view.findViewById(R.id.editTextTextConfirmPassword);
+        EditText editUsername = view.findViewById(R.id.editTextName);
         Button btnCreate = view.findViewById(R.id.btnCreateAccount);
         ImageButton btnPrevious = view.findViewById(R.id.previousPage);
         TextView signIn = view.findViewById(R.id.signInTextView);
@@ -59,12 +60,13 @@ public class RegisterFragment extends Fragment {
             String email = editEmailRegister.getText().toString();
             String password = editPasswordRegister.getText().toString();
             String confirmPassword = editConfirmPasswordRegister.getText().toString();
+            String username = editUsername.getText().toString();
 
-            ((RegisterCallback) requireActivity()).register(email, password, confirmPassword);
+            ((RegisterCallback) requireActivity()).register(email, password, confirmPassword, username);
         });
 
         btnPrevious.setOnClickListener(v -> {
-            loadFragment(new WelcomeFragment());
+            requireActivity().finish();
         });
 
         signIn.setOnClickListener(v -> {
