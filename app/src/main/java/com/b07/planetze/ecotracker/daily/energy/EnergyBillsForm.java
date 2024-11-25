@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import com.b07.planetze.ecotracker.daily.DailyForm;
 import com.b07.planetze.ecotracker.daily.shopping.BuyOtherDaily;
 import com.b07.planetze.ecotracker.exception.DailyFormException;
+import com.b07.planetze.form.Form;
 import com.b07.planetze.form.FormSubmission;
 import com.b07.planetze.form.definition.FieldId;
 import com.b07.planetze.form.definition.FormBuilder;
@@ -37,7 +38,24 @@ public final class EnergyBillsForm implements DailyForm<EnergyBillsDaily> {
 
     @NonNull
     @Override
-    public EnergyBillsDaily createDaily(@NonNull FormSubmission form) {
+    public Form dailyToForm(@NonNull EnergyBillsDaily daily) {
+        Form form = definition.createForm();
+
+        int billType = switch(daily.billType()) {
+            case ELECTRICITY -> 0;
+            case GAS -> 1;
+            case WATER -> 2;
+        };
+        form.set(type, billType);
+
+        form.set(bills, daily.billAmount());
+
+        return form;
+    }
+
+    @NonNull
+    @Override
+    public EnergyBillsDaily formToDaily(@NonNull FormSubmission form) {
         EnergyBillsDaily.BillType billType = switch(form.get(type)) {
             case 0 -> EnergyBillsDaily.BillType.ELECTRICITY;
             case 1 -> EnergyBillsDaily.BillType.GAS;

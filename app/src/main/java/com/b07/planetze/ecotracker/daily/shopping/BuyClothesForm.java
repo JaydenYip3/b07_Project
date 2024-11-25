@@ -3,6 +3,7 @@ package com.b07.planetze.ecotracker.daily.shopping;
 import androidx.annotation.NonNull;
 
 import com.b07.planetze.ecotracker.daily.DailyForm;
+import com.b07.planetze.form.Form;
 import com.b07.planetze.form.FormSubmission;
 import com.b07.planetze.form.definition.FieldId;
 import com.b07.planetze.form.definition.FormBuilder;
@@ -30,7 +31,17 @@ public final class BuyClothesForm implements DailyForm<BuyClothesDaily> {
 
     @NonNull
     @Override
-    public BuyClothesDaily createDaily(@NonNull FormSubmission form) {
+    public Form dailyToForm(@NonNull BuyClothesDaily daily) {
+        Form form = definition.createForm();
+
+        form.set(numberItems, daily.numberItems());
+
+        return form;
+    }
+
+    @NonNull
+    @Override
+    public BuyClothesDaily formToDaily(@NonNull FormSubmission form) {
         return new BuyClothesDaily(form.get(numberItems));
     }
 }

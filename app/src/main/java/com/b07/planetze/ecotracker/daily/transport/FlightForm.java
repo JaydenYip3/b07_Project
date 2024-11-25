@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 
 import com.b07.planetze.ecotracker.daily.DailyForm;
 import com.b07.planetze.ecotracker.exception.DailyFormException;
+import com.b07.planetze.form.Form;
 import com.b07.planetze.form.FormSubmission;
 import com.b07.planetze.form.definition.FieldId;
 import com.b07.planetze.form.definition.FormBuilder;
@@ -12,7 +13,7 @@ import com.b07.planetze.form.definition.FormDefinition;
 import com.b07.planetze.form.field.ChoiceField;
 import com.b07.planetze.form.field.IntField;
 
-public final class FlightForm implements DailyForm {
+public final class FlightForm implements DailyForm<FlightDaily> {
     @NonNull public static final FlightForm INSTANCE = new FlightForm();
 
     @NonNull private final FieldId<Integer> type;
@@ -35,7 +36,23 @@ public final class FlightForm implements DailyForm {
 
     @NonNull
     @Override
-    public FlightDaily createDaily(@NonNull FormSubmission form) {
+    public Form dailyToForm(@NonNull FlightDaily daily) {
+        Form form = definition.createForm();
+
+        int flightType = switch(daily.flightType()) {
+            case SHORT_HAUL -> 0;
+            case LONG_HAUL -> 1;
+        };
+        form.set(type, flightType);
+
+        form.set(number, daily.numberFlights());
+
+        return form;
+    }
+
+    @NonNull
+    @Override
+    public FlightDaily formToDaily(@NonNull FormSubmission form) {
         FlightDaily.FlightType flightType = switch(form.get(type)) {
             case 0 -> FlightDaily.FlightType.SHORT_HAUL;
             case 1 -> FlightDaily.FlightType.LONG_HAUL;

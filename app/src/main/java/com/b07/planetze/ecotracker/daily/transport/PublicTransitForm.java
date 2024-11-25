@@ -2,6 +2,8 @@ package com.b07.planetze.ecotracker.daily.transport;
 
 import androidx.annotation.NonNull;
 
+import com.b07.planetze.ecotracker.daily.Daily;
+import com.b07.planetze.form.Form;
 import com.b07.planetze.util.measurement.ImmutableDuration;
 import com.b07.planetze.ecotracker.daily.DailyForm;
 import com.b07.planetze.ecotracker.exception.DailyFormException;
@@ -12,7 +14,7 @@ import com.b07.planetze.form.definition.FormDefinition;
 import com.b07.planetze.form.field.ChoiceField;
 import com.b07.planetze.form.field.DurationField;
 
-public final class PublicTransitForm implements DailyForm {
+public final class PublicTransitForm implements DailyForm<PublicTransitDaily> {
     @NonNull public static final PublicTransitForm INSTANCE
             = new PublicTransitForm();
 
@@ -36,7 +38,24 @@ public final class PublicTransitForm implements DailyForm {
 
     @NonNull
     @Override
-    public PublicTransitDaily createDaily(@NonNull FormSubmission form) {
+    public Form dailyToForm(@NonNull PublicTransitDaily daily) {
+        Form form = definition.createForm();
+
+        int transitType = switch(daily.transitType()) {
+            case BUS -> 0;
+            case TRAIN -> 1;
+            case SUBWAY -> 2;
+        };
+        form.set(type, transitType);
+
+        form.set(duration, daily.duration());
+
+        return form;
+    }
+
+    @NonNull
+    @Override
+    public PublicTransitDaily formToDaily(@NonNull FormSubmission form) {
         PublicTransitDaily.TransitType transitType = switch(form.get(type)) {
             case 0 -> PublicTransitDaily.TransitType.BUS;
             case 1 -> PublicTransitDaily.TransitType.TRAIN;

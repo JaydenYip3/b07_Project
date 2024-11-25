@@ -48,7 +48,7 @@ public final class EcoTrackerActivity extends AppCompatActivity {
 
         model.form.getSubmission().observe(this, maybeSub -> {
             maybeSub.apply(sub -> {
-                model.ecoTracker.submitDaily(df.createDaily(sub));
+                model.ecoTracker.submitDaily(df.formToDaily(sub));
             });
         });
 

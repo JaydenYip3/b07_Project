@@ -2,6 +2,7 @@ package com.b07.planetze.ecotracker.daily.transport;
 
 import androidx.annotation.NonNull;
 
+import com.b07.planetze.form.Form;
 import com.b07.planetze.util.measurement.ImmutableDistance;
 import com.b07.planetze.ecotracker.daily.DailyForm;
 import com.b07.planetze.form.FormSubmission;
@@ -10,7 +11,8 @@ import com.b07.planetze.form.definition.FormBuilder;
 import com.b07.planetze.form.definition.FormDefinition;
 import com.b07.planetze.form.field.DistanceField;
 
-public final class CyclingOrWalkingForm implements DailyForm {
+public final class CyclingOrWalkingForm
+        implements DailyForm<CyclingOrWalkingDaily> {
     @NonNull public static final CyclingOrWalkingForm INSTANCE
             = new CyclingOrWalkingForm();
 
@@ -32,7 +34,17 @@ public final class CyclingOrWalkingForm implements DailyForm {
 
     @NonNull
     @Override
-    public CyclingOrWalkingDaily createDaily(@NonNull FormSubmission form) {
+    public Form dailyToForm(@NonNull CyclingOrWalkingDaily daily) {
+        Form form = definition.createForm();
+
+        form.set(distance, daily.distance());
+
+        return form;
+    }
+
+    @NonNull
+    @Override
+    public CyclingOrWalkingDaily formToDaily(@NonNull FormSubmission form) {
         return new CyclingOrWalkingDaily(form.get(distance));
     }
 }

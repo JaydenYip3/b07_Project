@@ -9,7 +9,7 @@ import com.b07.planetze.ecotracker.daily.Daily;
 import com.b07.planetze.ecotracker.daily.DailyType;
 
 public record DrivingDaily(
-        @NonNull Vehicle vehicle,
+        @NonNull VehicleType vehicleType,
         @NonNull ImmutableDistance distance
 ) implements Daily {
     private static final double GAS_CAR_G_CO2E_PER_KM = 170;
@@ -19,7 +19,7 @@ public record DrivingDaily(
     @NonNull
     @Override
     public Emissions emissions() {
-        return Emissions.transport(Mass.g(switch(vehicle) {
+        return Emissions.transport(Mass.g(switch(vehicleType) {
             case GAS_CAR -> GAS_CAR_G_CO2E_PER_KM * distance.km();
             case ELECTRIC_CAR -> ELECTRIC_CAR_G_CO2E_PER_KM * distance.km();
             case MOTORBIKE -> MOTORBIKE_G_CO2E_PER_KM * distance.km();
@@ -32,7 +32,7 @@ public record DrivingDaily(
         return DailyType.DRIVING;
     }
 
-    public enum Vehicle {
+    public enum VehicleType {
         GAS_CAR,
         ELECTRIC_CAR,
         MOTORBIKE,

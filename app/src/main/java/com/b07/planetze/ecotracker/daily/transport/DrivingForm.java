@@ -2,6 +2,7 @@ package com.b07.planetze.ecotracker.daily.transport;
 
 import androidx.annotation.NonNull;
 
+import com.b07.planetze.form.Form;
 import com.b07.planetze.util.measurement.ImmutableDistance;
 import com.b07.planetze.ecotracker.daily.DailyForm;
 import com.b07.planetze.ecotracker.exception.DailyFormException;
@@ -12,7 +13,7 @@ import com.b07.planetze.form.definition.FormDefinition;
 import com.b07.planetze.form.field.ChoiceField;
 import com.b07.planetze.form.field.DistanceField;
 
-public final class DrivingForm implements DailyForm {
+public final class DrivingForm implements DailyForm<DrivingDaily> {
     @NonNull public static final DrivingForm INSTANCE = new DrivingForm();
 
     @NonNull private final FieldId<ImmutableDistance> distance;
@@ -22,7 +23,7 @@ public final class DrivingForm implements DailyForm {
     private DrivingForm() {
         FormBuilder fb = new FormBuilder();
         distance = fb.add("Distance travelled", DistanceField.create());
-        vehicle = fb.add("Vehicle", ChoiceField
+        vehicle = fb.add("VehicleType", ChoiceField
                 .withChoices("Gas car", "Electric car", "Motorbike")
                 .initially(0));
         definition = fb.build();
@@ -36,14 +37,31 @@ public final class DrivingForm implements DailyForm {
 
     @NonNull
     @Override
-    public DrivingDaily createDaily(@NonNull FormSubmission form) {
-        DrivingDaily.Vehicle v = switch(form.get(vehicle)) {
-            case 0 -> DrivingDaily.Vehicle.GAS_CAR;
-            case 1 -> DrivingDaily.Vehicle.ELECTRIC_CAR;
-            case 2 -> DrivingDaily.Vehicle.MOTORBIKE;
+    public Form dailyToForm(@NonNull DrivingDaily daily) {
+        Form form = definition.createForm();
+
+        form.set(distance, daily.distance());
+
+        int vehicleType = switch(daily.vehicleType()) {
+            case GAS_CAR -> 0;
+            case ELECTRIC_CAR -> 1;
+            case MOTORBIKE -> 2;
+        };
+        form.set(vehicle, vehicleType);
+
+        return form;
+    }
+
+    @NonNull
+    @Override
+    public DrivingDaily formToDaily(@NonNull FormSubmission form) {
+        DrivingDaily.VehicleType vehicleType = switch(form.get(vehicle)) {
+            case 0 -> DrivingDaily.VehicleType.GAS_CAR;
+            case 1 -> DrivingDaily.VehicleType.ELECTRIC_CAR;
+            case 2 -> DrivingDaily.VehicleType.MOTORBIKE;
             default -> throw new DailyFormException();
         };
 
-        return new DrivingDaily(v, form.get(distance));
+        return new DrivingDaily(vehicleType, form.get(distance));
     }
 }

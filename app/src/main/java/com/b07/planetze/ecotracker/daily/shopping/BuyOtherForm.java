@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 
 import com.b07.planetze.ecotracker.daily.DailyForm;
 import com.b07.planetze.ecotracker.exception.DailyFormException;
+import com.b07.planetze.form.Form;
 import com.b07.planetze.form.FormSubmission;
 import com.b07.planetze.form.definition.FieldId;
 import com.b07.planetze.form.definition.FormBuilder;
@@ -34,7 +35,23 @@ public final class BuyOtherForm implements DailyForm<BuyOtherDaily> {
 
     @NonNull
     @Override
-    public BuyOtherDaily createDaily(@NonNull FormSubmission form) {
+    public Form dailyToForm(@NonNull BuyOtherDaily daily) {
+        Form form = definition.createForm();
+
+        int purchaseType = switch(daily.purchaseType()) {
+            case FURNITURE -> 0;
+            case APPLIANCE -> 1;
+        };
+        form.set(type, purchaseType);
+
+        form.set(number, daily.numberItems());
+
+        return form;
+    }
+
+    @NonNull
+    @Override
+    public BuyOtherDaily formToDaily(@NonNull FormSubmission form) {
         BuyOtherDaily.PurchaseType purchaseType = switch(form.get(type)) {
             case 0 -> BuyOtherDaily.PurchaseType.FURNITURE;
             case 1 -> BuyOtherDaily.PurchaseType.APPLIANCE;
