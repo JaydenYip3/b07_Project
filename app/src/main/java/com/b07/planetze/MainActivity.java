@@ -5,19 +5,18 @@ import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.RequiresApi;
+
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+
 
 import android.widget.Button;
 import android.view.View;
 import android.content.Intent;
 
-import com.b07.planetze.onboarding.QuestionsFoodFragment;
-import com.b07.planetze.onboarding.QuestionsTransportationFragment;
+import com.b07.planetze.ecotracker.EcoTrackerActivity;
+
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 @RequiresApi(api = Build.VERSION_CODES.O)
@@ -37,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
         //User bruh = new User("Caleb", "passwordthatneedstobeencrypted", "bruh.com");
         //myRef.child("User").setValue(bruh);
 
+//        EcoTrackerActivity.start(this);
+
         if (savedInstanceState == null) {
             loadFragment(new WelcomeFragment());
         }
@@ -45,16 +46,7 @@ public class MainActivity extends AppCompatActivity {
     private void loadFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_container, fragment);
-        transaction.addToBackStack(null);
+        transaction.addToBackStack(fragment.getClass().getName());
         transaction.commit();
-    }
-
-    @Override
-    public void onBackPressed() {
-        if (getSupportFragmentManager().getBackStackEntryCount() > 1) {
-            getSupportFragmentManager().popBackStack();
-        } else {
-            super.onBackPressed();
-        }
     }
 }
