@@ -1,6 +1,8 @@
-package com.b07.planetze.common;
+package com.b07.planetze.util;
 
 import androidx.annotation.NonNull;
+
+import com.b07.planetze.common.InvalidDateIntervalException;
 
 import java.time.LocalDate;
 
