@@ -1,11 +1,10 @@
-package com.b07.planetze.ecotracker.daily.transport;
+package com.b07.planetze.common.daily.transport;
 
 import androidx.annotation.NonNull;
 
-import com.b07.planetze.ecotracker.daily.Daily;
 import com.b07.planetze.form.Form;
 import com.b07.planetze.util.measurement.ImmutableDuration;
-import com.b07.planetze.ecotracker.daily.DailyForm;
+import com.b07.planetze.common.daily.DailyForm;
 import com.b07.planetze.ecotracker.exception.DailyFormException;
 import com.b07.planetze.form.FormSubmission;
 import com.b07.planetze.form.definition.FieldId;

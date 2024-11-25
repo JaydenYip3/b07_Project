@@ -1,4 +1,7 @@
 package com.b07.planetze.common.daily;
 
-public record DailyId() {
+import androidx.annotation.NonNull;
+
+public record DailyId(@NonNull String get) {
+
 }

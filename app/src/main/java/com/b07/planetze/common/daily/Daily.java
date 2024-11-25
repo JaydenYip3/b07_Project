@@ -1,4 +1,4 @@
-package com.b07.planetze.ecotracker.daily;
+package com.b07.planetze.common.daily;
 
 import androidx.annotation.NonNull;
 

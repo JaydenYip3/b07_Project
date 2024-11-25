@@ -1,8 +1,8 @@
-package com.b07.planetze.ecotracker.daily.shopping;
+package com.b07.planetze.common.daily.shopping;
 
 import androidx.annotation.NonNull;
 
-import com.b07.planetze.ecotracker.daily.DailyForm;
+import com.b07.planetze.common.daily.DailyForm;
 import com.b07.planetze.form.Form;
 import com.b07.planetze.form.FormSubmission;
 import com.b07.planetze.form.definition.FieldId;

@@ -1,9 +1,9 @@
-package com.b07.planetze.ecotracker.daily.food;
+package com.b07.planetze.common.daily.food;
 
 
 import androidx.annotation.NonNull;
 
-import com.b07.planetze.ecotracker.daily.DailyForm;
+import com.b07.planetze.common.daily.DailyForm;
 import com.b07.planetze.ecotracker.exception.DailyFormException;
 import com.b07.planetze.form.Form;
 import com.b07.planetze.form.FormSubmission;

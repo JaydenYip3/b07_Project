@@ -1,10 +1,10 @@
-package com.b07.planetze.ecotracker.daily.energy;
+package com.b07.planetze.common.daily.energy;
 
 import androidx.annotation.NonNull;
 
 import com.b07.planetze.common.Emissions;
-import com.b07.planetze.ecotracker.daily.Daily;
-import com.b07.planetze.ecotracker.daily.DailyType;
+import com.b07.planetze.common.daily.Daily;
+import com.b07.planetze.common.daily.DailyType;
 import com.b07.planetze.util.measurement.Mass;
 
 public record EnergyBillsDaily(

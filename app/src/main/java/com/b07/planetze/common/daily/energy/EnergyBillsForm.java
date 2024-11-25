@@ -1,9 +1,8 @@
-package com.b07.planetze.ecotracker.daily.energy;
+package com.b07.planetze.common.daily.energy;
 
 import androidx.annotation.NonNull;
 
-import com.b07.planetze.ecotracker.daily.DailyForm;
-import com.b07.planetze.ecotracker.daily.shopping.BuyOtherDaily;
+import com.b07.planetze.common.daily.DailyForm;
 import com.b07.planetze.ecotracker.exception.DailyFormException;
 import com.b07.planetze.form.Form;
 import com.b07.planetze.form.FormSubmission;
@@ -11,7 +10,6 @@ import com.b07.planetze.form.definition.FieldId;
 import com.b07.planetze.form.definition.FormBuilder;
 import com.b07.planetze.form.definition.FormDefinition;
 import com.b07.planetze.form.field.ChoiceField;
-import com.b07.planetze.form.field.IntField;
 import com.b07.planetze.form.field.MoneyField;
 
 public final class EnergyBillsForm implements DailyForm<EnergyBillsDaily> {

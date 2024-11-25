@@ -1,16 +1,16 @@
-package com.b07.planetze.ecotracker.daily;
+package com.b07.planetze.common.daily;
 
 import androidx.annotation.NonNull;
 
-import com.b07.planetze.ecotracker.daily.energy.EnergyBillsForm;
-import com.b07.planetze.ecotracker.daily.food.MealForm;
-import com.b07.planetze.ecotracker.daily.shopping.BuyClothesForm;
-import com.b07.planetze.ecotracker.daily.shopping.BuyElectronicsForm;
-import com.b07.planetze.ecotracker.daily.shopping.BuyOtherForm;
-import com.b07.planetze.ecotracker.daily.transport.CyclingOrWalkingForm;
-import com.b07.planetze.ecotracker.daily.transport.DrivingForm;
-import com.b07.planetze.ecotracker.daily.transport.FlightForm;
-import com.b07.planetze.ecotracker.daily.transport.PublicTransitForm;
+import com.b07.planetze.common.daily.energy.EnergyBillsForm;
+import com.b07.planetze.common.daily.food.MealForm;
+import com.b07.planetze.common.daily.shopping.BuyClothesForm;
+import com.b07.planetze.common.daily.shopping.BuyElectronicsForm;
+import com.b07.planetze.common.daily.shopping.BuyOtherForm;
+import com.b07.planetze.common.daily.transport.CyclingOrWalkingForm;
+import com.b07.planetze.common.daily.transport.DrivingForm;
+import com.b07.planetze.common.daily.transport.FlightForm;
+import com.b07.planetze.common.daily.transport.PublicTransitForm;
 
 /**
  * The type of a logged daily activity.

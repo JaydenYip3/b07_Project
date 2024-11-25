@@ -7,8 +7,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.b07.planetze.ecotracker.daily.Daily;
-import com.b07.planetze.ecotracker.daily.DailyType;
+import com.b07.planetze.common.daily.Daily;
+import com.b07.planetze.common.daily.DailyType;
 
 public final class EcoTrackerViewModel extends ViewModel {
     @NonNull private final MutableLiveData<EcoTrackerState> state;
