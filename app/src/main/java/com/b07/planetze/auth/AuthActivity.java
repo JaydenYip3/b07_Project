@@ -20,10 +20,6 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.b07.planetze.R;
 import com.b07.planetze.WelcomeFragment;
-
-import com.b07.planetze.onboarding.QuestionsTransportationFragment;
-
-
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
@@ -73,7 +69,6 @@ public class AuthActivity extends AppCompatActivity implements LoginCallback, Re
                         }
                         else{
                             Toast.makeText(this, "Logged in as " + user.getEmail(), Toast.LENGTH_SHORT).show();
-                            //loadFragment(new QuestionsTransportationFragment()); //replace w ecotracker
                         }
 
                     } else {
@@ -99,11 +94,9 @@ public class AuthActivity extends AppCompatActivity implements LoginCallback, Re
                 auth.getCurrentUser().sendEmailVerification().addOnCompleteListener(this, verificationTask -> {
                     if (task.isSuccessful()) {
                         Toast.makeText(this, "User registered successfully; Please verify your email address", Toast.LENGTH_LONG).show();
-
                         FirebaseUser user = auth.getCurrentUser();
                         switchScreens(AuthScreen.EMAIL_CONFIRMATION);
                         confirmEmail();
-
                     } else {
                         Toast.makeText(this, verificationTask.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     }
@@ -135,7 +128,7 @@ public class AuthActivity extends AppCompatActivity implements LoginCallback, Re
                         boolean isVerified = user.isEmailVerified();
                         if (isVerified) {
                             Toast.makeText(getApplicationContext(), "Email verified! Access granted.", Toast.LENGTH_SHORT).show();
-                            loadFragment(new QuestionsTransportationFragment());
+                            //links other page from here
                         } else {
                             handler.postDelayed(this, 5000);
                         }

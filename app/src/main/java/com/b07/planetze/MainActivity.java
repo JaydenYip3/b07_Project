@@ -1,25 +1,15 @@
 package com.b07.planetze;
 
-import android.os.Build;
 import android.os.Bundle;
-
-import androidx.activity.EdgeToEdge;
-import androidx.annotation.RequiresApi;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
-
-import android.widget.Button;
-import android.view.View;
-import android.content.Intent;
-
 import com.b07.planetze.ecotracker.EcoTrackerActivity;
-
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-@RequiresApi(api = Build.VERSION_CODES.O)
+
 public class MainActivity extends AppCompatActivity {
 
     FirebaseDatabase db;
@@ -29,8 +19,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //db = FirebaseDatabase.getInstance("https://planetze-3cc9d-default-rtdb.firebaseio.com/");
-        //DatabaseReference myRef = db.getReference("testDemo");
+        db = FirebaseDatabase.getInstance("https://planetze-3cc9d-default-rtdb.firebaseio.com/");
+        DatabaseReference myRef = db.getReference("testDemo");
 
         //myRef.setValue("B07 Demo!");
         //User bruh = new User("Caleb", "passwordthatneedstobeencrypted", "bruh.com");

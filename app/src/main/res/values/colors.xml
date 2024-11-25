@@ -10,12 +10,10 @@
     <color name="teal_700">#FF018786</color>
 
     <!--  template colors below, above needed for themes files   -->
-
     <color name="gray">#d8dbe2</color>
     <color name="lightgray">#f2f3f4</color>
     <color name="bluegray">#a9bcd0</color>
     <color name="teal">#009999</color>
     <color name="dark_bluegray">#373f51</color>
     <color name="dark">#1b1b1e</color>
-
 </resources>
