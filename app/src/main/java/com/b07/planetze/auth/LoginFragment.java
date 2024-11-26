@@ -20,6 +20,10 @@ import android.widget.TextView;
 
 import com.b07.planetze.R;
 import com.b07.planetze.WelcomeFragment;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 /**
  * An email + password login screen. <br>
@@ -58,7 +62,7 @@ public class LoginFragment extends Fragment {
         floatingAnimator.start();
 
         btnPrevious.setOnClickListener(v -> {
-            loadFragment(new WelcomeFragment());
+            requireActivity().finish();
         });
 
         loginButton.setOnClickListener(v -> {
@@ -78,6 +82,12 @@ public class LoginFragment extends Fragment {
         signUp.setOnClickListener(v -> {
             AuthActivity.start(requireActivity(), AuthScreen.REGISTER);
         });
+
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser user = auth.getCurrentUser();
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+
+
 
         return view;
     }

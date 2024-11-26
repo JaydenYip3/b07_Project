@@ -23,7 +23,7 @@ public final class UserId {
      * @return the user id
      */
     @NonNull
-    public String get() {
+    public String getUserId() {
         return this.id;
     }
 
