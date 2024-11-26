@@ -2,10 +2,13 @@ package com.b07.planetze.util.measurement;
 
 import androidx.annotation.NonNull;
 
+import com.b07.planetze.database.ToJsonSerializable;
+
 /**
  * A measurement of mass.
  */
-public final class Mass extends Measurement<Mass> {
+public final class Mass extends Measurement<Mass>
+        implements ToJsonSerializable {
     private static final double POUNDS_TO_KG = 	0.45359237;
     private static final double KG_TO_POUNDS = 1 / POUNDS_TO_KG;
 
@@ -108,5 +111,16 @@ public final class Mass extends Measurement<Mass> {
     @Override
     public String toString() {
         return kg + "kg";
+    }
+
+    @NonNull
+    public static Mass fromJson(Object o) {
+        return new Mass((double) o);
+    }
+
+    @NonNull
+    @Override
+    public Object toJson() {
+        return kg;
     }
 }

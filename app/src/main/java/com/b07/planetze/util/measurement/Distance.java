@@ -3,10 +3,13 @@ package com.b07.planetze.util.measurement;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.b07.planetze.database.ToJsonSerializable;
+
 /**
  * A measurement of distance.
  */
-public final class Distance extends Measurement<Distance> {
+public final class Distance extends Measurement<Distance>
+        implements ToJsonSerializable {
     private static final double MILES_TO_METRES = 1609.344;
     private static final double METRES_TO_MILES = 1 / MILES_TO_METRES;
 
@@ -106,5 +109,16 @@ public final class Distance extends Measurement<Distance> {
     @Override
     public Distance self() {
         return this;
+    }
+
+    @NonNull
+    public static Distance fromJson(Object o) {
+        return new Distance((double) o);
+    }
+
+    @NonNull
+    @Override
+    public Object toJson() {
+        return m;
     }
 }

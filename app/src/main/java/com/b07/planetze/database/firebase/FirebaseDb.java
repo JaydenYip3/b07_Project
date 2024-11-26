@@ -18,6 +18,7 @@ import com.b07.planetze.database.DatabaseError;
 import com.b07.planetze.database.DatabaseException;
 import com.b07.planetze.database.data.DailyFetchList;
 import com.b07.planetze.database.data.DailyId;
+import com.b07.planetze.database.data.DailyMap;
 import com.b07.planetze.util.DateInterval;
 import com.b07.planetze.util.Unit;
 import com.b07.planetze.util.option.Option;
@@ -36,18 +37,20 @@ import java.util.function.Function;
 public final class FirebaseDb implements Database {
     @NonNull private final DatabaseReference db;
     @NonNull private final String userId;
+    @NonNull private final DailyMap dailies;
 
     public FirebaseDb() {
-        this.db = FirebaseDatabase
-                .getInstance("https://planetze-3cc9d-default-rtdb.firebaseio.com")
-                .getReference();
-
         FirebaseAuth auth = FirebaseAuth.getInstance();
         this.userId = Option.mapNull(auth.getCurrentUser())
                 .getOrThrow(new DatabaseException("User not logged in"))
                 .getUid();
-    }
 
+        this.db = FirebaseDatabase
+                .getInstance("https://planetze-3cc9d-default-rtdb.firebaseio.com")
+                .getReference();
+
+        dailies = new DailyMap();
+    }
 
     @SuppressWarnings({"ConstantConditions"})
     @NonNull
@@ -78,14 +81,14 @@ public final class FirebaseDb implements Database {
             @NonNull Emissions emissions,
             @NonNull Consumer<Result<Unit, DatabaseError>> callback
     ) {
-        db.child("onboarding").child(userId).get()
-                .addOnCompleteListener(task -> callback.accept(map))
+        db.child("onboarding").child(userId).setValue(emissions.toJson());
     }
 
     public void fetchOnboardingEmissions(
-            @NonNull Consumer<Result<Emissions, DatabaseError>> callback
+            @NonNull Consumer<Result<Option<Emissions>, DatabaseError>> callback
     ) {
-        db.child
+        db.child("onboarding").child(userId).get()
+                .addOnCompleteListener(task -> callback.accept(map(task, Emissions::fromJson)));
     }
 
     public void postDaily(
@@ -93,7 +96,6 @@ public final class FirebaseDb implements Database {
             @NonNull Daily daily,
             @NonNull Consumer<Result<Unit, DatabaseError>> callback
     ) {
-
     }
 
     public void updateDaily(

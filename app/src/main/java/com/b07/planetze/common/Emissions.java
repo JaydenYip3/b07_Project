@@ -2,17 +2,21 @@ package com.b07.planetze.common;
 
 import androidx.annotation.NonNull;
 
+import com.b07.planetze.database.ToJsonSerializable;
 import com.b07.planetze.util.measurement.Mass;
 import com.b07.planetze.util.Util;
 import com.b07.planetze.util.immutability.ImmutableList;
 import com.b07.planetze.util.immutability.MutableWithCopy;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Stores CO2e emissions by category.
  */
-public final class Emissions implements MutableWithCopy<Emissions> {
+public final class Emissions
+        implements MutableWithCopy<Emissions>, ToJsonSerializable {
     @NonNull private final ImmutableList<Mass> categories;
 
     private Emissions() {
@@ -198,5 +202,29 @@ public final class Emissions implements MutableWithCopy<Emissions> {
     @Override
     public Emissions self() {
         return this;
+    }
+
+    @NonNull
+    public static Emissions fromJson(Object o) {
+        @SuppressWarnings("unchecked")
+        Map<String, Object> map = (Map<String, Object>) o;
+
+        Emissions e = Emissions.zero();
+        e.transport().set(Mass.fromJson(map.get("transport")));
+        e.energy().set(Mass.fromJson(map.get("energy")));
+        e.food().set(Mass.fromJson(map.get("food")));
+        e.shopping().set(Mass.fromJson(map.get("shopping")));
+        return e;
+    }
+
+    @NonNull
+    @Override
+    public Object toJson() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("transport", transport().toJson());
+        map.put("energy", energy().toJson());
+        map.put("food", food().toJson());
+        map.put("shopping", shopping().toJson());
+        return map;
     }
 }
