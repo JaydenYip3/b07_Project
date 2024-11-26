@@ -9,13 +9,19 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.b07.planetze.common.Emissions;
+import com.b07.planetze.common.User;
 import com.b07.planetze.daily.Daily;
 import com.b07.planetze.daily.DailyType;
 import com.b07.planetze.database.Database;
 import com.b07.planetze.database.DatabaseError;
+import com.b07.planetze.database.data.DailyFetch;
 import com.b07.planetze.database.data.DailyFetchList;
 import com.b07.planetze.database.firebase.FirebaseDb;
 import com.b07.planetze.util.DateInterval;
+import com.b07.planetze.util.option.Option;
+import com.b07.planetze.util.option.Some;
+import com.b07.planetze.util.result.Error;
 import com.b07.planetze.util.result.Ok;
 
 import java.time.LocalDate;
@@ -44,14 +50,6 @@ public final class EcoTrackerViewModel extends ViewModel {
     public void submitDaily(@NonNull Daily daily) {
         db.postDaily(LocalDate.now(), daily, r -> {
             Log.d(TAG, "postDaily callback: " + r);
-        });
-
-        db.fetchDailies(DateInterval.day(LocalDate.now()), result -> {
-            result.match(fetchList -> {
-                Log.d(TAG, "emissions: " + fetchList.emissions());
-            }, dbError -> {
-                Log.d(TAG, "error: " + dbError);
-            });
         });
 
         // TODO: transition to EcoTrackerState.ViewLogs

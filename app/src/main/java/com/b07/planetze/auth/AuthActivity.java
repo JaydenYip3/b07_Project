@@ -70,8 +70,6 @@ public class AuthActivity extends AppCompatActivity implements LoginCallback, Re
                         }
                         else{
                             Toast.makeText(this, "Logged in as " + user.getEmail(), Toast.LENGTH_SHORT).show();
-
-                            EcoTrackerActivity.start(this);
                         }
 
                     } else {
