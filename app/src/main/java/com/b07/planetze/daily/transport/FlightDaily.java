@@ -40,14 +40,10 @@ public record FlightDaily(
 
     @SuppressWarnings("ConstantConditions")
     @NonNull
-    public static FlightDaily fromJson(Map<String, Object> map) {
+    public static FlightDaily fromJson(@NonNull Map<String, Object> map) {
         return new FlightDaily(
                 (int) map.get("numberFlights"),
-                switch((String) map.get("flightType")) {
-                    case "SHORT_HAUL" -> FlightType.SHORT_HAUL;
-                    case "LONG_HAUL" -> FlightType.LONG_HAUL;
-                    default -> throw new DailyException();
-                }
+                FlightType.valueOf((String) map.get("flightType"))
         );
     }
 
@@ -55,12 +51,8 @@ public record FlightDaily(
     @Override
     public Object toJson() {
         Map<String, Object> map = new HashMap<>();
-        map.put("type", type().toJson());
         map.put("numberFlights", numberFlights);
-        map.put("flightType", switch(flightType) {
-            case SHORT_HAUL -> "SHORT_HAUL";
-            case LONG_HAUL -> "LONG_HAUL";
-        });
+        map.put("flightType", flightType.name());
         return map;
     }
 

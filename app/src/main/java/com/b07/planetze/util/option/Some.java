@@ -138,6 +138,12 @@ public final class Some<T> extends Option<T> {
 
     @NonNull
     @Override
+    public String toString() {
+        return String.format("Some(%s)", value);
+    }
+
+    @NonNull
+    @Override
     public Some<T> copy() {
         if (value instanceof MutableWithCopy<?> v) {
             @SuppressWarnings("unchecked")

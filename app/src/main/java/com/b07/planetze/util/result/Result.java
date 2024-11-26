@@ -207,4 +207,8 @@ public sealed abstract class Result<T, E>
 
     @Override
     public abstract boolean equals(@Nullable Object o);
+
+    @NonNull
+    @Override
+    public abstract String toString();
 }

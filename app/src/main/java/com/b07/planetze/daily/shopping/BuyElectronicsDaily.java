@@ -37,14 +37,9 @@ public record BuyElectronicsDaily(
 
     @SuppressWarnings("ConstantConditions")
     @NonNull
-    public static BuyElectronicsDaily fromJson(Map<String, Object> map) {
+    public static BuyElectronicsDaily fromJson(@NonNull Map<String, Object> map) {
         return new BuyElectronicsDaily(
-                switch((String) map.get("deviceType")) {
-                    case "SMARTPHONE" -> DeviceType.SMARTPHONE;
-                    case "LAPTOP" -> DeviceType.LAPTOP;
-                    case "TV" -> DeviceType.TV;
-                    default -> throw new DailyException();
-                },
+                DeviceType.valueOf((String) map.get("deviceType")),
                 (int) map.get("numberDevices")
         );
     }
@@ -53,12 +48,7 @@ public record BuyElectronicsDaily(
     @Override
     public Object toJson() {
         Map<String, Object> map = new HashMap<>();
-        map.put("type", type().toJson());
-        map.put("deviceType", switch (deviceType) {
-            case SMARTPHONE -> "SMARTPHONE";
-            case LAPTOP -> "LAPTOP";
-            case TV -> "TV";
-        });
+        map.put("deviceType", deviceType.name());
         map.put("numberDevices", numberDevices);
         return map;
     }

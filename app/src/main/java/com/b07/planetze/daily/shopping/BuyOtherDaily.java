@@ -35,13 +35,9 @@ public record BuyOtherDaily(
 
     @SuppressWarnings("ConstantConditions")
     @NonNull
-    public static BuyOtherDaily fromJson(Map<String, Object> map) {
+    public static BuyOtherDaily fromJson(@NonNull Map<String, Object> map) {
         return new BuyOtherDaily(
-                switch((String) map.get("purchaseType")) {
-                    case "FURNITURE" -> PurchaseType.FURNITURE;
-                    case "APPLIANCE" -> PurchaseType.APPLIANCE;
-                    default -> throw new DailyException();
-                },
+                PurchaseType.valueOf((String) map.get("purchaseType")),
                 (int) map.get("numberItems")
         );
     }
@@ -50,11 +46,7 @@ public record BuyOtherDaily(
     @Override
     public Object toJson() {
         Map<String, Object> map = new HashMap<>();
-        map.put("type", type().toJson());
-        map.put("purchaseType", switch(purchaseType) {
-            case FURNITURE -> "FURNITURE";
-            case APPLIANCE -> "APPLIANCE";
-        });
+        map.put("purchaseType", purchaseType.name());
         map.put("numberItems", numberItems);
         return map;
     }

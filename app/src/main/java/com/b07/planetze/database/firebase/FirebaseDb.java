@@ -18,7 +18,9 @@ import com.b07.planetze.database.DatabaseException;
 import com.b07.planetze.database.data.DailyFetchList;
 import com.b07.planetze.database.data.DailyId;
 import com.b07.planetze.database.data.DailyMap;
+import com.b07.planetze.database.data.DailyData;
 import com.b07.planetze.util.DateInterval;
+import com.b07.planetze.util.Unit;
 import com.b07.planetze.util.option.Option;
 import com.b07.planetze.util.result.Result;
 import com.google.android.gms.tasks.Task;
@@ -27,9 +29,11 @@ import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
@@ -51,20 +55,30 @@ public final class FirebaseDb implements Database {
 
         dailies = new DailyMap();
 
-        db.child("dailies").child("userId").addChildEventListener(new ChildEventListener() {
+        db.child("dailies").child(userId).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
+                DailyId id = new DailyId(Objects.requireNonNull(snapshot.getKey()));
+                DailyData d = DailyData.fromJson(snapshot.getValue());
+                dailies.put(id, d.date(), d.daily());
+                Log.d(TAG, "onChildAdded: " + id.get());
             }
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                DailyId id = new DailyId(Objects.requireNonNull(snapshot.getKey()));
+                DailyData d = DailyData.fromJson(snapshot.getValue());
+                dailies.put(id, d.date(), d.daily());
 
+                Log.d(TAG, "onChildChanged: " + id.get());
             }
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+                DailyId id = new DailyId(Objects.requireNonNull(snapshot.getKey()));
+                dailies.remove(id);
 
+                Log.d(TAG, "onChildRemoved: " + id.get());
             }
 
             @Override
@@ -74,14 +88,14 @@ public final class FirebaseDb implements Database {
 
             @Override
             public void onCancelled(@NonNull com.google.firebase.database.DatabaseError error) {
-
+                Log.w(TAG, "onCancelled: ", error.toException());
             }
         });
     }
 
     @SuppressWarnings({"ConstantConditions"})
     @NonNull
-    private static <T> Result<Option<T>, DatabaseError> map(
+    private static <T> Result<Option<T>, DatabaseError> mapTask(
             @NonNull Task<DataSnapshot> task,
             @NonNull Function<Object, T> deserializer
     ) {
@@ -90,40 +104,76 @@ public final class FirebaseDb implements Database {
                 : error(new FirebaseError(task.getException()));
     }
 
-    public void postUser(@NonNull User user) {
-        db.child("users").child(userId).setValue(user.toJson());
+    @NonNull
+    private static Result<Unit, DatabaseError> mapFirebaseError(
+            @Nullable com.google.firebase.database.DatabaseError err
+    ) {
+        return err == null ? ok() : error(new FirebaseError(err.getMessage()));
+    }
+
+    public void postUser(
+            @NonNull User user,
+            @NonNull Consumer<Result<Unit, DatabaseError>> callback
+    ) {
+        db.child("users").child(userId).setValue(user.toJson(),
+                (err, ref) -> callback.accept(mapFirebaseError(err)));
     }
 
     public void fetchUser(@NonNull Consumer<Result<Option<User>, DatabaseError>> callback) {
-        db.child("users").child(userId).get()
-                .addOnCompleteListener(task -> callback.accept(map(task, User::fromJson)));
+        db.child("users").child(userId).get().addOnCompleteListener(
+                task -> callback.accept(mapTask(task, User::fromJson)));
     }
 
-    public void postOnboardingEmissions(@NonNull Emissions emissions) {
-        db.child("onboarding_emissions").child(userId).setValue(emissions.toJson());
+    public void postOnboardingEmissions(
+            @NonNull Emissions emissions,
+            @NonNull Consumer<Result<Unit, DatabaseError>> callback
+    ) {
+        db.child("onboardingEmissions").child(userId).setValue(emissions.toJson(),
+                (err, ref) -> callback.accept(mapFirebaseError(err)));
     }
 
     public void fetchOnboardingEmissions(@NonNull Consumer<Result<Option<Emissions>, DatabaseError>> callback) {
-        db.child("onboarding_emissions").child(userId).get()
-                .addOnCompleteListener(task -> callback.accept(map(task, Emissions::fromJson)));
+        db.child("onboardingEmissions").child(userId).get().addOnCompleteListener(
+                task -> callback.accept(mapTask(task, Emissions::fromJson)));
     }
 
-    public void postDaily(@NonNull LocalDate date, @NonNull Daily daily) {
-        db.child("dailies").child(userId).push()
+    public void postDaily(
+            @NonNull LocalDate date,
+            @NonNull Daily daily,
+            @NonNull Consumer<Result<Unit, DatabaseError>> callback
+    ) {
+        DailyData d = new DailyData(date, daily);
+        db.child("dailies").child(userId).push().setValue(d.toJson(),
+                (err, ref) -> callback.accept(mapFirebaseError(err)));
     }
 
-    public void updateDaily(@NonNull DailyId id, @NonNull Daily update) {
+    public void updateDaily(
+            @NonNull DailyId id,
+            @NonNull Daily update,
+            @NonNull Consumer<Result<Unit, DatabaseError>> callback
+    ) {
+        Map<String, Object> map = new HashMap<>();
+        map.put(id.get(), update.toJson());
 
+        db.child("dailies").child(userId).updateChildren(map,
+                (err, ref) -> callback.accept(mapFirebaseError(err)));
     }
 
-    public void deleteDaily(@NonNull DailyId id) {
+    public void deleteDaily(
+            @NonNull DailyId id,
+            @NonNull Consumer<Result<Unit, DatabaseError>> callback
+    ) {
+        Map<String, Object> map = new HashMap<>();
+        map.put(id.get(), null);
 
+        db.child("dailies").child(userId).updateChildren(map,
+                (err, ref) -> callback.accept(mapFirebaseError(err)));
     }
 
     public void fetchDailies(
             @NonNull DateInterval interval,
             @NonNull Consumer<Result<DailyFetchList, DatabaseError>> callback
     ) {
-
+        callback.accept(ok(dailies.getAllIn(interval)));
     }
 }

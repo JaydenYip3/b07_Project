@@ -120,6 +120,12 @@ public final class None<T> extends Option<T> {
 
     @NonNull
     @Override
+    public String toString() {
+        return "None";
+    }
+
+    @NonNull
+    @Override
     public None<T> copy() {
         return new None<>();
     }

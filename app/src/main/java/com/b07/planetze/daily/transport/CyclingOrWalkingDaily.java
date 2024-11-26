@@ -31,7 +31,7 @@ implements Daily {
 
     @SuppressWarnings("ConstantConditions")
     @NonNull
-    public static CyclingOrWalkingDaily fromJson(Map<String, Object> map) {
+    public static CyclingOrWalkingDaily fromJson(@NonNull Map<String, Object> map) {
         return new CyclingOrWalkingDaily(
                 ImmutableDistance.fromJson(map.get("distance")));
     }
@@ -40,7 +40,6 @@ implements Daily {
     @Override
     public Object toJson() {
         Map<String, Object> map = new HashMap<>();
-        map.put("type", type().toJson());
         map.put("distance", distance.toJson());
         return map;
     }

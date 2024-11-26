@@ -129,6 +129,12 @@ public final class Error<T, E> extends Result<T, E> {
 
     @NonNull
     @Override
+    public String toString() {
+        return String.format("Error(%s)", value);
+    }
+
+    @NonNull
+    @Override
     public Error<T, E> copy() {
         if (value instanceof MutableWithCopy<?> e) {
             @SuppressWarnings("unchecked")

@@ -46,16 +46,9 @@ public record MealDaily(
 
     @SuppressWarnings("ConstantConditions")
     @NonNull
-    public static MealDaily fromJson(Map<String, Object> map) {
+    public static MealDaily fromJson(@NonNull Map<String, Object> map) {
         return new MealDaily(
-                switch((String) map.get("mealType")) {
-                    case "BEEF" -> MealType.BEEF;
-                    case "PORK" -> MealType.PORK;
-                    case "CHICKEN" -> MealType.CHICKEN;
-                    case "FISH" -> MealType.FISH;
-                    case "PLANT_BASED" -> MealType.PLANT_BASED;
-                    default -> throw new DailyException();
-                },
+                MealType.valueOf((String) map.get("mealType")),
                 (int) map.get("numberServings")
         );
     }
@@ -64,14 +57,7 @@ public record MealDaily(
     @Override
     public Object toJson() {
         Map<String, Object> map = new HashMap<>();
-        map.put("type", type().toJson());
-        map.put("mealType", switch(mealType) {
-            case BEEF -> "BEEF";
-            case PORK -> "PORK";
-            case CHICKEN -> "CHICKEN";
-            case FISH -> "FISH";
-            case PLANT_BASED -> "PLANT_BASED";
-        });
+        map.put("mealType", mealType.name());
         map.put("numberServings", numberServings);
         return map;
     }

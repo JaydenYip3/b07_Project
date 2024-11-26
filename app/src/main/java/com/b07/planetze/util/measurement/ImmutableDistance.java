@@ -2,7 +2,7 @@ package com.b07.planetze.util.measurement;
 
 import androidx.annotation.NonNull;
 
-import com.b07.planetze.database.ToJsonSerializable;
+import com.b07.planetze.database.ToJson;
 import com.b07.planetze.util.immutability.ImmutableCopy;
 
 /**
@@ -10,7 +10,7 @@ import com.b07.planetze.util.immutability.ImmutableCopy;
  * Consider instantiating this with {@link Distance#immutableCopy()}.
  */
 public final class ImmutableDistance extends ImmutableCopy<Distance>
-        implements ToJsonSerializable {
+        implements ToJson {
     public ImmutableDistance(@NonNull Distance object) {
         super(object);
     }
@@ -37,7 +37,7 @@ public final class ImmutableDistance extends ImmutableCopy<Distance>
     }
 
     @NonNull
-    public static ImmutableDistance fromJson(Object o) {
+    public static ImmutableDistance fromJson(@NonNull Object o) {
         return Distance.fromJson(o).immutableCopy();
     }
 

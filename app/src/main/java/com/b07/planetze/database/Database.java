@@ -16,19 +16,36 @@ import java.time.LocalDate;
 import java.util.function.Consumer;
 
 public interface Database {
-    void postUser(@NonNull User user);
+    void postUser(
+            @NonNull User user,
+            @NonNull Consumer<Result<Unit, DatabaseError>> callback
+    );
 
     void fetchUser(@NonNull Consumer<Result<Option<User>, DatabaseError>> callback);
 
-    void postOnboardingEmissions(@NonNull Emissions emissions);
+    void postOnboardingEmissions(
+            @NonNull Emissions emissions,
+            @NonNull Consumer<Result<Unit, DatabaseError>> callback
+    );
 
     void fetchOnboardingEmissions(@NonNull Consumer<Result<Option<Emissions>, DatabaseError>> callback);
 
-    void postDaily(@NonNull LocalDate date, @NonNull Daily daily);
+    void postDaily(
+            @NonNull LocalDate date,
+            @NonNull Daily daily,
+            @NonNull Consumer<Result<Unit, DatabaseError>> callback
+    );
 
-    void updateDaily(@NonNull DailyId id, @NonNull Daily update);
+    void updateDaily(
+            @NonNull DailyId id,
+            @NonNull Daily update,
+            @NonNull Consumer<Result<Unit, DatabaseError>> callback
+    );
 
-    void deleteDaily(@NonNull DailyId id);
+    void deleteDaily(
+            @NonNull DailyId id,
+            @NonNull Consumer<Result<Unit, DatabaseError>> callback
+    );
 
     void fetchDailies(
             @NonNull DateInterval interval,

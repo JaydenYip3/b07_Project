@@ -20,6 +20,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.b07.planetze.R;
 import com.b07.planetze.WelcomeFragment;
+import com.b07.planetze.ecotracker.EcoTrackerActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
@@ -69,6 +70,8 @@ public class AuthActivity extends AppCompatActivity implements LoginCallback, Re
                         }
                         else{
                             Toast.makeText(this, "Logged in as " + user.getEmail(), Toast.LENGTH_SHORT).show();
+
+                            EcoTrackerActivity.start(this);
                         }
 
                     } else {

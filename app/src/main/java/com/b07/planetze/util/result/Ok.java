@@ -125,6 +125,12 @@ public final class Ok<T, E> extends Result<T, E> {
 
     @NonNull
     @Override
+    public String toString() {
+        return String.format("Ok(%s)", value);
+    }
+
+    @NonNull
+    @Override
     public Ok<T, E> copy() {
         if (value instanceof MutableWithCopy<?> v) {
             @SuppressWarnings("unchecked")

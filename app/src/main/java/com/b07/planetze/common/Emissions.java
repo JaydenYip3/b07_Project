@@ -2,7 +2,7 @@ package com.b07.planetze.common;
 
 import androidx.annotation.NonNull;
 
-import com.b07.planetze.database.ToJsonSerializable;
+import com.b07.planetze.database.ToJson;
 import com.b07.planetze.util.measurement.Mass;
 import com.b07.planetze.util.Util;
 import com.b07.planetze.util.immutability.ImmutableList;
@@ -16,7 +16,7 @@ import java.util.Map;
  * Stores CO2e emissions by category.
  */
 public final class Emissions
-        implements MutableWithCopy<Emissions>, ToJsonSerializable {
+        implements MutableWithCopy<Emissions>, ToJson {
     @NonNull private final ImmutableList<Mass> categories;
 
     private Emissions() {
@@ -204,8 +204,9 @@ public final class Emissions
         return this;
     }
 
+    @SuppressWarnings("ConstantConditions")
     @NonNull
-    public static Emissions fromJson(Object o) {
+    public static Emissions fromJson(@NonNull Object o) {
         @SuppressWarnings("unchecked")
         Map<String, Object> map = (Map<String, Object>) o;
 

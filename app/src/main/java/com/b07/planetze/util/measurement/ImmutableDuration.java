@@ -2,7 +2,7 @@ package com.b07.planetze.util.measurement;
 
 import androidx.annotation.NonNull;
 
-import com.b07.planetze.database.ToJsonSerializable;
+import com.b07.planetze.database.ToJson;
 import com.b07.planetze.util.immutability.ImmutableCopy;
 
 /**
@@ -10,7 +10,7 @@ import com.b07.planetze.util.immutability.ImmutableCopy;
  * Consider instantiating this with {@link Duration#immutableCopy()}.
  */
 public final class ImmutableDuration extends ImmutableCopy<Duration>
-        implements ToJsonSerializable {
+        implements ToJson {
     public ImmutableDuration(@NonNull Duration object) {
         super(object);
     }
@@ -30,7 +30,7 @@ public final class ImmutableDuration extends ImmutableCopy<Duration>
     }
 
     @NonNull
-    public static ImmutableDuration fromJson(Object o) {
+    public static ImmutableDuration fromJson(@NonNull Object o) {
         return Duration.fromJson(o).immutableCopy();
     }
 

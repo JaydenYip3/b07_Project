@@ -2,7 +2,7 @@ package com.b07.planetze.common;
 
 import androidx.annotation.NonNull;
 
-import com.b07.planetze.database.ToJsonSerializable;
+import com.b07.planetze.database.ToJson;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,10 +14,10 @@ public record User(
         @NonNull String name,
         @NonNull String email,
         @NonNull String country
-) implements ToJsonSerializable {
+) implements ToJson {
     @SuppressWarnings({"unchecked", "ConstantConditions"})
     @NonNull
-    public static User fromJson(Object o) {
+    public static User fromJson(@NonNull Object o) {
         Map<String, String> map = (Map<String, String>) o;
 
         return new User(map.get("name"), map.get("email"), map.get("country"));

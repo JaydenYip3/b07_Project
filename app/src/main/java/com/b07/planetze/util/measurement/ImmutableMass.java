@@ -2,7 +2,7 @@ package com.b07.planetze.util.measurement;
 
 import androidx.annotation.NonNull;
 
-import com.b07.planetze.database.ToJsonSerializable;
+import com.b07.planetze.database.ToJson;
 import com.b07.planetze.util.immutability.ImmutableCopy;
 
 /**
@@ -10,7 +10,7 @@ import com.b07.planetze.util.immutability.ImmutableCopy;
  * Consider instantiating this with {@link Mass#immutableCopy()}.
  */
 public final class ImmutableMass extends ImmutableCopy<Mass>
-        implements ToJsonSerializable {
+        implements ToJson {
     public ImmutableMass(@NonNull Mass object) {
         super(object);
     }
@@ -37,7 +37,7 @@ public final class ImmutableMass extends ImmutableCopy<Mass>
     }
 
     @NonNull
-    public static ImmutableMass fromJson(Object o) {
+    public static ImmutableMass fromJson(@NonNull Object o) {
         return Mass.fromJson(o).immutableCopy();
     }
 

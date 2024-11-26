@@ -46,14 +46,9 @@ public record EnergyBillsDaily(
 
     @SuppressWarnings("ConstantConditions")
     @NonNull
-    public static EnergyBillsDaily fromJson(Map<String, Object> map) {
+    public static EnergyBillsDaily fromJson(@NonNull Map<String, Object> map) {
         return new EnergyBillsDaily(
-                switch((String) map.get("billType")) {
-                    case "ELECTRICITY" -> BillType.ELECTRICITY;
-                    case "GAS" -> BillType.GAS;
-                    case "WATER" -> BillType.WATER;
-                    default -> throw new DailyException();
-                },
+                BillType.valueOf((String) map.get("billType")),
                 (double) map.get("billAmount")
         );
     }
@@ -62,12 +57,7 @@ public record EnergyBillsDaily(
     @Override
     public Object toJson() {
         Map<String, Object> map = new HashMap<>();
-        map.put("type", type().toJson());
-        map.put("billType", switch(billType) {
-            case ELECTRICITY -> "ELECTRICITY";
-            case GAS -> "GAS";
-            case WATER -> "WATER";
-        });
+        map.put("billType", billType.name());
         map.put("billAmount", billAmount);
         return map;
     }

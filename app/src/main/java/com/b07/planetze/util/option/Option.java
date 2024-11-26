@@ -239,4 +239,8 @@ public sealed abstract class Option<T>
 
     @Override
     public abstract int hashCode();
+
+    @NonNull
+    @Override
+    public abstract String toString();
 }

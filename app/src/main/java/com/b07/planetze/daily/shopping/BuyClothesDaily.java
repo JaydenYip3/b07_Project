@@ -28,7 +28,7 @@ implements Daily {
 
     @SuppressWarnings("ConstantConditions")
     @NonNull
-    public static BuyClothesDaily fromJson(Map<String, Object> map) {
+    public static BuyClothesDaily fromJson(@NonNull Map<String, Object> map) {
         return new BuyClothesDaily((int) map.get("numberItems"));
     }
 
@@ -36,7 +36,6 @@ implements Daily {
     @Override
     public Object toJson() {
         Map<String, Object> map = new HashMap<>();
-        map.put("type", type().toJson());
         map.put("numberItems", numberItems);
         return map;
     }

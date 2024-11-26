@@ -43,14 +43,9 @@ public record PublicTransitDaily(
 
     @SuppressWarnings("ConstantConditions")
     @NonNull
-    public static PublicTransitDaily fromJson(Map<String, Object> map) {
+    public static PublicTransitDaily fromJson(@NonNull Map<String, Object> map) {
         return new PublicTransitDaily(
-                switch((String) map.get("transitType")) {
-                    case "BUS" -> TransitType.BUS;
-                    case "TRAIN" -> TransitType.TRAIN;
-                    case "SUBWAY" -> TransitType.SUBWAY;
-                    default -> throw new DailyException();
-                },
+                TransitType.valueOf((String) map.get("transitType")),
                 ImmutableDuration.fromJson(map.get("duration"))
         );
     }
@@ -59,12 +54,7 @@ public record PublicTransitDaily(
     @Override
     public Object toJson() {
         Map<String, Object> map = new HashMap<>();
-        map.put("type", type().toJson());
-        map.put("transitType", switch(transitType) {
-            case BUS -> "BUS";
-            case TRAIN -> "TRAIN";
-            case SUBWAY -> "SUBWAY";
-        });
+        map.put("transitType", transitType.name());
         map.put("duration", duration.toJson());
         return map;
     }

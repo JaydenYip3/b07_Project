@@ -38,14 +38,9 @@ public record DrivingDaily(
 
     @SuppressWarnings("ConstantConditions")
     @NonNull
-    public static DrivingDaily fromJson(Map<String, Object> map) {
+    public static DrivingDaily fromJson(@NonNull Map<String, Object> map) {
         return new DrivingDaily(
-                switch((String) map.get("vehicleType")) {
-                    case "GAS_CAR" -> VehicleType.GAS_CAR;
-                    case "ELECTRIC_CAR" -> VehicleType.ELECTRIC_CAR;
-                    case "MOTORBIKE" -> VehicleType.MOTORBIKE;
-                    default -> throw new DailyException();
-                },
+                VehicleType.valueOf((String) map.get("vehicleType")),
                 ImmutableDistance.fromJson(map.get("distance"))
         );
     }
@@ -54,12 +49,7 @@ public record DrivingDaily(
     @Override
     public Object toJson() {
         Map<String, Object> map = new HashMap<>();
-        map.put("type", type().toJson());
-        map.put("vehicleType", switch(vehicleType) {
-            case GAS_CAR -> "GAS_CAR";
-            case ELECTRIC_CAR -> "ELECTRIC_CAR";
-            case MOTORBIKE -> "MOTORBIKE";
-        });
+        map.put("vehicleType", vehicleType.name());
         map.put("distance", distance.toJson());
         return map;
     }

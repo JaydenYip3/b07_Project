@@ -3,13 +3,13 @@ package com.b07.planetze.util.measurement;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import com.b07.planetze.database.ToJsonSerializable;
+import com.b07.planetze.database.ToJson;
 
 /**
  * A measurement of duration.
  */
 public final class Duration extends Measurement<Duration>
-        implements ToJsonSerializable {
+        implements ToJson {
     private double s;
 
     private Duration(double s) {
@@ -96,7 +96,7 @@ public final class Duration extends Measurement<Duration>
     }
 
     @NonNull
-    public static Duration fromJson(Object o) {
+    public static Duration fromJson(@NonNull Object o) {
         return new Duration((double) o);
     }
 
