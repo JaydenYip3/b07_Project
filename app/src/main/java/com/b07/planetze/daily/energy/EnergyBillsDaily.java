@@ -1,11 +1,15 @@
-package com.b07.planetze.common.daily.energy;
+package com.b07.planetze.daily.energy;
 
 import androidx.annotation.NonNull;
 
 import com.b07.planetze.common.Emissions;
-import com.b07.planetze.common.daily.Daily;
-import com.b07.planetze.common.daily.DailyType;
+import com.b07.planetze.daily.Daily;
+import com.b07.planetze.daily.DailyException;
+import com.b07.planetze.daily.DailyType;
 import com.b07.planetze.util.measurement.Mass;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public record EnergyBillsDaily(
         @NonNull BillType billType,
@@ -38,6 +42,34 @@ public record EnergyBillsDaily(
     @Override
     public DailyType type() {
         return DailyType.ENERGY_BILLS;
+    }
+
+    @SuppressWarnings("ConstantConditions")
+    @NonNull
+    public static EnergyBillsDaily fromJson(Map<String, Object> map) {
+        return new EnergyBillsDaily(
+                switch((String) map.get("billType")) {
+                    case "ELECTRICITY" -> BillType.ELECTRICITY;
+                    case "GAS" -> BillType.GAS;
+                    case "WATER" -> BillType.WATER;
+                    default -> throw new DailyException();
+                },
+                (double) map.get("billAmount")
+        );
+    }
+
+    @NonNull
+    @Override
+    public Object toJson() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("type", type().toJson());
+        map.put("billType", switch(billType) {
+            case ELECTRICITY -> "ELECTRICITY";
+            case GAS -> "GAS";
+            case WATER -> "WATER";
+        });
+        map.put("billAmount", billAmount);
+        return map;
     }
 
     public enum BillType {

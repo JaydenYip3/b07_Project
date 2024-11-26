@@ -2,9 +2,7 @@ package com.b07.planetze.database.data;
 
 import androidx.annotation.NonNull;
 
-import com.b07.planetze.common.Emissions;
-import com.b07.planetze.common.daily.Daily;
-import com.b07.planetze.common.daily.DailyType;
+import com.b07.planetze.daily.Daily;
 
 import java.time.LocalDate;
 

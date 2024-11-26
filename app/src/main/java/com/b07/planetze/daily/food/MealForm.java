@@ -1,10 +1,10 @@
-package com.b07.planetze.common.daily.food;
+package com.b07.planetze.daily.food;
 
 
 import androidx.annotation.NonNull;
 
-import com.b07.planetze.common.daily.DailyForm;
-import com.b07.planetze.ecotracker.exception.DailyFormException;
+import com.b07.planetze.daily.DailyForm;
+import com.b07.planetze.daily.DailyException;
 import com.b07.planetze.form.Form;
 import com.b07.planetze.form.FormSubmission;
 import com.b07.planetze.form.definition.FieldId;
@@ -62,7 +62,7 @@ public final class MealForm implements DailyForm<MealDaily> {
             case 2 -> MealDaily.MealType.CHICKEN;
             case 3 -> MealDaily.MealType.FISH;
             case 4 -> MealDaily.MealType.PLANT_BASED;
-            default -> throw new DailyFormException();
+            default -> throw new DailyException();
         };
 
         return new MealDaily(mealType, form.get(number));

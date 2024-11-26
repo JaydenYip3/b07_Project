@@ -1,11 +1,11 @@
-package com.b07.planetze.common.daily.transport;
+package com.b07.planetze.daily.transport;
 
 import androidx.annotation.NonNull;
 
 import com.b07.planetze.form.Form;
 import com.b07.planetze.util.measurement.ImmutableDuration;
-import com.b07.planetze.common.daily.DailyForm;
-import com.b07.planetze.ecotracker.exception.DailyFormException;
+import com.b07.planetze.daily.DailyForm;
+import com.b07.planetze.daily.DailyException;
 import com.b07.planetze.form.FormSubmission;
 import com.b07.planetze.form.definition.FieldId;
 import com.b07.planetze.form.definition.FormBuilder;
@@ -59,7 +59,7 @@ public final class PublicTransitForm implements DailyForm<PublicTransitDaily> {
             case 0 -> PublicTransitDaily.TransitType.BUS;
             case 1 -> PublicTransitDaily.TransitType.TRAIN;
             case 2 -> PublicTransitDaily.TransitType.SUBWAY;
-            default -> throw new DailyFormException();
+            default -> throw new DailyException();
         };
 
         return new PublicTransitDaily(transitType, form.get(duration));

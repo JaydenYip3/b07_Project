@@ -1,9 +1,9 @@
-package com.b07.planetze.common.daily.energy;
+package com.b07.planetze.daily.energy;
 
 import androidx.annotation.NonNull;
 
-import com.b07.planetze.common.daily.DailyForm;
-import com.b07.planetze.ecotracker.exception.DailyFormException;
+import com.b07.planetze.daily.DailyForm;
+import com.b07.planetze.daily.DailyException;
 import com.b07.planetze.form.Form;
 import com.b07.planetze.form.FormSubmission;
 import com.b07.planetze.form.definition.FieldId;
@@ -58,7 +58,7 @@ public final class EnergyBillsForm implements DailyForm<EnergyBillsDaily> {
             case 0 -> EnergyBillsDaily.BillType.ELECTRICITY;
             case 1 -> EnergyBillsDaily.BillType.GAS;
             case 2 -> EnergyBillsDaily.BillType.WATER;
-            default -> throw new DailyFormException();
+            default -> throw new DailyException();
         };
 
         return new EnergyBillsDaily(billType, form.get(bills));

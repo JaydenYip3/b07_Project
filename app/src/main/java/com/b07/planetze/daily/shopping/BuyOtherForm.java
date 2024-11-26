@@ -1,9 +1,9 @@
-package com.b07.planetze.common.daily.shopping;
+package com.b07.planetze.daily.shopping;
 
 import androidx.annotation.NonNull;
 
-import com.b07.planetze.common.daily.DailyForm;
-import com.b07.planetze.ecotracker.exception.DailyFormException;
+import com.b07.planetze.daily.DailyForm;
+import com.b07.planetze.daily.DailyException;
 import com.b07.planetze.form.Form;
 import com.b07.planetze.form.FormSubmission;
 import com.b07.planetze.form.definition.FieldId;
@@ -55,7 +55,7 @@ public final class BuyOtherForm implements DailyForm<BuyOtherDaily> {
         BuyOtherDaily.PurchaseType purchaseType = switch(form.get(type)) {
             case 0 -> BuyOtherDaily.PurchaseType.FURNITURE;
             case 1 -> BuyOtherDaily.PurchaseType.APPLIANCE;
-            default -> throw new DailyFormException();
+            default -> throw new DailyException();
         };
 
         return new BuyOtherDaily(purchaseType, form.get(number));

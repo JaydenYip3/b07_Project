@@ -1,10 +1,10 @@
-package com.b07.planetze.common.daily.transport;
+package com.b07.planetze.daily.transport;
 
 import androidx.annotation.NonNull;
 
 import com.b07.planetze.form.Form;
 import com.b07.planetze.util.measurement.ImmutableDistance;
-import com.b07.planetze.common.daily.DailyForm;
+import com.b07.planetze.daily.DailyForm;
 import com.b07.planetze.form.FormSubmission;
 import com.b07.planetze.form.definition.FieldId;
 import com.b07.planetze.form.definition.FormBuilder;

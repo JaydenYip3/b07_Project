@@ -1,4 +1,4 @@
-package com.b07.planetze.common.daily;
+package com.b07.planetze.daily;
 
 import androidx.annotation.NonNull;
 

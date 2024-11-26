@@ -1,9 +1,9 @@
-package com.b07.planetze.common.daily.shopping;
+package com.b07.planetze.daily.shopping;
 
 import androidx.annotation.NonNull;
 
-import com.b07.planetze.common.daily.DailyForm;
-import com.b07.planetze.ecotracker.exception.DailyFormException;
+import com.b07.planetze.daily.DailyForm;
+import com.b07.planetze.daily.DailyException;
 import com.b07.planetze.form.Form;
 import com.b07.planetze.form.FormSubmission;
 import com.b07.planetze.form.definition.FieldId;
@@ -59,7 +59,7 @@ public final class BuyElectronicsForm
             case 0 -> BuyElectronicsDaily.DeviceType.SMARTPHONE;
             case 1 -> BuyElectronicsDaily.DeviceType.LAPTOP;
             case 2 -> BuyElectronicsDaily.DeviceType.TV;
-            default -> throw new DailyFormException();
+            default -> throw new DailyException();
         };
 
         return new BuyElectronicsDaily(deviceType, form.get(number));

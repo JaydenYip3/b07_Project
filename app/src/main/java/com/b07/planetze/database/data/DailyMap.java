@@ -2,7 +2,7 @@ package com.b07.planetze.database.data;
 
 import androidx.annotation.NonNull;
 
-import com.b07.planetze.common.daily.Daily;
+import com.b07.planetze.daily.Daily;
 import com.b07.planetze.util.DateInterval;
 import com.b07.planetze.util.immutability.ImmutableList;
 import com.b07.planetze.util.option.Option;

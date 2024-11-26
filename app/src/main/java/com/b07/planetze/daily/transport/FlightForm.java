@@ -1,10 +1,10 @@
-package com.b07.planetze.common.daily.transport;
+package com.b07.planetze.daily.transport;
 
 
 import androidx.annotation.NonNull;
 
-import com.b07.planetze.common.daily.DailyForm;
-import com.b07.planetze.ecotracker.exception.DailyFormException;
+import com.b07.planetze.daily.DailyForm;
+import com.b07.planetze.daily.DailyException;
 import com.b07.planetze.form.Form;
 import com.b07.planetze.form.FormSubmission;
 import com.b07.planetze.form.definition.FieldId;
@@ -56,7 +56,7 @@ public final class FlightForm implements DailyForm<FlightDaily> {
         FlightDaily.FlightType flightType = switch(form.get(type)) {
             case 0 -> FlightDaily.FlightType.SHORT_HAUL;
             case 1 -> FlightDaily.FlightType.LONG_HAUL;
-            default -> throw new DailyFormException();
+            default -> throw new DailyException();
         };
 
         return new FlightDaily(form.get(number), flightType);

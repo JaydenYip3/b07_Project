@@ -3,16 +3,15 @@ package com.b07.planetze.database.firebase;
 import static com.b07.planetze.util.result.Result.ok;
 import static com.b07.planetze.util.result.Result.error;
 import static com.b07.planetze.util.option.Option.some;
-import static com.b07.planetze.util.option.Option.none;
 
-import android.os.Parcelable;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.b07.planetze.common.Emissions;
 import com.b07.planetze.common.User;
-import com.b07.planetze.common.UserId;
-import com.b07.planetze.common.daily.Daily;
+import com.b07.planetze.daily.Daily;
 import com.b07.planetze.database.Database;
 import com.b07.planetze.database.DatabaseError;
 import com.b07.planetze.database.DatabaseException;
@@ -20,21 +19,22 @@ import com.b07.planetze.database.data.DailyFetchList;
 import com.b07.planetze.database.data.DailyId;
 import com.b07.planetze.database.data.DailyMap;
 import com.b07.planetze.util.DateInterval;
-import com.b07.planetze.util.Unit;
 import com.b07.planetze.util.option.Option;
 import com.b07.planetze.util.result.Result;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.time.LocalDate;
 import java.util.function.Consumer;
 import java.util.function.Function;
 
 public final class FirebaseDb implements Database {
+    @NonNull private static final String TAG = "FirebaseDb";
     @NonNull private final DatabaseReference db;
     @NonNull private final String userId;
     @NonNull private final DailyMap dailies;
@@ -50,6 +50,33 @@ public final class FirebaseDb implements Database {
                 .getReference();
 
         dailies = new DailyMap();
+
+        db.child("dailies").child("userId").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull com.google.firebase.database.DatabaseError error) {
+
+            }
+        });
     }
 
     @SuppressWarnings({"ConstantConditions"})
@@ -63,53 +90,33 @@ public final class FirebaseDb implements Database {
                 : error(new FirebaseError(task.getException()));
     }
 
-    public void postUser(
-            @NonNull User user,
-            @NonNull Consumer<Result<Unit, DatabaseError>> callback
-    ) {
+    public void postUser(@NonNull User user) {
         db.child("users").child(userId).setValue(user.toJson());
     }
 
-    public void fetchUser(
-            @NonNull Consumer<Result<Option<User>, DatabaseError>> callback
-    ) {
+    public void fetchUser(@NonNull Consumer<Result<Option<User>, DatabaseError>> callback) {
         db.child("users").child(userId).get()
                 .addOnCompleteListener(task -> callback.accept(map(task, User::fromJson)));
     }
 
-    public void postOnboardingEmissions(
-            @NonNull Emissions emissions,
-            @NonNull Consumer<Result<Unit, DatabaseError>> callback
-    ) {
-        db.child("onboarding").child(userId).setValue(emissions.toJson());
+    public void postOnboardingEmissions(@NonNull Emissions emissions) {
+        db.child("onboarding_emissions").child(userId).setValue(emissions.toJson());
     }
 
-    public void fetchOnboardingEmissions(
-            @NonNull Consumer<Result<Option<Emissions>, DatabaseError>> callback
-    ) {
-        db.child("onboarding").child(userId).get()
+    public void fetchOnboardingEmissions(@NonNull Consumer<Result<Option<Emissions>, DatabaseError>> callback) {
+        db.child("onboarding_emissions").child(userId).get()
                 .addOnCompleteListener(task -> callback.accept(map(task, Emissions::fromJson)));
     }
 
-    public void postDaily(
-            @NonNull LocalDate date,
-            @NonNull Daily daily,
-            @NonNull Consumer<Result<Unit, DatabaseError>> callback
-    ) {
+    public void postDaily(@NonNull LocalDate date, @NonNull Daily daily) {
+        db.child("dailies").child(userId).push()
     }
 
-    public void updateDaily(
-            @NonNull DailyId id,
-            @NonNull Daily update,
-            @NonNull Consumer<Result<Unit, DatabaseError>> callback
-    ) {
+    public void updateDaily(@NonNull DailyId id, @NonNull Daily update) {
 
     }
 
-    public void deleteDaily(
-            @NonNull DailyId id,
-            @NonNull Consumer<Result<Unit, DatabaseError>> callback
-    ) {
+    public void deleteDaily(@NonNull DailyId id) {
 
     }
 

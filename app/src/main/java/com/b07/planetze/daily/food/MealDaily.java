@@ -1,11 +1,15 @@
-package com.b07.planetze.common.daily.food;
+package com.b07.planetze.daily.food;
 
 import androidx.annotation.NonNull;
 
 import com.b07.planetze.common.Emissions;
+import com.b07.planetze.daily.DailyException;
 import com.b07.planetze.util.measurement.Mass;
-import com.b07.planetze.common.daily.Daily;
-import com.b07.planetze.common.daily.DailyType;
+import com.b07.planetze.daily.Daily;
+import com.b07.planetze.daily.DailyType;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public record MealDaily(
         @NonNull MealType mealType,
@@ -38,6 +42,38 @@ public record MealDaily(
     @Override
     public DailyType type() {
         return DailyType.MEAL;
+    }
+
+    @SuppressWarnings("ConstantConditions")
+    @NonNull
+    public static MealDaily fromJson(Map<String, Object> map) {
+        return new MealDaily(
+                switch((String) map.get("mealType")) {
+                    case "BEEF" -> MealType.BEEF;
+                    case "PORK" -> MealType.PORK;
+                    case "CHICKEN" -> MealType.CHICKEN;
+                    case "FISH" -> MealType.FISH;
+                    case "PLANT_BASED" -> MealType.PLANT_BASED;
+                    default -> throw new DailyException();
+                },
+                (int) map.get("numberServings")
+        );
+    }
+
+    @NonNull
+    @Override
+    public Object toJson() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("type", type().toJson());
+        map.put("mealType", switch(mealType) {
+            case BEEF -> "BEEF";
+            case PORK -> "PORK";
+            case CHICKEN -> "CHICKEN";
+            case FISH -> "FISH";
+            case PLANT_BASED -> "PLANT_BASED";
+        });
+        map.put("numberServings", numberServings);
+        return map;
     }
 
     public enum MealType {
