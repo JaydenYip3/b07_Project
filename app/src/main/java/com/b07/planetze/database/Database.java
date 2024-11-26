@@ -2,73 +2,129 @@ package com.b07.planetze.database;
 
 import androidx.annotation.NonNull;
 
-import com.b07.planetze.util.DateInterval;
-import com.b07.planetze.common.DatedEmissions;
 import com.b07.planetze.common.Emissions;
-import com.b07.planetze.common.UserId;
+import com.b07.planetze.common.User;
+import com.b07.planetze.daily.Daily;
+import com.b07.planetze.database.data.DailyFetchList;
+import com.b07.planetze.database.data.DailyId;
+import com.b07.planetze.util.DateInterval;
+import com.b07.planetze.util.option.Option;
 import com.b07.planetze.util.result.Result;
 import com.b07.planetze.util.Unit;
 
 import java.time.LocalDate;
-import java.util.List;
 import java.util.function.Consumer;
 
 /**
- * A database. <br>
- * Example usage:
- * <pre>
- *     {@code
- *     db.fetchDailyEmissions(userId, date, result -> {
- *         result.match(emissions -> {
- *             Log.d(TAG, emissions.toString());
- *         }, error -> {
- *             Log.e(TAG, error.message());
- *         });
- *     });
- * </pre>
+ * Interfaces with the database backend. <br>
+ * All methods operate on the currently signed in user.
  */
 public interface Database {
     /**
-     * Fetches daily CO2e emissions for a specific user and date. <br>
-     * Days with no recorded emissions are considered to have an emission mass of 0kg.
-     * @param userId the user's id
-     * @param date the date
-     * @param callback A function to be called after the data is fetched.
-     *                 If fetching is successful, the result contains the
-     *                 emissions on the specified date.
+     * Sets user information.
+     * @param callback a function that takes in a {@link Result}. <br>
+     *                 This is called upon completion of the operation (of
+     *                 setting user information).
      */
-    void fetchDailyEmissions(
-            @NonNull UserId userId,
-            @NonNull LocalDate date,
-            @NonNull Consumer<Result<Emissions, DatabaseError>> callback
+    void postUser(
+            @NonNull User user,
+            @NonNull Consumer<Result<Unit, DatabaseError>> callback
     );
 
     /**
-     * Fetches daily CO2e emissions over an interval of dates. <br>
-     * Days with no recorded emissions are skipped.
-     * @param userId the user's id
-     * @param interval the interval of dates
-     * @param callback A function to be called after the data is fetched.
-     *                 If fetching is successful, the result contains
-     *                 dated emissions over the specified interval.
+     * Fetches user information. <br>
+     * Example:
+     * <pre>
+     *     {@code
+     *     fetchUser(result -> {
+     *         if (result instanceof Ok<Option<User>, ?> r) { // if this operation was successful
+     *             Option<User> userOption = r.get();
+     *             if (userOption instanceof Some<User> user) { // if the user has user info set
+     *                 Log.d(TAG, "user: " + user);
+     *             } else {
+     *                 Log.d(TAG, "user nonexistent");
+     *             }
+     *         } else { // if this operation failed
+     *             DatabaseError e = ((Error<?, DatabaseError>) result).get();
+     *             Log.d(TAG, "error: " + e);
+     *         }
+     *     });
+     *     }
+     * </pre>
+     * Alternate syntax:
+     * <pre>
+     *     {@code
+     *     fetchUser(result -> {
+     *         result.match(userOption -> { // if this operation was successful:
+     *             userOption.match(
+     *                 // if the user has user info set:
+     *                 user -> Log.d(TAG, "user: " + user),
+     *
+     *                 // otherwise:
+     *                 () -> Log.d(TAG, "user nonexistent")
+     *             );
+     *         }, dbError -> { // if this operation failed:
+     *             Log.d(TAG, "error: " + dbError);
+     *         });
+     *     });
+     *     }
+     * </pre>
      */
-    void fetchEmissionsOverInterval(
-            @NonNull UserId userId,
-            @NonNull DateInterval interval,
-            @NonNull Consumer<Result<List<DatedEmissions>, DatabaseError>> callback
-    );
+    void fetchUser(@NonNull Consumer<Result<Option<User>, DatabaseError>> callback);
 
-    /**
-     * Updates daily CO2e emissions for a specific user and date.
-     * @param userId the user's id
-     * @param date the date of the emissions
-     * @param emissions the emitted CO2e
-     * @param callback a function to be called after the update finishes
-     */
-    void updateDailyEmissions(
-            @NonNull UserId userId,
-            @NonNull LocalDate date,
+    void postOnboardingEmissions(
             @NonNull Emissions emissions,
             @NonNull Consumer<Result<Unit, DatabaseError>> callback
+    );
+
+    void fetchOnboardingEmissions(@NonNull Consumer<Result<Option<Emissions>, DatabaseError>> callback);
+
+    void postDaily(
+            @NonNull LocalDate date,
+            @NonNull Daily daily,
+            @NonNull Consumer<Result<Unit, DatabaseError>> callback
+    );
+
+    /**
+     * Updates (edits) a previously-logged daily activity.
+     * @param id the activity id
+     * @param update the updated daily activity log
+     */
+    void updateDaily(
+            @NonNull DailyId id,
+            @NonNull Daily update,
+            @NonNull Consumer<Result<Unit, DatabaseError>> callback
+    );
+
+    void deleteDaily(
+            @NonNull DailyId id,
+            @NonNull Consumer<Result<Unit, DatabaseError>> callback
+    );
+
+    /**
+     * Fetches a list of daily activities (and by extension emissions) over an
+     * interval. <br>
+     * Example:
+     * <pre>
+     *     {@code
+     *     fetchDailies(DateInterval.day(LocalDate.now()), result -> {
+     *         if (result instanceof Ok<DailyFetchList, ?> r) {
+     *             DailyFetchList list = r.get();
+     *             Emissions emissions = list.emissions();
+     *             Log.d(TAG, "emissions: " + emissions);
+     *
+     *             for (DailyFetch fetch : list) {
+     *                 Log.d(TAG, "id: " + fetch.id());
+     *                 Log.d(TAG, "date: " + fetch.date());
+     *                 Log.d(TAG, "daily: " + fetch.daily());
+     *             }
+     *         }
+     *     });
+     *     }
+     * </pre>
+     */
+    void fetchDailies(
+            @NonNull DateInterval interval,
+            @NonNull Consumer<Result<DailyFetchList, DatabaseError>> callback
     );
 }

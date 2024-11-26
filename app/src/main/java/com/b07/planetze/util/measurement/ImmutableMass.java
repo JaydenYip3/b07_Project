@@ -2,13 +2,15 @@ package com.b07.planetze.util.measurement;
 
 import androidx.annotation.NonNull;
 
+import com.b07.planetze.database.ToJson;
 import com.b07.planetze.util.immutability.ImmutableCopy;
 
 /**
  * Immutably stores a copy of a {@link Mass}. <br>
  * Consider instantiating this with {@link Mass#immutableCopy()}.
  */
-public final class ImmutableMass extends ImmutableCopy<Mass> {
+public final class ImmutableMass extends ImmutableCopy<Mass>
+        implements ToJson {
     public ImmutableMass(@NonNull Mass object) {
         super(object);
     }
@@ -32,5 +34,16 @@ public final class ImmutableMass extends ImmutableCopy<Mass> {
      */
     public double lb() {
         return object.lb();
+    }
+
+    @NonNull
+    public static ImmutableMass fromJson(@NonNull Object o) {
+        return Mass.fromJson(o).immutableCopy();
+    }
+
+    @NonNull
+    @Override
+    public Object toJson() {
+        return object.toJson();
     }
 }

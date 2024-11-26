@@ -23,11 +23,13 @@ public final class None<T> extends Option<T> {
 
     private None() {}
 
+    @NonNull
     @Override
     public None<T> apply(@NonNull Consumer<T> f) {
         return this;
     }
 
+    @NonNull
     @Override
     public None<T> applyNone(@NonNull Runnable f) {
         f.run();
@@ -114,6 +116,12 @@ public final class None<T> extends Option<T> {
     @Override
     public int hashCode() {
         return 0;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return "None";
     }
 
     @NonNull

@@ -43,12 +43,14 @@ public final class Ok<T, E> extends Result<T, E> {
         return value;
     }
 
+    @NonNull
     @Override
     public Ok<T, E> apply(@NonNull Consumer<T> f) {
         f.accept(value);
         return this;
     }
 
+    @NonNull
     @Override
     public Ok<T, E> applyError(@NonNull Consumer<E> f) {
         return this;
@@ -119,6 +121,12 @@ public final class Ok<T, E> extends Result<T, E> {
     @Override
     public boolean equals(@Nullable Object o) {
         return (o instanceof Ok<?, ?> ok) && value.equals(ok.value);
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return String.format("Ok(%s)", value);
     }
 
     @NonNull

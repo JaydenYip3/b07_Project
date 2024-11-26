@@ -8,7 +8,6 @@ import androidx.annotation.Nullable;
 
 import com.b07.planetze.util.option.None;
 import com.b07.planetze.util.option.Option;
-import com.b07.planetze.util.option.Some;
 
 import java.util.Arrays;
 import java.util.Iterator;

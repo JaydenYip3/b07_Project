@@ -15,8 +15,9 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 /**
- * Holds an optional value—useful for code explicitness
- * and for building abstractions around null values. <br>
+ * Represents a value that may be absent. <br>
+ * This is useful for code explicitness and for building abstractions around
+ * possibly-absent values. <br>
  * Structurally, this is a sum type of variants {@link Some} and {@link None},
  * representing the presence and absence of the value, respectively.
  * @param <T> the type of the value
@@ -29,13 +30,15 @@ public sealed abstract class Option<T>
      * @param value the value
      * @param <T> the type of the value
      */
-    public static <T> Some<T> some(T value) {
+    @NonNull
+    public static <T> Some<T> some(@NonNull T value) {
         return new Some<>(value);
     }
 
     /**
      * {@return a new <code>Some(Unit.UNIT)</code>}
      */
+    @NonNull
     public static Some<Unit> some() {
         return Some.UNIT_INSTANCE;
     }
@@ -44,6 +47,7 @@ public sealed abstract class Option<T>
      * {@return an instance of <code>None</code>}
      * @param <T> the type of the <code>Option</code>
      */
+    @NonNull
     public static <T> None<T> none() {
         @SuppressWarnings("unchecked")
         None<T> none = (None<T>) None.INSTANCE;
@@ -80,6 +84,7 @@ public sealed abstract class Option<T>
      * @param f the function
      * @return <code>this</code>
      */
+    @NonNull
     public abstract Option<T> apply(@NonNull Consumer<T> f);
 
     /**
@@ -87,6 +92,7 @@ public sealed abstract class Option<T>
      * @param f the function
      * @return <code>this</code>
      */
+    @NonNull
     public abstract Option<T> applyNone(@NonNull Runnable f);
 
     /**
@@ -233,4 +239,8 @@ public sealed abstract class Option<T>
 
     @Override
     public abstract int hashCode();
+
+    @NonNull
+    @Override
+    public abstract String toString();
 }

@@ -2,7 +2,7 @@ package com.b07.planetze.ecotracker;
 
 import androidx.annotation.NonNull;
 
-import com.b07.planetze.ecotracker.daily.DailyType;
+import com.b07.planetze.daily.DailyType;
 
 /**
  * A sum type representing EcoTracker screens.

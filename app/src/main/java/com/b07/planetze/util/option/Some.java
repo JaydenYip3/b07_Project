@@ -41,12 +41,14 @@ public final class Some<T> extends Option<T> {
         return value;
     }
 
+    @NonNull
     @Override
     public Some<T> apply(@NonNull Consumer<T> f) {
         f.accept(value);
         return this;
     }
 
+    @NonNull
     @Override
     public Some<T> applyNone(@NonNull Runnable f) {
         return this;
@@ -132,6 +134,12 @@ public final class Some<T> extends Option<T> {
     @Override
     public int hashCode() {
         return value.hashCode();
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return String.format("Some(%s)", value);
     }
 
     @NonNull
