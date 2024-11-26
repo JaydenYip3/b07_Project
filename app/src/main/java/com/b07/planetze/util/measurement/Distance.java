@@ -43,7 +43,7 @@ public final class Distance extends Measurement<Distance>
      */
     @NonNull
     public static Distance km(double km) {
-        return new Distance(km / 1000);
+        return new Distance(km * 1000);
     }
 
     /**
@@ -66,7 +66,7 @@ public final class Distance extends Measurement<Distance>
      * {@return this distance in kilometres}
      */
     public double km() {
-        return 1000 * m;
+        return m / 1000;
     }
 
     public double mi() {

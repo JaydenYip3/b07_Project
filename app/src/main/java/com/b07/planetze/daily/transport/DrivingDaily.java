@@ -1,5 +1,7 @@
 package com.b07.planetze.daily.transport;
 
+import android.util.Log;
+
 import androidx.annotation.NonNull;
 
 import com.b07.planetze.common.Emissions;
