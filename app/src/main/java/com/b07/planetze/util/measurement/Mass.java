@@ -3,6 +3,7 @@ package com.b07.planetze.util.measurement;
 import androidx.annotation.NonNull;
 
 import com.b07.planetze.database.ToJson;
+import com.b07.planetze.util.Util;
 
 /**
  * A measurement of mass.
@@ -115,7 +116,7 @@ public final class Mass extends Measurement<Mass>
 
     @NonNull
     public static Mass fromJson(@NonNull Object o) {
-        return new Mass((double) o);
+        return new Mass(Util.toDouble(o));
     }
 
     @NonNull

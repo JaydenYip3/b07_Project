@@ -6,6 +6,7 @@ import com.b07.planetze.common.Emissions;
 import com.b07.planetze.daily.Daily;
 import com.b07.planetze.daily.DailyException;
 import com.b07.planetze.daily.DailyType;
+import com.b07.planetze.util.Util;
 import com.b07.planetze.util.measurement.Mass;
 
 import java.util.HashMap;
@@ -49,7 +50,7 @@ public record EnergyBillsDaily(
     public static EnergyBillsDaily fromJson(@NonNull Map<String, Object> map) {
         return new EnergyBillsDaily(
                 BillType.valueOf((String) map.get("billType")),
-                (double) map.get("billAmount")
+                Util.toDouble(map.get("billAmount"))
         );
     }
 

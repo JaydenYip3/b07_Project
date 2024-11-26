@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.b07.planetze.database.ToJson;
+import com.b07.planetze.util.Util;
 
 /**
  * A measurement of distance.
@@ -113,7 +114,7 @@ public final class Distance extends Measurement<Distance>
 
     @NonNull
     public static Distance fromJson(@NonNull Object o) {
-        return new Distance((double) o);
+        return new Distance(Util.toDouble(o));
     }
 
     @NonNull

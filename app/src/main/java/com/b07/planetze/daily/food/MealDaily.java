@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 
 import com.b07.planetze.common.Emissions;
 import com.b07.planetze.daily.DailyException;
+import com.b07.planetze.util.Util;
 import com.b07.planetze.util.measurement.Mass;
 import com.b07.planetze.daily.Daily;
 import com.b07.planetze.daily.DailyType;
@@ -49,7 +50,7 @@ public record MealDaily(
     public static MealDaily fromJson(@NonNull Map<String, Object> map) {
         return new MealDaily(
                 MealType.valueOf((String) map.get("mealType")),
-                (int) map.get("numberServings")
+                Util.toInt(map.get("numberServings"))
         );
     }
 

@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.b07.planetze.database.ToJson;
+import com.b07.planetze.util.Util;
 
 /**
  * A measurement of duration.
@@ -97,7 +98,7 @@ public final class Duration extends Measurement<Duration>
 
     @NonNull
     public static Duration fromJson(@NonNull Object o) {
-        return new Duration((double) o);
+        return new Duration(Util.toDouble(o));
     }
 
     @NonNull

@@ -67,4 +67,12 @@ public final class Util {
         }
         return list;
     }
+
+    public static int toInt(Object o) {
+        return ((Number) o).intValue();
+    }
+
+    public static double toDouble(Object o) {
+        return ((Number) o).doubleValue();
+    }
 }

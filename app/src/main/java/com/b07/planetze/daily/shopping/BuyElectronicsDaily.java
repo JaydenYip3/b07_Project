@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 
 import com.b07.planetze.common.Emissions;
 import com.b07.planetze.daily.DailyException;
+import com.b07.planetze.util.Util;
 import com.b07.planetze.util.measurement.Mass;
 import com.b07.planetze.daily.Daily;
 import com.b07.planetze.daily.DailyType;
@@ -40,7 +41,7 @@ public record BuyElectronicsDaily(
     public static BuyElectronicsDaily fromJson(@NonNull Map<String, Object> map) {
         return new BuyElectronicsDaily(
                 DeviceType.valueOf((String) map.get("deviceType")),
-                (int) map.get("numberDevices")
+                Util.toInt(map.get("numberDevices"))
         );
     }
 

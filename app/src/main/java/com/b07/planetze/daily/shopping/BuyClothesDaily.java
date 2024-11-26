@@ -3,6 +3,7 @@ package com.b07.planetze.daily.shopping;
 import androidx.annotation.NonNull;
 
 import com.b07.planetze.common.Emissions;
+import com.b07.planetze.util.Util;
 import com.b07.planetze.util.measurement.Mass;
 import com.b07.planetze.daily.Daily;
 import com.b07.planetze.daily.DailyType;
@@ -29,7 +30,7 @@ implements Daily {
     @SuppressWarnings("ConstantConditions")
     @NonNull
     public static BuyClothesDaily fromJson(@NonNull Map<String, Object> map) {
-        return new BuyClothesDaily((int) map.get("numberItems"));
+        return new BuyClothesDaily(Util.toInt(map.get("numberItems")));
     }
 
     @NonNull
