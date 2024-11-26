@@ -4,8 +4,10 @@ import androidx.annotation.NonNull;
 
 import com.b07.planetze.common.Emissions;
 
+import java.time.LocalDate;
+
 /**
- * A logged daily activity.
+ * The details of a daily activity.
  */
 public interface Daily {
     /**
