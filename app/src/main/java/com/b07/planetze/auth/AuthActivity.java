@@ -107,9 +107,9 @@ public class AuthActivity extends AppCompatActivity implements LoginCallback, Re
                         Toast.makeText(this, "User registered successfully; Please verify your email address", Toast.LENGTH_LONG).show();
                         FirebaseUser user = auth.getCurrentUser();
                         FirebaseDatabase db = FirebaseDatabase.getInstance();
-                        User a = new User(new UserId(user.getUid()), username);
+//                        User a = new User(new UserId(user.getUid()), username);
 
-                        db.getReference("Users").child(a.getUserId()).setValue(a);
+//                        db.getReference("Users").child(a.getUserId()).setValue(a);
 //                        Map<String, Object> emptyActivities = new TreeMap<>();
 //                        emptyActivities.put("00-00-0000", "Activity Object");
 
