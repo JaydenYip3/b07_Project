@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId "com.b07.planetze"
-        minSdk 24
+        minSdk 34
         targetSdk 34
         versionCode 1
         versionName "1.0"
@@ -42,13 +42,18 @@ dependencies {
     implementation libs.constraintlayout
     implementation libs.navigation.fragment
     implementation libs.navigation.ui
+    implementation libs.legacy.support.v4
+    implementation libs.lifecycle.livedata.ktx
+    implementation libs.lifecycle.viewmodel.ktx
     testImplementation libs.junit
     androidTestImplementation libs.ext.junit
     androidTestImplementation libs.espresso.core
+
 
     implementation platform('com.google.firebase:firebase-bom:33.5.1')
     implementation("com.google.firebase:firebase-database")
     implementation("com.google.firebase:firebase-auth")
     implementation 'com.google.firebase:firebase-analytics'
-    implementation 'com.google.firebase:firebase-auth:21.0.1'
+    implementation 'com.google.firebase:firebase-auth:22.1.1'
+
 }

@@ -3,6 +3,7 @@ package com.b07.planetze.auth;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Patterns;
@@ -18,18 +19,34 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.b07.planetze.R;
+import com.b07.planetze.WelcomeFragment;
+import com.b07.planetze.common.Emissions;
+import com.b07.planetze.common.User;
+import com.b07.planetze.common.UserId;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * An activity that deals with user authentication.
  */
-public class AuthActivity extends AppCompatActivity implements LoginCallback, RegisterCallback, ResetPasswordCallback, SendResetCallback, AuthScreenSwitch {
+public class AuthActivity extends AppCompatActivity implements LoginCallback, RegisterCallback, ResetPasswordCallback, SendResetCallback, AuthScreenSwitch, EmailConfirmationCallback {
     private static final String TAG = "AuthActivity";
     private static final String EXTRA_INITIAL_SCREEN = "com.b07.planetze.AUTH_INITIAL_SCREEN";
 
     private FirebaseAuth auth;
+
+    final Handler handler = new Handler();
+
 
     /**
      * Starts an AuthActivity.
@@ -57,8 +74,14 @@ public class AuthActivity extends AppCompatActivity implements LoginCallback, Re
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
                         FirebaseUser user = auth.getCurrentUser();
+                        if (user != null && !user.isEmailVerified()){
+                            switchScreens(AuthScreen.EMAIL_CONFIRMATION);
+                            confirmEmail();
+                        }
+                        else{
+                            Toast.makeText(this, "Logged in as " + user.getEmail(), Toast.LENGTH_SHORT).show();
+                        }
 
-                        Toast.makeText(this, "Logged in as " + user.getEmail(), Toast.LENGTH_SHORT).show();
                     } else {
                         Exception e = task.getException();
 
@@ -72,19 +95,99 @@ public class AuthActivity extends AppCompatActivity implements LoginCallback, Re
     }
 
     @Override
-    public void register(@NonNull String email, @NonNull String password) {
+    public void register(@NonNull String email, @NonNull String password, @NonNull String confirmPassword, @NonNull String username) {
+        if (!password.equals(confirmPassword)){
+            Toast.makeText(this, "Passwords do not match", Toast.LENGTH_LONG).show();
+            return;
+        }
         auth.createUserWithEmailAndPassword(email,password).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 auth.getCurrentUser().sendEmailVerification().addOnCompleteListener(this, verificationTask -> {
                     if (task.isSuccessful()) {
                         Toast.makeText(this, "User registered successfully; Please verify your email address", Toast.LENGTH_LONG).show();
+                        FirebaseUser user = auth.getCurrentUser();
+                        FirebaseDatabase db = FirebaseDatabase.getInstance();
+//                        User a = new User(new UserId(user.getUid()), username);
+
+//                        db.getReference("Users").child(a.getUserId()).setValue(a);
+//                        Map<String, Object> emptyActivities = new TreeMap<>();
+//                        emptyActivities.put("00-00-0000", "Activity Object");
+
+
+//                        db.getReference("Activities").child(a.getUserId()).setValue(pLikeduserId)
+//                                .addOnCompleteListener(task2 -> {
+//                                    if (task2.isSuccessful()) {
+//                                        Toast.makeText(this, "Successfully wrote Activity object to Activities.",Toast.LENGTH_LONG).show();
+//                                    } else {
+//                                        Toast.makeText(this, "Failed to write Activity object: " + task.getException(), Toast.LENGTH_LONG).show();
+//                                    }
+//                                });
+
+
+
+                        switchScreens(AuthScreen.EMAIL_CONFIRMATION);
+                        confirmEmail();
                     } else {
                         Toast.makeText(this, verificationTask.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
             }
+            else {
+                // Handle errors
+                try {
+                    throw task.getException();
+                } catch (FirebaseAuthUserCollisionException e) {
+                    Toast.makeText(this, "This email is already in use by another account.", Toast.LENGTH_LONG).show();
+                } catch (Exception e) {
+                    Toast.makeText(this, "Sign-up failed. Please try again.", Toast.LENGTH_LONG).show();
+                }
+            }
+
         });
     }
+
+    @Override
+    public void confirmEmail(){
+        Handler handler = new Handler();
+        Runnable checkEmailVerification = new Runnable() {
+            @Override
+            public void run() {
+                FirebaseUser user = auth.getCurrentUser();
+                user.reload().addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        boolean isVerified = user.isEmailVerified();
+                        if (isVerified) {
+                            Toast.makeText(getApplicationContext(), "Email verified! Access granted.", Toast.LENGTH_SHORT).show();
+                            //links other page from here
+                        } else {
+                            handler.postDelayed(this, 5000);
+                        }
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Error checking email verification status.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        };
+
+        handler.post(checkEmailVerification);
+    }
+
+    public void resendConfirmationEmail(){
+        //TODO check for valid user in system
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser currentUser = auth.getCurrentUser();
+
+        currentUser.sendEmailVerification()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(this, "Email has been sent.", Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(this, "Failed to send email. Try again later.", Toast.LENGTH_LONG).show();
+                    }
+                });
+
+    }
+
 
     @Override
     public void sendPasswordResetEmail(@NonNull String email) {
@@ -99,7 +202,6 @@ public class AuthActivity extends AppCompatActivity implements LoginCallback, Re
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
                         Toast.makeText(this, "Password reset email sent", Toast.LENGTH_SHORT).show();
-                        loadFragment(new ResetPasswordFragment());
                     } else {
                         Log.e(TAG, "failed to send reset email: ", task.getException());
                         Toast.makeText(this, "Error: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
@@ -146,13 +248,14 @@ public class AuthActivity extends AppCompatActivity implements LoginCallback, Re
             case REGISTER -> loadFragment(new RegisterFragment());
             case RESET_PASSWORD -> loadFragment(new ResetPasswordFragment());
             case SEND_PASSWORD_RESET -> loadFragment(new SendResetFragment());
+            case EMAIL_CONFIRMATION -> loadFragment(new EmailConfirmationFragment());
         }
     }
 
     private void loadFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragmentContainer, fragment);
-        transaction.addToBackStack(null);
+        transaction.addToBackStack(fragment.getClass().getName());
         transaction.commit();
     }
 
