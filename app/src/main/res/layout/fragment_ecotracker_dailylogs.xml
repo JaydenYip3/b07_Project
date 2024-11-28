@@ -12,28 +12,31 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
         android:layout_width="0dp"
-        android:layout_height="40dp"
-        android:elevation="5dp"
+        android:layout_height="60dp"
+        android:background="@color/white"
+        android:backgroundTint="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
+        <Button
             android:id="@+id/ecotracker_dailylogs_date"
-            android:layout_width="wrap_content"
+            android:layout_width="110dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="20dp"
-            android:text="a"
-            android:textColor="@color/dark"
-            android:textSize="20sp"
+            android:backgroundTint="@color/teal"
+            android:text="Thu 28"
+            android:textColor="@color/lightgray"
+            android:textSize="16sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ScrollView
-        android:id="@+id/scrollView2"
+        android:id="@+id/ecotracker_dailylogs_scroll"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="24dp"
@@ -78,8 +81,31 @@
                 android:id="@+id/ecotracker_dailylogs_dailysummaries"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"></LinearLayout>
+                android:orientation="vertical">
+
+            </LinearLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="120dp" />
         </LinearLayout>
     </ScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/ecotracker_dailylogs_add"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="32dp"
+        android:clickable="true"
+        android:contentDescription="Log a new activity"
+        android:src="@drawable/ecotracker_dailylogs_add"
+        app:backgroundTint="@color/teal"
+        app:fabCustomSize="60dp"
+        app:layout_constraintBottom_toBottomOf="@+id/ecotracker_dailylogs_scroll"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:maxImageSize="32dp"
+        app:shapeAppearanceOverlay="@style/Theme.Planetze.Rounded"
+        app:tint="@color/white" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

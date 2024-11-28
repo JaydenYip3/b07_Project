@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.b07.planetze.R;
 import com.b07.planetze.database.data.DailyFetch;
 import com.b07.planetze.util.measurement.Mass;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +36,10 @@ public final class DailyLogsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         EcoTrackerViewModel model = new ViewModelProvider(requireActivity())
                 .get(EcoTrackerViewModel.class);
+
+        FloatingActionButton button = view.findViewById(
+                R.id.ecotracker_dailylogs_add);
+        button.setClipToOutline(true);
 
         TextView totalEmissions = view.findViewById(
                 R.id.ecotracker_dailylogs_totalemissions);

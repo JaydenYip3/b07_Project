@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="ecotracker_dailysummary_edit">Edit</string>
-    <string name="ecotracker_dailysummary_delete">Delete</string>
-    <string name="ecotracker_dailysummary_arrow_description">right arrow</string>
+    <string name="ecotracker_dailyfetch_arrow_description">right arrow</string>
+
+    <string name="ecotracker_dailylogs_add_description">Log a new activity</string>
 </resources>

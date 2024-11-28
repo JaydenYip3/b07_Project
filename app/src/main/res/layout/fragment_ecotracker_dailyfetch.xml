@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="90dp"
     android:layout_marginTop="16dp"
-    android:background="@drawable/round_outline_gray"
+    android:background="@drawable/ecotracker_dailyfetch_bg"
     android:foreground="?attr/selectableItemBackground"
     tools:context=".ecotracker.DailyFetchFragment">
 
@@ -17,7 +17,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
-        android:background="@drawable/round_outline_blue"
+        android:background="@drawable/ecotracker_dailyfetch_emissions"
         android:gravity="center_horizontal|center_vertical"
         android:textAlignment="gravity"
         android:textColor="@color/dark"
@@ -32,8 +32,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
-        android:contentDescription="@string/ecotracker_dailysummary_arrow_description"
-        android:src="@drawable/baseline_arrow_forward_ios_24"
+        android:contentDescription="@string/ecotracker_dailyfetch_arrow_description"
+        android:src="@drawable/ecotracker_dailyfetch_arrow"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
