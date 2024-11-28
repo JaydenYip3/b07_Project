@@ -38,4 +38,9 @@ public record DailyData(LocalDate date, Daily daily)
         map.put("fields", daily.toJson());
         return map;
     }
+
+    @NonNull
+    public DailyFetch withId(DailyId id) {
+        return new DailyFetch(id, date, daily);
+    }
 }

@@ -46,7 +46,7 @@ public final class DailyLogsFragment extends Fragment {
 
         model.getDailies().observe(getViewLifecycleOwner(), list -> {
             Mass total = list.emissions().total();
-            totalEmissions.setText(total.format());
+            totalEmissions.setText(total.format() + " CO2e");
 
             FragmentManager mgr = requireActivity().getSupportFragmentManager();
             FragmentTransaction ft = mgr.beginTransaction();

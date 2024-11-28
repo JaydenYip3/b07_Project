@@ -42,13 +42,11 @@ public final class DailyMap {
 
     // this suppresses an incorrect NullPointerException warning
     @SuppressWarnings("ConstantConditions")
-    public void put(@NonNull DailyId id,
-                    @NonNull LocalDate date,
-                    @NonNull Daily daily) {
-        Option.mapNull(datesById.put(id, date))
-                .apply(prevDate -> dailies.get(prevDate).remove(id));
+    public void put(@NonNull DailyFetch fetch) {
+        Option.mapNull(datesById.put(fetch.id(), fetch.date()))
+                .apply(prevDate -> dailies.get(prevDate).remove(fetch.id()));
 
-        dailiesOn(date).put(id, daily);
+        dailiesOn(fetch.date()).put(fetch.id(), fetch.daily());
     }
 
     // this suppresses an incorrect NullPointerException warning
@@ -78,5 +76,9 @@ public final class DailyMap {
         });
 
         return new DailyFetchList(new ImmutableList<>(list));
+    }
+
+    public boolean isEmpty() {
+        return datesById.isEmpty();
     }
 }
