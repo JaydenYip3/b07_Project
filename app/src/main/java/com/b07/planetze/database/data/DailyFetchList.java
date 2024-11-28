@@ -6,7 +6,9 @@ import com.b07.planetze.common.Emissions;
 import com.b07.planetze.util.immutability.ImmutableList;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * A collection of {@link DailyFetch} <br>
@@ -14,9 +16,6 @@ import java.util.Iterator;
 public final class DailyFetchList implements Iterable<DailyFetch> {
     @NonNull private final ImmutableList<DailyFetch> dailies;
 
-    /**
-     * @param dailies a list of dailies sorted by date
-     */
     public DailyFetchList(@NonNull ImmutableList<DailyFetch> dailies) {
         this.dailies = dailies;
     }
@@ -39,6 +38,13 @@ public final class DailyFetchList implements Iterable<DailyFetch> {
         Emissions sum = Emissions.zero();
         dailies.forEach(f -> sum.add(f.daily().emissions()));
         return sum;
+    }
+
+    @NonNull
+    public DailyFetchList orderBy(Comparator<DailyFetch> comparator) {
+        List<DailyFetch> list = dailies.copy();
+        list.sort(comparator);
+        return new DailyFetchList(new ImmutableList<>(list));
     }
 
     @NonNull

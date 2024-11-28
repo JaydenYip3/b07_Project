@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.b07.planetze.R;
+import com.b07.planetze.database.data.DailyFetch;
 import com.b07.planetze.database.data.DailyFetchList;
 import com.b07.planetze.database.data.DailySummary;
 import com.b07.planetze.ecotracker.exception.EcoTrackerException;
@@ -54,7 +55,7 @@ public final class DailyLogsFragment extends Fragment {
             summaries.forEach(ft::remove);
             summaries.clear();
 
-            list.forEach(fetch -> {
+            list.orderBy(DailyFetch.descendingEmissions).forEach(fetch -> {
                 DailySummary summary = fetch.summary();
                 Mass emissions = summary.emissions().total();
                 double proportion = total.isZero()

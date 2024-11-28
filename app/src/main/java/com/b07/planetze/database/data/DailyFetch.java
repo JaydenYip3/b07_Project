@@ -5,6 +5,7 @@ import androidx.annotation.NonNull;
 import com.b07.planetze.daily.Daily;
 
 import java.time.LocalDate;
+import java.util.Comparator;
 
 /**
  * A {@link Daily} with an added id and date.
@@ -18,4 +19,8 @@ public record DailyFetch(
     public DailySummary summary() {
         return new DailySummary(id, date, daily.type(), daily.emissions());
     }
+
+    @NonNull public static final Comparator<DailyFetch> descendingEmissions
+            = (a, b) -> b.daily().emissions().total()
+                    .compareTo(a.daily.emissions().total());
 }
