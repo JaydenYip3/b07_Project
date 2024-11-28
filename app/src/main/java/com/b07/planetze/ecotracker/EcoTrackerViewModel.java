@@ -30,12 +30,18 @@ public final class EcoTrackerViewModel extends ViewModel {
     @NonNull private final String TAG = "EcoTrackerViewModel";
 
     @NonNull private final MutableLiveData<EcoTrackerState> state;
+    @NonNull private final MutableLiveData<DailyFetchList> dailies;
     @NonNull private final Database db;
 
     public EcoTrackerViewModel() {
         // TODO: set actual default state
         this.state = new MutableLiveData<>(new EcoTrackerState.Form(DailyType.DRIVING));
+        this.dailies = new MutableLiveData<>(DailyFetchList.empty());
         this.db = new FirebaseDb();
+
+        db.fetchDailies(DateInterval.day(LocalDate.now()), fetch -> {
+            fetch.apply(dailies::setValue);
+        });
     }
 
     @NonNull
@@ -48,9 +54,13 @@ public final class EcoTrackerViewModel extends ViewModel {
     }
 
     public void submitDaily(@NonNull Daily daily) {
-        db.postDaily(LocalDate.now(), daily, r -> {
-            Log.d(TAG, "postDaily callback: " + r);
-        });
+//        db.postDaily(LocalDate.now(), daily, post -> {
+//            Log.d(TAG, "postDaily callback: " + post);
+//
+//            db.fetchDailies(DateInterval.day(LocalDate.now()), fetch -> {
+//                fetch.apply(dailies::setValue);
+//            });
+//        });
 
         // TODO: transition to EcoTrackerState.ViewLogs
         state.setValue(new EcoTrackerState.SelectForm());

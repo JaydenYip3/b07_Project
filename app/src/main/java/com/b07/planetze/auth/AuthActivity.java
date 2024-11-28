@@ -23,6 +23,7 @@ import com.b07.planetze.WelcomeFragment;
 import com.b07.planetze.common.Emissions;
 import com.b07.planetze.common.User;
 import com.b07.planetze.common.UserId;
+import com.b07.planetze.ecotracker.EcoTrackerActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
@@ -80,6 +81,8 @@ public class AuthActivity extends AppCompatActivity implements LoginCallback, Re
                         }
                         else{
                             Toast.makeText(this, "Logged in as " + user.getEmail(), Toast.LENGTH_SHORT).show();
+
+                            EcoTrackerActivity.start(this);
                         }
 
                     } else {
@@ -255,7 +258,7 @@ public class AuthActivity extends AppCompatActivity implements LoginCallback, Re
     private void loadFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragmentContainer, fragment);
-        transaction.addToBackStack(fragment.getClass().getName());
+//        transaction.addToBackStack(fragment.getClass().getName());
         transaction.commit();
     }
 

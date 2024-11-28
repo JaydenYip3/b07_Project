@@ -1,5 +1,6 @@
 package com.b07.planetze.ecotracker;
 
+import static com.b07.planetze.util.option.Option.none;
 import static com.b07.planetze.util.option.Option.some;
 
 import android.content.Context;
@@ -53,7 +54,7 @@ public final class EcoTrackerActivity extends AppCompatActivity {
         });
 
         loadFragment(FormFragment.newInstance());
-        model.form.setForm(f);
+        model.form.setForm(some(f));
     }
 
     @Override

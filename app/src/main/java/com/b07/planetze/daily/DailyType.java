@@ -29,28 +29,50 @@ import java.util.function.Function;
  * The type of a logged daily activity.
  */
 public enum DailyType implements ToJson {
-    DRIVING(DrivingForm.INSTANCE,"DRIVING", DrivingDaily::fromJson),
-    PUBLIC_TRANSIT(PublicTransitForm.INSTANCE, "PUBLIC_TRANSIT", PublicTransitDaily::fromJson),
-    CYCLING_OR_WALKING(CyclingOrWalkingForm.INSTANCE, "CYCLING_OR_WALKING", CyclingOrWalkingDaily::fromJson),
-    FLIGHT(FlightForm.INSTANCE, "FLIGHT", FlightDaily::fromJson),
-    MEAL(MealForm.INSTANCE, "MEAL", MealDaily::fromJson),
-    BUY_CLOTHES(BuyClothesForm.INSTANCE, "BUY_CLOTHES", BuyClothesDaily::fromJson),
-    BUY_ELECTRONICS(BuyElectronicsForm.INSTANCE, "BUY_ELECTRONICS", BuyElectronicsDaily::fromJson),
-    BUY_OTHER(BuyOtherForm.INSTANCE, "BUY_OTHER", BuyOtherDaily::fromJson),
-    ENERGY_BILLS(EnergyBillsForm.INSTANCE, "ENERGY_BILLS", EnergyBillsDaily::fromJson);
+    DRIVING("Driving",
+            DrivingForm.INSTANCE,
+            DrivingDaily::fromJson),
+    PUBLIC_TRANSIT("Public transit",
+            PublicTransitForm.INSTANCE,
+            PublicTransitDaily::fromJson),
+    CYCLING_OR_WALKING("Cycling/walking",
+            CyclingOrWalkingForm.INSTANCE,
+            CyclingOrWalkingDaily::fromJson),
+    FLIGHT("Flight",
+            FlightForm.INSTANCE,
+            FlightDaily::fromJson),
+    MEAL("Food consumption",
+            MealForm.INSTANCE,
+            MealDaily::fromJson),
+    BUY_CLOTHES("Clothes shopping",
+            BuyClothesForm.INSTANCE,
+            BuyClothesDaily::fromJson),
+    BUY_ELECTRONICS("Electronics shopping",
+            BuyElectronicsForm.INSTANCE,
+            BuyElectronicsDaily::fromJson),
+    BUY_OTHER("Other shopping",
+            BuyOtherForm.INSTANCE,
+            BuyOtherDaily::fromJson),
+    ENERGY_BILLS("Energy bills",
+            EnergyBillsForm.INSTANCE,
+            EnergyBillsDaily::fromJson);
 
+    @NonNull private final String displayName;
     @NonNull private final DailyForm<?> form;
-    @NonNull private final String string;
     @NonNull private final Function<Map<String, Object>, Daily> createDailyFromJson;
 
     DailyType(
+            @NonNull String displayName,
             @NonNull DailyForm<?> form,
-            @NonNull String string,
             @NonNull Function<Map<String, Object>, Daily> createDailyFromJson
     ) {
+        this.displayName = displayName;
         this.form = form;
-        this.string = string;
         this.createDailyFromJson = createDailyFromJson;
+    }
+    @NonNull
+    public String displayName() {
+        return displayName;
     }
 
     @NonNull
@@ -60,24 +82,13 @@ public enum DailyType implements ToJson {
 
     @NonNull
     public static DailyType fromJson(Object o) {
-        return switch((String) o) {
-            case "DRIVING" -> DRIVING;
-            case "PUBLIC_TRANSIT" -> PUBLIC_TRANSIT;
-            case "CYCLING_OR_WALKING" -> CYCLING_OR_WALKING;
-            case "FLIGHT" -> FLIGHT;
-            case "MEAL" -> MEAL;
-            case "BUY_CLOTHES" -> BUY_CLOTHES;
-            case "BUY_ELECTRONICS" -> BUY_ELECTRONICS;
-            case "BUY_OTHER" -> BUY_OTHER;
-            case "ENERGY_BILLS" -> ENERGY_BILLS;
-            default -> throw new DailyException();
-        };
+        return DailyType.valueOf((String) o);
     }
 
     @NonNull
     @Override
     public Object toJson() {
-        return string;
+        return this.name();
     }
 
     @NonNull

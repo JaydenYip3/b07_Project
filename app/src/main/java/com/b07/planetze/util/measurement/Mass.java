@@ -1,5 +1,7 @@
 package com.b07.planetze.util.measurement;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -11,7 +13,7 @@ import com.b07.planetze.util.Util;
  * A measurement of mass.
  */
 public final class Mass extends Measurement<Mass>
-        implements ToJson {
+        implements ToJson, Parcelable {
     private static final double POUNDS_TO_KG = 	0.45359237;
     private static final double KG_TO_POUNDS = 1 / POUNDS_TO_KG;
 
@@ -125,5 +127,26 @@ public final class Mass extends Measurement<Mass>
     @Override
     public Object toJson() {
         return kg;
+    }
+
+    public static final Parcelable.Creator<Mass> CREATOR
+            = new Parcelable.Creator<>() {
+        public Mass createFromParcel(Parcel in) {
+            return new Mass(in.readDouble());
+        }
+
+        public Mass[] newArray(int size) {
+            return new Mass[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeDouble(kg);
     }
 }

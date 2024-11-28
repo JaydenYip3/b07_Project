@@ -41,8 +41,8 @@ public final class FormViewModel extends ViewModel {
         previousTagCounter = 0;
     }
 
-    public void setForm(@NonNull Form form) {
-        this.form.setValue(some(form));
+    public void setForm(@NonNull Option<Form> form) {
+        this.form.setValue(form);
     }
 
     public LiveData<Option<Form>> getForm() {

@@ -30,7 +30,7 @@ import com.b07.planetze.util.option.Option;
 import com.b07.planetze.util.option.Some;
 
 public final class FormFragment extends Fragment {
-    public FormFragment() {}
+    private FormFragment() {}
 
     public static FormFragment newInstance() {
         return new FormFragment();

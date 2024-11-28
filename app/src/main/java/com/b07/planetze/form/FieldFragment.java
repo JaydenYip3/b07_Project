@@ -54,6 +54,8 @@ public abstract class FieldFragment<F extends Field<V>, V> extends Fragment {
         Option<FieldId<V>> f = Option.mapNull(
                 args.getParcelable(FIELD_ID_KEY, FieldId.class));
 
+        Log.d(TAG, "created " + f);
+
         fieldId = f;
     }
 
@@ -99,4 +101,10 @@ public abstract class FieldFragment<F extends Field<V>, V> extends Fragment {
     public abstract View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState);
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "destroyed " + fieldId);
+    }
 }

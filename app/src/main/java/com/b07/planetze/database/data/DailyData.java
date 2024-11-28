@@ -7,11 +7,12 @@ import com.b07.planetze.daily.DailyType;
 import com.b07.planetze.database.ToJson;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Describes the representation of logged daily activities in the database.
+ * The representation of logged daily activities in the database.
  */
 public record DailyData(LocalDate date, Daily daily)
         implements ToJson {
@@ -22,17 +23,17 @@ public record DailyData(LocalDate date, Daily daily)
         Map<String, Object> fields = (Map<String, Object>) map.get("fields");
         DailyType type = DailyType.fromJson(map.get("type"));
 
-        return new DailyData(
-                LocalDate.parse((String) map.get("date")),
-                type.createDailyFromJson(fields)
-        );
+        LocalDate date = LocalDate.parse((String) map.get("date"),
+                DateTimeFormatter.ISO_LOCAL_DATE);
+
+        return new DailyData(date, type.createDailyFromJson(fields));
     }
 
     @NonNull
     @Override
     public Object toJson() {
         Map<String, Object> map = new HashMap<>();
-        map.put("date", date.toString());
+        map.put("date", date.format(DateTimeFormatter.ISO_LOCAL_DATE));
         map.put("type", daily.type().toJson());
         map.put("fields", daily.toJson());
         return map;
