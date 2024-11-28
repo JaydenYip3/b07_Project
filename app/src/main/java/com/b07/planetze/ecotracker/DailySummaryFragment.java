@@ -54,7 +54,11 @@ public class DailySummaryFragment extends Fragment {
                 .get(EcoTrackerViewModel.class);
 
         TextView name = view.findViewById(R.id.ecotracker_dailysummary_name);
-        name.setText(summary.name());
+        name.setText(summary.type().displayName());
+
+        TextView category = view.findViewById(
+                R.id.ecotracker_dailysummary_category);
+        category.setText(summary.type().category().displayName());
 
         TextView emissions = view.findViewById(
                 R.id.ecotracker_dailysummary_emissions);

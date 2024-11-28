@@ -15,7 +15,6 @@ public record DailyFetch(
         @NonNull Daily daily
 ) {
     @NonNull DailySummary summary() {
-        return new DailySummary(
-                id, date, daily.type().displayName(), daily.emissions());
+        return new DailySummary(id, date, daily.type(), daily.emissions());
     }
 }

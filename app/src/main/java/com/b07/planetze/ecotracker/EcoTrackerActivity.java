@@ -22,6 +22,7 @@ import androidx.lifecycle.ViewModelProvider;
 import com.b07.planetze.R;
 import com.b07.planetze.common.Emissions;
 import com.b07.planetze.daily.DailyForm;
+import com.b07.planetze.daily.DailyType;
 import com.b07.planetze.database.data.DailyId;
 import com.b07.planetze.database.data.DailySummary;
 import com.b07.planetze.form.Form;
@@ -90,7 +91,7 @@ public final class EcoTrackerActivity extends AppCompatActivity {
 //            }
         });
 
-        loadFragment(DailySummaryFragment.newInstance(new DailySummary(new DailyId("hi"), LocalDate.now(), "name", Emissions.transport(Mass.kg(23))), 0.33));
+        loadFragment(DailySummaryFragment.newInstance(new DailySummary(new DailyId("hi"), LocalDate.now(), DailyType.CYCLING_OR_WALKING, Emissions.transport(Mass.kg(23))), 0.33));
     }
 
     private void loadFragment(@NonNull Fragment fragment) {
