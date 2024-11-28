@@ -26,6 +26,7 @@ import com.b07.planetze.common.Emissions;
 import com.b07.planetze.common.User;
 import com.b07.planetze.common.UserId;
 import com.b07.planetze.database.firebase.FirebaseDb;
+import com.b07.planetze.home.HomeActivity;
 import com.b07.planetze.onboarding.QuestionsTransportationFragment;
 import com.b07.planetze.util.option.Option;
 import com.b07.planetze.util.option.Some;
@@ -93,7 +94,7 @@ public class AuthActivity extends AppCompatActivity implements LoginCallback, Re
                                     userOption.match(// if the user has user info set:
                                             emissions -> {
                                                 Log.d(TAG, "emissions found");
-                                                //load ecotracker ---------------------------------------
+                                                HomeActivity.start(this);
                                             },
                                             () -> {
                                                 Log.d(TAG, "emissions not found");

@@ -8,14 +8,26 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.b07.planetze.R;
 import com.b07.planetze.auth.RegisterCallback;
+import com.b07.planetze.common.User;
+import com.b07.planetze.database.firebase.FirebaseDb;
 import com.b07.planetze.ecotracker.EcoTrackerActivity;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class HomeScreenFragment extends Fragment {
+
+    User currentUser;
+    FirebaseDb db = new FirebaseDb();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -32,8 +44,20 @@ public class HomeScreenFragment extends Fragment {
         LinearLayout balance = view.findViewById(R.id.balance);
         LinearLayout hub = view.findViewById(R.id.hub);
 
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
 
-        username.setText("Jayden");
+
+        databaseReference.child("users").child(currentUserId).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                username.setText(dataSnapshot.getValue(String.class));
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {}
+        });
+
 
         tracker.setOnClickListener(v -> EcoTrackerActivity.start(requireActivity()));
 

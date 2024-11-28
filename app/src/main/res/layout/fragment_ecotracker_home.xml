@@ -63,6 +63,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="@color/white"
+                android:id="@+id/daily_emissions"
                 android:text="XYZ"
                 android:textSize="60sp"
                 android:gravity="center_horizontal"/>

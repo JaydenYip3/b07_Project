@@ -20,7 +20,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.b07.planetze.R;
 
-import com.b07.planetze.ecotracker.daily.DailyForm;
+//import com.b07.planetze.ecotracker.daily.DailyForm;
 import com.b07.planetze.daily.DailyForm;
 
 import com.b07.planetze.form.Form;

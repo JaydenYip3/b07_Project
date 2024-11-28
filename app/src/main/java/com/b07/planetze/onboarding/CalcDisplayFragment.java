@@ -21,6 +21,7 @@ import com.b07.planetze.R;
 import com.b07.planetze.common.Emissions;
 import com.b07.planetze.common.User;
 import com.b07.planetze.database.firebase.FirebaseDb;
+import com.b07.planetze.home.HomeActivity;
 import com.b07.planetze.util.measurement.Mass;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -67,6 +68,8 @@ public class CalcDisplayFragment extends Fragment {
         Mass c = userEmissions.shopping();
         c.set(Mass.zero());
         c.set(Mass.kg(emissions[3]));
+
+
 
         db.postOnboardingEmissions(userEmissions,result2 -> {
             result2.match(user2 -> Log.d(TAG, "user found")
@@ -150,7 +153,7 @@ public class CalcDisplayFragment extends Fragment {
         buttonNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //loadFragment(new QuestionsHousingFragment());   //change to ecotracker!!-----------------------
+                HomeActivity.start(requireActivity());
             }
         });
 
