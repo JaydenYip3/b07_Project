@@ -44,11 +44,13 @@ public final class Error<T, E> extends Result<T, E> {
         return value;
     }
 
+    @NonNull
     @Override
     public Error<T, E> apply(@NonNull Consumer<T> f) {
         return this;
     }
 
+    @NonNull
     @Override
     public Error<T, E> applyError(@NonNull Consumer<E> f) {
         f.accept(value);
@@ -123,6 +125,12 @@ public final class Error<T, E> extends Result<T, E> {
     @Override
     public boolean equals(@Nullable Object o) {
         return (o instanceof Error<?, ?> e) && value.equals(e.value);
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return String.format("Error(%s)", value);
     }
 
     @NonNull

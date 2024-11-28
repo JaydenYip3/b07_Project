@@ -19,8 +19,10 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.b07.planetze.R;
-import com.b07.planetze.WelcomeFragment;
+
 import com.b07.planetze.ecotracker.daily.DailyForm;
+import com.b07.planetze.daily.DailyForm;
+
 import com.b07.planetze.form.Form;
 import com.b07.planetze.form.FormFragment;
 import com.b07.planetze.form.FormViewModel;

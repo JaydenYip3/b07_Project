@@ -2,37 +2,34 @@ package com.b07.planetze.common;
 
 import androidx.annotation.NonNull;
 
-import java.util.ArrayList;
+import com.b07.planetze.database.ToJson;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
- * Represents a User with an ID and a username.
+ * User details.
  */
-public class User {
-    private final UserId id;
-    private String username;
+public record User(
+        @NonNull String name,
+        @NonNull String email,
+        @NonNull String country
+) implements ToJson {
+    @SuppressWarnings({"unchecked", "ConstantConditions"})
+    @NonNull
+    public static User fromJson(@NonNull Object o) {
+        Map<String, String> map = (Map<String, String>) o;
 
-    private boolean compolete_survey;
-
-    // Constructor
-    public User(@NonNull UserId id, @NonNull String username) {
-        this.id = id;
-        this.username = username;
-        this.compolete_survey = false;
-
-    }
-    // Getters
-    public String getUserId() {
-        return id.getUserId();
+        return new User(map.get("name"), map.get("email"), map.get("country"));
     }
 
-    public String getUsername() {
-        return username;
+    @NonNull
+    @Override
+    public Object toJson() {
+        Map<String, String> map = new HashMap<>();
+        map.put("name", name);
+        map.put("email", email);
+        map.put("country", country);
+        return map;
     }
-
-    public void setUsername(@NonNull String username) {
-        this.username = username;
-    }
-
-
-
 }

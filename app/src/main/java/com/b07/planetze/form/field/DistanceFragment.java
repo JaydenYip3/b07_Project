@@ -75,7 +75,7 @@ public final class DistanceFragment
                     error.setText(R.string.distance_error);
                     return;
                 }
-                form.set(id, Distance.m(value).immutableCopy())
+                form.set(id, Distance.km(value).immutableCopy())
                         .match(ok -> error.setText(""), error::setText);
             }
 
