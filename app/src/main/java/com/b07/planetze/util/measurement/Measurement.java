@@ -76,6 +76,10 @@ public abstract class Measurement<T extends Measurement<T>>
         return self();
     }
 
+    public boolean isZero() {
+        return getValue() == 0;
+    }
+
     @Override
     public abstract boolean equals(@Nullable Object o);
 

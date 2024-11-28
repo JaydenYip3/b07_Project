@@ -14,7 +14,8 @@ public record DailyFetch(
         @NonNull LocalDate date,
         @NonNull Daily daily
 ) {
-    @NonNull DailySummary summary() {
+    @NonNull
+    public DailySummary summary() {
         return new DailySummary(id, date, daily.type(), daily.emissions());
     }
 }

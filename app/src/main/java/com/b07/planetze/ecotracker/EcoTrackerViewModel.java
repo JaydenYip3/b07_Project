@@ -35,19 +35,25 @@ public final class EcoTrackerViewModel extends ViewModel {
     @NonNull private final Database db;
 
     public EcoTrackerViewModel() {
-        // TODO: set actual default state
-        this.state = new MutableLiveData<>(new EcoTrackerState.Form(DailyType.DRIVING));
+        this.state = new MutableLiveData<>(new EcoTrackerState.ViewLogs());
         this.dailies = new MutableLiveData<>(DailyFetchList.empty());
         this.db = new FirebaseDb();
-
-        db.fetchDailies(DateInterval.day(LocalDate.now()), fetch -> {
-            fetch.apply(dailies::setValue);
-        });
     }
 
     @NonNull
     public LiveData<EcoTrackerState> getState() {
         return state;
+    }
+
+    @NonNull
+    public LiveData<DailyFetchList> getDailies() {
+        return dailies;
+    }
+
+    public void fetchDailies() {
+        db.fetchDailies(DateInterval.day(LocalDate.now()), fetch -> {
+            fetch.apply(dailies::setValue);
+        });
     }
 
     public void newDaily(@NonNull DailyType type) {

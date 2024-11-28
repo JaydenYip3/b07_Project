@@ -64,6 +64,11 @@ public final class EcoTrackerActivity extends AppCompatActivity {
         model.form.setForm(some(f));
     }
 
+    private void startViewLogs(@NonNull Model model,
+                               @NonNull EcoTrackerState.ViewLogs state) {
+        loadFragment(DailyLogsFragment.newInstance());
+    }
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -84,14 +89,16 @@ public final class EcoTrackerActivity extends AppCompatActivity {
         );
 
         model.ecoTracker.getState().observe(this, state -> {
-//            if (state instanceof EcoTrackerState.Form form) {
-//                startForm(model, form);
-//            } else if (state instanceof EcoTrackerState.SelectForm selectForm) {
-//                startSelectForm(model, selectForm);
-//            }
+            if (state instanceof EcoTrackerState.Form form) {
+                startForm(model, form);
+            } else if (state instanceof EcoTrackerState.SelectForm selectForm) {
+                startSelectForm(model, selectForm);
+            } else if (state instanceof EcoTrackerState.ViewLogs viewLogs) {
+                startViewLogs(model, viewLogs);
+            }
         });
 
-        loadFragment(DailySummaryFragment.newInstance(new DailySummary(new DailyId("hi"), LocalDate.now(), DailyType.CYCLING_OR_WALKING, Emissions.transport(Mass.kg(23))), 0.33));
+//        loadFragment(DailySummaryFragment.newInstance(new DailySummary(new DailyId("hi"), LocalDate.now(), DailyType.CYCLING_OR_WALKING, Emissions.transport(Mass.kg(23))), 0.33));
     }
 
     private void loadFragment(@NonNull Fragment fragment) {

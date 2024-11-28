@@ -20,7 +20,7 @@ import com.b07.planetze.database.data.DailySummary;
 import com.b07.planetze.ecotracker.exception.EcoTrackerException;
 import com.b07.planetze.util.option.Option;
 
-public class DailySummaryFragment extends Fragment {
+public final class DailySummaryFragment extends Fragment {
     @NonNull private static final String TAG = "DailySummaryFragment";
     @NonNull private static final String ARG_DAILY_SUMMARY = "daily_summary";
     @NonNull private static final String ARG_PROPORTION = "proportion";
@@ -63,6 +63,7 @@ public class DailySummaryFragment extends Fragment {
         TextView emissions = view.findViewById(
                 R.id.ecotracker_dailysummary_emissions);
         emissions.setText(summary.emissions().total().format());
+        emissions.setClipToOutline(true);
 
         ConstraintLayout layout = view.findViewById(
                 R.id.ecotracker_dailysummary_layout);
