@@ -10,6 +10,7 @@ import com.b07.planetze.database.ToJson;
 import com.b07.planetze.util.Util;
 
 import java.text.DecimalFormat;
+import java.util.Locale;
 
 /**
  * A measurement of mass.
@@ -81,18 +82,6 @@ public final class Mass extends Measurement<Mass>
         return kg * KG_TO_POUNDS;
     }
 
-    @NonNull
-    public String format() {
-        if (g() < 10) {
-            return new DecimalFormat("0.0").format(g()) + "g";
-        } else if (g() < 1000) {
-            return new DecimalFormat("0").format(g()) + "g";
-        } else if (kg < 10) {
-            return new DecimalFormat("0.0").format(kg) + "kg";
-        }
-        return new DecimalFormat("0").format(kg) + "kg";
-    }
-
     @Override
     protected double getValue() {
         return kg;
@@ -101,6 +90,18 @@ public final class Mass extends Measurement<Mass>
     @Override
     protected void setValue(double value) {
         kg = value;
+    }
+
+    @NonNull
+    public String format() {
+        if (g() < 10) {
+            return String.format(Locale.US, "%.1fg", g());
+        } else if (g() < 1000) {
+            return String.format(Locale.US, "%.0fg", g());
+        } else if (kg() < 10) {
+            return String.format(Locale.US, "%.1fkg", kg());
+        }
+        return String.format(Locale.US, "%.0fkg", kg());
     }
 
     @Override

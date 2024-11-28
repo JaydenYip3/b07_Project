@@ -35,6 +35,12 @@ public record BuyElectronicsDaily(
 
     @NonNull
     @Override
+    public String summary() {
+        return numberDevices + " " + deviceType.displayName(numberDevices != 1);
+    }
+
+    @NonNull
+    @Override
     public DailyType type() {
         return DailyType.BUY_ELECTRONICS;
     }
@@ -83,8 +89,19 @@ public record BuyElectronicsDaily(
     }
 
     public enum DeviceType {
-        SMARTPHONE,
-        LAPTOP,
-        TV
+        SMARTPHONE("smartphone"),
+        LAPTOP("laptop"),
+        TV("TV");
+
+        @NonNull private final String displayName;
+
+        DeviceType(@NonNull String displayName) {
+            this.displayName = displayName;
+        }
+
+        @NonNull
+        public String displayName(boolean isPlural) {
+            return displayName + (isPlural ? "s" : "");
+        }
     }
 }

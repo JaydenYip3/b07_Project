@@ -34,6 +34,11 @@ public record DailyFetch(
     }
 
     @NonNull
+    public String summary() {
+        return data.daily().summary();
+    }
+
+    @NonNull
     public Daily daily() {
         return data.daily();
     }

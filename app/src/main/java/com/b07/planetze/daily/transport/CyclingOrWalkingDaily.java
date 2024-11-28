@@ -28,6 +28,12 @@ implements Daily {
 
     @NonNull
     @Override
+    public String summary() {
+        return distance.format();
+    }
+
+    @NonNull
+    @Override
     public DailyType type() {
         return DailyType.CYCLING_OR_WALKING;
     }

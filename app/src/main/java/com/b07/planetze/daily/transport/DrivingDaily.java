@@ -36,6 +36,12 @@ public record DrivingDaily(
 
     @NonNull
     @Override
+    public String summary() {
+        return distance.format() + " via " + vehicleType.displayName();
+    }
+
+    @NonNull
+    @Override
     public DailyType type() {
         return DailyType.DRIVING;
     }
@@ -84,8 +90,19 @@ public record DrivingDaily(
     }
 
     public enum VehicleType {
-        GAS_CAR,
-        ELECTRIC_CAR,
-        MOTORBIKE,
+        GAS_CAR("gas car"),
+        ELECTRIC_CAR("electric car"),
+        MOTORBIKE("motorbike");
+
+        @NonNull private final String displayName;
+
+        VehicleType(@NonNull String displayName) {
+            this.displayName = displayName;
+        }
+
+        @NonNull
+        public String displayName() {
+            return displayName;
+        }
     }
 }

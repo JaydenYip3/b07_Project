@@ -33,6 +33,11 @@ public final class ImmutableDuration extends ImmutableCopy<Duration>
     }
 
     @NonNull
+    public String format() {
+        return object.format();
+    }
+
+    @NonNull
     public static ImmutableDuration fromJson(@NonNull Object o) {
         return Duration.fromJson(o).immutableCopy();
     }

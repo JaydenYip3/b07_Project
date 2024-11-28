@@ -40,6 +40,11 @@ public final class ImmutableDistance extends ImmutableCopy<Distance>
     }
 
     @NonNull
+    public String format() {
+        return object.format();
+    }
+
+    @NonNull
     public static ImmutableDistance fromJson(@NonNull Object o) {
         return Distance.fromJson(o).immutableCopy();
     }

@@ -57,8 +57,8 @@ public final class DailyFetchFragment extends Fragment {
         name.setText(fetch.type().displayName());
 
         TextView category = view.findViewById(
-                R.id.ecotracker_dailyfetch_category);
-        category.setText(fetch.type().category().displayName());
+                R.id.ecotracker_dailyfetch_summary);
+        category.setText(fetch.summary());
 
         TextView emissions = view.findViewById(
                 R.id.ecotracker_dailyfetch_emissions);

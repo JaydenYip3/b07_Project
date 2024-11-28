@@ -26,6 +26,12 @@ implements Daily {
 
     @NonNull
     @Override
+    public String summary() {
+        return numberItems + " item" + (numberItems != 1 ? "s" : "");
+    }
+
+    @NonNull
+    @Override
     public DailyType type() {
         return DailyType.BUY_CLOTHES;
     }

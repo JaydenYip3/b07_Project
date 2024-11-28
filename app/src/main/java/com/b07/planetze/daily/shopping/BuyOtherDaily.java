@@ -35,6 +35,12 @@ public record BuyOtherDaily(
 
     @NonNull
     @Override
+    public String summary() {
+        return numberItems + " " + purchaseType.displayName(numberItems != 1);
+    }
+
+    @NonNull
+    @Override
     public DailyType type() {
         return DailyType.BUY_OTHER;
     }
@@ -83,7 +89,18 @@ public record BuyOtherDaily(
     }
 
     public enum PurchaseType {
-        FURNITURE,
-        APPLIANCE,
+        FURNITURE("furniture piece"),
+        APPLIANCE("appliance");
+
+        @NonNull private final String displayName;
+
+        PurchaseType(@NonNull String displayName) {
+            this.displayName = displayName;
+        }
+
+        @NonNull
+        public String displayName(boolean isPlural) {
+            return displayName + (isPlural ? "s" : "");
+        }
     }
 }

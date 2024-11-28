@@ -45,6 +45,12 @@ public record MealDaily(
 
     @NonNull
     @Override
+    public String summary() {
+        return numberServings + " servings of " + mealType.displayName();
+    }
+
+    @NonNull
+    @Override
     public DailyType type() {
         return DailyType.MEAL;
     }
@@ -93,10 +99,21 @@ public record MealDaily(
     }
 
     public enum MealType {
-        BEEF,
-        PORK,
-        CHICKEN,
-        FISH,
-        PLANT_BASED
+        BEEF("beef"),
+        PORK("pork"),
+        CHICKEN("chicken"),
+        FISH("fish"),
+        PLANT_BASED("plant-based food");
+
+        @NonNull private final String displayName;
+
+        MealType(@NonNull String displayName) {
+            this.displayName = displayName;
+        }
+
+        @NonNull
+        public String displayName() {
+            return displayName;
+        }
     }
 }

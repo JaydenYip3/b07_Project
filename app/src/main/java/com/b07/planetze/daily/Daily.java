@@ -28,6 +28,9 @@ public interface Daily extends ToJson, Parcelable {
     @NonNull
     Emissions emissions();
 
+    @NonNull
+    String summary();
+
     /**
      * {@return the type of this activity}
      */

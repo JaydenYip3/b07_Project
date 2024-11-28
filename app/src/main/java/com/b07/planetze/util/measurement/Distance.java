@@ -9,6 +9,9 @@ import androidx.annotation.Nullable;
 import com.b07.planetze.database.ToJson;
 import com.b07.planetze.util.Util;
 
+import java.text.DecimalFormat;
+import java.util.Locale;
+
 /**
  * A measurement of distance.
  */
@@ -84,6 +87,18 @@ public final class Distance extends Measurement<Distance>
     @Override
     protected void setValue(double value) {
         m = value;
+    }
+
+    @NonNull
+    public String format() {
+        if (m() < 10) {
+            return String.format(Locale.US, "%.1fm", m());
+        } else if (m() < 1000) {
+            return String.format(Locale.US, "%.0fm", m());
+        } else if (km() < 10) {
+            return String.format(Locale.US, "%.1fkm", km());
+        }
+        return String.format(Locale.US, "%.0fkm", km());
     }
 
     @Override

@@ -40,6 +40,11 @@ public final class ImmutableMass extends ImmutableCopy<Mass>
     }
 
     @NonNull
+    public String format() {
+        return object.format();
+    }
+
+    @NonNull
     public static ImmutableMass fromJson(@NonNull Object o) {
         return Mass.fromJson(o).immutableCopy();
     }

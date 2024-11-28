@@ -9,6 +9,9 @@ import androidx.annotation.Nullable;
 import com.b07.planetze.database.ToJson;
 import com.b07.planetze.util.Util;
 
+import java.text.DecimalFormat;
+import java.util.Locale;
+
 /**
  * A measurement of duration.
  */
@@ -55,6 +58,10 @@ public final class Duration extends Measurement<Duration>
         return s;
     }
 
+    public double mins() {
+        return s / 60;
+    }
+
     /**
      * {@return this duration in hours}
      */
@@ -70,6 +77,18 @@ public final class Duration extends Measurement<Duration>
     @Override
     protected void setValue(double value) {
         s = value;
+    }
+
+    @NonNull
+    public String format() {
+        long s = (long) this.s;
+        if (s < 60) {
+            return s + "s";
+        } else if (s < 3600) {
+            return String.format(Locale.US, "%dm%02ds", s/60, s % 60);
+        }
+        return String.format(
+                Locale.US, "%dh%02dm%02ds", s/3600, (s % 3600)/60, (s % 60));
     }
 
     @Override

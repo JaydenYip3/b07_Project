@@ -14,6 +14,7 @@ import com.b07.planetze.util.Util;
 import com.b07.planetze.util.measurement.Mass;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public record EnergyBillsDaily(
@@ -41,6 +42,13 @@ public record EnergyBillsDaily(
             case WATER ->
                     G_CO2E_PER_WATER_M3 * WATER_M3_PER_DOLLAR * billAmount;
         }));
+    }
+
+    @NonNull
+    @Override
+    public String summary() {
+        return String.format(
+                Locale.US, "$%.2f in %s", billAmount, billType.displayName());
     }
 
     @NonNull
@@ -93,8 +101,19 @@ public record EnergyBillsDaily(
     }
 
     public enum BillType {
-        ELECTRICITY,
-        GAS,
-        WATER
+        ELECTRICITY("electricity bills"),
+        GAS("gas bills"),
+        WATER("water bills");
+
+        @NonNull private final String displayName;
+
+        BillType(@NonNull String displayName) {
+            this.displayName = displayName;
+        }
+
+        @NonNull
+        public String displayName() {
+            return displayName;
+        }
     }
 }

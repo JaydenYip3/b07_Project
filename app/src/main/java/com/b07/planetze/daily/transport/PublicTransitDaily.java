@@ -42,6 +42,12 @@ public record PublicTransitDaily(
 
     @NonNull
     @Override
+    public String summary() {
+        return duration.format() + " on " + transitType.displayName();
+    }
+
+    @NonNull
+    @Override
     public DailyType type() {
         return DailyType.PUBLIC_TRANSIT;
     }
@@ -90,8 +96,19 @@ public record PublicTransitDaily(
     }
 
     public enum TransitType {
-        BUS,
-        TRAIN,
-        SUBWAY
+        BUS("bus"),
+        TRAIN("train"),
+        SUBWAY("subway");
+
+        @NonNull private final String displayName;
+
+        TransitType(@NonNull String displayName) {
+            this.displayName = displayName;
+        }
+
+        @NonNull
+        public String displayName() {
+            return displayName;
+        }
     }
 }

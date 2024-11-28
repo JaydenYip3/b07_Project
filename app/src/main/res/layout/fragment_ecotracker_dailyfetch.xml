@@ -51,7 +51,7 @@
         app:layout_constraintStart_toEndOf="@+id/ecotracker_dailyfetch_emissions" />
 
     <TextView
-        android:id="@+id/ecotracker_dailyfetch_category"
+        android:id="@+id/ecotracker_dailyfetch_summary"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"

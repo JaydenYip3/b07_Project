@@ -43,6 +43,12 @@ public record FlightDaily(
         return DailyType.FLIGHT;
     }
 
+    @NonNull
+    @Override
+    public String summary() {
+        return numberFlights + " " + flightType.displayName(numberFlights != 1);
+    }
+
     @SuppressWarnings("ConstantConditions")
     @NonNull
     public static FlightDaily fromJson(@NonNull Map<String, Object> map) {
@@ -90,11 +96,22 @@ public record FlightDaily(
         /**
          * < 1500km
          */
-        SHORT_HAUL,
+        SHORT_HAUL("short haul flight"),
 
         /**
          * > 1500km
          */
-        LONG_HAUL
+        LONG_HAUL("long haul flight");
+
+        @NonNull private final String displayName;
+
+        FlightType(@NonNull String displayName) {
+            this.displayName = displayName;
+        }
+
+        @NonNull
+        public String displayName(boolean isPlural) {
+            return displayName + (isPlural ? "s" : "");
+        }
     }
 }
