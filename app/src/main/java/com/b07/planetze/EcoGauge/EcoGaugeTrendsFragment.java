@@ -19,7 +19,7 @@ public class EcoGaugeTrendsFragment extends Fragment{
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        View view = inflater.inflate(R.layout.fragment_eco_gauge_overview, container, false);
+        View view = inflater.inflate(R.layout.fragment_eco_gauge_trends, container, false);
 
         // on below line we are initializing our graph view.
         graphView = view.findViewById(R.id.idGraphView);
