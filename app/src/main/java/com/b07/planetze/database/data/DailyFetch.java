@@ -1,10 +1,16 @@
 package com.b07.planetze.database.data;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.annotation.NonNull;
 
+import com.b07.planetze.common.Emissions;
 import com.b07.planetze.daily.Daily;
+import com.b07.planetze.daily.DailyType;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Comparator;
 
 /**
@@ -12,15 +18,53 @@ import java.util.Comparator;
  */
 public record DailyFetch(
         @NonNull DailyId id,
-        @NonNull LocalDate date,
-        @NonNull Daily daily
-) {
+        @NonNull DailyData data
+) implements Parcelable {
+    @NonNull public static final Comparator<DailyFetch> descendingEmissions
+            = (a, b) -> b.emissions().total().compareTo(a.emissions().total());
+
     @NonNull
-    public DailySummary summary() {
-        return new DailySummary(id, date, daily.type(), daily.emissions());
+    public Emissions emissions() {
+        return data.daily().emissions();
     }
 
-    @NonNull public static final Comparator<DailyFetch> descendingEmissions
-            = (a, b) -> b.daily().emissions().total()
-                    .compareTo(a.daily.emissions().total());
+    @NonNull
+    public LocalDate date() {
+        return data.date();
+    }
+
+    @NonNull
+    public Daily daily() {
+        return data.daily();
+    }
+
+    @NonNull
+    public DailyType type() {
+        return data.daily().type();
+    }
+
+    public static final Parcelable.Creator<DailyFetch> CREATOR
+            = new Parcelable.Creator<>() {
+        public DailyFetch createFromParcel(Parcel in) {
+            return new DailyFetch(
+                    DailyId.CREATOR.createFromParcel(in),
+                    DailyData.CREATOR.createFromParcel(in)
+            );
+        }
+
+        public DailyFetch[] newArray(int size) {
+            return new DailyFetch[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeParcelable(id, 0);
+        dest.writeParcelable(data, 0);
+    }
 }

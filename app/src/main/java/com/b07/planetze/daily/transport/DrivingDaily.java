@@ -1,5 +1,7 @@
 package com.b07.planetze.daily.transport;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -54,6 +56,31 @@ public record DrivingDaily(
         map.put("vehicleType", vehicleType.name());
         map.put("distance", distance.toJson());
         return map;
+    }
+
+    public static final Parcelable.Creator<DrivingDaily> CREATOR
+            = new Parcelable.Creator<>() {
+        public DrivingDaily createFromParcel(Parcel in) {
+            return new DrivingDaily(
+                    VehicleType.valueOf(in.readString()),
+                    ImmutableDistance.CREATOR.createFromParcel(in)
+            );
+        }
+
+        public DrivingDaily[] newArray(int size) {
+            return new DrivingDaily[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeString(vehicleType.name());
+        dest.writeParcelable(distance, 0);
     }
 
     public enum VehicleType {

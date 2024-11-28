@@ -1,5 +1,8 @@
 package com.b07.planetze.util.measurement;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -10,7 +13,7 @@ import com.b07.planetze.util.Util;
  * A measurement of distance.
  */
 public final class Distance extends Measurement<Distance>
-        implements ToJson {
+        implements ToJson, Parcelable {
     private static final double MILES_TO_METRES = 1609.344;
     private static final double METRES_TO_MILES = 1 / MILES_TO_METRES;
 
@@ -121,5 +124,26 @@ public final class Distance extends Measurement<Distance>
     @Override
     public Object toJson() {
         return m;
+    }
+
+    public static final Parcelable.Creator<Distance> CREATOR
+            = new Parcelable.Creator<>() {
+        public Distance createFromParcel(Parcel in) {
+            return new Distance(in.readDouble());
+        }
+
+        public Distance[] newArray(int size) {
+            return new Distance[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeDouble(m);
     }
 }

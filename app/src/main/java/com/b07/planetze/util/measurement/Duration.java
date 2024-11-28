@@ -1,5 +1,8 @@
 package com.b07.planetze.util.measurement;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -10,7 +13,7 @@ import com.b07.planetze.util.Util;
  * A measurement of duration.
  */
 public final class Duration extends Measurement<Duration>
-        implements ToJson {
+        implements ToJson, Parcelable {
     private double s;
 
     private Duration(double s) {
@@ -27,6 +30,7 @@ public final class Duration extends Measurement<Duration>
 
     /**
      * {@return a new duration given seconds}
+     *
      * @param s a value in seconds
      */
     @NonNull
@@ -36,6 +40,7 @@ public final class Duration extends Measurement<Duration>
 
     /**
      * {@return a new duration given hours}
+     *
      * @param h a value in hours
      */
     @NonNull
@@ -105,5 +110,26 @@ public final class Duration extends Measurement<Duration>
     @Override
     public Object toJson() {
         return s;
+    }
+
+    public static final Parcelable.Creator<Duration> CREATOR
+            = new Parcelable.Creator<>() {
+        public Duration createFromParcel(Parcel in) {
+            return new Duration(in.readDouble());
+        }
+
+        public Duration[] newArray(int size) {
+            return new Duration[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeDouble(s);
     }
 }

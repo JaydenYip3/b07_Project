@@ -1,11 +1,15 @@
 package com.b07.planetze.daily.energy;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.annotation.NonNull;
 
 import com.b07.planetze.common.Emissions;
 import com.b07.planetze.daily.Daily;
 import com.b07.planetze.daily.DailyException;
 import com.b07.planetze.daily.DailyType;
+import com.b07.planetze.daily.food.MealDaily;
 import com.b07.planetze.util.Util;
 import com.b07.planetze.util.measurement.Mass;
 
@@ -61,6 +65,31 @@ public record EnergyBillsDaily(
         map.put("billType", billType.name());
         map.put("billAmount", billAmount);
         return map;
+    }
+
+    public static final Parcelable.Creator<EnergyBillsDaily> CREATOR
+            = new Parcelable.Creator<>() {
+        public EnergyBillsDaily createFromParcel(Parcel in) {
+            return new EnergyBillsDaily(
+                    BillType.valueOf(in.readString()),
+                    in.readDouble()
+            );
+        }
+
+        public EnergyBillsDaily[] newArray(int size) {
+            return new EnergyBillsDaily[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeString(billType.name());
+        dest.writeDouble(billAmount);
     }
 
     public enum BillType {

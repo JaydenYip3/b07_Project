@@ -1,5 +1,8 @@
 package com.b07.planetze.util.measurement;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.annotation.NonNull;
 
 import com.b07.planetze.database.ToJson;
@@ -10,7 +13,7 @@ import com.b07.planetze.util.immutability.ImmutableCopy;
  * Consider instantiating this with {@link Mass#immutableCopy()}.
  */
 public final class ImmutableMass extends ImmutableCopy<Mass>
-        implements ToJson {
+        implements ToJson, Parcelable {
     public ImmutableMass(@NonNull Mass object) {
         super(object);
     }
@@ -45,5 +48,26 @@ public final class ImmutableMass extends ImmutableCopy<Mass>
     @Override
     public Object toJson() {
         return object.toJson();
+    }
+
+    public static final Creator<ImmutableMass> CREATOR
+            = new Parcelable.Creator<>() {
+        public ImmutableMass createFromParcel(Parcel in) {
+            return Mass.CREATOR.createFromParcel(in).immutableCopy();
+        }
+
+        public ImmutableMass[] newArray(int size) {
+            return new ImmutableMass[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeParcelable(object, 0);
     }
 }

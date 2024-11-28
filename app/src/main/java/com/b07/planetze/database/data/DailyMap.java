@@ -62,7 +62,7 @@ public final class DailyMap {
     public Option<DailyFetch> get(@NonNull DailyId id) {
         return Option.mapNull(datesById.get(id))
                 .map(date -> new DailyFetch(
-                        id, date, dailies.get(date).get(id)));
+                        id, new DailyData(date, dailies.get(date).get(id))));
     }
 
     @NonNull
@@ -71,7 +71,7 @@ public final class DailyMap {
 
         dailies.subMap(itv.start(), itv.end()).forEach((date, map) -> {
             map.forEach((id, daily) -> {
-                list.add(new DailyFetch(id, date, daily));
+                list.add(new DailyFetch(id, new DailyData(date, daily)));
             });
         });
 

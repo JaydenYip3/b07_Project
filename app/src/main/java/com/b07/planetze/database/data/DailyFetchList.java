@@ -29,6 +29,10 @@ public final class DailyFetchList implements Iterable<DailyFetch> {
         return dailies.size();
     }
 
+    public boolean isEmpty() {
+        return size() == 0;
+    }
+
     /**
      * {@return a new <code>Emissions</code> containing the sum of all
      *          daily activity emissions in this list}
@@ -36,12 +40,17 @@ public final class DailyFetchList implements Iterable<DailyFetch> {
     @NonNull
     public Emissions emissions() {
         Emissions sum = Emissions.zero();
-        dailies.forEach(f -> sum.add(f.daily().emissions()));
+        dailies.forEach(f -> sum.add(f.emissions()));
         return sum;
     }
 
+    /**
+     * {@return a new <code>DailyFetchList</code> sorted with a given
+     *          comparator}
+     * @param comparator the comparator
+     */
     @NonNull
-    public DailyFetchList orderBy(Comparator<DailyFetch> comparator) {
+    public DailyFetchList orderBy(@NonNull Comparator<DailyFetch> comparator) {
         List<DailyFetch> list = dailies.copy();
         list.sort(comparator);
         return new DailyFetchList(new ImmutableList<>(list));

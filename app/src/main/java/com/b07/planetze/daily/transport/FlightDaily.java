@@ -1,10 +1,14 @@
 package com.b07.planetze.daily.transport;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.annotation.NonNull;
 
 import com.b07.planetze.common.Emissions;
 import com.b07.planetze.daily.DailyException;
 import com.b07.planetze.util.Util;
+import com.b07.planetze.util.measurement.ImmutableDuration;
 import com.b07.planetze.util.measurement.Mass;
 import com.b07.planetze.daily.Daily;
 import com.b07.planetze.daily.DailyType;
@@ -55,6 +59,31 @@ public record FlightDaily(
         map.put("numberFlights", numberFlights);
         map.put("flightType", flightType.name());
         return map;
+    }
+
+    public static final Parcelable.Creator<FlightDaily> CREATOR
+            = new Parcelable.Creator<>() {
+        public FlightDaily createFromParcel(Parcel in) {
+            return new FlightDaily(
+                    in.readInt(),
+                    FlightType.valueOf(in.readString())
+            );
+        }
+
+        public FlightDaily[] newArray(int size) {
+            return new FlightDaily[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeInt(numberFlights);
+        dest.writeString(flightType.name());
     }
 
     public enum FlightType {

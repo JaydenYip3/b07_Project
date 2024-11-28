@@ -16,28 +16,28 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.b07.planetze.R;
-import com.b07.planetze.database.data.DailySummary;
+import com.b07.planetze.database.data.DailyFetch;
 import com.b07.planetze.ecotracker.exception.EcoTrackerException;
 import com.b07.planetze.util.option.Option;
 
-public final class DailySummaryFragment extends Fragment {
-    @NonNull private static final String TAG = "DailySummaryFragment";
-    @NonNull private static final String ARG_DAILY_SUMMARY = "daily_summary";
+public final class DailyFetchFragment extends Fragment {
+    @NonNull private static final String TAG = "DailyFetchFragment";
+    @NonNull private static final String ARG_DAILY_FETCH = "daily_fetch";
     @NonNull private static final String ARG_PROPORTION = "proportion";
 
-    @NonNull private Option<DailySummary> dailySummary;
-    private double emissionsPercentage;
+    @NonNull private Option<DailyFetch> dailyFetch;
+    private double emissionsProportion;
 
-    private DailySummaryFragment() {
-        dailySummary = none();
-        emissionsPercentage = 0;
+    private DailyFetchFragment() {
+        dailyFetch = none();
+        emissionsProportion = 0;
     }
 
-    public static DailySummaryFragment newInstance(DailySummary summary,
-                                                   double emissionsProportion) {
-        DailySummaryFragment fragment = new DailySummaryFragment();
+    public static DailyFetchFragment newInstance(DailyFetch fetch,
+                                                 double emissionsProportion) {
+        DailyFetchFragment fragment = new DailyFetchFragment();
         Bundle args = new Bundle();
-        args.putParcelable(ARG_DAILY_SUMMARY, summary);
+        args.putParcelable(ARG_DAILY_FETCH, fetch);
         args.putDouble(ARG_PROPORTION, emissionsProportion);
         fragment.setArguments(args);
         return fragment;
@@ -47,30 +47,30 @@ public final class DailySummaryFragment extends Fragment {
                               @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        DailySummary summary = dailySummary.getOrThrow(
-                new EcoTrackerException("Daily summary not provided"));
+        DailyFetch fetch = dailyFetch.getOrThrow(
+                new EcoTrackerException(ARG_DAILY_FETCH + " not provided"));
 
         EcoTrackerViewModel model = new ViewModelProvider(requireActivity())
                 .get(EcoTrackerViewModel.class);
 
-        TextView name = view.findViewById(R.id.ecotracker_dailysummary_name);
-        name.setText(summary.type().displayName());
+        TextView name = view.findViewById(R.id.ecotracker_dailyfetch_name);
+        name.setText(fetch.type().displayName());
 
         TextView category = view.findViewById(
-                R.id.ecotracker_dailysummary_category);
-        category.setText(summary.type().category().displayName());
+                R.id.ecotracker_dailyfetch_category);
+        category.setText(fetch.type().category().displayName());
 
         TextView emissions = view.findViewById(
-                R.id.ecotracker_dailysummary_emissions);
-        emissions.setText(summary.emissions().total().format());
+                R.id.ecotracker_dailyfetch_emissions);
+        emissions.setText(fetch.emissions().total().format());
         emissions.setClipToOutline(true);
 
         ConstraintLayout layout = view.findViewById(
-                R.id.ecotracker_dailysummary_layout);
+                R.id.ecotracker_dailyfetch_layout);
         layout.setClipToOutline(true);
 
         layout.setOnClickListener(v -> {
-            model.editDaily(summary.id());
+            model.editDaily(fetch.id());
         });
     }
 
@@ -81,10 +81,10 @@ public final class DailySummaryFragment extends Fragment {
         Bundle args = Option.mapNull(getArguments())
                 .getOrThrow(new EcoTrackerException("No arguments provided"));
 
-        dailySummary = Option.mapNull(
-                args.getParcelable(ARG_DAILY_SUMMARY, DailySummary.class));
+        dailyFetch = Option.mapNull(
+                args.getParcelable(ARG_DAILY_FETCH, DailyFetch.class));
 
-        emissionsPercentage = args.getDouble(ARG_PROPORTION);
+        emissionsProportion = args.getDouble(ARG_PROPORTION);
     }
 
     @Override
@@ -92,6 +92,6 @@ public final class DailySummaryFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(
-                R.layout.fragment_ecotracker_dailysummary, container, false);
+                R.layout.fragment_ecotracker_dailyfetch, container, false);
     }
 }

@@ -1,10 +1,15 @@
 package com.b07.planetze.daily.shopping;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.annotation.NonNull;
 
 import com.b07.planetze.common.Emissions;
 import com.b07.planetze.daily.DailyException;
+import com.b07.planetze.daily.transport.CyclingOrWalkingDaily;
 import com.b07.planetze.util.Util;
+import com.b07.planetze.util.measurement.ImmutableDistance;
 import com.b07.planetze.util.measurement.Mass;
 import com.b07.planetze.daily.Daily;
 import com.b07.planetze.daily.DailyType;
@@ -50,6 +55,31 @@ public record BuyOtherDaily(
         map.put("purchaseType", purchaseType.name());
         map.put("numberItems", numberItems);
         return map;
+    }
+
+    public static final Parcelable.Creator<BuyOtherDaily> CREATOR
+            = new Parcelable.Creator<>() {
+        public BuyOtherDaily createFromParcel(Parcel in) {
+            return new BuyOtherDaily(
+                    PurchaseType.valueOf(in.readString()),
+                    in.readInt()
+            );
+        }
+
+        public BuyOtherDaily[] newArray(int size) {
+            return new BuyOtherDaily[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeString(purchaseType.name());
+        dest.writeInt(numberItems);
     }
 
     public enum PurchaseType {

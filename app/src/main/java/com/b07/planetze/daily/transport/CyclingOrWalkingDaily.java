@@ -1,5 +1,8 @@
 package com.b07.planetze.daily.transport;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.annotation.NonNull;
 
 import com.b07.planetze.common.Emissions;
@@ -42,5 +45,28 @@ implements Daily {
         Map<String, Object> map = new HashMap<>();
         map.put("distance", distance.toJson());
         return map;
+    }
+
+    public static final Parcelable.Creator<CyclingOrWalkingDaily> CREATOR
+            = new Parcelable.Creator<>() {
+        public CyclingOrWalkingDaily createFromParcel(Parcel in) {
+            return new CyclingOrWalkingDaily(
+                    ImmutableDistance.CREATOR.createFromParcel(in)
+            );
+        }
+
+        public CyclingOrWalkingDaily[] newArray(int size) {
+            return new CyclingOrWalkingDaily[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeParcelable(distance, 0);
     }
 }

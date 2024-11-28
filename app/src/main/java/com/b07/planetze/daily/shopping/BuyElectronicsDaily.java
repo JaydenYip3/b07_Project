@@ -1,5 +1,8 @@
 package com.b07.planetze.daily.shopping;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.annotation.NonNull;
 
 import com.b07.planetze.common.Emissions;
@@ -52,6 +55,31 @@ public record BuyElectronicsDaily(
         map.put("deviceType", deviceType.name());
         map.put("numberDevices", numberDevices);
         return map;
+    }
+
+    public static final Parcelable.Creator<BuyElectronicsDaily> CREATOR
+            = new Parcelable.Creator<>() {
+        public BuyElectronicsDaily createFromParcel(Parcel in) {
+            return new BuyElectronicsDaily(
+                    DeviceType.valueOf(in.readString()),
+                    in.readInt()
+            );
+        }
+
+        public BuyElectronicsDaily[] newArray(int size) {
+            return new BuyElectronicsDaily[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeString(deviceType.name());
+        dest.writeInt(numberDevices);
     }
 
     public enum DeviceType {

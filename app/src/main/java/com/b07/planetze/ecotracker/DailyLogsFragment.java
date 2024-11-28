@@ -4,7 +4,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
@@ -17,9 +16,7 @@ import android.widget.TextView;
 
 import com.b07.planetze.R;
 import com.b07.planetze.database.data.DailyFetch;
-import com.b07.planetze.database.data.DailyFetchList;
 import com.b07.planetze.database.data.DailySummary;
-import com.b07.planetze.ecotracker.exception.EcoTrackerException;
 import com.b07.planetze.util.measurement.Mass;
 
 import java.util.ArrayList;
@@ -61,7 +58,7 @@ public final class DailyLogsFragment extends Fragment {
                 double proportion = total.isZero()
                         ? 0 : emissions.kg() / total.kg();
 
-                Fragment f = DailySummaryFragment.newInstance(
+                Fragment f = DailyFetchFragment.newInstance(
                         summary, proportion);
 
                 ft.add(R.id.ecotracker_dailylogs_dailysummaries, f);

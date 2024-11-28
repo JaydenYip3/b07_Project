@@ -1,5 +1,8 @@
 package com.b07.planetze.daily.shopping;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.annotation.NonNull;
 
 import com.b07.planetze.common.Emissions;
@@ -31,6 +34,29 @@ implements Daily {
     @NonNull
     public static BuyClothesDaily fromJson(@NonNull Map<String, Object> map) {
         return new BuyClothesDaily(Util.toInt(map.get("numberItems")));
+    }
+
+    public static final Parcelable.Creator<BuyClothesDaily> CREATOR
+            = new Parcelable.Creator<>() {
+        public BuyClothesDaily createFromParcel(Parcel in) {
+            return new BuyClothesDaily(
+                    in.readInt()
+            );
+        }
+
+        public BuyClothesDaily[] newArray(int size) {
+            return new BuyClothesDaily[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeInt(numberItems);
     }
 
     @NonNull

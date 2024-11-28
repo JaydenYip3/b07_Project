@@ -35,55 +35,72 @@ public enum DailyType implements ToJson, Parcelable {
     DRIVING("Driving",
             DailyCategory.TRANSPORT,
             DrivingForm.INSTANCE,
-            DrivingDaily::fromJson),
+            DrivingDaily::fromJson,
+            DrivingDaily.CREATOR::createFromParcel),
     PUBLIC_TRANSIT("Public transit",
             DailyCategory.TRANSPORT,
             PublicTransitForm.INSTANCE,
-            PublicTransitDaily::fromJson),
-    CYCLING_OR_WALKING("Cycling/walking",
+            PublicTransitDaily::fromJson,
+            PublicTransitDaily.CREATOR::createFromParcel),
+    CYCLING_OR_WALKING("Cycling / walking",
             DailyCategory.TRANSPORT,
             CyclingOrWalkingForm.INSTANCE,
-            CyclingOrWalkingDaily::fromJson),
+            CyclingOrWalkingDaily::fromJson,
+            CyclingOrWalkingDaily.CREATOR::createFromParcel),
     FLIGHT("Flight",
             DailyCategory.TRANSPORT,
             FlightForm.INSTANCE,
-            FlightDaily::fromJson),
+            FlightDaily::fromJson,
+            FlightDaily.CREATOR::createFromParcel),
     MEAL("Food consumption",
             DailyCategory.FOOD,
             MealForm.INSTANCE,
-            MealDaily::fromJson),
+            MealDaily::fromJson,
+            MealDaily.CREATOR::createFromParcel),
     BUY_CLOTHES("Clothes shopping",
             DailyCategory.SHOPPING,
             BuyClothesForm.INSTANCE,
-            BuyClothesDaily::fromJson),
+            BuyClothesDaily::fromJson,
+            BuyClothesDaily.CREATOR::createFromParcel),
     BUY_ELECTRONICS("Electronics shopping",
             DailyCategory.SHOPPING,
             BuyElectronicsForm.INSTANCE,
-            BuyElectronicsDaily::fromJson),
+            BuyElectronicsDaily::fromJson,
+            BuyElectronicsDaily.CREATOR::createFromParcel),
     BUY_OTHER("Other shopping",
             DailyCategory.SHOPPING,
             BuyOtherForm.INSTANCE,
-            BuyOtherDaily::fromJson),
+            BuyOtherDaily::fromJson,
+            BuyClothesDaily.CREATOR::createFromParcel),
     ENERGY_BILLS("Energy bills",
             DailyCategory.ENERGY,
             EnergyBillsForm.INSTANCE,
-            EnergyBillsDaily::fromJson);
+            EnergyBillsDaily::fromJson,
+            EnergyBillsDaily.CREATOR::createFromParcel);
 
-    @NonNull private final String displayName;
-    @NonNull private final DailyCategory category;
-    @NonNull private final DailyForm<?> form;
-    @NonNull private final Function<Map<String, Object>, Daily> createDailyFromJson;
+    @NonNull
+    private final String displayName;
+    @NonNull
+    private final DailyCategory category;
+    @NonNull
+    private final DailyForm<?> form;
+    @NonNull
+    private final Function<Map<String, Object>, Daily> createDailyFromJson;
+    @NonNull
+    private final Function<Parcel, Daily> createDailyFromParcel;
 
     DailyType(
             @NonNull String displayName,
             @NonNull DailyCategory category,
             @NonNull DailyForm<?> form,
-            @NonNull Function<Map<String, Object>, Daily> createDailyFromJson
+            @NonNull Function<Map<String, Object>, Daily> createDailyFromJson,
+            @NonNull Function<Parcel, Daily> createDailyFromParcel
     ) {
         this.displayName = displayName;
         this.category = category;
         this.form = form;
         this.createDailyFromJson = createDailyFromJson;
+        this.createDailyFromParcel = createDailyFromParcel;
     }
     @NonNull
     public String displayName() {
@@ -114,6 +131,11 @@ public enum DailyType implements ToJson, Parcelable {
     @NonNull
     public Daily createDailyFromJson(Map<String, Object> map) {
         return createDailyFromJson.apply(map);
+    }
+
+    @NonNull
+    public Daily createDailyFromParcel(Parcel in) {
+        return createDailyFromParcel.apply(in);
     }
 
     public static final Parcelable.Creator<DailyType> CREATOR
