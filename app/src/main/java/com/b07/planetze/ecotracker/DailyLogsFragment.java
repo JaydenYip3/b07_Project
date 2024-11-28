@@ -16,7 +16,6 @@ import android.widget.TextView;
 
 import com.b07.planetze.R;
 import com.b07.planetze.database.data.DailyFetch;
-import com.b07.planetze.database.data.DailySummary;
 import com.b07.planetze.util.measurement.Mass;
 
 import java.util.ArrayList;
@@ -53,13 +52,12 @@ public final class DailyLogsFragment extends Fragment {
             summaries.clear();
 
             list.orderBy(DailyFetch.descendingEmissions).forEach(fetch -> {
-                DailySummary summary = fetch.summary();
-                Mass emissions = summary.emissions().total();
+                Mass emissions = fetch.emissions().total();
                 double proportion = total.isZero()
                         ? 0 : emissions.kg() / total.kg();
 
                 Fragment f = DailyFetchFragment.newInstance(
-                        summary, proportion);
+                        fetch, proportion);
 
                 ft.add(R.id.ecotracker_dailylogs_dailysummaries, f);
                 summaries.add(f);

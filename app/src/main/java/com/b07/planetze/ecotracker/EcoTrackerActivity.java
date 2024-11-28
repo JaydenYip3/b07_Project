@@ -20,17 +20,10 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.b07.planetze.R;
-import com.b07.planetze.common.Emissions;
 import com.b07.planetze.daily.DailyForm;
-import com.b07.planetze.daily.DailyType;
-import com.b07.planetze.database.data.DailyId;
-import com.b07.planetze.database.data.DailySummary;
 import com.b07.planetze.form.Form;
 import com.b07.planetze.form.FormFragment;
 import com.b07.planetze.form.FormViewModel;
-import com.b07.planetze.util.measurement.Mass;
-
-import java.time.LocalDate;
 
 public final class EcoTrackerActivity extends AppCompatActivity {
     @NonNull private static final String TAG = "EcoTrackerActivity";
