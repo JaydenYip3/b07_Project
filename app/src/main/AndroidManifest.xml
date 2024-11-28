@@ -18,6 +18,7 @@
         <activity
             android:name=".auth.AuthActivity"
             android:exported="false" />
+        <activity android:name=".home.HomeActivity" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -27,11 +28,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity> <!-- Register Activity -->
-<<<<<<< HEAD
-<!--        <activity-->
-<!--            android:name=".auth.RegisterFragment" />-->
-=======
->>>>>>> 530657ac43e56038e8c55cce6b01412fb9b13c22
     </application>
 
 </manifest>
