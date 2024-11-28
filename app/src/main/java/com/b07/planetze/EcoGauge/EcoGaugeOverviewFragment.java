@@ -28,12 +28,22 @@ public class EcoGaugeOverviewFragment extends Fragment {
         resultsTextView = view.findViewById(R.id.resultsTextView);
         timeSpinner = view.findViewById(R.id.timeSpinner);
         Button emissionsTrendButton = view.findViewById(R.id.emissionsTrendButton);
+        Button breakdownButton = view.findViewById(R.id.graphByCategoryButon);
+        Button comparisonButton = view.findViewById(R.id.comparisonButton);
 
         // Set up spinner to handle time period selection
         setupTimeSpinner();
 
         emissionsTrendButton.setOnClickListener(v -> {
             ((EcoGaugeScreenSwitch) requireActivity()).switchScreens(EcoGaugeScreen.TRENDS);
+        });
+
+        breakdownButton.setOnClickListener(v -> {
+            ((EcoGaugeScreenSwitch) requireActivity()).switchScreens(EcoGaugeScreen.BREAKDOWN);
+        });
+
+        comparisonButton.setOnClickListener(v -> {
+            ((EcoGaugeScreenSwitch) requireActivity()).switchScreens(EcoGaugeScreen.COMPARISON);
         });
 
         return view;

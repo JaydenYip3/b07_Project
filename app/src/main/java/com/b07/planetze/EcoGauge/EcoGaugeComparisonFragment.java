@@ -9,6 +9,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import com.b07.planetze.R;
+import com.b07.planetze.database.firebase.FirebaseDb;
+import com.b07.planetze.onboarding.CountryProcessor;
 
 public class EcoGaugeComparisonFragment extends Fragment {
 
@@ -21,7 +23,9 @@ public class EcoGaugeComparisonFragment extends Fragment {
         TextView comparisonTextView = view.findViewById(R.id.comparisonTextView);
 
         // Get comparison data
-        String comparisonText = ((EcoGaugeComparisonCallback) requireActivity()).getComparisonText();
+        CountryProcessor countryProcessor = new CountryProcessor(view.getContext(), "countries.json");
+        FirebaseDb database = new FirebaseDb();
+        String comparisonText = ((EcoGaugeComparisonCallback) requireActivity()).getComparisonText(countryProcessor, database);
 
         // Update the TextView with comparison data
         comparisonTextView.setText(comparisonText);
