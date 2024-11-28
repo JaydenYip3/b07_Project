@@ -69,11 +69,6 @@ public final class DailyFetchFragment extends Fragment {
                 R.id.ecotracker_dailyfetch_layout);
         layout.setClipToOutline(true);
 
-        FloatingActionButton add = view.findViewById(
-                R.id.ecotracker_dailylogs_add);
-        add.setOnClickListener(v -> {
-
-        });
 
         layout.setOnClickListener(v -> {
             model.editDaily(fetch.id());

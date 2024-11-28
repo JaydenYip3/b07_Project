@@ -12,6 +12,8 @@ import androidx.lifecycle.ViewModelProvider;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.b07.planetze.R;
@@ -37,12 +39,33 @@ public final class DailyLogsFragment extends Fragment {
         EcoTrackerViewModel model = new ViewModelProvider(requireActivity())
                 .get(EcoTrackerViewModel.class);
 
-        FloatingActionButton button = view.findViewById(
-                R.id.ecotracker_dailylogs_add);
-        button.setClipToOutline(true);
 
         TextView totalEmissions = view.findViewById(
                 R.id.ecotracker_dailylogs_totalemissions);
+
+        View typeExit = view.findViewById(R.id.ecotracker_dailylogs_type_exit);
+        Button typeClose = view.findViewById(
+                R.id.ecotracker_dailylogs_type_close);
+        FrameLayout typeLayout = view.findViewById(
+                R.id.ecotracker_dailylogs_type_layout);
+
+        typeExit.setOnClickListener(v -> {
+            typeExit.setVisibility(View.GONE);
+            typeLayout.setVisibility(View.GONE);
+        });
+
+        typeClose.setOnClickListener(v -> {
+            typeExit.setVisibility(View.GONE);
+            typeLayout.setVisibility(View.GONE);
+        });
+
+        FloatingActionButton add = view.findViewById(
+                R.id.ecotracker_dailylogs_add);
+//        add.setClipToOutline(true);
+        add.setOnClickListener(v -> {
+            typeExit.setVisibility(View.VISIBLE);
+            typeLayout.setVisibility(View.VISIBLE);
+        });
 
         List<Fragment> summaries = new ArrayList<>();
 
