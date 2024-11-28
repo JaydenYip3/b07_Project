@@ -9,6 +9,8 @@ import androidx.annotation.NonNull;
 import com.b07.planetze.database.ToJson;
 import com.b07.planetze.util.Util;
 
+import java.text.DecimalFormat;
+
 /**
  * A measurement of mass.
  */
@@ -77,6 +79,18 @@ public final class Mass extends Measurement<Mass>
      */
     public double lb() {
         return kg * KG_TO_POUNDS;
+    }
+
+    @NonNull
+    public String format() {
+        if (g() < 10) {
+            return new DecimalFormat("0.0").format(g()) + "g";
+        } else if (g() < 1000) {
+            return new DecimalFormat("0").format(g()) + "g";
+        } else if (kg < 10) {
+            return new DecimalFormat("0.0").format(kg) + "kg";
+        }
+        return new DecimalFormat("0").format(kg) + "kg";
     }
 
     @Override

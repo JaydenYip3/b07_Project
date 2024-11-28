@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ecotracker_dailysummary_layout"
+    android:layout_width="match_parent"
+    android:layout_height="90dp"
+    android:background="@drawable/round_outline_gray"
+    android:foreground="?attr/selectableItemBackground"
+    tools:context=".ecotracker.DailySummaryFragment">
+
+    <TextView
+        android:id="@+id/ecotracker_dailysummary_emissions"
+        android:layout_width="90dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/round_outline_blue"
+        android:gravity="center_horizontal|center_vertical"
+        android:textAlignment="gravity"
+        android:textColor="@color/dark"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/ecotracker_dailysummary_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:contentDescription="@string/ecotracker_dailysummary_arrow_description"
+        android:src="@drawable/baseline_arrow_forward_ios_24"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/ecotracker_dailysummary_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:textColor="@color/dark"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/ecotracker_dailysummary_split"
+        app:layout_constraintEnd_toStartOf="@+id/ecotracker_dailysummary_indicator"
+        app:layout_constraintStart_toEndOf="@+id/ecotracker_dailysummary_emissions" />
+
+    <TextView
+        android:id="@+id/ecotracker_dailysummary_category"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:background="#00FFFFFF"
+        android:textAlignment="gravity"
+        android:textColor="@color/dark"
+        android:textSize="20sp"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toStartOf="@+id/ecotracker_dailysummary_indicator"
+        app:layout_constraintStart_toEndOf="@+id/ecotracker_dailysummary_emissions"
+        app:layout_constraintTop_toTopOf="@+id/ecotracker_dailysummary_split" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/ecotracker_dailysummary_split"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="45dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

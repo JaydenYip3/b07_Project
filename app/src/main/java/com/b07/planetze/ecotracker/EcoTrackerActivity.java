@@ -20,10 +20,16 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.b07.planetze.R;
+import com.b07.planetze.common.Emissions;
 import com.b07.planetze.daily.DailyForm;
+import com.b07.planetze.database.data.DailyId;
+import com.b07.planetze.database.data.DailySummary;
 import com.b07.planetze.form.Form;
 import com.b07.planetze.form.FormFragment;
 import com.b07.planetze.form.FormViewModel;
+import com.b07.planetze.util.measurement.Mass;
+
+import java.time.LocalDate;
 
 public final class EcoTrackerActivity extends AppCompatActivity {
     @NonNull private static final String TAG = "EcoTrackerActivity";
@@ -77,12 +83,14 @@ public final class EcoTrackerActivity extends AppCompatActivity {
         );
 
         model.ecoTracker.getState().observe(this, state -> {
-            if (state instanceof EcoTrackerState.Form form) {
-                startForm(model, form);
-            } else if (state instanceof EcoTrackerState.SelectForm selectForm) {
-                startSelectForm(model, selectForm);
-            }
+//            if (state instanceof EcoTrackerState.Form form) {
+//                startForm(model, form);
+//            } else if (state instanceof EcoTrackerState.SelectForm selectForm) {
+//                startSelectForm(model, selectForm);
+//            }
         });
+
+        loadFragment(DailySummaryFragment.newInstance(new DailySummary(new DailyId("hi"), LocalDate.now(), "name", Emissions.transport(Mass.kg(23))), 0.33));
     }
 
     private void loadFragment(@NonNull Fragment fragment) {

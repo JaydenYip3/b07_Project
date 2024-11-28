@@ -17,6 +17,7 @@ import com.b07.planetze.database.Database;
 import com.b07.planetze.database.DatabaseError;
 import com.b07.planetze.database.data.DailyFetch;
 import com.b07.planetze.database.data.DailyFetchList;
+import com.b07.planetze.database.data.DailyId;
 import com.b07.planetze.database.firebase.FirebaseDb;
 import com.b07.planetze.util.DateInterval;
 import com.b07.planetze.util.option.Option;
@@ -49,8 +50,12 @@ public final class EcoTrackerViewModel extends ViewModel {
         return state;
     }
 
-    public void selectForm(@NonNull DailyType type) {
+    public void newDaily(@NonNull DailyType type) {
         state.setValue(new EcoTrackerState.Form(type));
+    }
+
+    public void editDaily(@NonNull DailyId id) {
+
     }
 
     public void submitDaily(@NonNull Daily daily) {

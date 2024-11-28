@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ecotracker_dailysummary_edit">Edit</string>
+    <string name="ecotracker_dailysummary_delete">Delete</string>
+    <string name="ecotracker_dailysummary_arrow_description">right arrow</string>
+</resources>
