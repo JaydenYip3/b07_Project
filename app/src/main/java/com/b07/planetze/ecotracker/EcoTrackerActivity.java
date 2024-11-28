@@ -19,7 +19,10 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.b07.planetze.R;
+
+import com.b07.planetze.ecotracker.daily.DailyForm;
 import com.b07.planetze.daily.DailyForm;
+
 import com.b07.planetze.form.Form;
 import com.b07.planetze.form.FormFragment;
 import com.b07.planetze.form.FormViewModel;
@@ -69,20 +72,21 @@ public final class EcoTrackerActivity extends AppCompatActivity {
                     systemBars.bottom);
             return insets;
         });
-
-        Model model = new Model(
-                new ViewModelProvider(this).get(EcoTrackerViewModel.class),
-                new ViewModelProvider(this).get(FormViewModel.class)
-        );
-
-        model.ecoTracker.getState().observe(this, state -> {
-            if (state instanceof EcoTrackerState.Form form) {
-                startForm(model, form);
-            } else if (state instanceof EcoTrackerState.SelectForm selectForm) {
-                startSelectForm(model, selectForm);
-            }
-        });
+        loadFragment(new EcoTrackerHomeFragment());
+//        Model model = new Model(
+//                new ViewModelProvider(this).get(EcoTrackerViewModel.class),
+//                new ViewModelProvider(this).get(FormViewModel.class)
+//        );
+//
+//        model.ecoTracker.getState().observe(this, state -> {
+//            if (state instanceof EcoTrackerState.Form form) {
+//                startForm(model, form);
+//            } else if (state instanceof EcoTrackerState.SelectForm selectForm) {
+//                startSelectForm(model, selectForm);
+//            }
+//        });
     }
+
 
     private void loadFragment(@NonNull Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
