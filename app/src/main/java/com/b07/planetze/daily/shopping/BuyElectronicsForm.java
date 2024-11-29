@@ -25,7 +25,7 @@ public final class BuyElectronicsForm
         FormBuilder fb = new FormBuilder();
         type = fb.add("Type of device", ChoiceField
                 .withChoices("Smartphone", "Laptop", "TV"));
-        number = fb.add("Number of devices purchased", IntField.POSITIVE);
+        number = fb.add("Number of devices purchased", IntField.create());
         definition = fb.build();
     }
 

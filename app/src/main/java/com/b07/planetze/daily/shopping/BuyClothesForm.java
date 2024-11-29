@@ -19,7 +19,7 @@ public final class BuyClothesForm implements DailyForm<BuyClothesDaily> {
     private BuyClothesForm() {
         FormBuilder fb = new FormBuilder();
         numberItems = fb.add("Number of clothing items purchased",
-                IntField.POSITIVE);
+                IntField.create());
         definition = fb.build();
     }
 

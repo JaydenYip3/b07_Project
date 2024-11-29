@@ -22,7 +22,7 @@ public final class FlightForm implements DailyForm<FlightDaily> {
 
     private FlightForm() {
         FormBuilder fb = new FormBuilder();
-        number = fb.add("Number of flights taken", IntField.POSITIVE);
+        number = fb.add("Number of flights taken", IntField.create());
         type = fb.add("Type of flight", ChoiceField
                 .withChoices("Short-haul", "Long-haul"));
         definition = fb.build();

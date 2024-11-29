@@ -144,7 +144,7 @@ public final class DailyLogsFragment extends Fragment {
             updateSummaries(view, list);
         });
 
-        List<Integer> ids = Arrays.asList(new Integer[] {
+        List<Integer> ids = Arrays.asList(
                 R.id.ecotracker_dailylogs_type_driving,
                 R.id.ecotracker_dailylogs_type_publictransit,
                 R.id.ecotracker_dailylogs_type_cyclingorwalking,
@@ -152,8 +152,8 @@ public final class DailyLogsFragment extends Fragment {
                 R.id.ecotracker_dailylogs_type_buyclothes,
                 R.id.ecotracker_dailylogs_type_buyelectronics,
                 R.id.ecotracker_dailylogs_type_buyother
-        });
-        List<DailyType> types = Arrays.asList(new DailyType[] {
+        );
+        List<DailyType> types = Arrays.asList(
                 DailyType.DRIVING,
                 DailyType.PUBLIC_TRANSIT,
                 DailyType.CYCLING_OR_WALKING,
@@ -161,7 +161,7 @@ public final class DailyLogsFragment extends Fragment {
                 DailyType.BUY_CLOTHES,
                 DailyType.BUY_ELECTRONICS,
                 DailyType.BUY_OTHER
-        });
+        );
 
         Util.zip(ids, types).forEach((id, type) -> {
             TextView text = view.findViewById(id);

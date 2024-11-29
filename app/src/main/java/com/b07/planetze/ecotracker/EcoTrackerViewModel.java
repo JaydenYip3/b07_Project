@@ -52,6 +52,8 @@ public final class EcoTrackerViewModel extends ViewModel {
 
     public void fetchDailies() {
         db.fetchDailies(DateInterval.day(LocalDate.now()), fetch -> {
+            Log.d(TAG, "fetchDailies: " + fetch);
+            fetch.apply(list -> Log.d(TAG, "fetchDailies size: " + list.size()));
             fetch.apply(dailies::setValue);
         });
     }
@@ -59,6 +61,8 @@ public final class EcoTrackerViewModel extends ViewModel {
     public void newDaily(@NonNull DailyType type) {
 //        state.setValue(new EcoTrackerState.Form(type));
         Log.d(TAG, "newDaily: " + type);
+
+        state.setValue(new EcoTrackerState.Form(type));
     }
 
     public void editDaily(@NonNull DailyId id) {
@@ -66,6 +70,7 @@ public final class EcoTrackerViewModel extends ViewModel {
     }
 
     public void submitDaily(@NonNull Daily daily) {
+        Log.d(TAG, "submitDaily: " + daily.summary());
 //        db.postDaily(LocalDate.now(), daily, post -> {
 //            Log.d(TAG, "postDaily callback: " + post);
 //
@@ -74,7 +79,6 @@ public final class EcoTrackerViewModel extends ViewModel {
 //            });
 //        });
 
-        // TODO: transition to EcoTrackerState.ViewLogs
-        state.setValue(new EcoTrackerState.SelectForm());
+        state.setValue(new EcoTrackerState.ViewLogs());
     }
 }

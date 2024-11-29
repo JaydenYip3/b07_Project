@@ -195,7 +195,9 @@ public final class FirebaseDb implements Database {
 
                 map.apply(m -> m.forEach((id, data) -> {
                     DailyData d = DailyData.fromJson(data);
-                    fetch.add(d.withId(new DailyId(id)));
+                    if (interval.contains(d.date())) {
+                        fetch.add(d.withId(new DailyId(id)));
+                    }
                 }));
 
                 callback.accept(ok(new DailyFetchList(new ImmutableList<>(fetch))));

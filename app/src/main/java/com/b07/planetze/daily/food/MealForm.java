@@ -24,7 +24,7 @@ public final class MealForm implements DailyForm<MealDaily> {
         FormBuilder fb = new FormBuilder();
         type = fb.add("Type of meal", ChoiceField
                 .withChoices("Beef", "Pork", "Chicken", "Fish", "Plant-based"));
-        number = fb.add("Number of servings consumed", IntField.POSITIVE);
+        number = fb.add("Number of servings consumed", IntField.create());
         definition = fb.build();
     }
 

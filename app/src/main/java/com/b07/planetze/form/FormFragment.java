@@ -29,8 +29,14 @@ import com.b07.planetze.util.Util;
 import com.b07.planetze.util.option.Option;
 import com.b07.planetze.util.option.Some;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public final class FormFragment extends Fragment {
-    private FormFragment() {}
+    @NonNull private final List<Fragment> childFragments;
+    private FormFragment() {
+        childFragments = new ArrayList<>();
+    }
 
     public static FormFragment newInstance() {
         return new FormFragment();
@@ -59,25 +65,15 @@ public final class FormFragment extends Fragment {
             FragmentManager mgr = requireActivity().getSupportFragmentManager();
             FragmentTransaction ft = mgr.beginTransaction();
 
-            // Remove previous field fragments
-            for (int i = model.getPreviousTagCounter();
-                 i < model.getTagCounter(); i++) {
-                Option.mapNull(mgr.findFragmentByTag(fragmentTag(i)))
-                        .apply(ft::remove);
-            }
+            childFragments.forEach(ft::remove);
 
-            int count = model.getTagCounter();
-
-            // Add new field fragments
             Util.enumerate(def.fields()).forEach((i, fieldDef) -> {
                 FieldId<?> id = new FieldId<>(form.definition().id(), i);
                 Fragment frag = fieldDef.field().createFragment(id);
-                String tag = fragmentTag(count + i);
 
-                ft.add(R.id.form_fragment_container, frag, tag);
+                ft.add(R.id.form_fragment_container, frag);
+                childFragments.add(frag);
             });
-
-            model.setTagCounter(count + def.fields().size());
 
             ft.commit();
         });
