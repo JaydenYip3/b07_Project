@@ -131,12 +131,53 @@ public class EcoGaugeActivity extends AppCompatActivity implements EcoGaugeOverv
     }
     @Override
     public Map<String, Double> getEmissionsByCategory() {
+        final double[] transport = {0};
+        final double[] energy = {0};
+        final double[] food = {0};
+        final double[] shopping = {0};
+        // Determine the date interval based on the time period
+        DateInterval interval = null;
+        switch (timePeriod) {
+            case "Week":
+                interval = new DateInterval(LocalDate.now().minusWeeks(1), LocalDate.now());
+                break;
+            case "Month":
+                interval = new DateInterval(LocalDate.now().minusMonths(1), LocalDate.now());
+                break;
+            case "Year":
+                interval = new DateInterval(LocalDate.now().minusYears(1), LocalDate.now());
+                break;
+        }
+
+        // Fetch emissions data for the interval
+        FirebaseDb database = new FirebaseDb();
+        database.fetchDailies(interval, result -> {
+            if (result instanceof Ok<DailyFetchList, ?> r) {
+                DailyFetchList list = r.get();
+                Emissions emissions = list.emissions();
+                Log.d(TAG, "emissions: " + emissions);
+
+                for (DailyFetch fetch : list) {
+                    Log.d(TAG, "id: " + fetch.id());
+                    Log.d(TAG, "date: " + fetch.date());
+                    Log.d(TAG, "daily: " + fetch.daily());
+                }
+                Mass transportation = emissions.transport();
+                Mass energyUsage = emissions.energy();
+                Mass foodConsumption = emissions.food();
+                Mass shoppingConsumption = emissions.shopping();
+                transport [0]= transportation.kg();
+                energy [0]= energyUsage.kg();
+                food[0] = foodConsumption.kg();
+                shopping[0] = shoppingConsumption.kg();
+            }
+        });
         // Dummy data, replace with real calculation
         return Map.of(
-                "Transportation", 120.0,
-                "Energy use", 80.0,
-                "Food consumption", 60.0,
-                "Shopping/consumption", 40.0
+                "Transportation", transport [0],
+                "Energy use", energy [0],
+                "Food consumption", food[0],
+                "Shopping/consumption", shopping[0]
         );
     }
     @Override
