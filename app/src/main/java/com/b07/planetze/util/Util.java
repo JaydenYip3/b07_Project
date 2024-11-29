@@ -1,11 +1,22 @@
 package com.b07.planetze.util;
 
+import static com.b07.planetze.util.option.Option.none;
+import static com.b07.planetze.util.option.Option.some;
+
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.annotation.NonNull;
 
+import com.b07.planetze.util.immutability.ImmutableList;
 import com.b07.planetze.util.iterator.Enumerable;
 import com.b07.planetze.util.iterator.ZipIterable;
+import com.b07.planetze.util.option.Option;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.function.BiConsumer;
+import java.util.function.Function;
 import java.util.function.Supplier;
 
 public final class Util {
@@ -74,5 +85,66 @@ public final class Util {
 
     public static double toDouble(Object o) {
         return ((Number) o).doubleValue();
+    }
+
+    public static <T extends Parcelable> void parcelizeImmutableList(
+            @NonNull ImmutableList<T> list,
+            @NonNull Parcel dest
+    ) {
+        dest.writeInt(list.size());
+        list.forEach(v -> dest.writeParcelable(v, 0));
+    }
+
+    public static <T> void parcelizeImmutableList(
+            @NonNull Parcel dest,
+            @NonNull ImmutableList<T> list,
+            @NonNull BiConsumer<Parcel, T> writeToParcel
+    ) {
+        dest.writeInt(list.size());
+        list.forEach(v -> writeToParcel.accept(dest, v));
+    }
+
+    public static <T> ImmutableList<T> deparcelizeImmutableList(
+            @NonNull Parcel in,
+            @NonNull Function<Parcel, T> createFromParcel
+    ) {
+        return new ImmutableList<>(deparcelizeList(in, createFromParcel));
+    }
+
+    public static <T> void parcelizeList(
+            @NonNull Parcel dest,
+            @NonNull List<T> list,
+            @NonNull BiConsumer<Parcel, T> writeToParcel
+    ) {
+        dest.writeInt(list.size());
+        list.forEach(v -> writeToParcel.accept(dest, v));
+    }
+
+    public static <T> List<T> deparcelizeList(
+            @NonNull Parcel in,
+            @NonNull Function<Parcel, T> createFromParcel
+    ) {
+        List<T> list = new ArrayList<>();
+        int size = in.readInt();
+        for (int i = 0; i < size; i++) {
+            list.add(createFromParcel.apply(in));
+        }
+        return list;
+    }
+
+    public static void parcelizeOption(
+            @NonNull Parcel dest,
+            Option<?> option
+    ) {
+        dest.writeBoolean(option.isSome());
+        option.apply(dest::writeValue);
+    }
+
+    public static <T> Option<T> deparcelizeOption(
+            @NonNull Parcel in,
+            @NonNull Function<Parcel, T> createFromParcel
+    ) {
+        boolean isSome = in.readBoolean();
+        return isSome ? some(createFromParcel.apply(in)) : none();
     }
 }

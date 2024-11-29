@@ -3,6 +3,9 @@ package com.b07.planetze.form;
 import static com.b07.planetze.util.result.Result.error;
 import static com.b07.planetze.util.result.Result.ok;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.annotation.NonNull;
 
 import com.b07.planetze.form.definition.FieldId;
@@ -26,7 +29,7 @@ import java.util.Set;
  * An editable form.
  * @see FormBuilder
  */
-public final class Form {
+public final class Form implements Parcelable {
     @NonNull private final FormDefinition definition;
     @NonNull private final List<Option<Object>> values;
 
@@ -36,12 +39,19 @@ public final class Form {
      * @see FormBuilder
      */
     public Form(@NonNull FormDefinition definition) {
-        this.definition = definition;
-        this.values = new ArrayList<>(definition.fields().size());
+        this(definition, new ArrayList<>(definition.fields().size()));
 
         definition
                 .fields()
                 .forEach(f -> values.add(f.initialValue().map(v -> v)));
+    }
+
+    private Form(
+            @NonNull FormDefinition definition,
+            @NonNull List<Option<Object>> values
+    ) {
+        this.definition = definition;
+        this.values = values;
     }
 
     public FormDefinition definition() {
@@ -107,5 +117,34 @@ public final class Form {
                 definition.id(),
                 new ImmutableList<>(presentValues)
         ));
+    }
+
+    public static final Parcelable.Creator<Form> CREATOR
+            = new Parcelable.Creator<>() {
+        public Form createFromParcel(Parcel in) {
+            FormDefinition def = FormDefinition.CREATOR.createFromParcel(in);
+            List<Option<Object>> list = new ArrayList<>();
+
+            def.fields().forEach(field -> {
+                list.add(Util.deparcelizeOption(
+                        in, field.field().deparcelizer()::deparcelizeValue));
+            });
+            return new Form(def, list);
+        }
+
+        public Form[] newArray(int size) {
+            return new Form[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeParcelable(definition, 0);
+        values.forEach(v -> Util.parcelizeOption(dest, v));
     }
 }

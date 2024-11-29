@@ -2,9 +2,13 @@ package com.b07.planetze.form.definition;
 
 import static com.b07.planetze.util.result.Result.ok;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.annotation.NonNull;
 
 import com.b07.planetze.form.exception.FieldInitException;
+import com.b07.planetze.util.Util;
 import com.b07.planetze.util.option.Option;
 
 /**
