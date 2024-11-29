@@ -29,16 +29,10 @@ public final class FormViewModel extends ViewModel {
     @NonNull
     private final MutableLiveData<Set<Integer>> missingFields;
 
-    private int fragmentTagCounter;
-    private int previousTagCounter;
-
     public FormViewModel() {
         this.form = new MutableLiveData<>(none());
         this.submission = new MutableLiveData<>(none());
         this.missingFields = new MutableLiveData<>(new HashSet<>(0));
-
-        fragmentTagCounter = 0;
-        previousTagCounter = 0;
     }
 
     public void setForm(@NonNull Option<Form> form) {
@@ -49,34 +43,21 @@ public final class FormViewModel extends ViewModel {
         return form;
     }
 
+    public void setSubmission(@NonNull Option<FormSubmission> submission) {
+        this.submission.setValue(submission);
+    }
+
+    @NonNull
     public LiveData<Option<FormSubmission>> getSubmission() {
         return submission;
     }
 
+    public void setMissingFields(@NonNull Set<Integer> missingFields) {
+        this.missingFields.setValue(missingFields);
+    }
+
+    @NonNull
     public LiveData<Set<Integer>> getMissingFields() {
         return missingFields;
-    }
-
-    public void setTagCounter(int count) {
-        previousTagCounter = fragmentTagCounter;
-        fragmentTagCounter = count;
-    }
-
-    public int getPreviousTagCounter() {
-        return previousTagCounter;
-    }
-
-    public int getTagCounter() {
-        return fragmentTagCounter;
-    }
-
-    public void submit() {
-        Form f = Option
-                .flattenNull(form.getValue())
-                .getOrThrow(new FormException("submit called before setForm"));
-
-        f.submit()
-                .map(Option::some)
-                .match(submission::setValue, missingFields::setValue);
     }
 }

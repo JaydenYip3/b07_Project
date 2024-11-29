@@ -15,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,6 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class FormFragment extends Fragment {
+    @NonNull private static final String TAG = "FormFragment";
     @NonNull private final List<Fragment> childFragments;
     private FormFragment() {
         childFragments = new ArrayList<>();
@@ -60,7 +62,11 @@ public final class FormFragment extends Fragment {
             FormDefinition def = form.definition();
 
             Button submit = view.findViewById(R.id.form_submit);
-            submit.setOnClickListener(btn -> model.submit());
+            submit.setOnClickListener(btn -> {
+                form.submit()
+                        .map(Option::some)
+                        .match(model::setSubmission, model::setMissingFields);
+            });
 
             FragmentManager mgr = requireActivity().getSupportFragmentManager();
             FragmentTransaction ft = mgr.beginTransaction();
