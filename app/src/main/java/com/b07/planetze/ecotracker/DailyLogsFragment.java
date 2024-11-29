@@ -22,12 +22,15 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.b07.planetze.R;
+import com.b07.planetze.daily.DailyType;
 import com.b07.planetze.database.data.DailyFetch;
 import com.b07.planetze.database.data.DailyFetchList;
+import com.b07.planetze.util.Util;
 import com.b07.planetze.util.measurement.Mass;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -139,6 +142,30 @@ public final class DailyLogsFragment extends Fragment {
 
         model.getDailies().observe(getViewLifecycleOwner(), list -> {
             updateSummaries(view, list);
+        });
+
+        List<Integer> ids = Arrays.asList(new Integer[] {
+                R.id.ecotracker_dailylogs_type_driving,
+                R.id.ecotracker_dailylogs_type_publictransit,
+                R.id.ecotracker_dailylogs_type_cyclingorwalking,
+                R.id.ecotracker_dailylogs_type_flight,
+                R.id.ecotracker_dailylogs_type_buyclothes,
+                R.id.ecotracker_dailylogs_type_buyelectronics,
+                R.id.ecotracker_dailylogs_type_buyother
+        });
+        List<DailyType> types = Arrays.asList(new DailyType[] {
+                DailyType.DRIVING,
+                DailyType.PUBLIC_TRANSIT,
+                DailyType.CYCLING_OR_WALKING,
+                DailyType.FLIGHT,
+                DailyType.BUY_CLOTHES,
+                DailyType.BUY_ELECTRONICS,
+                DailyType.BUY_OTHER
+        });
+
+        Util.zip(ids, types).forEach((id, type) -> {
+            TextView text = view.findViewById(id);
+            text.setOnClickListener(v -> model.newDaily(type));
         });
 
         model.fetchDailies();

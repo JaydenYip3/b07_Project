@@ -45,4 +45,10 @@ public final class DailyId implements Comparable<DailyId>, Parcelable {
     public void writeToParcel(@NonNull Parcel dest, int flags) {
         dest.writeString(id);
     }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return String.format("DailyId[id=%s]", id);
+    }
 }

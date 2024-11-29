@@ -57,11 +57,12 @@ public final class EcoTrackerViewModel extends ViewModel {
     }
 
     public void newDaily(@NonNull DailyType type) {
-        state.setValue(new EcoTrackerState.Form(type));
+//        state.setValue(new EcoTrackerState.Form(type));
+        Log.d(TAG, "newDaily: " + type);
     }
 
     public void editDaily(@NonNull DailyId id) {
-
+        Log.d(TAG, "editDaily: " + id);
     }
 
     public void submitDaily(@NonNull Daily daily) {
