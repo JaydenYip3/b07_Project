@@ -24,6 +24,7 @@ import com.b07.planetze.daily.DailyForm;
 import com.b07.planetze.form.Form;
 import com.b07.planetze.form.FormFragment;
 import com.b07.planetze.form.FormViewModel;
+import com.b07.planetze.form.TitledForm;
 
 public final class EcoTrackerActivity extends AppCompatActivity {
     @NonNull private static final String TAG = "EcoTrackerActivity";
@@ -43,16 +44,25 @@ public final class EcoTrackerActivity extends AppCompatActivity {
         DailyForm<?> df = state.dailyType().form();
         Form f = df.definition().createForm();
 
+        model.form.getIsCancelled().observe(this, isCancelled -> {
+            if (isCancelled) {
+                model.form.setIsCancelled(false);
+                model.form.setForm(none());
+                model.ecoTracker.cancelNewDaily();
+            }
+        });
 
         model.form.getSubmission().observe(this, maybeSub -> {
             maybeSub.apply(sub -> {
                 model.form.setSubmission(none());
+                model.form.setForm(none());
                 model.ecoTracker.submitDaily(df.formToDaily(sub));
             });
         });
 
         loadFragment(FormFragment.newInstance());
-        model.form.setForm(some(f));
+        var form = new TitledForm("title", f);
+        model.form.setForm(some(form));
     }
 
     private void startViewLogs(@NonNull Model model,

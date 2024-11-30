@@ -56,14 +56,23 @@ public final class FormFragment extends Fragment {
                 .get(FormViewModel.class);
 
         model.getForm().observe(getViewLifecycleOwner(), maybeForm -> {
-            if (!(maybeForm instanceof Some<Form> some)) {
+            if (!(maybeForm instanceof Some<TitledForm> some)) {
                 return;
             }
-            Form form = some.get();
+            Form form = some.get().form();
+            String title = some.get().title();
             FormDefinition def = form.definition();
 
+            TextView titleText = view.findViewById(R.id.form_title);
+            titleText.setText(title);
+
+            TextView cancel = view.findViewById(R.id.form_cancel);
+            cancel.setOnClickListener(v -> {
+                model.setIsCancelled(true);
+            });
+
             TextView submit = view.findViewById(R.id.form_done);
-            submit.setOnClickListener(btn -> {
+            submit.setOnClickListener(v -> {
                 form.submit()
                         .map(Option::some)
                         .match(model::setSubmission, model::setMissingFields);

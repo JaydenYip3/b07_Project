@@ -23,7 +23,9 @@ import java.util.Set;
 
 public final class FormViewModel extends ViewModel {
     @NonNull
-    private final MutableLiveData<Option<Form>> form;
+    private final MutableLiveData<Option<TitledForm>> form;
+    @NonNull
+    private final MutableLiveData<Boolean> isCancelled;
     @NonNull
     private final MutableLiveData<Option<FormSubmission>> submission;
     @NonNull
@@ -31,16 +33,25 @@ public final class FormViewModel extends ViewModel {
 
     public FormViewModel() {
         this.form = new MutableLiveData<>(none());
+        this.isCancelled = new MutableLiveData<>(false);
         this.submission = new MutableLiveData<>(none());
         this.missingFields = new MutableLiveData<>(new HashSet<>(0));
     }
 
-    public void setForm(@NonNull Option<Form> form) {
+    public void setForm(@NonNull Option<TitledForm> form) {
         this.form.setValue(form);
     }
 
-    public LiveData<Option<Form>> getForm() {
+    public LiveData<Option<TitledForm>> getForm() {
         return form;
+    }
+
+    public LiveData<Boolean> getIsCancelled() {
+        return isCancelled;
+    }
+
+    public void setIsCancelled(boolean b) {
+        isCancelled.setValue(b);
     }
 
     public void setSubmission(@NonNull Option<FormSubmission> submission) {
