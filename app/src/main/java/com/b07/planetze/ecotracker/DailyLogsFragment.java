@@ -152,7 +152,9 @@ public final class DailyLogsFragment extends Fragment {
                 R.id.ecotracker_dailylogs_type_flight,
                 R.id.ecotracker_dailylogs_type_buyclothes,
                 R.id.ecotracker_dailylogs_type_buyelectronics,
-                R.id.ecotracker_dailylogs_type_buyother
+                R.id.ecotracker_dailylogs_type_buyother,
+                R.id.ecotracker_dailylogs_type_meal,
+                R.id.ecotracker_dailylogs_type_energybills
         );
         List<DailyType> types = Arrays.asList(
                 DailyType.DRIVING,
@@ -161,7 +163,9 @@ public final class DailyLogsFragment extends Fragment {
                 DailyType.FLIGHT,
                 DailyType.BUY_CLOTHES,
                 DailyType.BUY_ELECTRONICS,
-                DailyType.BUY_OTHER
+                DailyType.BUY_OTHER,
+                DailyType.MEAL,
+                DailyType.ENERGY_BILLS
         );
 
         Util.zip(ids, types).forEach((id, type) -> {

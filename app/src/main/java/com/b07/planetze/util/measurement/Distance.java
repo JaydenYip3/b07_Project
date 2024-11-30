@@ -20,6 +20,12 @@ public final class Distance extends Measurement<Distance>
     private static final double MILES_TO_METRES = 1609.344;
     private static final double METRES_TO_MILES = 1 / MILES_TO_METRES;
 
+    public enum Unit {
+        KM,
+        M,
+        MI
+    }
+
     private double m;
 
     private Distance(double m) {
@@ -61,6 +67,15 @@ public final class Distance extends Measurement<Distance>
         return new Distance(mi * MILES_TO_METRES);
     }
 
+    @NonNull
+    public static Distance withUnit(Unit unit, double value) {
+        return switch (unit) {
+            case KM -> km(value);
+            case M -> m(value);
+            case MI -> mi(value);
+        };
+    }
+
     /**
      * {@return this distance in metres}
      */
@@ -77,6 +92,14 @@ public final class Distance extends Measurement<Distance>
 
     public double mi() {
         return METRES_TO_MILES * m;
+    }
+
+    public double get(Unit unit) {
+        return switch (unit) {
+            case KM -> km();
+            case M -> m();
+            case MI -> mi();
+        };
     }
 
     @Override

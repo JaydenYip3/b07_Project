@@ -2,14 +2,12 @@ package com.b07.planetze.util.measurement;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 
 import com.b07.planetze.database.ToJson;
 import com.b07.planetze.util.Util;
 
-import java.text.DecimalFormat;
 import java.util.Locale;
 
 /**
@@ -19,6 +17,11 @@ public final class Mass extends Measurement<Mass>
         implements ToJson, Parcelable {
     private static final double POUNDS_TO_KG = 	0.45359237;
     private static final double KG_TO_POUNDS = 1 / POUNDS_TO_KG;
+    public enum Unit {
+        KG,
+        G,
+        LB
+    }
 
     private double kg;
 
@@ -61,6 +64,15 @@ public final class Mass extends Measurement<Mass>
         return new Mass(lb * POUNDS_TO_KG);
     }
 
+    @NonNull
+    public static Mass withUnit(Unit unit, double value) {
+        return switch (unit) {
+            case KG -> Mass.kg(value);
+            case G -> Mass.g(value);
+            case LB -> Mass.lb(value);
+        };
+    }
+
     /**
      * {@return this mass in kilograms}
      */
@@ -80,6 +92,14 @@ public final class Mass extends Measurement<Mass>
      */
     public double lb() {
         return kg * KG_TO_POUNDS;
+    }
+
+    public double get(Unit unit) {
+        return switch (unit) {
+            case KG -> kg();
+            case G -> g();
+            case LB -> lb();
+        };
     }
 
     @Override

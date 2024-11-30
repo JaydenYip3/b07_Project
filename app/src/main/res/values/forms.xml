@@ -15,12 +15,18 @@
     <string name="money_hint">0</string>
     <string name="money_error">Enter a number</string>
 
-    <string name="field_required">0</string>
+    <string name="field_required">This field is required</string>
     <string name="form_submit">Submit</string>
 
     <string-array name="mass_units">
         <item>kg</item>
         <item>g</item>
         <item>lb</item>
+    </string-array>
+
+    <string-array name="distance_units">
+        <item>km</item>
+        <item>m</item>
+        <item>mi</item>
     </string-array>
 </resources>
