@@ -47,8 +47,6 @@ public final class EcoTrackerViewModel extends ViewModel {
 
     public void fetchDailies() {
         db.fetchDailies(DateInterval.day(LocalDate.now()), fetch -> {
-            Log.d(TAG, "fetchDailies: " + fetch);
-            fetch.apply(list -> Log.d(TAG, "fetchDailies size: " + list.size()));
             fetch.apply(dailies::setValue);
         });
     }
@@ -61,11 +59,20 @@ public final class EcoTrackerViewModel extends ViewModel {
         state.setValue(new EcoTrackerState.ViewLogs());
     }
 
+    public void deleteDaily(@NonNull DailyId id,
+                            @NonNull Consumer<DatabaseError> onError) {
+        db.deleteDaily(id, r -> {
+            r.applyError(onError);
+            fetchDailies();
+        });
+
+        state.setValue(new EcoTrackerState.ViewLogs());
+    }
+
     public void submitEditDaily(@NonNull DailyFetch fetch,
                                 @NonNull Consumer<DatabaseError> onError) {
         db.updateDaily(fetch, r -> {
             r.applyError(onError);
-
             fetchDailies();
         });
 
@@ -76,7 +83,6 @@ public final class EcoTrackerViewModel extends ViewModel {
                                @NonNull Consumer<DatabaseError> onError) {
         db.postDaily(LocalDate.now(), daily, post -> {
             post.applyError(onError);
-
             fetchDailies();
         });
 

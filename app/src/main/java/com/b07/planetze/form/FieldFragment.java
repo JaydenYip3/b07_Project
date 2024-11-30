@@ -54,8 +54,6 @@ public abstract class FieldFragment<F extends Field<V>, V> extends Fragment {
         Option<FieldId<V>> f = Option.mapNull(
                 args.getParcelable(FIELD_ID_KEY, FieldId.class));
 
-        Log.d(TAG, "created " + f);
-
         fieldId = f;
     }
 

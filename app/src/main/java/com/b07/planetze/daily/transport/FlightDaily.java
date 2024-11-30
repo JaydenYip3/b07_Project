@@ -96,12 +96,12 @@ public record FlightDaily(
         /**
          * < 1500km
          */
-        SHORT_HAUL("short haul flight"),
+        SHORT_HAUL("short-haul flight"),
 
         /**
          * > 1500km
          */
-        LONG_HAUL("long haul flight");
+        LONG_HAUL("long-haul flight");
 
         @NonNull private final String displayName;
 

@@ -70,9 +70,10 @@ public final class FormFragment extends Fragment {
                         .match(model::setSubmission, model::setMissingFields);
             });
 
-            TextView delete = view.findViewById(R.id.form_delete);
+            View delete = view.findViewById(R.id.form_delete);
+            TextView deleteTextView = view.findViewById(R.id.form_delete_text);
             deleteText.match(text -> {
-                delete.setText(text);
+                deleteTextView.setText(text);
                 delete.setVisibility(View.VISIBLE);
             }, () -> {
                 delete.setVisibility(View.GONE);

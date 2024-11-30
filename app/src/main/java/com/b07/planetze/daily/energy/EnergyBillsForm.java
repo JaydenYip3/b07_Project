@@ -25,7 +25,7 @@ public final class EnergyBillsForm implements DailyForm<EnergyBillsDaily> {
         FormBuilder fb = new FormBuilder();
         type = fb.add("Type of bill", ChoiceField
                 .withChoices("Electricity", "Gas", "Water"));
-        bills = fb.add("", MoneyField.create());
+        bills = fb.add("Bill amount", MoneyField.create());
         definition = fb.build();
     }
 

@@ -50,7 +50,6 @@ public final class FormViewModel extends ViewModel {
     }
 
     public void setIsCancelled(boolean b) {
-        Log.d(TAG, "isCancelled: " + b);
         isCancelled.setValue(b);
     }
 

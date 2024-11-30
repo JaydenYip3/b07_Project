@@ -4,6 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import java.util.Objects;
 
@@ -34,6 +35,16 @@ public final class DailyId implements Comparable<DailyId>, Parcelable {
     @Override
     public int compareTo(@NonNull DailyId o) {
         return id.compareTo(o.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
+
+    @Override
+    public boolean equals(@Nullable Object o) {
+        return (o instanceof DailyId other) && id.equals(other.id);
     }
 
     @Override

@@ -43,7 +43,7 @@ public final class EcoTrackerActivity extends AppCompatActivity {
     private void onSubmitError(@NonNull DatabaseError e) {
         Toast.makeText(
                 this,
-                "Failed to submit: " + e.message(),
+                "Failed to update database: " + e.message(),
                 Toast.LENGTH_SHORT
         ).show();
     }
@@ -59,7 +59,6 @@ public final class EcoTrackerActivity extends AppCompatActivity {
 
             model.form.getSubmission().observe(this, maybeSub -> {
                 maybeSub.apply(sub -> {
-                    Log.d(TAG, "submission1");
                     model.form.reset();
                     model.ecoTracker.submitNewDaily(
                             df.formToDaily(sub), this::onSubmitError);
@@ -74,7 +73,6 @@ public final class EcoTrackerActivity extends AppCompatActivity {
 
             model.form.getSubmission().observe(this, maybeSub -> {
                 maybeSub.apply(sub -> {
-                    Log.d(TAG, "submission2");
                     model.form.reset();
                     model.ecoTracker.submitEditDaily(
                             fetch.withReplacedDaily(df.formToDaily(sub)),
@@ -85,15 +83,14 @@ public final class EcoTrackerActivity extends AppCompatActivity {
 
             model.form.getIsDeleted().observe(this, isDeleted -> {
                 if (isDeleted) {
-                    Log.d(TAG, "deleted");
                     model.form.reset();
-                    // TODO: remove daily
+                    model.ecoTracker.deleteDaily(
+                            fetch.id(), this::onSubmitError);
                 }
             });
         }
 
         model.form.getIsCancelled().observe(this, isCancelled -> {
-            Log.d(TAG, "activity isCancelled: " + isCancelled);
             if (isCancelled) {
                 model.form.reset();
                 model.ecoTracker.cancelForm();
@@ -114,7 +111,6 @@ public final class EcoTrackerActivity extends AppCompatActivity {
     private void startViewLogs(@NonNull Model model,
                                @NonNull EcoTrackerState.ViewLogs state) {
         model.form.removeObservers(this);
-        Log.d(TAG, "startViewLogs");
         model.form.reset();
         loadFragment(DailyLogsFragment.newInstance());
     }
