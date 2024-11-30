@@ -48,6 +48,18 @@ public final class EcoTrackerActivity extends AppCompatActivity {
         ).show();
     }
 
+    private void startHome(@NonNull Model model,
+                           @NonNull EcoTrackerState.Home state) {
+        loadFragment(EcoTrackerHomeFragment.newInstance());
+    }
+
+    private void startViewLogs(@NonNull Model model,
+                               @NonNull EcoTrackerState.ViewLogs state) {
+        model.form.removeObservers(this);
+        model.form.reset();
+        loadFragment(DailyLogsFragment.newInstance());
+    }
+
     private void startForm(@NonNull Model model,
                            @NonNull EcoTrackerState.Form state) {
         model.form.removeObservers(this);
@@ -108,13 +120,6 @@ public final class EcoTrackerActivity extends AppCompatActivity {
         model.form.setForm(some(form));
     }
 
-    private void startViewLogs(@NonNull Model model,
-                               @NonNull EcoTrackerState.ViewLogs state) {
-        model.form.removeObservers(this);
-        model.form.reset();
-        loadFragment(DailyLogsFragment.newInstance());
-    }
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -135,7 +140,9 @@ public final class EcoTrackerActivity extends AppCompatActivity {
         );
 
         model.ecoTracker.getState().observe(this, state -> {
-            if (state instanceof EcoTrackerState.Form form) {
+            if (state instanceof EcoTrackerState.Home home) {
+                startHome(model, home);
+            } else if (state instanceof EcoTrackerState.Form form) {
                 startForm(model, form);
             } else if (state instanceof EcoTrackerState.ViewLogs viewLogs) {
                 startViewLogs(model, viewLogs);

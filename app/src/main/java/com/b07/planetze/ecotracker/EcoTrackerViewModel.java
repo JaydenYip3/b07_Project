@@ -30,7 +30,7 @@ public final class EcoTrackerViewModel extends ViewModel {
     @NonNull private final Database db;
 
     public EcoTrackerViewModel() {
-        this.state = new MutableLiveData<>(new EcoTrackerState.ViewLogs());
+        this.state = new MutableLiveData<>(new EcoTrackerState.Home());
         this.dailies = new MutableLiveData<>(DailyFetchList.empty());
         this.db = new FirebaseDb();
     }
@@ -87,5 +87,13 @@ public final class EcoTrackerViewModel extends ViewModel {
         });
 
         state.setValue(new EcoTrackerState.ViewLogs());
+    }
+
+    public void toActivityLog() {
+        state.setValue(new EcoTrackerState.ViewLogs());
+    }
+
+    public void toHome() {
+        state.setValue(new EcoTrackerState.Home());
     }
 }

@@ -1,5 +1,7 @@
 package com.b07.planetze.auth;
 
+import static android.content.ContentValues.TAG;
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -23,7 +25,12 @@ import com.b07.planetze.WelcomeFragment;
 import com.b07.planetze.common.Emissions;
 import com.b07.planetze.common.User;
 import com.b07.planetze.common.UserId;
-import com.b07.planetze.ecotracker.EcoTrackerActivity;
+import com.b07.planetze.database.firebase.FirebaseDb;
+import com.b07.planetze.home.HomeActivity;
+import com.b07.planetze.onboarding.QuestionsTransportationFragment;
+import com.b07.planetze.util.option.Option;
+import com.b07.planetze.util.option.Some;
+import com.b07.planetze.util.result.Ok;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
@@ -81,8 +88,22 @@ public class AuthActivity extends AppCompatActivity implements LoginCallback, Re
                         }
                         else{
                             Toast.makeText(this, "Logged in as " + user.getEmail(), Toast.LENGTH_SHORT).show();
-
-                            EcoTrackerActivity.start(this);
+                            FirebaseDb fdb = new FirebaseDb();
+                            fdb.fetchOnboardingEmissions(result -> {
+                                result.match(userOption -> { // if this operation was successful:
+                                    userOption.match(// if the user has user info set:
+                                            emissions -> {
+                                                Log.d(TAG, "emissions found");
+                                                HomeActivity.start(this);
+                                            },
+                                            () -> {
+                                                Log.d(TAG, "emissions not found");
+                                                loadFragment(new QuestionsTransportationFragment());
+                                            });
+                                }, dbError -> { // if this operation failed:
+                                    Log.d(TAG, "error: " + dbError);
+                                });
+                            });
                         }
 
                     } else {
@@ -126,10 +147,22 @@ public class AuthActivity extends AppCompatActivity implements LoginCallback, Re
 //                                    }
 //                                });
 
-
+                        FirebaseDb fdb = new FirebaseDb();
+                        Map<String, String> map = new HashMap<>();
+                        map.put("name", username);
+                        map.put("email", email);
+                        map.put("country", "");
+                        User currentUser = User.fromJson(map);
+                        fdb.postUser(currentUser, result -> {
+                            result.match(fbuser -> Log.d(TAG, "user made")
+                                    , dbError -> { // if this operation failed:
+                                        Log.d(TAG, "error: " + dbError);
+                                    });
+                        });
 
                         switchScreens(AuthScreen.EMAIL_CONFIRMATION);
                         confirmEmail();
+
                     } else {
                         Toast.makeText(this, verificationTask.getException().getMessage(), Toast.LENGTH_SHORT).show();
                     }
@@ -161,7 +194,7 @@ public class AuthActivity extends AppCompatActivity implements LoginCallback, Re
                         boolean isVerified = user.isEmailVerified();
                         if (isVerified) {
                             Toast.makeText(getApplicationContext(), "Email verified! Access granted.", Toast.LENGTH_SHORT).show();
-                            //links other page from here
+                            loadFragment(new QuestionsTransportationFragment());
                         } else {
                             handler.postDelayed(this, 5000);
                         }
@@ -258,7 +291,7 @@ public class AuthActivity extends AppCompatActivity implements LoginCallback, Re
     private void loadFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragmentContainer, fragment);
-//        transaction.addToBackStack(fragment.getClass().getName());
+        transaction.addToBackStack(fragment.getClass().getName());
         transaction.commit();
     }
 

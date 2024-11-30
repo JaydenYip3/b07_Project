@@ -8,6 +8,7 @@ import com.b07.planetze.daily.DailyType;
  * A sum type representing EcoTracker screens.
  */
 public sealed interface EcoTrackerState {
+    record Home() implements EcoTrackerState {}
     record ViewLogs() implements EcoTrackerState {}
     record Form(@NonNull FormAction action) implements EcoTrackerState {}
 }
