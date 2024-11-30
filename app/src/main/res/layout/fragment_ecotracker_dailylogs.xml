@@ -61,6 +61,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="30dp"
+                    android:text="Total emissions"
                     android:textColor="@color/dark"
                     app:layout_constraintTop_toTopOf="parent" />
 

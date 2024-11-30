@@ -49,7 +49,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="16kg" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -75,7 +76,8 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/ecotracker_dailyfetch_split"
         app:layout_constraintEnd_toStartOf="@+id/ecotracker_dailyfetch_indicator"
-        app:layout_constraintStart_toEndOf="@+id/ecotracker_dailyfetch_emissions_bg" />
+        app:layout_constraintStart_toEndOf="@+id/ecotracker_dailyfetch_emissions_bg"
+        tools:text="Activity" />
 
     <TextView
         android:id="@+id/ecotracker_dailyfetch_summary"
@@ -89,7 +91,8 @@
         android:textStyle="italic"
         app:layout_constraintEnd_toStartOf="@+id/ecotracker_dailyfetch_indicator"
         app:layout_constraintStart_toEndOf="@+id/ecotracker_dailyfetch_emissions_bg"
-        app:layout_constraintTop_toTopOf="@+id/ecotracker_dailyfetch_split" />
+        app:layout_constraintTop_toTopOf="@+id/ecotracker_dailyfetch_split"
+        tools:text="Summary" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/ecotracker_dailyfetch_split"
