@@ -9,6 +9,6 @@ import com.b07.planetze.daily.DailyType;
  */
 public sealed interface EcoTrackerState {
     record Home() implements EcoTrackerState {}
-    record ViewLogs() implements EcoTrackerState {}
+    record ViewLogs(boolean isBackFromForm) implements EcoTrackerState {}
     record Form(@NonNull FormAction action) implements EcoTrackerState {}
 }

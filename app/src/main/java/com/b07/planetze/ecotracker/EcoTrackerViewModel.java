@@ -60,7 +60,7 @@ public final class EcoTrackerViewModel extends ViewModel {
     }
 
     public void cancelForm() {
-        state.setValue(new EcoTrackerState.ViewLogs());
+        state.setValue(new EcoTrackerState.ViewLogs(true));
     }
 
     public void deleteDaily(@NonNull DailyId id,
@@ -70,7 +70,7 @@ public final class EcoTrackerViewModel extends ViewModel {
             fetchDailies();
         });
 
-        state.setValue(new EcoTrackerState.ViewLogs());
+        state.setValue(new EcoTrackerState.ViewLogs(true));
     }
 
     public void submitEditDaily(@NonNull DailyFetch fetch,
@@ -80,7 +80,7 @@ public final class EcoTrackerViewModel extends ViewModel {
             fetchDailies();
         });
 
-        state.setValue(new EcoTrackerState.ViewLogs());
+        state.setValue(new EcoTrackerState.ViewLogs(true));
     }
 
     public void submitNewDaily(@NonNull Daily daily,
@@ -90,7 +90,7 @@ public final class EcoTrackerViewModel extends ViewModel {
             fetchDailies();
         });
 
-        state.setValue(new EcoTrackerState.ViewLogs());
+        state.setValue(new EcoTrackerState.ViewLogs(true));
     }
 
     public void setDate(@NonNull LocalDate date) {
@@ -108,7 +108,7 @@ public final class EcoTrackerViewModel extends ViewModel {
     }
 
     public void toActivityLog() {
-        state.setValue(new EcoTrackerState.ViewLogs());
+        state.setValue(new EcoTrackerState.ViewLogs(false));
     }
 
     public void toHome() {

@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.transition.TransitionInflater;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -97,6 +98,17 @@ public final class FormFragment extends Fragment {
 
             ft.commit();
         });
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+//        var inflater = TransitionInflater.from(requireContext());
+//        setEnterTransition(
+//                inflater.inflateTransition(R.transition.slide_right));
+//
+//        setExitTransition(
+//                inflater.inflateTransition(R.transition.slide_right));
     }
 
     @NonNull
