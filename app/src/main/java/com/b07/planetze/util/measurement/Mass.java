@@ -8,7 +8,10 @@ import androidx.annotation.NonNull;
 import com.b07.planetze.database.ToJson;
 import com.b07.planetze.util.Util;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Locale;
+import java.util.function.Supplier;
 
 /**
  * A measurement of mass.
@@ -98,6 +101,22 @@ public final class Mass extends Measurement<Mass>
         return kg / 1000;
     }
 
+    public double gigagrams() {
+        return kg / 1e6;
+    }
+
+    public double teragrams() {
+        return kg / 1e9;
+    }
+
+    public double petagrams() {
+        return kg / 1e12;
+    }
+
+    public double exagrams() {
+        return kg / 1e15;
+    }
+
     public double get(Unit unit) {
         return switch (unit) {
             case KG -> kg();
@@ -118,18 +137,18 @@ public final class Mass extends Measurement<Mass>
 
     @NonNull
     public String format() {
-        if (g() < 10) {
-            return String.format(Locale.US, "%.1fg", g());
-        } else if (g() < 1000) {
-            return String.format(Locale.US, "%.0fg", g());
-        } else if (kg() < 10) {
-            return String.format(Locale.US, "%.1fkg", kg());
-        } else if (kg() < 1000) {
-            return String.format(Locale.US, "%.0fkg", kg());
-        } else if (megagrams() < 10) {
-            return String.format(Locale.US, "%.1fMg", megagrams());
-        } else if (megagrams() < 10000) {
-            return String.format(Locale.US, "%.0fMg", megagrams());
+        List<Double> values = List.of(g(), kg(), megagrams(), gigagrams(),
+                teragrams(), petagrams(), exagrams());
+        List<String> units = List.of("g", "kg", "Mg", "Gg", "Tg", "Pg", "Eg");
+
+        for (var item : Util.zip(values, units)) {
+            double value = item.left();
+            String unit = item.right();
+            if (value < 10) {
+                return String.format(Locale.US, "%.1f%s", value, unit);
+            } else if (value < 1000) {
+                return String.format(Locale.US, "%.0f%s", value, unit);
+            }
         }
         return String.format(Locale.US, "%3.1ekg", kg());
     }
