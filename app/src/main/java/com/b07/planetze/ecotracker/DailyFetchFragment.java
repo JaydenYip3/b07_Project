@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -24,21 +25,29 @@ public final class DailyFetchFragment extends Fragment {
     @NonNull private static final String TAG = "DailyFetchFragment";
     @NonNull private static final String ARG_DAILY_FETCH = "daily_fetch";
     @NonNull private static final String ARG_PROPORTION = "proportion";
+    @NonNull private static final String ARG_SHOW_PROPORTION_BAR = "show_bar";
 
     @NonNull private Option<DailyFetch> dailyFetch;
     private double emissionsProportion;
+    private boolean showProportionBar;
 
     private DailyFetchFragment() {
         dailyFetch = none();
         emissionsProportion = 0;
+        showProportionBar = false;
     }
 
-    public static DailyFetchFragment newInstance(DailyFetch fetch,
-                                                 double emissionsProportion) {
+    @NonNull
+    public static DailyFetchFragment newInstance(
+            @NonNull DailyFetch fetch,
+            double emissionsProportion,
+            boolean showProportionBar
+    ) {
         DailyFetchFragment fragment = new DailyFetchFragment();
         Bundle args = new Bundle();
         args.putParcelable(ARG_DAILY_FETCH, fetch);
         args.putDouble(ARG_PROPORTION, emissionsProportion);
+        args.putBoolean(ARG_SHOW_PROPORTION_BAR, showProportionBar);
         fragment.setArguments(args);
         return fragment;
     }
@@ -64,6 +73,16 @@ public final class DailyFetchFragment extends Fragment {
                 R.id.ecotracker_dailyfetch_emissions);
         emissions.setText(fetch.emissions().total().format());
 
+        ConstraintLayout emissionsBg = view.findViewById(
+                R.id.ecotracker_dailyfetch_emissions_bg);
+        ConstraintSet set = new ConstraintSet();
+        set.clone(emissionsBg);
+        set.constrainPercentWidth(
+                R.id.ecotracker_dailyfetch_emissions_proportion,
+                (float) (showProportionBar ? emissionsProportion : 0)
+        );
+        set.applyTo(emissionsBg);
+
         ConstraintLayout layout = view.findViewById(
                 R.id.ecotracker_dailyfetch_layout);
         layout.setClipToOutline(true);
@@ -85,6 +104,8 @@ public final class DailyFetchFragment extends Fragment {
                 args.getParcelable(ARG_DAILY_FETCH, DailyFetch.class));
 
         emissionsProportion = args.getDouble(ARG_PROPORTION);
+
+        showProportionBar = args.getBoolean(ARG_SHOW_PROPORTION_BAR);
     }
 
     @Override

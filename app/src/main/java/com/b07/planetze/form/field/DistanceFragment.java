@@ -57,7 +57,6 @@ public final class DistanceFragment
                      @NonNull View view,
                      @NonNull String s,
                      @NonNull Distance.Unit unit) {
-
         TextView errorText = view.findViewById(R.id.form_distance_error);
 
         double value;
@@ -117,7 +116,10 @@ public final class DistanceFragment
                     }
                 };
 
-                set(id, form, view, input.getText().toString(), distanceUnit[0]);
+                String text = input.getText().toString();
+                if (!text.isEmpty()) {
+                    set(id, form, view, text, distanceUnit[0]);
+                }
             }
 
             @Override

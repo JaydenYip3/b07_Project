@@ -6,7 +6,6 @@ import static com.b07.planetze.util.option.Option.some;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -57,7 +56,11 @@ public final class EcoTrackerActivity extends AppCompatActivity {
                                @NonNull EcoTrackerState.ViewLogs state) {
         model.form.removeObservers(this);
         model.form.reset();
-        loadFragment(DailyLogsFragment.newInstance());
+        if (state.isBackFromForm()) {
+            backToFragment(DailyLogsFragment.newInstance());
+        } else {
+            loadFragment(DailyLogsFragment.newInstance());
+        }
     }
 
     private void startForm(@NonNull Model model,
@@ -109,7 +112,7 @@ public final class EcoTrackerActivity extends AppCompatActivity {
             }
         });
 
-        loadFragment(FormFragment.newInstance());
+        enterFragment(FormFragment.newInstance());
 
         var form = new FormOptions(
                 f,
@@ -150,11 +153,33 @@ public final class EcoTrackerActivity extends AppCompatActivity {
         });
     }
 
+    private void enterFragment(@NonNull Fragment fragment) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .setCustomAnimations(
+                        R.anim.slide_enter_from_right,
+                        R.anim.slide_exit_into_left
+                )
+                .replace(R.id.ecotracker_fragment_container, fragment)
+                .commit();
+    }
+
+    private void backToFragment(@NonNull Fragment fragment) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .setCustomAnimations(
+                        R.anim.slide_enter_from_left,
+                        R.anim.slide_exit_into_right
+                )
+                .replace(R.id.ecotracker_fragment_container, fragment)
+                .commit();
+    }
+
     private void loadFragment(@NonNull Fragment fragment) {
-        FragmentTransaction transaction = getSupportFragmentManager()
+        FragmentTransaction ft = getSupportFragmentManager()
                 .beginTransaction();
-        transaction.replace(R.id.ecotracker_fragment_container, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
+
+        ft.replace(R.id.ecotracker_fragment_container, fragment);
+        ft.commit();
     }
 }

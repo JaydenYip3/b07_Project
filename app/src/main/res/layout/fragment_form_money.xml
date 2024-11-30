@@ -52,7 +52,7 @@ tools:context=".form.field.MoneyFragment">
             android:background="@drawable/form_input"
             android:ems="10"
             android:gravity="center_vertical"
-            android:hint="0"
+            android:hint="0.0"
             android:inputType="number|numberDecimal"
             android:textSize="38sp" />
     </LinearLayout>

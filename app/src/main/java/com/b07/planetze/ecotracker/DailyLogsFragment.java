@@ -12,6 +12,7 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.transition.TransitionInflater;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,6 +29,7 @@ import com.b07.planetze.util.Util;
 import com.b07.planetze.util.measurement.Mass;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -56,6 +58,12 @@ public final class DailyLogsFragment extends Fragment {
             typeExit.setVisibility(View.VISIBLE);
             typeLayout.setVisibility(View.VISIBLE);
 
+            typeExit.setAlpha(0f);
+            typeExit.animate()
+                    .alpha(0.4f)
+                    .setDuration(200)
+                    .setListener(null);
+
             ObjectAnimator animation = ObjectAnimator.ofFloat(
                     typeLayout, "translationY", 0f);
             animation.setDuration(200);
@@ -68,8 +76,28 @@ public final class DailyLogsFragment extends Fragment {
         View typeExit = view.findViewById(R.id.ecotracker_dailylogs_type_exit);
         FrameLayout typeLayout = view.findViewById(
                 R.id.ecotracker_dailylogs_type_layout);
+        typeExit.setOnClickListener(v -> {});
 
-        typeExit.setVisibility(View.INVISIBLE);
+        typeExit.animate()
+                .alpha(0f)
+                .setDuration(200)
+                .setListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationEnd(
+                    @NonNull Animator animation) {
+                typeExit.setVisibility(View.GONE);
+                typeExit.setOnClickListener(v -> closeTypeSelector(view));
+            }
+            @Override
+            public void onAnimationStart(
+                    @NonNull Animator animation) {}
+            @Override
+            public void onAnimationCancel(
+                    @NonNull Animator animation) {}
+            @Override
+            public void onAnimationRepeat(
+                    @NonNull Animator animation) {}
+        });
 
         typeLayout.post(() -> {
             typeLayout.setTranslationY(0);
@@ -84,7 +112,7 @@ public final class DailyLogsFragment extends Fragment {
                 public void onAnimationEnd(Animator animation) {
                     super.onAnimationEnd(animation);
 
-                    typeLayout.setVisibility(View.INVISIBLE);
+                    typeLayout.setVisibility(View.GONE);
                 }
             });
         });
@@ -110,7 +138,7 @@ public final class DailyLogsFragment extends Fragment {
                     ? 0 : emissions.kg() / total.kg();
 
             Fragment f = DailyFetchFragment.newInstance(
-                    fetch, proportion);
+                    fetch, proportion, list.size() > 1);
 
             ft.add(R.id.ecotracker_dailylogs_dailysummaries, f);
             summaries.add(f);
@@ -133,10 +161,21 @@ public final class DailyLogsFragment extends Fragment {
         FloatingActionButton add = view.findViewById(
                 R.id.ecotracker_dailylogs_add);
 
+        Button date = view.findViewById(R.id.ecotracker_dailylogs_date);
+        date.setOnClickListener(v -> {
+            new DatePickerFragment().show(
+                    requireActivity().getSupportFragmentManager(), "dateFrag");
+        });
+
         typeExit.setOnClickListener(v -> closeTypeSelector(view));
         typeClose.setOnClickListener(v -> closeTypeSelector(view));
 
         add.setOnClickListener(v -> openTypeSelector(view));
+
+        model.getDate().observe(getViewLifecycleOwner(), d -> {
+            var pattern = DateTimeFormatter.ofPattern("EEE LLL dd, uuuu");
+            date.setText(d.format(pattern));
+        });
 
         model.getDailies().observe(getViewLifecycleOwner(), list -> {
             updateSummaries(view, list);
@@ -177,13 +216,14 @@ public final class DailyLogsFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_ecotracker_dailylogs,
                 container, false);
     }

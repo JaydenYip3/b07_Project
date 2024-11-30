@@ -24,4 +24,8 @@
         <item name="cornerSize">50%</item>
     </style>
 
+    <style name="Theme.Planetze.DatePicker" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/teal</item>
+    </style>
+
 </resources>
