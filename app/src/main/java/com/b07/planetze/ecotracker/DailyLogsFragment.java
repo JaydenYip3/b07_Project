@@ -57,6 +57,12 @@ public final class DailyLogsFragment extends Fragment {
             typeExit.setVisibility(View.VISIBLE);
             typeLayout.setVisibility(View.VISIBLE);
 
+            typeExit.setAlpha(0f);
+            typeExit.animate()
+                    .alpha(0.4f)
+                    .setDuration(200)
+                    .setListener(null);
+
             ObjectAnimator animation = ObjectAnimator.ofFloat(
                     typeLayout, "translationY", 0f);
             animation.setDuration(200);
@@ -69,8 +75,28 @@ public final class DailyLogsFragment extends Fragment {
         View typeExit = view.findViewById(R.id.ecotracker_dailylogs_type_exit);
         FrameLayout typeLayout = view.findViewById(
                 R.id.ecotracker_dailylogs_type_layout);
+        typeExit.setOnClickListener(v -> {});
 
-        typeExit.setVisibility(View.INVISIBLE);
+        typeExit.animate()
+                .alpha(0f)
+                .setDuration(200)
+                .setListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationEnd(
+                    @NonNull Animator animation) {
+                typeExit.setVisibility(View.GONE);
+                typeExit.setOnClickListener(v -> closeTypeSelector(view));
+            }
+            @Override
+            public void onAnimationStart(
+                    @NonNull Animator animation) {}
+            @Override
+            public void onAnimationCancel(
+                    @NonNull Animator animation) {}
+            @Override
+            public void onAnimationRepeat(
+                    @NonNull Animator animation) {}
+        });
 
         typeLayout.post(() -> {
             typeLayout.setTranslationY(0);
@@ -85,7 +111,7 @@ public final class DailyLogsFragment extends Fragment {
                 public void onAnimationEnd(Animator animation) {
                     super.onAnimationEnd(animation);
 
-                    typeLayout.setVisibility(View.INVISIBLE);
+                    typeLayout.setVisibility(View.GONE);
                 }
             });
         });
