@@ -25,7 +25,6 @@
             android:layout_width="110dp"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/teal"
-            android:text="Thu 28"
             android:textColor="@color/lightgray"
             android:textSize="16sp"
             android:textStyle="bold"
@@ -61,7 +60,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginTop="30dp"
-                    android:text="Total emissions"
                     android:textColor="@color/dark"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -70,7 +68,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="14dp"
-                    android:text="10.3kg CO2e"
                     android:textColor="@color/dark"
                     android:textSize="34sp"
                     android:textStyle="bold"

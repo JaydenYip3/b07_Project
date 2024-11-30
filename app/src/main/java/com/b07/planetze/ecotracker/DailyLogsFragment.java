@@ -110,7 +110,7 @@ public final class DailyLogsFragment extends Fragment {
                     ? 0 : emissions.kg() / total.kg();
 
             Fragment f = DailyFetchFragment.newInstance(
-                    fetch, proportion);
+                    fetch, proportion, list.size() > 1);
 
             ft.add(R.id.ecotracker_dailylogs_dailysummaries, f);
             summaries.add(f);
