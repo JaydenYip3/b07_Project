@@ -17,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -61,7 +62,7 @@ public final class DailyLogsFragment extends Fragment {
             ObjectAnimator animation = ObjectAnimator.ofFloat(
                     typeLayout, "translationY", 0f);
             animation.setDuration(200);
-            animation.setInterpolator(new AccelerateDecelerateInterpolator());
+            animation.setInterpolator(new DecelerateInterpolator());
             animation.start();
         });
     }
@@ -79,7 +80,7 @@ public final class DailyLogsFragment extends Fragment {
             ObjectAnimator animation = ObjectAnimator.ofFloat(
                     typeLayout, "translationY", typeLayout.getHeight());
             animation.setDuration(200);
-            animation.setInterpolator(new AccelerateDecelerateInterpolator());
+            animation.setInterpolator(new DecelerateInterpolator());
             animation.start();
             animation.addListener(new AnimatorListenerAdapter() {
                 @Override
@@ -165,7 +166,10 @@ public final class DailyLogsFragment extends Fragment {
 
         Util.zip(ids, types).forEach((id, type) -> {
             TextView text = view.findViewById(id);
-            text.setOnClickListener(v -> model.newDaily(type));
+            text.setOnClickListener(v -> {
+                closeTypeSelector(view);
+                model.newDaily(type);
+            });
         });
 
         model.fetchDailies();

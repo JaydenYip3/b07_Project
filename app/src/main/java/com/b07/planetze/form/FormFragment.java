@@ -21,6 +21,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.b07.planetze.R;
 import com.b07.planetze.form.definition.FieldId;
@@ -61,7 +62,7 @@ public final class FormFragment extends Fragment {
             Form form = some.get();
             FormDefinition def = form.definition();
 
-            Button submit = view.findViewById(R.id.form_submit);
+            TextView submit = view.findViewById(R.id.form_done);
             submit.setOnClickListener(btn -> {
                 form.submit()
                         .map(Option::some)

@@ -20,7 +20,7 @@
     <EditText
         android:id="@+id/form_distance_input"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="57dp"
         android:ems="10"
         android:hint="@string/distance_hint"
         android:inputType="numberDecimal" />

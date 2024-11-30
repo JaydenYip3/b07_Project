@@ -42,6 +42,16 @@ public final class Duration extends Measurement<Duration>
     }
 
     /**
+     * {@return a new duration given minutes}
+     *
+     * @param mins a value in minutes
+     */
+    @NonNull
+    public static Duration mins(double mins) {
+        return new Duration(60 * mins);
+    }
+
+    /**
      * {@return a new duration given hours}
      *
      * @param h a value in hours
