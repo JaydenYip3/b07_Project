@@ -11,9 +11,11 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -77,6 +79,7 @@ public class QuestionsTransportationFragment extends Fragment implements Adapter
         // Specify the layout to use when the list of choices appears.
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner.
+
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
 
@@ -109,74 +112,74 @@ public class QuestionsTransportationFragment extends Fragment implements Adapter
             }
         });
 
+
+
+
         return view;
     }
 
     public void ownCar(@NonNull View view) {
-        TextView question4 = view.findViewById(R.id.textView4);
-        TextView question5 = view.findViewById(R.id.textView5);
-        TextView question6 = view.findViewById(R.id.textView6);
-        TextView question7 = view.findViewById(R.id.textView7);
+        // Make all the car-related views visible
         view.findViewById(R.id.textView2).setVisibility(View.VISIBLE);
         view.findViewById(R.id.radioGroup2).setVisibility(View.VISIBLE);
         view.findViewById(R.id.textView3).setVisibility(View.VISIBLE);
         view.findViewById(R.id.radioGroup3).setVisibility(View.VISIBLE);
-        question4.setText(R.string.survey_question4);
-        question5.setText(R.string.survey_question5);
-        question6.setText(R.string.survey_question6);
-        question7.setText(R.string.survey_question7);
-        ConstraintLayout constraintLayout = view.findViewById(R.id.parentLayout);
 
-        // Create a ConstraintSet and clone the current layout constraints
-        ConstraintSet constraintSet = new ConstraintSet();
-        constraintSet.clone(constraintLayout);
-
-        // Clear any existing constraints that might prevent repositioning
-        constraintSet.clear(R.id.textView4, ConstraintSet.TOP);
-        constraintSet.clear(R.id.textView4, ConstraintSet.START);
-        constraintSet.clear(R.id.textView4, ConstraintSet.END);
-
-        // Set new constraints to move the TextView to the bottom-center of the parent
-        constraintSet.connect(R.id.textView4, ConstraintSet.TOP, R.id.radioGroup3, ConstraintSet.BOTTOM, 16);
-        constraintSet.connect(R.id.textView4, ConstraintSet.START, R.id.radioGroup3, ConstraintSet.START, 0);
-        constraintSet.connect(R.id.textView4, ConstraintSet.END, R.id.radioGroup3, ConstraintSet.END, 0);
-
-        // Apply the new constraints to the layout
-        constraintSet.applyTo(constraintLayout);
-    }
-    public void notOwnCar(@NonNull View view) {
+        // Update the text for questions 4 to 7
         TextView question4 = view.findViewById(R.id.textView4);
         TextView question5 = view.findViewById(R.id.textView5);
         TextView question6 = view.findViewById(R.id.textView6);
         TextView question7 = view.findViewById(R.id.textView7);
-        view.findViewById(R.id.textView2).setVisibility(View.INVISIBLE);
-        view.findViewById(R.id.radioGroup2).setVisibility(View.INVISIBLE);
-        view.findViewById(R.id.textView3).setVisibility(View.INVISIBLE);
-        view.findViewById(R.id.radioGroup3).setVisibility(View.INVISIBLE);
+
+        question4.setText(R.string.survey_question4);
+        question5.setText(R.string.survey_question5);
+        question6.setText(R.string.survey_question6);
+        question7.setText(R.string.survey_question7);
+
+        // Adjust question 4's position to appear below radioGroup3
+        LinearLayout parentLayout = view.findViewById(R.id.parentLayout);
+        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) question4.getLayoutParams();
+
+        layoutParams.topMargin = 16; // Add margin between question4 and radioGroup3
+        question4.setLayoutParams(layoutParams);
+
+        // Ensure question4 follows radioGroup3 in the layout hierarchy
+        parentLayout.removeView(question4); // Remove it first
+        parentLayout.addView(question4, parentLayout.indexOfChild(view.findViewById(R.id.radioGroup3)) + 1);
+    }
+
+    public void notOwnCar(@NonNull View view) {
+        // Get references to TextViews for questions
+        TextView question4 = view.findViewById(R.id.textView4);
+        TextView question5 = view.findViewById(R.id.textView5);
+        TextView question6 = view.findViewById(R.id.textView6);
+        TextView question7 = view.findViewById(R.id.textView7);
+
+        // Set text to alternate questions
         question4.setText(R.string.survey_question4alt);
         question5.setText(R.string.survey_question5alt);
         question6.setText(R.string.survey_question6alt);
         question7.setText(R.string.survey_question7alt);
 
-        ConstraintLayout constraintLayout = view.findViewById(R.id.parentLayout);
+        // Hide unrelated views
+        view.findViewById(R.id.textView2).setVisibility(View.GONE);
+        view.findViewById(R.id.radioGroup2).setVisibility(View.GONE);
+        view.findViewById(R.id.textView3).setVisibility(View.GONE);
+        view.findViewById(R.id.radioGroup3).setVisibility(View.GONE);
 
-        // Create a ConstraintSet and clone the current layout constraints
-        ConstraintSet constraintSet = new ConstraintSet();
-        constraintSet.clone(constraintLayout);
+        // Adjust the position of question4
+        LinearLayout parentLayout = view.findViewById(R.id.parentLayout);
+        LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) question4.getLayoutParams();
 
-        // Clear any existing constraints that might prevent repositioning
-        constraintSet.clear(R.id.textView4, ConstraintSet.TOP);
-        constraintSet.clear(R.id.textView4, ConstraintSet.START);
-        constraintSet.clear(R.id.textView4, ConstraintSet.END);
+        // Add margin between question4 and the previous element
+        layoutParams.topMargin = 16;
+        question4.setLayoutParams(layoutParams);
 
-        // Set new constraints to move the TextView to the bottom-center of the parent
-        constraintSet.connect(R.id.textView4, ConstraintSet.TOP, R.id.radioGroup1, ConstraintSet.BOTTOM, 16);
-        constraintSet.connect(R.id.textView4, ConstraintSet.START, R.id.radioGroup1, ConstraintSet.START, 0);
-        constraintSet.connect(R.id.textView4, ConstraintSet.END, R.id.radioGroup1, ConstraintSet.END, 0);
-
-        // Apply the new constraints to the layout
-        constraintSet.applyTo(constraintLayout);
+        // Ensure question4 follows radioGroup1 in the layout hierarchy
+        parentLayout.removeView(question4); // Remove the view first
+        parentLayout.addView(question4, parentLayout.indexOfChild(view.findViewById(R.id.radioGroup1)) + 1);
     }
+
 
     public void onSubmit(@NonNull View v) {
         RadioButton b11 = v.findViewById(R.id.radioButton11);
@@ -211,6 +214,12 @@ public class QuestionsTransportationFragment extends Fragment implements Adapter
         RadioButton b73 = v.findViewById(R.id.radioButton73);
         RadioButton b74 = v.findViewById(R.id.radioButton74);
         RadioButton b75 = v.findViewById(R.id.radioButton75);
+        Spinner spinner = v.findViewById(R.id.countries);
+
+        if (spinner.getSelectedItem().toString().equals("***Select a Country***")){
+            Toast.makeText(v.getContext(), "Please select a valid country", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
         if((b11.isChecked() || b12.isChecked())
                 && (b41.isChecked() || b42.isChecked() || b43.isChecked() || b44.isChecked())
@@ -280,6 +289,9 @@ public class QuestionsTransportationFragment extends Fragment implements Adapter
             emissions[0] = transportEmissionsKgs;
             Log.d(TAG, "emissions: " + emissions[0] + emissions[1] + emissions[2] + emissions[3]);
             loadFragment(new QuestionsFoodFragment(emissions));
+        }
+        else{
+            Toast.makeText(v.getContext(), "Please complete all the questions.", Toast.LENGTH_SHORT).show();
         }
     }
     public void onItemSelected(AdapterView<?> parent, View view,

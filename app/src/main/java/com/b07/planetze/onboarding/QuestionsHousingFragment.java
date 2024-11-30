@@ -2,6 +2,7 @@ package com.b07.planetze.onboarding;
 
 import static android.content.ContentValues.TAG;
 
+import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,7 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -51,7 +54,7 @@ public class QuestionsHousingFragment extends Fragment{
         View view = inflater.inflate(R.layout.fragment_questions_housing, container, false);
 
 
-        Button buttonBack = view.findViewById(R.id.back);
+        ImageButton buttonBack = view.findViewById(R.id.back);
 
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -151,6 +154,9 @@ public class QuestionsHousingFragment extends Fragment{
             emissions[2] = housingEmissionsKgs;
             Log.d(TAG, "emissions: " + emissions[0] + emissions[1] + emissions[2] + emissions[3]);
             loadFragment(new QuestionsConsumptionFragment(emissions));
+        }
+        else{
+            Toast.makeText(v.getContext(), "Please complete all the questions.", Toast.LENGTH_SHORT).show();
         }
     }
     private void loadFragment(Fragment fragment) {

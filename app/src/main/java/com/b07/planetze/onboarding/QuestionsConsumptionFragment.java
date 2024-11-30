@@ -10,8 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -47,7 +49,7 @@ public class QuestionsConsumptionFragment extends Fragment{
 
 
         Log.d(TAG, "emissions: " + emissions[0] + emissions[1] + emissions[2] + emissions[3]);
-        Button buttonBack = view.findViewById(R.id.back);
+        ImageButton buttonBack = view.findViewById(R.id.back);
 
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -151,6 +153,9 @@ public class QuestionsConsumptionFragment extends Fragment{
             emissions[3] = consumptionEmissionsKgs;
             Log.d(TAG, "emissions: " + emissions[0] + emissions[1] + emissions[2] + emissions[3]);
             loadFragment(new CalcDisplayFragment(emissions));
+        }
+        else{
+            Toast.makeText(v.getContext(), "Please complete all the questions.", Toast.LENGTH_SHORT).show();
         }
     }
     private void loadFragment(Fragment fragment) {
