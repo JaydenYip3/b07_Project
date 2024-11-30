@@ -11,30 +11,47 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.b07.planetze.R;
-import com.b07.planetze.database.firebase.FirebaseDb;
 
-public class EcoTrackerHomeFragment extends Fragment {
+public final class EcoTrackerHomeFragment extends Fragment {
+    private EcoTrackerHomeFragment() {}
 
-    FirebaseDb db = new FirebaseDb();
+    @NonNull
+    public static EcoTrackerHomeFragment newInstance() {
+        return new EcoTrackerHomeFragment();
+    }
 
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_ecotracker_home, container, false);
+    public void onViewCreated(@NonNull View view,
+                              @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        EcoTrackerViewModel model = new ViewModelProvider(requireActivity())
+                .get(EcoTrackerViewModel.class);
+
+        View toActivityLog = view.findViewById(
+                R.id.ecotracker_home_activitylog);
+        toActivityLog.setOnClickListener(v -> {
+            model.toActivityLog();
+        });
 
         ImageButton previousPage = view.findViewById(R.id.previousPage);
         TextView daily_emission = view.findViewById(R.id.daily_emissions);
-
 
         //TODO daily_emission.setText(db.);
         previousPage.setOnClickListener(v -> {
             requireActivity().finish();
         });
+    }
 
-
-        return view;
+    @NonNull
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(
+                R.layout.fragment_ecotracker_home, container, false);
     }
 
 

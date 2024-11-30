@@ -1,9 +1,14 @@
 package com.b07.planetze.daily.transport;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.annotation.NonNull;
 
 import com.b07.planetze.common.Emissions;
 import com.b07.planetze.daily.DailyException;
+import com.b07.planetze.util.measurement.Distance;
+import com.b07.planetze.util.measurement.ImmutableDistance;
 import com.b07.planetze.util.measurement.ImmutableDuration;
 import com.b07.planetze.util.measurement.Mass;
 import com.b07.planetze.daily.Daily;
@@ -37,6 +42,12 @@ public record PublicTransitDaily(
 
     @NonNull
     @Override
+    public String summary() {
+        return duration.format() + " on " + transitType.displayName();
+    }
+
+    @NonNull
+    @Override
     public DailyType type() {
         return DailyType.PUBLIC_TRANSIT;
     }
@@ -59,9 +70,45 @@ public record PublicTransitDaily(
         return map;
     }
 
+    public static final Parcelable.Creator<PublicTransitDaily> CREATOR
+            = new Parcelable.Creator<>() {
+        public PublicTransitDaily createFromParcel(Parcel in) {
+            return new PublicTransitDaily(
+                    TransitType.valueOf(in.readString()),
+                    ImmutableDuration.CREATOR.createFromParcel(in)
+            );
+        }
+
+        public PublicTransitDaily[] newArray(int size) {
+            return new PublicTransitDaily[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeString(transitType.name());
+        dest.writeParcelable(duration, 0);
+    }
+
     public enum TransitType {
-        BUS,
-        TRAIN,
-        SUBWAY
+        BUS("bus"),
+        TRAIN("train"),
+        SUBWAY("subway");
+
+        @NonNull private final String displayName;
+
+        TransitType(@NonNull String displayName) {
+            this.displayName = displayName;
+        }
+
+        @NonNull
+        public String displayName() {
+            return displayName;
+        }
     }
 }

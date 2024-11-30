@@ -33,10 +33,10 @@ public class FormTest {
                 .initially(1));
 
         FieldId<Integer> f2 = fb.add("f2", IntField
-                .POSITIVE
+                .create()
                 .initially(3));
 
-        FieldId<Integer> f3 = fb.add("f3", IntField.POSITIVE);
+        FieldId<Integer> f3 = fb.add("f3", IntField.create());
 
         FormDefinition def = fb.build();
         Form form = def.createForm();

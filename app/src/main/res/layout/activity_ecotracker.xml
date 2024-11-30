@@ -5,12 +5,14 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
     tools:context=".ecotracker.EcoTrackerActivity">
 
     <FrameLayout
         android:id="@+id/ecotracker_fragment_container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/white">
 
     </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

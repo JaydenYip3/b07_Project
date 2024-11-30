@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="ecotracker_dailyfetch_arrow_description">right arrow</string>
+
+    <string name="ecotracker_dailylogs_add_description">Log a new activity</string>
+    <string name="ecotracker_dailylogs_close_description">Close menu</string>
+
+    <string name="ecotracker_dailylogs_co2e">CO2e</string>
+
+    <string name="ecotracker_dailylogs_type_title">Log new activity</string>
+
+    <string name="ecotracker_dailylogs_type_driving">Driving</string>
+    <string name="ecotracker_dailylogs_type_publictransit">Public transit</string>
+    <string name="ecotracker_dailylogs_type_cyclingorwalking">Cycling / walking</string>
+    <string name="ecotracker_dailylogs_type_flight">Flight</string>
+
+    <string name="ecotracker_dailylogs_type_meal">Food consumption</string>
+
+    <string name="ecotracker_dailylogs_type_buyclothes">Clothes shopping</string>
+    <string name="ecotracker_dailylogs_type_buyelectronics">Electronics shopping</string>
+    <string name="ecotracker_dailylogs_type_buyother">Other shopping</string>
+
+    <string name="ecotracker_dailylogs_type_energybills">Energy bills</string>
+
+    <dimen name="ecotracker_dailylogs_type_item_padding">20dp</dimen>
+    <dimen name="ecotracker_dailylogs_type_item_height">50dp</dimen>
+    <dimen name="ecotracker_dailylogs_type_item_text_size">18sp</dimen>
+    <color name="ecotracker_dailylogs_type_item_text_color">@color/dark_bluegray</color>
+    <drawable name="ecotracker_dailylogs_type_item_foreground">?attr/selectableItemBackground</drawable>
+    <dimen name="ecotracker_dailylogs_type_separator_height">1px</dimen>
+    <color name="ecotracker_dailylogs_type_separator_color">@color/gray</color>
+</resources>

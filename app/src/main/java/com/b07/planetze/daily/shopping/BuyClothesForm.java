@@ -2,6 +2,7 @@ package com.b07.planetze.daily.shopping;
 
 import androidx.annotation.NonNull;
 
+import com.b07.planetze.daily.Daily;
 import com.b07.planetze.daily.DailyForm;
 import com.b07.planetze.form.Form;
 import com.b07.planetze.form.FormSubmission;
@@ -19,7 +20,7 @@ public final class BuyClothesForm implements DailyForm<BuyClothesDaily> {
     private BuyClothesForm() {
         FormBuilder fb = new FormBuilder();
         numberItems = fb.add("Number of clothing items purchased",
-                IntField.POSITIVE);
+                IntField.create());
         definition = fb.build();
     }
 
@@ -31,7 +32,8 @@ public final class BuyClothesForm implements DailyForm<BuyClothesDaily> {
 
     @NonNull
     @Override
-    public Form dailyToForm(@NonNull BuyClothesDaily daily) {
+    public Form dailyToForm(@NonNull Daily d) {
+        var daily = (BuyClothesDaily) d;
         Form form = definition.createForm();
 
         form.set(numberItems, daily.numberItems());
