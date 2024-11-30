@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -21,10 +22,12 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.b07.planetze.R;
 import com.b07.planetze.daily.DailyForm;
+import com.b07.planetze.database.DatabaseError;
+import com.b07.planetze.database.data.DailyFetch;
 import com.b07.planetze.form.Form;
 import com.b07.planetze.form.FormFragment;
 import com.b07.planetze.form.FormViewModel;
-import com.b07.planetze.form.TitledForm;
+import com.b07.planetze.form.FormOptions;
 
 public final class EcoTrackerActivity extends AppCompatActivity {
     @NonNull private static final String TAG = "EcoTrackerActivity";
@@ -37,36 +40,82 @@ public final class EcoTrackerActivity extends AppCompatActivity {
     private record Model(@NonNull EcoTrackerViewModel ecoTracker,
                          @NonNull FormViewModel form) {}
 
+    private void onSubmitError(@NonNull DatabaseError e) {
+        Toast.makeText(
+                this,
+                "Failed to submit: " + e.message(),
+                Toast.LENGTH_SHORT
+        ).show();
+    }
+
     private void startForm(@NonNull Model model,
                            @NonNull EcoTrackerState.Form state) {
-        model.form.getSubmission().removeObservers(this);
+        model.form.removeObservers(this);
 
-        DailyForm<?> df = state.dailyType().form();
-        Form f = df.definition().createForm();
+        Form f;
+        if (state.action() instanceof FormAction.New action) {
+            DailyForm<?> df = action.type().form();
+            f = df.definition().createForm();
+
+            model.form.getSubmission().observe(this, maybeSub -> {
+                maybeSub.apply(sub -> {
+                    Log.d(TAG, "submission1");
+                    model.form.reset();
+                    model.ecoTracker.submitNewDaily(
+                            df.formToDaily(sub), this::onSubmitError);
+                });
+            });
+
+        } else {
+            var action = (FormAction.Edit) state.action();
+            DailyFetch fetch = action.fetch();
+            DailyForm<?> df = fetch.type().form();
+            f = df.dailyToForm(fetch.daily());
+
+            model.form.getSubmission().observe(this, maybeSub -> {
+                maybeSub.apply(sub -> {
+                    Log.d(TAG, "submission2");
+                    model.form.reset();
+                    model.ecoTracker.submitEditDaily(
+                            fetch.withReplacedDaily(df.formToDaily(sub)),
+                            this::onSubmitError
+                    );
+                });
+            });
+
+            model.form.getIsDeleted().observe(this, isDeleted -> {
+                if (isDeleted) {
+                    Log.d(TAG, "deleted");
+                    model.form.reset();
+                    // TODO: remove daily
+                }
+            });
+        }
 
         model.form.getIsCancelled().observe(this, isCancelled -> {
+            Log.d(TAG, "activity isCancelled: " + isCancelled);
             if (isCancelled) {
-                model.form.setIsCancelled(false);
-                model.form.setForm(none());
-                model.ecoTracker.cancelNewDaily();
+                model.form.reset();
+                model.ecoTracker.cancelForm();
             }
         });
 
-        model.form.getSubmission().observe(this, maybeSub -> {
-            maybeSub.apply(sub -> {
-                model.form.setSubmission(none());
-                model.form.setForm(none());
-                model.ecoTracker.submitDaily(df.formToDaily(sub));
-            });
-        });
-
         loadFragment(FormFragment.newInstance());
-        var form = new TitledForm("title", f);
+
+        var form = new FormOptions(
+                f,
+                state.action().formTitle(),
+                state.action() instanceof FormAction.New
+                        ? none() : some("Delete activity")
+        );
         model.form.setForm(some(form));
     }
 
     private void startViewLogs(@NonNull Model model,
                                @NonNull EcoTrackerState.ViewLogs state) {
+        model.form.removeObservers(this);
+        Log.d(TAG, "startViewLogs");
+        model.form.reset();
         loadFragment(DailyLogsFragment.newInstance());
     }
 
@@ -96,12 +145,11 @@ public final class EcoTrackerActivity extends AppCompatActivity {
                 startViewLogs(model, viewLogs);
             }
         });
-
-//        loadFragment(DailyFetchFragment.newInstance(new DailySummary(new DailyId("hi"), LocalDate.now(), DailyType.CYCLING_OR_WALKING, Emissions.transport(Mass.kg(23))), 0.33));
     }
 
     private void loadFragment(@NonNull Fragment fragment) {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        FragmentTransaction transaction = getSupportFragmentManager()
+                .beginTransaction();
         transaction.replace(R.id.ecotracker_fragment_container, fragment);
         transaction.addToBackStack(null);
         transaction.commit();

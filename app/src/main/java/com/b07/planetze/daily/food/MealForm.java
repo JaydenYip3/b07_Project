@@ -3,6 +3,7 @@ package com.b07.planetze.daily.food;
 
 import androidx.annotation.NonNull;
 
+import com.b07.planetze.daily.Daily;
 import com.b07.planetze.daily.DailyForm;
 import com.b07.planetze.daily.DailyException;
 import com.b07.planetze.form.Form;
@@ -36,7 +37,8 @@ public final class MealForm implements DailyForm<MealDaily> {
 
     @NonNull
     @Override
-    public Form dailyToForm(@NonNull MealDaily daily) {
+    public Form dailyToForm(@NonNull Daily d) {
+        var daily = (MealDaily) d;
         Form form = definition.createForm();
 
         int mealType = switch(daily.mealType()) {

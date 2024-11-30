@@ -3,6 +3,7 @@ package com.b07.planetze.daily.transport;
 
 import androidx.annotation.NonNull;
 
+import com.b07.planetze.daily.Daily;
 import com.b07.planetze.daily.DailyForm;
 import com.b07.planetze.daily.DailyException;
 import com.b07.planetze.form.Form;
@@ -36,7 +37,8 @@ public final class FlightForm implements DailyForm<FlightDaily> {
 
     @NonNull
     @Override
-    public Form dailyToForm(@NonNull FlightDaily daily) {
+    public Form dailyToForm(@NonNull Daily d) {
+        var daily = (FlightDaily) d;
         Form form = definition.createForm();
 
         int flightType = switch(daily.flightType()) {

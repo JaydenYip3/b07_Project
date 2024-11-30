@@ -12,11 +12,9 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -33,7 +31,6 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public final class DailyLogsFragment extends Fragment {
     @NonNull private static final String TAG = "DailyLogsFragment";
@@ -172,7 +169,7 @@ public final class DailyLogsFragment extends Fragment {
             TextView text = view.findViewById(id);
             text.setOnClickListener(v -> {
                 closeTypeSelector(view);
-                model.newDaily(type);
+                model.newForm(new FormAction.New(type));
             });
         });
 

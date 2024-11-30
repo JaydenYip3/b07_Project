@@ -2,6 +2,7 @@ package com.b07.planetze.daily.energy;
 
 import androidx.annotation.NonNull;
 
+import com.b07.planetze.daily.Daily;
 import com.b07.planetze.daily.DailyForm;
 import com.b07.planetze.daily.DailyException;
 import com.b07.planetze.form.Form;
@@ -36,7 +37,8 @@ public final class EnergyBillsForm implements DailyForm<EnergyBillsDaily> {
 
     @NonNull
     @Override
-    public Form dailyToForm(@NonNull EnergyBillsDaily daily) {
+    public Form dailyToForm(@NonNull Daily d) {
+        var daily = (EnergyBillsDaily) d;
         Form form = definition.createForm();
 
         int billType = switch(daily.billType()) {

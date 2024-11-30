@@ -43,7 +43,6 @@ tools:context=".form.field.DistanceFragment">
             android:gravity="right|center_vertical"
             android:hint="0"
             android:inputType="number|numberDecimal"
-            android:maxLength="6"
             android:textSize="38sp" />
 
         <Spinner

@@ -54,7 +54,6 @@ tools:context=".form.field.MoneyFragment">
             android:gravity="center_vertical"
             android:hint="0"
             android:inputType="number|numberDecimal"
-            android:maxLength="5"
             android:textSize="38sp" />
     </LinearLayout>
 

@@ -36,7 +36,6 @@ tools:context=".form.field.IntFragment">
         android:gravity="center_vertical"
         android:hint="0"
         android:inputType="number"
-        android:maxLength="6"
         android:textSize="36sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -24,6 +24,11 @@ public record DailyFetch(
             = (a, b) -> b.emissions().total().compareTo(a.emissions().total());
 
     @NonNull
+    public DailyFetch withReplacedDaily(@NonNull Daily daily) {
+        return new DailyFetch(id, new DailyData(data.date(), daily));
+    }
+
+    @NonNull
     public Emissions emissions() {
         return data.daily().emissions();
     }

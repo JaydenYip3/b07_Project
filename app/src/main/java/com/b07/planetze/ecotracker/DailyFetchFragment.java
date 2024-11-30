@@ -19,7 +19,6 @@ import com.b07.planetze.R;
 import com.b07.planetze.database.data.DailyFetch;
 import com.b07.planetze.ecotracker.exception.EcoTrackerException;
 import com.b07.planetze.util.option.Option;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public final class DailyFetchFragment extends Fragment {
     @NonNull private static final String TAG = "DailyFetchFragment";
@@ -71,7 +70,7 @@ public final class DailyFetchFragment extends Fragment {
 
 
         layout.setOnClickListener(v -> {
-            model.editDaily(fetch.id());
+            model.newForm(new FormAction.Edit(fetch));
         });
     }
 

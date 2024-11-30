@@ -3,16 +3,14 @@ package com.b07.planetze.ecotracker;
 import static com.b07.planetze.util.option.Option.some;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.b07.planetze.common.Emissions;
-import com.b07.planetze.common.User;
 import com.b07.planetze.daily.Daily;
-import com.b07.planetze.daily.DailyType;
 import com.b07.planetze.database.Database;
 import com.b07.planetze.database.DatabaseError;
 import com.b07.planetze.database.data.DailyFetch;
@@ -20,12 +18,9 @@ import com.b07.planetze.database.data.DailyFetchList;
 import com.b07.planetze.database.data.DailyId;
 import com.b07.planetze.database.firebase.FirebaseDb;
 import com.b07.planetze.util.DateInterval;
-import com.b07.planetze.util.option.Option;
-import com.b07.planetze.util.option.Some;
-import com.b07.planetze.util.result.Error;
-import com.b07.planetze.util.result.Ok;
 
 import java.time.LocalDate;
+import java.util.function.Consumer;
 
 public final class EcoTrackerViewModel extends ViewModel {
     @NonNull private final String TAG = "EcoTrackerViewModel";
@@ -58,25 +53,29 @@ public final class EcoTrackerViewModel extends ViewModel {
         });
     }
 
-    public void newDaily(@NonNull DailyType type) {
-//        state.setValue(new EcoTrackerState.Form(type));
-        Log.d(TAG, "newDaily: " + type);
-
-        state.setValue(new EcoTrackerState.Form(type));
+    public void newForm(@NonNull FormAction action) {
+        state.setValue(new EcoTrackerState.Form(action));
     }
 
-    public void cancelNewDaily() {
+    public void cancelForm() {
         state.setValue(new EcoTrackerState.ViewLogs());
     }
 
-    public void editDaily(@NonNull DailyId id) {
-        Log.d(TAG, "editDaily: " + id);
+    public void submitEditDaily(@NonNull DailyFetch fetch,
+                                @NonNull Consumer<DatabaseError> onError) {
+        db.updateDaily(fetch, r -> {
+            r.applyError(onError);
+
+            fetchDailies();
+        });
+
+        state.setValue(new EcoTrackerState.ViewLogs());
     }
 
-    public void submitDaily(@NonNull Daily daily) {
-        Log.d(TAG, "submitDaily: " + daily.summary());
+    public void submitNewDaily(@NonNull Daily daily,
+                               @NonNull Consumer<DatabaseError> onError) {
         db.postDaily(LocalDate.now(), daily, post -> {
-            Log.d(TAG, "postDaily callback: " + post);
+            post.applyError(onError);
 
             fetchDailies();
         });

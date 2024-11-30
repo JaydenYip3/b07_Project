@@ -102,7 +102,10 @@ public final class DistanceFragment
         });
 
         EditText input = view.findViewById(R.id.form_distance_input);
-        form.get(id).map(Object::toString).apply(input::setText);
+        form.get(id)
+                .map(ImmutableDistance::km)
+                .map(Object::toString)
+                .apply(input::setText);
 
         input.addTextChangedListener(new TextWatcher() {
             @Override

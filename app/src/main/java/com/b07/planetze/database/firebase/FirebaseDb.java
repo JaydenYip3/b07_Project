@@ -153,12 +153,11 @@ public final class FirebaseDb implements Database {
     }
 
     public void updateDaily(
-            @NonNull DailyId id,
-            @NonNull Daily update,
+            @NonNull DailyFetch updatedDaily,
             @NonNull Consumer<Result<Unit, DatabaseError>> callback
     ) {
         Map<String, Object> map = new HashMap<>();
-        map.put(id.get(), update.toJson());
+        map.put(updatedDaily.id().get(), updatedDaily.data().toJson());
 
         db.child("dailies").child(userId).updateChildren(map,
                 (err, ref) -> callback.accept(mapFirebaseError(err)));

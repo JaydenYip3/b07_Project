@@ -2,6 +2,7 @@ package com.b07.planetze.daily.shopping;
 
 import androidx.annotation.NonNull;
 
+import com.b07.planetze.daily.Daily;
 import com.b07.planetze.daily.DailyForm;
 import com.b07.planetze.daily.DailyException;
 import com.b07.planetze.form.Form;
@@ -37,7 +38,8 @@ public final class BuyElectronicsForm
 
     @NonNull
     @Override
-    public Form dailyToForm(@NonNull BuyElectronicsDaily daily) {
+    public Form dailyToForm(@NonNull Daily d) {
+        var daily = (BuyElectronicsDaily) d;
         Form form = definition.createForm();
 
         int deviceType = switch(daily.deviceType()) {
