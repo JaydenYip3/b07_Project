@@ -28,6 +28,7 @@ import com.b07.planetze.util.Util;
 import com.b07.planetze.util.measurement.Mass;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -143,6 +144,11 @@ public final class DailyLogsFragment extends Fragment {
         typeClose.setOnClickListener(v -> closeTypeSelector(view));
 
         add.setOnClickListener(v -> openTypeSelector(view));
+
+        model.getDate().observe(getViewLifecycleOwner(), d -> {
+            var pattern = DateTimeFormatter.ofPattern("EEE LLL dd, uuuu");
+            date.setText(d.format(pattern));
+        });
 
         model.getDailies().observe(getViewLifecycleOwner(), list -> {
             updateSummaries(view, list);

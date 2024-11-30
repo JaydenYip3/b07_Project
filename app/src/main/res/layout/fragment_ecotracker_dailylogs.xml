@@ -22,9 +22,10 @@
 
         <Button
             android:id="@+id/ecotracker_dailylogs_date"
-            android:layout_width="110dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/teal"
+            android:minWidth="130dp"
             android:textColor="@color/lightgray"
             android:textSize="16sp"
             android:textStyle="bold"

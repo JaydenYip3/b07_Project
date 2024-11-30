@@ -3,9 +3,6 @@ package com.b07.planetze.ecotracker;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Bundle;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.DatePicker;
 
 import androidx.annotation.NonNull;
@@ -15,30 +12,52 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.b07.planetze.R;
 
-import java.time.Year;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Calendar;
 
-public class DatePickerFragment extends DialogFragment
-        implements DatePickerDialog.OnDateSetListener {
-
-    private static EcoTrackerViewModel model;
+public class DatePickerFragment extends DialogFragment {
+    private EcoTrackerViewModel model;
 
     @NonNull
     @Override
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
-        final Calendar c = Calendar.getInstance();
-        int year = c.get(Calendar.YEAR);
-        int month = c.get(Calendar.MONTH);
-        int day = c.get(Calendar.DAY_OF_MONTH);
-
+    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
         model = new ViewModelProvider(requireActivity())
                 .get(EcoTrackerViewModel.class);
+        LocalDate date = model.getDateValue();
 
-        return new DatePickerDialog(requireContext(),
-                R.style.Theme_Planetze_DatePicker, this, year, month, day);
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.YEAR, date.getYear());
+        c.set(Calendar.MONTH, date.getMonthValue() - 1);
+        c.set(Calendar.DAY_OF_MONTH, date.getDayOfMonth());
+
+        int cYear = c.get(Calendar.YEAR);
+        int cMonth = c.get(Calendar.MONTH);
+        int cDay = c.get(Calendar.DAY_OF_MONTH);
+
+        var d = new DatePickerDialog(
+                requireContext(),
+                R.style.Theme_Planetze_DatePicker,
+                this::onDateSet,
+                cYear,
+                cMonth,
+                cDay
+        );
+
+        d.getDatePicker().init(cYear, cMonth, cDay, this::onDateSet);
+        return d;
     }
 
-    public void onDateSet(DatePicker view, int year, int month, int day) {
-        model.setDate(Year.of(year).atMonth(month).atDay(day));
+    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.YEAR, year);
+        c.set(Calendar.MONTH, month);
+        c.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+        LocalDate date = LocalDateTime.ofInstant(
+                c.toInstant(), c.getTimeZone().toZoneId()).toLocalDate();
+
+        model.setDate(date);
+
+        dismiss();
     }
 }

@@ -20,6 +20,7 @@ import com.b07.planetze.database.firebase.FirebaseDb;
 import com.b07.planetze.util.DateInterval;
 
 import java.time.LocalDate;
+import java.util.Objects;
 import java.util.function.Consumer;
 
 public final class EcoTrackerViewModel extends ViewModel {
@@ -27,11 +28,13 @@ public final class EcoTrackerViewModel extends ViewModel {
 
     @NonNull private final MutableLiveData<EcoTrackerState> state;
     @NonNull private final MutableLiveData<DailyFetchList> dailies;
+    @NonNull private final MutableLiveData<LocalDate> date;
     @NonNull private final Database db;
 
     public EcoTrackerViewModel() {
         this.state = new MutableLiveData<>(new EcoTrackerState.Home());
         this.dailies = new MutableLiveData<>(DailyFetchList.empty());
+        this.date = new MutableLiveData<>(LocalDate.now());
         this.db = new FirebaseDb();
     }
 
@@ -45,8 +48,9 @@ public final class EcoTrackerViewModel extends ViewModel {
         return dailies;
     }
 
+
     public void fetchDailies() {
-        db.fetchDailies(DateInterval.day(LocalDate.now()), fetch -> {
+        db.fetchDailies(DateInterval.day(getDateValue()), fetch -> {
             fetch.apply(dailies::setValue);
         });
     }
@@ -81,7 +85,7 @@ public final class EcoTrackerViewModel extends ViewModel {
 
     public void submitNewDaily(@NonNull Daily daily,
                                @NonNull Consumer<DatabaseError> onError) {
-        db.postDaily(LocalDate.now(), daily, post -> {
+        db.postDaily(getDateValue(), daily, post -> {
             post.applyError(onError);
             fetchDailies();
         });
@@ -90,7 +94,17 @@ public final class EcoTrackerViewModel extends ViewModel {
     }
 
     public void setDate(@NonNull LocalDate date) {
-        Log.d(TAG, "set date: " + date);
+        this.date.setValue(date);
+        fetchDailies();
+    }
+
+    public LiveData<LocalDate> getDate() {
+        return date;
+    }
+
+    @NonNull
+    public LocalDate getDateValue() {
+        return Objects.requireNonNullElse(date.getValue(), LocalDate.now());
     }
 
     public void toActivityLog() {
