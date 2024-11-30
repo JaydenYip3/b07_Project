@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -63,6 +64,18 @@ public final class DailyFetchFragment extends Fragment {
         TextView emissions = view.findViewById(
                 R.id.ecotracker_dailyfetch_emissions);
         emissions.setText(fetch.emissions().total().format());
+
+        ConstraintLayout emissionsBg = view.findViewById(
+                R.id.ecotracker_dailyfetch_emissions_bg);
+        ConstraintSet set = new ConstraintSet();
+        set.clone(emissionsBg);
+        double proportion = emissionsProportion > 0.99
+                ? 0 : emissionsProportion;
+        set.constrainPercentWidth(
+                R.id.ecotracker_dailyfetch_emissions_proportion,
+                (float) proportion
+        );
+        set.applyTo(emissionsBg);
 
         ConstraintLayout layout = view.findViewById(
                 R.id.ecotracker_dailyfetch_layout);

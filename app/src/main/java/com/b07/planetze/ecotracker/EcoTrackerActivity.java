@@ -154,7 +154,6 @@ public final class EcoTrackerActivity extends AppCompatActivity {
         FragmentTransaction transaction = getSupportFragmentManager()
                 .beginTransaction();
         transaction.replace(R.id.ecotracker_fragment_container, fragment);
-        transaction.addToBackStack(null);
         transaction.commit();
     }
 }
