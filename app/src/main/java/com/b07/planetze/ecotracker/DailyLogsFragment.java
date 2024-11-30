@@ -133,6 +133,12 @@ public final class DailyLogsFragment extends Fragment {
         FloatingActionButton add = view.findViewById(
                 R.id.ecotracker_dailylogs_add);
 
+        Button date = view.findViewById(R.id.ecotracker_dailylogs_date);
+        date.setOnClickListener(v -> {
+            new DatePickerFragment().show(
+                    requireActivity().getSupportFragmentManager(), "dateFrag");
+        });
+
         typeExit.setOnClickListener(v -> closeTypeSelector(view));
         typeClose.setOnClickListener(v -> closeTypeSelector(view));
 

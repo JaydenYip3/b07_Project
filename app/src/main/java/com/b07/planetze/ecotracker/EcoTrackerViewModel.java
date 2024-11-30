@@ -89,6 +89,10 @@ public final class EcoTrackerViewModel extends ViewModel {
         state.setValue(new EcoTrackerState.ViewLogs());
     }
 
+    public void setDate(@NonNull LocalDate date) {
+        Log.d(TAG, "set date: " + date);
+    }
+
     public void toActivityLog() {
         state.setValue(new EcoTrackerState.ViewLogs());
     }

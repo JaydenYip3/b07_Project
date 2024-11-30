@@ -41,7 +41,7 @@ tools:context=".form.field.DistanceFragment">
             android:background="@drawable/form_input"
             android:ems="10"
             android:gravity="right|center_vertical"
-            android:hint="0"
+            android:hint="0.0"
             android:inputType="number|numberDecimal"
             android:textSize="38sp" />
 
