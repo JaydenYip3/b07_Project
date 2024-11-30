@@ -97,26 +97,6 @@ public final class Mass extends Measurement<Mass>
         return kg * KG_TO_POUNDS;
     }
 
-    public double megagrams() {
-        return kg / 1000;
-    }
-
-    public double gigagrams() {
-        return kg / 1e6;
-    }
-
-    public double teragrams() {
-        return kg / 1e9;
-    }
-
-    public double petagrams() {
-        return kg / 1e12;
-    }
-
-    public double exagrams() {
-        return kg / 1e15;
-    }
-
     public double get(Unit unit) {
         return switch (unit) {
             case KG -> kg();
@@ -137,20 +117,11 @@ public final class Mass extends Measurement<Mass>
 
     @NonNull
     public String format() {
-        List<Double> values = List.of(g(), kg(), megagrams(), gigagrams(),
-                teragrams(), petagrams(), exagrams());
+        List<Double> values = List.of(
+                g(), kg(), kg/1e3, kg/1e6, kg/1e9, kg/1e12, kg/1e15);
         List<String> units = List.of("g", "kg", "Mg", "Gg", "Tg", "Pg", "Eg");
 
-        for (var item : Util.zip(values, units)) {
-            double value = item.left();
-            String unit = item.right();
-            if (value < 10) {
-                return String.format(Locale.US, "%.1f%s", value, unit);
-            } else if (value < 1000) {
-                return String.format(Locale.US, "%.0f%s", value, unit);
-            }
-        }
-        return String.format(Locale.US, "%3.1ekg", kg());
+        return Util.formatIncreasingSiPrefixes(values, units, kg(), "kg");
     }
 
     @Override

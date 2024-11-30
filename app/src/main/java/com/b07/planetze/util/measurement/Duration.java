@@ -93,12 +93,15 @@ public final class Duration extends Measurement<Duration>
     public String format() {
         long s = (long) this.s;
         if (s < 60) {
-            return s + "s";
+            return s + " seconds";
         } else if (s < 3600) {
-            return String.format(Locale.US, "%dm%02ds", s/60, s % 60);
+            return (s / 60) + " mins";
         }
-        return String.format(
-                Locale.US, "%dh%02dm%02ds", s/3600, (s % 3600)/60, (s % 60));
+
+        long mins = (s % 3600) / 60;
+        long h = s / 3600;
+
+        return mins == 0 ? h + " hours" : h + " hours, " + mins + " mins";
     }
 
     @Override

@@ -15,6 +15,7 @@ import com.b07.planetze.util.option.Option;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -146,5 +147,25 @@ public final class Util {
     ) {
         boolean isSome = in.readBoolean();
         return isSome ? some(createFromParcel.apply(in)) : none();
+    }
+
+    @NonNull
+    public static String formatIncreasingSiPrefixes(
+            @NonNull List<Double> values,
+            @NonNull List<String> units,
+            double defaultValue,
+            @NonNull String defaultUnit
+    ) {
+
+        for (var item : Util.zip(values, units)) {
+            double value = item.left();
+            String unit = item.right();
+            if (value < 10) {
+                return String.format(Locale.US, "%.1f%s", value, unit);
+            } else if (value < 1000) {
+                return String.format(Locale.US, "%.0f%s", value, unit);
+            }
+        }
+        return String.format(Locale.US, "%3.1e%s", defaultValue, defaultUnit);
     }
 }

@@ -10,6 +10,7 @@ import com.b07.planetze.database.ToJson;
 import com.b07.planetze.util.Util;
 
 import java.text.DecimalFormat;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -114,14 +115,11 @@ public final class Distance extends Measurement<Distance>
 
     @NonNull
     public String format() {
-        if (m() < 10) {
-            return String.format(Locale.US, "%.1fm", m());
-        } else if (m() < 1000) {
-            return String.format(Locale.US, "%.0fm", m());
-        } else if (km() < 10) {
-            return String.format(Locale.US, "%.1fkm", km());
-        }
-        return String.format(Locale.US, "%.0fkm", km());
+        List<Double> values = List.of(
+                m(), km(), km()/1e3, km()/1e6, km()/1e9, km()/1e12, km()/1e15);
+        List<String> units = List.of("m", "km", "Mm", "Gm", "Tm", "Pm", "Em");
+
+        return Util.formatIncreasingSiPrefixes(values, units, m(), "m");
     }
 
     @Override

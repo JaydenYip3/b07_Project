@@ -22,6 +22,7 @@ import com.b07.planetze.util.measurement.Distance;
 import com.b07.planetze.util.measurement.ImmutableDistance;
 import com.b07.planetze.form.Form;
 import com.b07.planetze.form.definition.FieldId;
+import com.b07.planetze.util.measurement.ImmutableDuration;
 import com.b07.planetze.util.measurement.Mass;
 
 public final class DistanceFragment
@@ -51,6 +52,25 @@ public final class DistanceFragment
         }
     }
 
+    private void set(@NonNull FieldId<ImmutableDistance> id,
+                     @NonNull Form form,
+                     @NonNull View view,
+                     @NonNull String s,
+                     @NonNull Distance.Unit unit) {
+
+        TextView errorText = view.findViewById(R.id.form_distance_error);
+
+        double value;
+        try {
+            value = Double.parseDouble(s);
+        } catch (NumberFormatException e) {
+            errorText.setText(R.string.distance_error);
+            return;
+        }
+        form.set(id, Distance.withUnit(unit, value).immutableCopy())
+                .match(ok -> errorText.setText(""), errorText::setText);
+    }
+
     @Override
     public void initializeField(
             @NonNull View view,
@@ -62,7 +82,11 @@ public final class DistanceFragment
         TextView name = view.findViewById(R.id.form_distance_name);
         name.setText(fieldName);
 
-        TextView error = view.findViewById(R.id.form_distance_error);
+        EditText input = view.findViewById(R.id.form_distance_input);
+        form.get(id)
+                .map(ImmutableDistance::km)
+                .map(Object::toString)
+                .apply(input::setText);
 
         final Spinner[] unit = {view.findViewById(R.id.form_distance_unit)};
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
@@ -73,13 +97,14 @@ public final class DistanceFragment
         adapter.setDropDownViewResource(R.layout.spinner_form_distance);
         unit[0].setAdapter(adapter);
 
-        final Distance.Unit[] distanceUnit = new Distance.Unit[] {Distance.Unit.KM};
+        final Distance.Unit[] distanceUnit
+                = new Distance.Unit[] {Distance.Unit.KM};
 
         unit[0].setOnItemSelectedListener(
                 new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(
-                    AdapterView<?> parent, View view, int position, long id) {
+                    AdapterView<?> parent, View v, int position, long vid) {
                 String item = (String) parent.getItemAtPosition(position);
 
                 distanceUnit[0] = switch (position) {
@@ -92,7 +117,7 @@ public final class DistanceFragment
                     }
                 };
 
-                Log.d(TAG, "sUnit: " + distanceUnit[0]);
+                set(id, form, view, input.getText().toString(), distanceUnit[0]);
             }
 
             @Override
@@ -100,12 +125,6 @@ public final class DistanceFragment
 
             }
         });
-
-        EditText input = view.findViewById(R.id.form_distance_input);
-        form.get(id)
-                .map(ImmutableDistance::km)
-                .map(Object::toString)
-                .apply(input::setText);
 
         input.addTextChangedListener(new TextWatcher() {
             @Override
@@ -115,16 +134,7 @@ public final class DistanceFragment
             @Override
             public void onTextChanged(
                     @NonNull CharSequence s, int start, int before, int count) {
-                double value;
-                try {
-                    value = Double.parseDouble(s.toString());
-                } catch (NumberFormatException e) {
-                    error.setText(R.string.distance_error);
-                    return;
-                }
-                Log.d(TAG, "fUnit: " + distanceUnit[0]);
-                form.set(id, Distance.withUnit(distanceUnit[0], value).immutableCopy())
-                        .match(ok -> error.setText(""), error::setText);
+                set(id, form, view, s.toString(), distanceUnit[0]);
             }
 
             @Override
@@ -134,9 +144,11 @@ public final class DistanceFragment
 
     @NonNull
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(@NonNull LayoutInflater inflater,
+                             ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_form_distance, container, false);
+        return inflater.inflate(
+                R.layout.fragment_form_distance, container, false);
     }
 }
