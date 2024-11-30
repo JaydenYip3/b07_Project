@@ -15,10 +15,11 @@ tools:context=".form.field.DistanceFragment">
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:textColor="@color/dark"
         android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -27,7 +28,7 @@ tools:context=".form.field.DistanceFragment">
         android:id="@+id/linearLayout"
         android:layout_width="280dp"
         android:layout_height="70dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -43,12 +44,13 @@ tools:context=".form.field.DistanceFragment">
             android:hint="0"
             android:inputType="number|numberDecimal"
             android:maxLength="6"
-            android:textSize="45sp" />
+            android:textSize="38sp" />
 
         <Spinner
             android:id="@+id/form_distance_unit"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:gravity="center_vertical"
             android:spinnerMode="dropdown" />
     </LinearLayout>
 
@@ -57,7 +59,7 @@ tools:context=".form.field.DistanceFragment">
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="10dp"
         android:textColor="@color/dark"

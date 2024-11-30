@@ -14,19 +14,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
         android:textColor="@color/dark"
         android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/form_duration_inputlayout"
-        android:layout_width="215dp"
+        android:layout_width="190dp"
         android:layout_height="80dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -34,7 +35,7 @@
 
         <EditText
             android:id="@+id/form_duration_hours"
-            android:layout_width="72dp"
+            android:layout_width="64dp"
             android:layout_height="match_parent"
             android:background="@drawable/form_input"
             android:ems="10"
@@ -42,7 +43,7 @@
             android:hint="00"
             android:inputType="number"
             android:maxLength="2"
-            android:textSize="45sp" />
+            android:textSize="38sp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -51,11 +52,11 @@
             android:paddingRight="5dp"
             android:text="h"
             android:textColor="@color/dark"
-            android:textSize="45sp" />
+            android:textSize="38sp" />
 
         <EditText
             android:id="@+id/form_duration_minutes"
-            android:layout_width="72dp"
+            android:layout_width="64dp"
             android:layout_height="match_parent"
             android:background="@drawable/form_input"
             android:ems="10"
@@ -63,7 +64,7 @@
             android:hint="00"
             android:inputType="number"
             android:maxLength="2"
-            android:textSize="45sp" />
+            android:textSize="38sp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -71,7 +72,7 @@
             android:gravity="center_vertical"
             android:text="m"
             android:textColor="@color/dark"
-            android:textSize="45sp" />
+            android:textSize="38sp" />
     </LinearLayout>
 
     <TextView
@@ -79,7 +80,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="10dp"
         android:textColor="@color/dark"

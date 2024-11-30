@@ -91,6 +91,8 @@ public final class DistanceFragment
                         yield Distance.Unit.KM;
                     }
                 };
+
+                Log.d(TAG, "sUnit: " + distanceUnit[0]);
             }
 
             @Override
@@ -117,6 +119,7 @@ public final class DistanceFragment
                     error.setText(R.string.distance_error);
                     return;
                 }
+                Log.d(TAG, "fUnit: " + distanceUnit[0]);
                 form.set(id, Distance.withUnit(distanceUnit[0], value).immutableCopy())
                         .match(ok -> error.setText(""), error::setText);
             }

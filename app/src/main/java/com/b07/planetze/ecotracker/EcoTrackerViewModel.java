@@ -71,13 +71,11 @@ public final class EcoTrackerViewModel extends ViewModel {
 
     public void submitDaily(@NonNull Daily daily) {
         Log.d(TAG, "submitDaily: " + daily.summary());
-//        db.postDaily(LocalDate.now(), daily, post -> {
-//            Log.d(TAG, "postDaily callback: " + post);
-//
-//            db.fetchDailies(DateInterval.day(LocalDate.now()), fetch -> {
-//                fetch.apply(dailies::setValue);
-//            });
-//        });
+        db.postDaily(LocalDate.now(), daily, post -> {
+            Log.d(TAG, "postDaily callback: " + post);
+
+            fetchDailies();
+        });
 
         state.setValue(new EcoTrackerState.ViewLogs());
     }

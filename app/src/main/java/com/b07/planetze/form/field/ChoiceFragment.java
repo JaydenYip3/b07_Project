@@ -1,5 +1,6 @@
 package com.b07.planetze.form.field;
 
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -55,10 +56,24 @@ public final class ChoiceFragment extends FieldFragment<ChoiceField, Integer> {
         RadioGroup group = view.findViewById(R.id.form_choice_group);
         group.removeAllViews();
 
+        ColorStateList colorStateList = new ColorStateList(
+                new int[][] {
+                        new int[] {-android.R.attr.state_enabled},
+                        new int[] {android.R.attr.state_enabled}
+                },
+                new int[] {
+                        0xff1b1b1e,
+                        0xff1b1b1e,
+                }
+        );
+
         Util.enumerate(field.choices()).forEach((i, choice) -> {
             RadioButton button = new RadioButton(group.getContext());
             button.setText(choice);
             button.setId(i);
+            button.setTextSize(16);
+            button.setTextColor(0xff1b1b1e);
+            button.setButtonTintList(colorStateList);
 
             if (form.get(id).isSomeAnd(i::equals)) {
                 button.toggle();

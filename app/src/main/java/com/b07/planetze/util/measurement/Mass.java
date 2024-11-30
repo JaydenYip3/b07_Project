@@ -94,6 +94,10 @@ public final class Mass extends Measurement<Mass>
         return kg * KG_TO_POUNDS;
     }
 
+    public double megagrams() {
+        return kg / 1000;
+    }
+
     public double get(Unit unit) {
         return switch (unit) {
             case KG -> kg();
@@ -120,8 +124,14 @@ public final class Mass extends Measurement<Mass>
             return String.format(Locale.US, "%.0fg", g());
         } else if (kg() < 10) {
             return String.format(Locale.US, "%.1fkg", kg());
+        } else if (kg() < 1000) {
+            return String.format(Locale.US, "%.0fkg", kg());
+        } else if (megagrams() < 10) {
+            return String.format(Locale.US, "%.1fMg", megagrams());
+        } else if (megagrams() < 10000) {
+            return String.format(Locale.US, "%.0fMg", megagrams());
         }
-        return String.format(Locale.US, "%.0fkg", kg());
+        return String.format(Locale.US, "%3.1ekg", kg());
     }
 
     @Override

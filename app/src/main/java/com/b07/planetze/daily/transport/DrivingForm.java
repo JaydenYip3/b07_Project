@@ -23,7 +23,7 @@ public final class DrivingForm implements DailyForm<DrivingDaily> {
     private DrivingForm() {
         FormBuilder fb = new FormBuilder();
         distance = fb.add("Distance travelled", DistanceField.create());
-        vehicle = fb.add("VehicleType", ChoiceField
+        vehicle = fb.add("Vehicle type", ChoiceField
                 .withChoices("Gas car", "Electric car", "Motorbike")
                 .initially(0));
         definition = fb.build();
