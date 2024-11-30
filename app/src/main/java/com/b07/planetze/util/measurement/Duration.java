@@ -95,13 +95,16 @@ public final class Duration extends Measurement<Duration>
         if (s < 60) {
             return s + " seconds";
         } else if (s < 3600) {
-            return (s / 60) + " mins";
+            return (s / 60) + " min" + (s/60 == 1 ? "" : "s");
         }
 
         long mins = (s % 3600) / 60;
         long h = s / 3600;
+        String hours = h + " hour" + (h == 1 ? "" : "s");
 
-        return mins == 0 ? h + " hours" : h + " hours, " + mins + " mins";
+        return mins == 0
+                ? hours
+                : hours + " " + mins + " min" + (mins == 1 ? "" : "s");
     }
 
     @Override

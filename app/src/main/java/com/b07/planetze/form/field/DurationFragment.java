@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -69,7 +70,7 @@ public final class DurationFragment
             errorText.setText("Invalid duration");
             return;
         }
-        if (m > 60) {
+        if (m >= 60) {
             errorText.setText("Invalid minutes");
             return;
         }
@@ -100,7 +101,10 @@ public final class DurationFragment
             minutes.setText(String.valueOf(m));
         });
 
-        final String[] components = {"", ""};
+        final String[] components = {
+                hours.getText().toString(),
+                minutes.getText().toString()
+        };
 
         hours.addTextChangedListener(new TextWatcher() {
             @Override
