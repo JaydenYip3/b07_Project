@@ -4,4 +4,4 @@ import androidx.annotation.NonNull;
 
 public record OtherAuthError(@NonNull String message)
         implements LoginError, RegisterError, ResetPasswordError,
-                SendEmailVerificationError {}
+                SendEmailVerificationError, SendPasswordResetError {}

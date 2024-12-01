@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 
 import com.b07.planetze.auth.AuthUser;
 import com.b07.planetze.auth.backend.error.CredentialsError;
+import com.b07.planetze.auth.backend.error.EmptyEmailError;
 import com.b07.planetze.auth.backend.error.EmptyFieldsError;
 import com.b07.planetze.auth.backend.error.LoginError;
 import com.b07.planetze.auth.backend.error.MalformedEmailError;
@@ -61,13 +62,12 @@ public final class FirebaseAuthBackend implements AuthBackend {
         }
         var fbUser = ((Ok<FirebaseUser, ?>) r).get();
 
-        String fbName = fbUser.getDisplayName();
         String fbEmail = fbUser.getEmail();
-        if (fbName == null || fbEmail == null) {
+        if (fbEmail == null) {
             return error("User was improperly initialized");
         }
 
-        return ok(new AuthUser(fbName, fbEmail, fbUser.isEmailVerified()));
+        return ok(new AuthUser(fbEmail, fbUser.isEmailVerified()));
     }
 
     @Override
@@ -163,12 +163,20 @@ public final class FirebaseAuthBackend implements AuthBackend {
             @NonNull String email,
             @NonNull Consumer<Result<Unit, SendPasswordResetError>> callback
     ) {
+        if (email.isEmpty()) {
+            callback.accept(error(new EmptyEmailError()));
+            return;
+        } else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            callback.accept(error(new MalformedEmailError()));
+            return;
+        }
+
         auth.sendPasswordResetEmail(email).addOnCompleteListener(task -> {
             if (task.isSuccessful()) {
                 callback.accept(ok());
             } else {
                 Error<Unit, String> e = getError(task);
-                callback.accept(e.mapError(SendPasswordResetError::new));
+                callback.accept(e.mapError(OtherAuthError::new));
             }
         });
     }
