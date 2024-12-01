@@ -8,6 +8,7 @@ import android.util.Patterns;
 import androidx.annotation.NonNull;
 
 import com.b07.planetze.auth.AuthUser;
+import com.b07.planetze.auth.backend.error.CredentialsError;
 import com.b07.planetze.auth.backend.error.EmptyFieldsError;
 import com.b07.planetze.auth.backend.error.LoginError;
 import com.b07.planetze.auth.backend.error.MalformedEmailError;
@@ -23,6 +24,7 @@ import com.b07.planetze.util.result.Result;
 import com.b07.planetze.util.result.Error;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -88,8 +90,14 @@ public final class FirebaseAuthBackend implements AuthBackend {
             if (task.isSuccessful()) {
                 callback.accept(getAuthUser().mapError(OtherAuthError::new));
             } else {
-                Error<AuthUser, String> error = getError(task);
-                callback.accept(error.mapError(OtherAuthError::new));
+                Exception e = task.getException();
+
+                if (e instanceof FirebaseAuthInvalidCredentialsException) {
+                    callback.accept(error(new CredentialsError()));
+                } else {
+                    Error<AuthUser, String> error = getError(task);
+                    callback.accept(error.mapError(OtherAuthError::new));
+                }
             }
         });
     }

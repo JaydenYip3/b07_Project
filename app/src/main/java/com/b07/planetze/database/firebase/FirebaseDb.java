@@ -45,17 +45,11 @@ import java.util.function.Function;
 public final class FirebaseDb implements Database {
     @NonNull private static final String TAG = "FirebaseDb";
     @NonNull private final DatabaseReference db;
-    @NonNull private final String userId;
     @NonNull private final DailyMap dailies;
 
     private boolean isListeningToDailies;
 
     public FirebaseDb() {
-        FirebaseAuth auth = FirebaseAuth.getInstance();
-        this.userId = Option.mapNull(auth.getCurrentUser())
-                .getOrThrow(new DatabaseException("User not logged in"))
-                .getUid();
-
         this.db = FirebaseDatabase
                 .getInstance("https://planetze-3cc9d-default-rtdb.firebaseio.com")
                 .getReference();
@@ -65,17 +59,28 @@ public final class FirebaseDb implements Database {
         isListeningToDailies = false;
     }
 
+    @NonNull
+    public String userId() {
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+
+        return Option.mapNull(auth.getCurrentUser())
+                .getOrThrow(new DatabaseException("User not logged in"))
+                .getUid();
+    }
+
     public void addDailyListenerIfNotExists() {
         if (isListeningToDailies) {
             return;
         }
         isListeningToDailies = true;
 
-        db.child("dailies").child(userId).addChildEventListener(new ChildEventListener() {
+        db.child("dailies").child(userId()).addChildEventListener(
+                new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot,
                                      @Nullable String previousChildName) {
-                DailyId id = new DailyId(Objects.requireNonNull(snapshot.getKey()));
+                DailyId id = new DailyId(
+                        Objects.requireNonNull(snapshot.getKey()));
                 DailyData d = DailyData.fromJson(snapshot.getValue());
                 dailies.put(d.withId(id));
                 Log.d(TAG, "onChildAdded: " + id.get());
@@ -84,7 +89,8 @@ public final class FirebaseDb implements Database {
             @Override
             public void onChildChanged(@NonNull DataSnapshot snapshot,
                                        @Nullable String previousChildName) {
-                DailyId id = new DailyId(Objects.requireNonNull(snapshot.getKey()));
+                DailyId id = new DailyId(
+                        Objects.requireNonNull(snapshot.getKey()));
                 DailyData d = DailyData.fromJson(snapshot.getValue());
                 dailies.put(d.withId(id));
 
@@ -93,7 +99,8 @@ public final class FirebaseDb implements Database {
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-                DailyId id = new DailyId(Objects.requireNonNull(snapshot.getKey()));
+                DailyId id = new DailyId(
+                        Objects.requireNonNull(snapshot.getKey()));
                 dailies.remove(id);
 
                 Log.d(TAG, "onChildRemoved: " + id.get());
@@ -133,12 +140,12 @@ public final class FirebaseDb implements Database {
             @NonNull User user,
             @NonNull Consumer<Result<Unit, DatabaseError>> callback
     ) {
-        db.child("users").child(userId).setValue(user.toJson(),
+        db.child("users").child(userId()).setValue(user.toJson(),
                 (err, ref) -> callback.accept(mapFirebaseError(err)));
     }
 
     public void fetchUser(@NonNull Consumer<Result<Option<User>, DatabaseError>> callback) {
-        db.child("users").child(userId).get().addOnCompleteListener(
+        db.child("users").child(userId()).get().addOnCompleteListener(
                 task -> callback.accept(mapTask(task, User::fromJson)));
     }
 
@@ -146,12 +153,12 @@ public final class FirebaseDb implements Database {
             @NonNull Emissions emissions,
             @NonNull Consumer<Result<Unit, DatabaseError>> callback
     ) {
-        db.child("onboardingEmissions").child(userId).setValue(emissions.toJson(),
+        db.child("onboardingEmissions").child(userId()).setValue(emissions.toJson(),
                 (err, ref) -> callback.accept(mapFirebaseError(err)));
     }
 
     public void fetchOnboardingEmissions(@NonNull Consumer<Result<Option<Emissions>, DatabaseError>> callback) {
-        db.child("onboardingEmissions").child(userId).get().addOnCompleteListener(
+        db.child("onboardingEmissions").child(userId()).get().addOnCompleteListener(
                 task -> callback.accept(mapTask(task, Emissions::fromJson)));
     }
 
@@ -163,7 +170,7 @@ public final class FirebaseDb implements Database {
         addDailyListenerIfNotExists();
 
         DailyData d = new DailyData(date, daily);
-        db.child("dailies").child(userId).push().setValue(d.toJson(),
+        db.child("dailies").child(userId()).push().setValue(d.toJson(),
                 (err, ref) -> callback.accept(mapFirebaseError(err)));
     }
 
@@ -176,7 +183,7 @@ public final class FirebaseDb implements Database {
         Map<String, Object> map = new HashMap<>();
         map.put(updatedDaily.id().get(), updatedDaily.data().toJson());
 
-        db.child("dailies").child(userId).updateChildren(map,
+        db.child("dailies").child(userId()).updateChildren(map,
                 (err, ref) -> callback.accept(mapFirebaseError(err)));
     }
 
@@ -189,7 +196,7 @@ public final class FirebaseDb implements Database {
         Map<String, Object> map = new HashMap<>();
         map.put(id.get(), null);
 
-        db.child("dailies").child(userId).updateChildren(map,
+        db.child("dailies").child(userId()).updateChildren(map,
                 (err, ref) -> callback.accept(mapFirebaseError(err)));
     }
 
@@ -200,7 +207,7 @@ public final class FirebaseDb implements Database {
         addDailyListenerIfNotExists();
 
         if (dailies.isEmpty()) {
-            db.child("dailies").child(userId).get().addOnCompleteListener(task -> {
+            db.child("dailies").child(userId()).get().addOnCompleteListener(task -> {
                 if (!task.isSuccessful()) {
                     callback.accept(error(new FirebaseError(
                             Objects.requireNonNull(task.getException()))));
