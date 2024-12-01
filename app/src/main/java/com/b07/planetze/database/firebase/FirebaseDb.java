@@ -1,5 +1,6 @@
 package com.b07.planetze.database.firebase;
 
+import static android.content.ContentValues.TAG;
 import static com.b07.planetze.util.result.Result.ok;
 import static com.b07.planetze.util.result.Result.error;
 import static com.b07.planetze.util.option.Option.some;
@@ -10,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.b07.planetze.common.Emissions;
+import com.b07.planetze.common.Habit;
 import com.b07.planetze.common.User;
 import com.b07.planetze.daily.Daily;
 import com.b07.planetze.database.Database;
@@ -20,6 +22,7 @@ import com.b07.planetze.database.data.DailyFetchList;
 import com.b07.planetze.database.data.DailyId;
 import com.b07.planetze.database.data.DailyMap;
 import com.b07.planetze.database.data.DailyData;
+import com.b07.planetze.onboarding.CountryProcessor;
 import com.b07.planetze.util.DateInterval;
 import com.b07.planetze.util.Unit;
 import com.b07.planetze.util.immutability.ImmutableList;
@@ -47,6 +50,7 @@ public final class FirebaseDb implements Database {
     @NonNull private final DatabaseReference db;
     @NonNull private final String userId;
     @NonNull private final DailyMap dailies;
+    @NonNull private final ArrayList<String> habits = new ArrayList<String>();
 
     public FirebaseDb() {
         FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -116,6 +120,57 @@ public final class FirebaseDb implements Database {
         return err == null ? ok() : error(new FirebaseError(err.getMessage()));
     }
 
+    public void fetchHabit(@NonNull Consumer<Result<Option<Habit>, DatabaseError>> callback) {
+        db.child("habits").child(userId).get().addOnCompleteListener(
+                task -> callback.accept(mapTask(task, Habit::fromJson)));
+    }
+
+    public void postHabit(
+            @NonNull String key,
+            @NonNull Consumer<Result<Unit, DatabaseError>> callback
+    ) {
+        fetchHabit(result -> {
+            result.match(habitOption -> { // if this operation was successful:
+                habitOption.match(// if the user has user info set:
+                        dbhabit -> {
+                            ArrayList<String> keys = dbhabit.keys();
+                            keys.add(key);
+                            db.child("habits").child(userId).setValue(dbhabit.toJson(),
+                                    (err, ref) -> callback.accept(mapFirebaseError(err)));
+                        },
+                        () -> {
+                            ArrayList<String> keys = new ArrayList<String>();
+                            keys.add(key);
+                            Habit newHabit = new Habit(keys);
+                            db.child("habits").child(userId).setValue(newHabit.toJson(),
+                                    (err, ref) -> callback.accept(mapFirebaseError(err)));
+                        });
+            }, dbError -> { // if this operation failed:
+                Log.d(TAG, "error: " + dbError);
+            });
+        });
+
+    }
+    public void deleteHabit(
+            @NonNull String key,
+            @NonNull Consumer<Result<Unit, DatabaseError>> callback
+    ) {
+        fetchHabit(result -> {
+            result.match(habitOption -> { // if this operation was successful:
+                habitOption.match(// if the user has user info set:
+                        dbhabit -> {
+                            Log.d(TAG, "found habits");
+                            ArrayList<String> keys = dbhabit.keys();
+                            keys.remove(key);
+                            db.child("habits").child(userId).setValue(dbhabit.toJson(),
+                                    (err, ref) -> callback.accept(mapFirebaseError(err)));
+                        },
+                        () -> Log.d(TAG, "habits nonexistent"));
+            }, dbError -> { // if this operation failed:
+                Log.d(TAG, "error: " + dbError);
+            });
+        });
+    }
     public void postUser(
             @NonNull User user,
             @NonNull Consumer<Result<Unit, DatabaseError>> callback

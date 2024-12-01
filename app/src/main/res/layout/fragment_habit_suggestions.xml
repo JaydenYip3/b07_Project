@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/gray"
+    tools:context=".ecotracker.habits.HabitSuggestionsFragment">
+    <Button
+        android:id="@+id/buttonBack"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:text="@string/back"
+        android:backgroundTint="@color/teal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="Habit Suggestions"
+        android:textColor="@color/dark_bluegray"
+        android:textSize="35sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/buttonBack"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:text="Adopt some eco-friendly habits to help you in make the world a cleaner place!"
+        android:textColor="@color/dark_bluegray"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@id/textView1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+    <Button
+        android:id="@+id/buttonFrag1"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="15dp"
+        android:backgroundTint="@color/teal"
+        android:text="View My Habits"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView2" />
+    <View
+        android:id="@+id/line1"
+        android:layout_width="0dp"
+        android:layout_height="3dp"
+        android:layout_marginTop="2dp"
+        android:background="@color/bluegray"
+        app:layout_constraintStart_toStartOf="@id/buttonFrag1"
+        app:layout_constraintEnd_toEndOf="@id/buttonFrag1"
+        app:layout_constraintTop_toBottomOf="@id/buttonFrag1"/>
+    <Button
+        android:id="@+id/buttonFrag2"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="30dp"
+        android:backgroundTint="@color/teal"
+        android:text="View Suggested Habits"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textView2" />
+    <View
+        android:id="@+id/line2"
+        android:layout_width="0dp"
+        android:layout_height="3dp"
+        android:layout_marginTop="2dp"
+        android:background="@color/bluegray"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="@id/buttonFrag2"
+        app:layout_constraintEnd_toEndOf="@id/buttonFrag2"
+        app:layout_constraintTop_toBottomOf="@id/buttonFrag2"/>
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/buttonFrag1"
+        app:layout_constraintBottom_toTopOf="@id/buttonNext" />
+    <Button
+        android:id="@+id/buttonNext"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        android:text="@string/next"
+        android:backgroundTint="@color/teal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
