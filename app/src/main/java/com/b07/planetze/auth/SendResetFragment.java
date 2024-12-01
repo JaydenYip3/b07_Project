@@ -16,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import com.b07.planetze.R;
+import com.b07.planetze.auth.backend.FirebaseAuthBackend;
 import com.google.firebase.auth.FirebaseAuth;
 
 /**
@@ -37,6 +38,9 @@ public class SendResetFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_send_reset, container, false);
 
+        var presenter = new LoginPresenter(
+                new FirebaseAuthBackend(), (LoginView) requireActivity());
+
         textBoxEmail = view.findViewById(R.id.textBoxEmail);
         buttonReset = view.findViewById(R.id.buttonReset);
         ImageButton btnPrevious = view.findViewById(R.id.previousPage);
@@ -44,7 +48,7 @@ public class SendResetFragment extends Fragment {
         buttonReset.setOnClickListener(v -> {
             String email = textBoxEmail.getText().toString().trim();
 
-            ((SendResetCallback) requireActivity()).sendPasswordResetEmail(email);
+            presenter.sendPasswordResetEmail(email);
         });
 
         btnPrevious.setOnClickListener(v -> {

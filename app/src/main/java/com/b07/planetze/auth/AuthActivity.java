@@ -32,7 +32,9 @@ import com.google.firebase.auth.FirebaseUser;
 /**
  * An activity that deals with user authentication.
  */
-public class AuthActivity extends AppCompatActivity implements RegisterCallback, SendResetCallback, AuthScreenSwitch, EmailConfirmationCallback {
+public class AuthActivity extends AppCompatActivity
+        implements LoginView, RegisterCallback, AuthScreenSwitch,
+        EmailConfirmationCallback {
     private static final String TAG = "AuthActivity";
     private static final String EXTRA_INITIAL_SCREEN = "com.b07.planetze.AUTH_INITIAL_SCREEN";
 
@@ -52,10 +54,26 @@ public class AuthActivity extends AppCompatActivity implements RegisterCallback,
         context.startActivity(intent);
     }
 
-    private void showToast(@NonNull String text) {
+    @Override
+    public void showToast(@NonNull String text) {
         int length = text.length() < 32
                 ? Toast.LENGTH_SHORT : Toast.LENGTH_LONG;
         Toast.makeText(this, text, length).show();
+    }
+
+    @Override
+    public void switchScreens(@NonNull AuthScreen screen) {
+        switch(screen) {
+            case LOGIN -> loadFragment(new LoginFragment());
+            case REGISTER -> loadFragment(new RegisterFragment());
+            case SEND_PASSWORD_RESET -> loadFragment(new SendResetFragment());
+            case EMAIL_CONFIRMATION -> loadFragment(new EmailConfirmationFragment());
+        }
+    }
+
+    @Override
+    public void toHome() {
+        HomeActivity.start(this);
     }
 
     @Override
@@ -129,7 +147,7 @@ public class AuthActivity extends AppCompatActivity implements RegisterCallback,
         handler.post(checkEmailVerification);
     }
 
-    public void resendConfirmationEmail(){
+    public void resendConfirmationEmail() {
         //TODO check for valid user in system
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser currentUser = auth.getCurrentUser();
@@ -143,34 +161,6 @@ public class AuthActivity extends AppCompatActivity implements RegisterCallback,
                     }
                 });
 
-    }
-
-
-    @Override
-    public void sendPasswordResetEmail(@NonNull String email) {
-        Log.d(TAG, "sending password reset email to " + email);
-
-        auth.sendPasswordResetEmail(email, r -> {
-            r.match(ok -> {
-                showToast("Password reset email sent");
-            }, e -> {
-                if (e instanceof OtherAuthError) {
-                    showToast("Error: " + e.message());
-                } else {
-                    showToast(e.message());
-                }
-            });
-        });
-    }
-
-    @Override
-    public void switchScreens(AuthScreen screen) {
-        switch(screen) {
-            case LOGIN -> loadFragment(new LoginFragment());
-            case REGISTER -> loadFragment(new RegisterFragment());
-            case SEND_PASSWORD_RESET -> loadFragment(new SendResetFragment());
-            case EMAIL_CONFIRMATION -> loadFragment(new EmailConfirmationFragment());
-        }
     }
 
     private void loadFragment(Fragment fragment) {
