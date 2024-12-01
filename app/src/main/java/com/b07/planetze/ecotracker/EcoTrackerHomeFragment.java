@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.b07.planetze.R;
+import com.b07.planetze.ecotracker.habits.HabitSuggestionsFragment;
 
 public final class EcoTrackerHomeFragment extends Fragment {
     private EcoTrackerHomeFragment() {}
@@ -34,6 +35,12 @@ public final class EcoTrackerHomeFragment extends Fragment {
                 R.id.ecotracker_home_activitylog);
         toActivityLog.setOnClickListener(v -> {
             model.toActivityLog();
+        });
+
+        View toHabitSuggestions = view.findViewById(
+                R.id.ecotracker_home_habit_suggestions);
+        toHabitSuggestions.setOnClickListener(v -> {
+            loadFragment(new HabitSuggestionsFragment());
         });
 
         ImageButton previousPage = view.findViewById(R.id.previousPage);
@@ -57,7 +64,7 @@ public final class EcoTrackerHomeFragment extends Fragment {
 
     private void loadFragment(Fragment fragment) {
         FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, fragment);
+        transaction.replace(R.id.ecotracker_fragment_container, fragment);
         transaction.addToBackStack(fragment.getClass().getName());
         transaction.commit();
     }

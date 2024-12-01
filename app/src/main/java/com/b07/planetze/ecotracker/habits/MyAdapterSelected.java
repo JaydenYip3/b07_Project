@@ -149,7 +149,7 @@ public class MyAdapterSelected extends RecyclerView.Adapter<MyAdapterSelected.My
                             incr++;
                         }
                     }
-                    
+
                     else if(((String) dailyType.toJson()).equals(targetDailyType)){
                         incr++;
                     }

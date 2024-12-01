@@ -26,6 +26,7 @@ import com.b07.planetze.R;
 import com.b07.planetze.common.Emissions;
 import com.b07.planetze.common.User;
 import com.b07.planetze.database.firebase.FirebaseDb;
+import com.b07.planetze.ecotracker.EcoTrackerHomeFragment;
 import com.b07.planetze.onboarding.QuestionsFoodFragment;
 import com.b07.planetze.onboarding.QuestionsTransportationFragment;
 
@@ -73,15 +74,7 @@ public class HabitSuggestionsFragment extends Fragment {
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //loadFragment(new QuestionsFoodFragment(emissions)); //ecotracker home
-            }
-        });
-
-        Button buttonSubmit = view.findViewById(R.id.buttonNext);
-        buttonSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onSubmit(view);
+                loadFragment(EcoTrackerHomeFragment.newInstance()); //ecotracker home
             }
         });
 
@@ -93,7 +86,7 @@ public class HabitSuggestionsFragment extends Fragment {
     }
     private void loadFragment(Fragment fragment) {
         FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragmentContainer, fragment);
+        transaction.replace(R.id.ecotracker_fragment_container, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
     }
