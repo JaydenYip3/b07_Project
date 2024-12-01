@@ -1,0 +1,119 @@
+{
+  "habit1": {
+    "habitName": "Get an Electric Car",
+    "dailyType": "DRIVING",
+    "category": "Transportation",
+    "description": "Compared to the standard gas car, adopting an electric car can reduce your footprint by over 120 kg of CO2e/km driven!",
+    "potential": 120.0,
+    "tracking": "frequency",
+    "keywords": ["transportation", "electric cars", "cars", "drive", "driving", "efficient", "travel", "travelling", "personal car", "alternative travel"]
+  },
+  "habit2": {
+    "habitName": "Take Public Transportation",
+    "dailyType": "PUBLIC_TRANSIT",
+    "category": "Transportation",
+    "description": "Compared to driving, taking public transit can reduce your carbon footprint by over 99% per km travelled!",
+    "potential": 169.11,
+    "tracking": "frequency",
+    "keywords": ["public transportation","transportation", "transit", "transits", "public transit", "cars", "drive", "driving", "efficient", "travel", "travelling", "alternative travel"]
+  },
+  "habit3": {
+    "habitName": "Walk or Cycle",
+    "dailyType": "CYCLING_OR_WALKING",
+    "category": "Transportation",
+    "description": "Cycling or walking around for shorter distances eliminates 100% of CO2 emissions made by travelling!",
+    "potential": 170.0,
+    "tracking": "frequency",
+    "keywords": ["transportation", "walking", "cycling", "bicycle", "bicycling", "running", "cars", "drive", "driving", "efficient", "travel","travelling", "alternative travel"]
+  },
+  "habit4": {
+    "habitName": "Consolidate Your Flights",
+    "dailyType": "FLIGHT",
+    "category": "Transportation",
+    "description": "When flying, choose a non-stop flight to avoid multiple short flights when possible, because planes emit more CO2 upon takeoff and landing than when cruising in the air!",
+    "potential": 13500.0,
+    "tracking": "frequency",
+    "keywords": ["consolidate your flights","transportation", "flying", "flights", "vacation", "efficient", "travel","travelling"]
+  },
+  "habit5": {
+    "habitName": "Eat Less Meat",
+    "dailyType": "MEAL",
+    "category": "Food",
+    "description": "Aim to minimize meat consumption to 1 serving (3oz) per day! This can save 1-15kgs of CO2e/serving reduced!",
+    "potential": 14.0,
+    "tracking": "frequency",
+    "keywords": ["eat less meat","food", "eating", "meals", "lunch", "dinner", "meats", "beef", "pork","chicken", "fish", "seafoods"]
+  },
+  "habit6": {
+    "habitName": "Adopt a Pescatarian Diet",
+    "dailyType": "MEAL",
+    "category": "Food",
+    "description": "Try adopting a pescatarian diet! That means no to most meats, but you can still eat fish and a bunch of plant-based alternatives available! This can save 0.5-14kgs of CO2e/serving of beef, pork, or chicken substituted with fish.",
+    "potential": 28.0,
+    "tracking": "frequency",
+    "keywords": ["adopt a pescatarian diet","food", "eating", "meals", "lunch", "dinner", "meats", "beef", "pork","chicken", "fish", "seafood", "diets", "dieting","vegan", "vegetarian", "pescatarian", "plant-based", "alternative eating"]
+  },
+  "habit7": {
+    "habitName": "Adopt a Vegan/Vegetarian Diet",
+    "dailyType": "MEAL",
+    "category": "Food",
+    "description": "Try adopting a vegan or vegetarian diet! Both mean staying away from any meat. But don't worry! There's a world of plant-based alternatives that taste just as good! And of course, this can save up to 15kg of CO2e/serving reduced!",
+    "potential": 30.0,
+    "tracking": "frequency",
+    "keywords": ["adopt a vegan diet", "adopt a vegetarian diet","food", "eating", "meals", "lunch", "dinner", "meats", "beef", "pork","chicken", "fish", "seafood", "diets", "dieting", "vegan", "vegetarian", "pescatarian","plant-based", "alternative eating"]
+  },
+  "habit8": {
+    "habitName": "Buy Less Clothes",
+    "dailyType": "BUY_CLOTHES",
+    "category": "Consumption",
+    "description": "Aim to purchase new clothing as rarely as possible. Don't make impulse purchases, and try to avoid trendy clothing that won't end up being worn very much in the long run, and you'll end up saving 15kg of CO2e/clothing item not bought!",
+    "potential": 15.0,
+    "tracking": "frequency",
+    "keywords": ["buy less clothes","consumption","shopping","buying clothes","clothes","purchases"]
+  },
+  "habit9": {
+    "habitName": "Buy Less Electronics",
+    "dailyType": "BUY_ELECTRONICS",
+    "category": "Consumption",
+    "description": "Aim to purchase electronics as rarely as possible. Don't make impulse purchases, and try to avoid always getting the trendy new phone or laptop when your current device is still in use. In not doing so, you can end up saving 70-331kg of CO2e/device not bought!",
+    "potential": 70.0,
+    "tracking": "frequency",
+    "keywords": ["buy less electronics","consumption","shopping","buying electronics","devices","electronics","phones","tablets","laptops","computers","purchases"]
+  },
+  "habit10": {
+    "habitName": "Buy Less Appliances/Furniture",
+    "dailyType": "BUY_OTHER",
+    "category": "Consumption",
+    "description": "Aim to buy appliances or furniture pieces as rarely as possible. Don't make impulse purchases, and avoid thoughtlessly replacing furniture or appliances that are perfectly fine. You can end up saving 80-400kg of CO2e/item not bought!",
+    "potential": 80.0,
+    "tracking": "frequency",
+    "keywords": ["buy less appliances","buy less furniture","consumption","shopping","buying furniture","buying appliances","furniture","appliances","purchases"]
+  },
+  "habit11": {
+    "habitName": "Save Electricity",
+    "dailyType": "ENERGY_BILLS",
+    "category": "Energy",
+    "description": "Reduce your electricity bill by unplugging devices when they're not used, using energy-efficient appliances, using cold water to wash clothes, or even hang-drying your clothes. Not only can a reduced electricity bill save money, but it can also save over 287kg of CO2e/dollar reduced!",
+    "potential": 287.0,
+    "tracking": "extent",
+    "keywords": ["save electricity","housing", "energy","energy bills", "home", "house","electricity bill","saving money"]
+  },
+  "habit12": {
+    "habitName": "Save Gas",
+    "dailyType": "ENERGY_BILLS",
+    "category": "Energy",
+    "description": "Save gas by reducing house cooling in the summer and reduce house heating in the winter. Not only can a reduced gas bill save money, but it can also save over 97kg of CO2e/dollar reduced!",
+    "potential": 97.0,
+    "tracking": "extent",
+    "keywords": ["save gas","housing","energy","energy bills", "home", "house","gas bill", "saving money"]
+  },
+  "habit13": {
+    "habitName": "Save Water",
+    "dailyType": "ENERGY_BILLS",
+    "category": "Energy",
+    "description": "Conserve water by taking shorter showers and turning off the tap when its not used. Not only can a reduced water bill save money, but it can also save over 12kg of CO2e/dollar reduced!",
+    "potential": 24.0,
+    "tracking": "extent",
+    "keywords": ["save water","housing","energy","energy bills", "home", "house","water bill", "saving money"]
+  }
+}
