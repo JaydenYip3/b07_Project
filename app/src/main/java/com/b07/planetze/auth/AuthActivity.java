@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.TextUtils;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -28,17 +27,12 @@ import com.b07.planetze.database.firebase.FirebaseDb;
 import com.b07.planetze.home.HomeActivity;
 import com.b07.planetze.onboarding.QuestionsTransportationFragment;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * An activity that deals with user authentication.
  */
-public class AuthActivity extends AppCompatActivity implements LoginCallback, RegisterCallback, SendResetCallback, AuthScreenSwitch, EmailConfirmationCallback {
+public class AuthActivity extends AppCompatActivity implements RegisterCallback, SendResetCallback, AuthScreenSwitch, EmailConfirmationCallback {
     private static final String TAG = "AuthActivity";
     private static final String EXTRA_INITIAL_SCREEN = "com.b07.planetze.AUTH_INITIAL_SCREEN";
 
@@ -62,36 +56,6 @@ public class AuthActivity extends AppCompatActivity implements LoginCallback, Re
         int length = text.length() < 32
                 ? Toast.LENGTH_SHORT : Toast.LENGTH_LONG;
         Toast.makeText(this, text, length).show();
-    }
-
-    @Override
-    public void login(@NonNull String email, @NonNull String password) {
-        auth.login(email, password, r -> {
-            r.match(user -> {
-                if (!user.isEmailVerified()) {
-                    switchScreens(AuthScreen.EMAIL_CONFIRMATION);
-                    confirmEmail();
-                    return;
-                }
-
-                showToast("Logged in as " + user.email());
-
-                Database db = new FirebaseDb();
-                db.fetchOnboardingEmissions(r2 -> {
-                    r2.match(maybeEmissions -> {
-                        maybeEmissions.match(emissions -> {
-                            HomeActivity.start(this);
-                        }, () -> {
-                            loadFragment(new QuestionsTransportationFragment());
-                        });
-                    }, dbError -> {
-                        showToast(dbError.message());
-                    });
-                });
-            }, e -> {
-                showToast(e.message());
-            });
-        });
     }
 
     @Override
@@ -140,7 +104,7 @@ public class AuthActivity extends AppCompatActivity implements LoginCallback, Re
     }
 
     @Override
-    public void confirmEmail(){
+    public void confirmEmail() {
         Handler handler = new Handler();
         Runnable checkEmailVerification = new Runnable() {
             @Override
@@ -211,7 +175,7 @@ public class AuthActivity extends AppCompatActivity implements LoginCallback, Re
 
     private void loadFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragmentContainer, fragment);
+        transaction.replace(R.id.auth_fragment_container, fragment);
         transaction.addToBackStack(fragment.getClass().getName());
         transaction.commit();
     }
@@ -220,7 +184,7 @@ public class AuthActivity extends AppCompatActivity implements LoginCallback, Re
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_auth);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);

@@ -1,14 +1,8 @@
 package com.b07.planetze.auth;
 
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 
 import com.b07.planetze.auth.backend.error.OtherAuthError;
-import com.b07.planetze.database.Database;
-import com.b07.planetze.database.firebase.FirebaseDb;
-import com.b07.planetze.home.HomeActivity;
-import com.b07.planetze.onboarding.QuestionsTransportationFragment;
 
 public final class LoginPresenter {
     @NonNull private final LoginModel model;
@@ -28,7 +22,7 @@ public final class LoginPresenter {
                 }
 
                 view.showToast("Logged in as " + user.email());
-
+                view.toHome();
             }, e -> {
                 view.showToast(e.message());
             });

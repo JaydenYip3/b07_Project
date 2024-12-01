@@ -6,4 +6,6 @@ public interface LoginView {
     void showToast(@NonNull String message);
 
     void switchScreens(@NonNull AuthScreen screen);
+
+    void toHome();
 }

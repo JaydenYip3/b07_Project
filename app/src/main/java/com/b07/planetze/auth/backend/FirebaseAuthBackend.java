@@ -15,7 +15,6 @@ import com.b07.planetze.auth.backend.error.LoginError;
 import com.b07.planetze.auth.backend.error.MalformedEmailError;
 import com.b07.planetze.auth.backend.error.OtherAuthError;
 import com.b07.planetze.auth.backend.error.RegisterError;
-import com.b07.planetze.auth.backend.error.ResetPasswordError;
 import com.b07.planetze.auth.backend.error.SendEmailVerificationError;
 import com.b07.planetze.auth.backend.error.SendPasswordResetError;
 import com.b07.planetze.util.Unit;

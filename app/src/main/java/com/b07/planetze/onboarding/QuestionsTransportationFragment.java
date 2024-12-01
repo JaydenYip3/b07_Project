@@ -28,12 +28,7 @@ import com.b07.planetze.R;
 
 import com.b07.planetze.common.Emissions;
 import com.b07.planetze.common.User;
-import com.b07.planetze.database.DatabaseError;
 import com.b07.planetze.database.firebase.FirebaseDb;
-import com.b07.planetze.util.Unit;
-import com.b07.planetze.util.measurement.Mass;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -304,7 +299,7 @@ public class QuestionsTransportationFragment extends Fragment implements Adapter
     }
     private void loadFragment(Fragment fragment) {
         FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragmentContainer, fragment);
+        transaction.replace(R.id.onboarding_fragment_container, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
     }
