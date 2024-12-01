@@ -2,6 +2,10 @@ package com.b07.planetze.ecotracker.habits;
 
 import static android.content.ContentValues.TAG;
 
+import static com.b07.planetze.daily.food.MealDaily.MealType.FISH;
+import static com.b07.planetze.daily.food.MealDaily.MealType.PLANT_BASED;
+import static com.b07.planetze.daily.transport.DrivingDaily.VehicleType.ELECTRIC_CAR;
+
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +21,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.b07.planetze.R;
 import com.b07.planetze.common.Habit;
 import com.b07.planetze.daily.DailyType;
+import com.b07.planetze.daily.food.MealDaily;
+import com.b07.planetze.daily.transport.DrivingDaily;
+import com.b07.planetze.daily.transport.FlightDaily;
 import com.b07.planetze.database.data.DailyFetch;
 import com.b07.planetze.database.data.DailyFetchList;
 import com.b07.planetze.database.firebase.FirebaseDb;
@@ -68,11 +75,11 @@ public class MyAdapterSelected extends RecyclerView.Adapter<MyAdapterSelected.My
             DataPoint d4 = null;
             DataPoint d5 = null;
 
-            d1 = new DataPoint(1, dailyFreqInterval(DateInterval.between(LocalDate.now().minusWeeks(5), LocalDate.now().minusWeeks(4)), habitDailyType, db));
-            d2 = new DataPoint(2, dailyFreqInterval(DateInterval.between(LocalDate.now().minusWeeks(4), LocalDate.now().minusWeeks(3)), habitDailyType, db));
-            d3 = new DataPoint(3, dailyFreqInterval(DateInterval.between(LocalDate.now().minusWeeks(3), LocalDate.now().minusWeeks(2)), habitDailyType, db));
-            d4 = new DataPoint(4, dailyFreqInterval(DateInterval.between(LocalDate.now().minusWeeks(2), LocalDate.now().minusWeeks(1)), habitDailyType, db));
-            d5 = new DataPoint(5, dailyFreqInterval(DateInterval.between(LocalDate.now().minusWeeks(1), LocalDate.now()), habitDailyType, db));
+            d1 = new DataPoint(1, dailyFreqInterval(DateInterval.between(LocalDate.now().minusWeeks(5), LocalDate.now().minusWeeks(4)), habit, db));
+            d2 = new DataPoint(2, dailyFreqInterval(DateInterval.between(LocalDate.now().minusWeeks(4), LocalDate.now().minusWeeks(3)), habit, db));
+            d3 = new DataPoint(3, dailyFreqInterval(DateInterval.between(LocalDate.now().minusWeeks(3), LocalDate.now().minusWeeks(2)), habit, db));
+            d4 = new DataPoint(4, dailyFreqInterval(DateInterval.between(LocalDate.now().minusWeeks(2), LocalDate.now().minusWeeks(1)), habit, db));
+            d5 = new DataPoint(5, dailyFreqInterval(DateInterval.between(LocalDate.now().minusWeeks(1), LocalDate.now()), habit, db));
 
             LineGraphSeries<DataPoint> series = new LineGraphSeries<DataPoint>(new DataPoint[]{
                     // on below line we are adding
@@ -106,17 +113,47 @@ public class MyAdapterSelected extends RecyclerView.Adapter<MyAdapterSelected.My
 
 
     }
-    public int dailyFreqInterval (DateInterval interval, String targetDailyType, FirebaseDb database){
+    public int dailyFreqInterval (DateInterval interval, SuggestedHabit habit, FirebaseDb database){
         final int[] count = {0};
         database.fetchDailies(interval, result -> {
             if (result instanceof Ok<DailyFetchList, ?> r) {
                 DailyFetchList list = r.get();
                 int incr = count[0];
+                String targetDailyType = habit.dailyType;
                 for (DailyFetch fetch : list) {
                     DailyType dailyType = fetch.daily().type();
-                    if(((String) dailyType.toJson()).equals(targetDailyType)){
+                    if(targetDailyType == "DRIVING"){  //--------------------needs to account for per day, not per occurence
+                        DrivingDaily drivingDaily = (DrivingDaily)fetch.daily();
+                        if(drivingDaily.vehicleType() == ELECTRIC_CAR){
+                            incr++;
+                        }
+                    }
+                    else if(targetDailyType == "FLIGHT"){
+                        FlightDaily flightDaily = (FlightDaily)fetch.daily();
+                        if(flightDaily.numberFlights() < 2){
+                            incr++;
+                        }
+                    }
+                    else if(targetDailyType == "MEAL"){ //meal and energy bills require further distinction than dailytype
+                        MealDaily mealDaily = (MealDaily)fetch.daily();
+                        if(Objects.equals(habit.header, "Eat Less Meat")
+                                && mealDaily.numberServings() <= 1){
+                            incr++;
+                        }
+                        else if(Objects.equals(habit.header, "Adopt a Pescatarian Diet")
+                                && mealDaily.mealType() == FISH){
+                            incr++;
+                        }
+                        else if(Objects.equals(habit.header, "Adopt a Vegan/Vegetarian Diet")
+                                && mealDaily.mealType() == PLANT_BASED){
+                            incr++;
+                        }
+                    }
+                    
+                    else if(((String) dailyType.toJson()).equals(targetDailyType)){
                         incr++;
                     }
+
                 }
                 count[0] = incr;
             }

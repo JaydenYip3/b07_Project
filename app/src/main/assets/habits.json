@@ -30,7 +30,7 @@
     "habitName": "Consolidate Your Flights",
     "dailyType": "FLIGHT",
     "category": "Transportation",
-    "description": "When flying, choose a non-stop flight to avoid multiple short flights when possible, because planes emit more CO2 upon takeoff and landing than when cruising in the air!",
+    "description": "When flying, choose one non-stop flight to avoid multiple short flights when possible, because planes emit more CO2 upon takeoff and landing than when cruising in the air!",
     "potential": 13500.0,
     "tracking": "frequency",
     "keywords": ["consolidate your flights","transportation", "flying", "flights", "vacation", "efficient", "travel","travelling"]
