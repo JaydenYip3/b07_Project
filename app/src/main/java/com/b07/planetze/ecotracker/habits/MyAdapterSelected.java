@@ -68,11 +68,11 @@ public class MyAdapterSelected extends RecyclerView.Adapter<MyAdapterSelected.My
             DataPoint d4 = null;
             DataPoint d5 = null;
 
-            d1 = new DataPoint(1, dailyFreqInterval(new DateInterval(LocalDate.now().minusWeeks(5), LocalDate.now().minusWeeks(4)), habitDailyType, db));
-            d2 = new DataPoint(2, dailyFreqInterval(new DateInterval (LocalDate.now().minusWeeks(4), LocalDate.now().minusWeeks(3)), habitDailyType, db));
-            d3 = new DataPoint(3, dailyFreqInterval(new DateInterval (LocalDate.now().minusWeeks(3), LocalDate.now().minusWeeks(2)), habitDailyType, db));
-            d4 = new DataPoint(4, dailyFreqInterval(new DateInterval (LocalDate.now().minusWeeks(2), LocalDate.now().minusWeeks(1)), habitDailyType, db));
-            d5 = new DataPoint(5, dailyFreqInterval(new DateInterval (LocalDate.now().minusWeeks(1), LocalDate.now()), habitDailyType, db));
+            d1 = new DataPoint(1, dailyFreqInterval(DateInterval.between(LocalDate.now().minusWeeks(5), LocalDate.now().minusWeeks(4)), habitDailyType, db));
+            d2 = new DataPoint(2, dailyFreqInterval(DateInterval.between(LocalDate.now().minusWeeks(4), LocalDate.now().minusWeeks(3)), habitDailyType, db));
+            d3 = new DataPoint(3, dailyFreqInterval(DateInterval.between(LocalDate.now().minusWeeks(3), LocalDate.now().minusWeeks(2)), habitDailyType, db));
+            d4 = new DataPoint(4, dailyFreqInterval(DateInterval.between(LocalDate.now().minusWeeks(2), LocalDate.now().minusWeeks(1)), habitDailyType, db));
+            d5 = new DataPoint(5, dailyFreqInterval(DateInterval.between(LocalDate.now().minusWeeks(1), LocalDate.now()), habitDailyType, db));
 
             LineGraphSeries<DataPoint> series = new LineGraphSeries<DataPoint>(new DataPoint[]{
                     // on below line we are adding
