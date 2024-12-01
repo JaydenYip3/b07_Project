@@ -38,7 +38,7 @@ import java.util.Map;
 /**
  * An activity that deals with user authentication.
  */
-public class AuthActivity extends AppCompatActivity implements LoginCallback, RegisterCallback, ResetPasswordCallback, SendResetCallback, AuthScreenSwitch, EmailConfirmationCallback {
+public class AuthActivity extends AppCompatActivity implements LoginCallback, RegisterCallback, SendResetCallback, AuthScreenSwitch, EmailConfirmationCallback {
     private static final String TAG = "AuthActivity";
     private static final String EXTRA_INITIAL_SCREEN = "com.b07.planetze.AUTH_INITIAL_SCREEN";
 
@@ -200,37 +200,10 @@ public class AuthActivity extends AppCompatActivity implements LoginCallback, Re
     }
 
     @Override
-    public void resetPassword(
-            @NonNull String code,
-            @NonNull String newPassword,
-            @NonNull String confirmPassword
-    ) {
-        if (TextUtils.isEmpty(code) || TextUtils.isEmpty(newPassword) || TextUtils.isEmpty(confirmPassword)) {
-            Toast.makeText(this, "All fields are required", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        if (!newPassword.equals(confirmPassword)) {
-            Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        auth.resetPassword(code, newPassword, r -> {
-            r.match(u -> {
-                showToast("Password reset successful.");
-                switchScreens(AuthScreen.LOGIN);
-            }, e -> {
-                showToast("Password reset failed: " + e.message());
-            });
-        });
-    }
-
-    @Override
     public void switchScreens(AuthScreen screen) {
         switch(screen) {
             case LOGIN -> loadFragment(new LoginFragment());
             case REGISTER -> loadFragment(new RegisterFragment());
-            case RESET_PASSWORD -> loadFragment(new ResetPasswordFragment());
             case SEND_PASSWORD_RESET -> loadFragment(new SendResetFragment());
             case EMAIL_CONFIRMATION -> loadFragment(new EmailConfirmationFragment());
         }

@@ -28,7 +28,7 @@ public final class LoginPresenter {
                 }
 
                 view.showToast("Logged in as " + user.email());
-                
+
             }, e -> {
                 view.showToast(e.message());
             });

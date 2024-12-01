@@ -6,6 +6,6 @@ package com.b07.planetze.auth;
 public enum AuthScreen {
     LOGIN,
     REGISTER,
-    RESET_PASSWORD,
-    SEND_PASSWORD_RESET, EMAIL_CONFIRMATION,
+    SEND_PASSWORD_RESET,
+    EMAIL_CONFIRMATION,
 }

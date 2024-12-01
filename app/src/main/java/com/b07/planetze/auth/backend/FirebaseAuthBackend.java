@@ -180,38 +180,4 @@ public final class FirebaseAuthBackend implements AuthBackend {
             }
         });
     }
-
-    private void confirmPasswordReset(
-            @NonNull String code,
-            @NonNull String password,
-            @NonNull Consumer<Result<Unit, ResetPasswordError>> callback
-    ) {
-        auth.confirmPasswordReset(code, password)
-                .addOnCompleteListener(task -> {
-
-            if (task.isSuccessful()) {
-                callback.accept(ok());
-            } else {
-                Error<Unit, String> e = getError(task);
-                callback.accept(e.mapError(OtherAuthError::new));
-            }
-        });
-    }
-
-    @Override
-    public void resetPassword(
-            @NonNull String code,
-            @NonNull String password,
-            @NonNull Consumer<Result<Unit, ResetPasswordError>> callback
-    ) {
-        auth.verifyPasswordResetCode(code).addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                confirmPasswordReset(code, password, callback);
-            } else {
-                Error<Unit, String> e = getError(task);
-                callback.accept(
-                        e.mapError(ResetPasswordError.InvalidCode::new));
-            }
-        });
-    }
 }

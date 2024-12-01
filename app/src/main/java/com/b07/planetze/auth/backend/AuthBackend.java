@@ -35,10 +35,4 @@ public interface AuthBackend {
             @NonNull String email,
             @NonNull Consumer<Result<Unit, SendPasswordResetError>> callback
     );
-
-    void resetPassword(
-            @NonNull String code,
-            @NonNull String password,
-            @NonNull Consumer<Result<Unit, ResetPasswordError>> callback
-    );
 }
