@@ -6,6 +6,7 @@ import com.b07.planetze.common.Emissions;
 import com.b07.planetze.common.Habit;
 import com.b07.planetze.common.User;
 import com.b07.planetze.daily.Daily;
+import com.b07.planetze.database.data.DailyFetch;
 import com.b07.planetze.database.data.DailyFetchList;
 import com.b07.planetze.database.data.DailyId;
 import com.b07.planetze.util.DateInterval;
@@ -100,12 +101,10 @@ public interface Database {
 
     /**
      * Updates (edits) a previously-logged daily activity.
-     * @param id the activity id
-     * @param update the updated daily activity log
+     * @param updatedDaily the updated daily activity log
      */
     void updateDaily(
-            @NonNull DailyId id,
-            @NonNull Daily update,
+            @NonNull DailyFetch updatedDaily,
             @NonNull Consumer<Result<Unit, DatabaseError>> callback
     );
 

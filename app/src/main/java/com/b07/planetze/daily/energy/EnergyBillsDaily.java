@@ -1,15 +1,20 @@
 package com.b07.planetze.daily.energy;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.annotation.NonNull;
 
 import com.b07.planetze.common.Emissions;
 import com.b07.planetze.daily.Daily;
 import com.b07.planetze.daily.DailyException;
 import com.b07.planetze.daily.DailyType;
+import com.b07.planetze.daily.food.MealDaily;
 import com.b07.planetze.util.Util;
 import com.b07.planetze.util.measurement.Mass;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public record EnergyBillsDaily(
@@ -41,6 +46,13 @@ public record EnergyBillsDaily(
 
     @NonNull
     @Override
+    public String summary() {
+        return String.format(
+                Locale.US, "$%.2f in %s", billAmount, billType.displayName());
+    }
+
+    @NonNull
+    @Override
     public DailyType type() {
         return DailyType.ENERGY_BILLS;
     }
@@ -63,9 +75,45 @@ public record EnergyBillsDaily(
         return map;
     }
 
+    public static final Parcelable.Creator<EnergyBillsDaily> CREATOR
+            = new Parcelable.Creator<>() {
+        public EnergyBillsDaily createFromParcel(Parcel in) {
+            return new EnergyBillsDaily(
+                    BillType.valueOf(in.readString()),
+                    in.readDouble()
+            );
+        }
+
+        public EnergyBillsDaily[] newArray(int size) {
+            return new EnergyBillsDaily[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeString(billType.name());
+        dest.writeDouble(billAmount);
+    }
+
     public enum BillType {
-        ELECTRICITY,
-        GAS,
-        WATER
+        ELECTRICITY("electricity bills"),
+        GAS("gas bills"),
+        WATER("water bills");
+
+        @NonNull private final String displayName;
+
+        BillType(@NonNull String displayName) {
+            this.displayName = displayName;
+        }
+
+        @NonNull
+        public String displayName() {
+            return displayName;
+        }
     }
 }

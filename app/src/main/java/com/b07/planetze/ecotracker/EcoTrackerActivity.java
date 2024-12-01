@@ -1,11 +1,12 @@
 package com.b07.planetze.ecotracker;
 
+import static com.b07.planetze.util.option.Option.none;
 import static com.b07.planetze.util.option.Option.some;
 
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -20,9 +21,12 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.b07.planetze.R;
 import com.b07.planetze.daily.DailyForm;
+import com.b07.planetze.database.DatabaseError;
+import com.b07.planetze.database.data.DailyFetch;
 import com.b07.planetze.form.Form;
 import com.b07.planetze.form.FormFragment;
 import com.b07.planetze.form.FormViewModel;
+import com.b07.planetze.form.FormOptions;
 
 public final class EcoTrackerActivity extends AppCompatActivity {
     @NonNull private static final String TAG = "EcoTrackerActivity";
@@ -35,25 +39,88 @@ public final class EcoTrackerActivity extends AppCompatActivity {
     private record Model(@NonNull EcoTrackerViewModel ecoTracker,
                          @NonNull FormViewModel form) {}
 
-    private void startSelectForm(@NonNull Model model,
-                                 @NonNull EcoTrackerState.SelectForm state) {
-        Log.d(TAG, "test");
+    private void onSubmitError(@NonNull DatabaseError e) {
+        Toast.makeText(
+                this,
+                "Failed to update database: " + e.message(),
+                Toast.LENGTH_SHORT
+        ).show();
     }
+
+    private void startHome(@NonNull Model model,
+                           @NonNull EcoTrackerState.Home state) {
+        loadFragment(EcoTrackerHomeFragment.newInstance());
+    }
+
+    private void startViewLogs(@NonNull Model model,
+                               @NonNull EcoTrackerState.ViewLogs state) {
+        model.form.removeObservers(this);
+        model.form.reset();
+        if (state.isBackFromForm()) {
+            backToFragment(DailyLogsFragment.newInstance());
+        } else {
+            loadFragment(DailyLogsFragment.newInstance());
+        }
+    }
+
     private void startForm(@NonNull Model model,
                            @NonNull EcoTrackerState.Form state) {
-        model.form.getSubmission().removeObservers(this);
+        model.form.removeObservers(this);
 
-        DailyForm<?> df = state.dailyType().form();
-        Form f = df.definition().createForm();
+        Form f;
+        if (state.action() instanceof FormAction.New action) {
+            DailyForm<?> df = action.type().form();
+            f = df.definition().createForm();
 
-        model.form.getSubmission().observe(this, maybeSub -> {
-            maybeSub.apply(sub -> {
-                model.ecoTracker.submitDaily(df.formToDaily(sub));
+            model.form.getSubmission().observe(this, maybeSub -> {
+                maybeSub.apply(sub -> {
+                    model.form.reset();
+                    model.ecoTracker.submitNewDaily(
+                            df.formToDaily(sub), this::onSubmitError);
+                });
             });
+
+        } else {
+            var action = (FormAction.Edit) state.action();
+            DailyFetch fetch = action.fetch();
+            DailyForm<?> df = fetch.type().form();
+            f = df.dailyToForm(fetch.daily());
+
+            model.form.getSubmission().observe(this, maybeSub -> {
+                maybeSub.apply(sub -> {
+                    model.form.reset();
+                    model.ecoTracker.submitEditDaily(
+                            fetch.withReplacedDaily(df.formToDaily(sub)),
+                            this::onSubmitError
+                    );
+                });
+            });
+
+            model.form.getIsDeleted().observe(this, isDeleted -> {
+                if (isDeleted) {
+                    model.form.reset();
+                    model.ecoTracker.deleteDaily(
+                            fetch.id(), this::onSubmitError);
+                }
+            });
+        }
+
+        model.form.getIsCancelled().observe(this, isCancelled -> {
+            if (isCancelled) {
+                model.form.reset();
+                model.ecoTracker.cancelForm();
+            }
         });
 
-        loadFragment(FormFragment.newInstance());
-        model.form.setForm(f);
+        enterFragment(FormFragment.newInstance());
+
+        var form = new FormOptions(
+                f,
+                state.action().formTitle(),
+                state.action() instanceof FormAction.New
+                        ? none() : some("Delete activity")
+        );
+        model.form.setForm(some(form));
     }
 
     @Override
@@ -76,18 +143,43 @@ public final class EcoTrackerActivity extends AppCompatActivity {
         );
 
         model.ecoTracker.getState().observe(this, state -> {
-            if (state instanceof EcoTrackerState.Form form) {
+            if (state instanceof EcoTrackerState.Home home) {
+                startHome(model, home);
+            } else if (state instanceof EcoTrackerState.Form form) {
                 startForm(model, form);
-            } else if (state instanceof EcoTrackerState.SelectForm selectForm) {
-                startSelectForm(model, selectForm);
+            } else if (state instanceof EcoTrackerState.ViewLogs viewLogs) {
+                startViewLogs(model, viewLogs);
             }
         });
     }
 
+    private void enterFragment(@NonNull Fragment fragment) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .setCustomAnimations(
+                        R.anim.slide_enter_from_right,
+                        R.anim.slide_exit_into_left
+                )
+                .replace(R.id.ecotracker_fragment_container, fragment)
+                .commit();
+    }
+
+    private void backToFragment(@NonNull Fragment fragment) {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .setCustomAnimations(
+                        R.anim.slide_enter_from_left,
+                        R.anim.slide_exit_into_right
+                )
+                .replace(R.id.ecotracker_fragment_container, fragment)
+                .commit();
+    }
+
     private void loadFragment(@NonNull Fragment fragment) {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.ecotracker_fragment_container, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
+        FragmentTransaction ft = getSupportFragmentManager()
+                .beginTransaction();
+
+        ft.replace(R.id.ecotracker_fragment_container, fragment);
+        ft.commit();
     }
 }

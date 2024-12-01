@@ -1,16 +1,33 @@
 package com.b07.planetze.database.data;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import java.util.Objects;
 
 /**
  * Uniquely identifies a logged daily activity stored in a database.
  */
-public class DailyId implements Comparable<DailyId> {
+public final class DailyId implements Comparable<DailyId>, Parcelable {
     @NonNull private final String id;
     public DailyId(@NonNull String id) {
         this.id = id;
     }
 
+    public static final Parcelable.Creator<DailyId> CREATOR
+            = new Parcelable.Creator<>() {
+        public DailyId createFromParcel(Parcel in) {
+            return new DailyId(Objects.requireNonNull(in.readString()));
+        }
+        public DailyId[] newArray(int size) {
+            return new DailyId[size];
+        }
+    };
+
+    @NonNull
     public String get() {
         return id;
     }
@@ -18,5 +35,31 @@ public class DailyId implements Comparable<DailyId> {
     @Override
     public int compareTo(@NonNull DailyId o) {
         return id.compareTo(o.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
+    }
+
+    @Override
+    public boolean equals(@Nullable Object o) {
+        return (o instanceof DailyId other) && id.equals(other.id);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeString(id);
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return String.format("DailyId[id=%s]", id);
     }
 }

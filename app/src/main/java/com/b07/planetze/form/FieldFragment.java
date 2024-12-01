@@ -75,10 +75,10 @@ public abstract class FieldFragment<F extends Field<V>, V> extends Fragment {
         });
 
         model.getForm().observe(getViewLifecycleOwner(), maybeForm -> {
-            if (!(maybeForm instanceof Some<Form> some)) {
+            if (!(maybeForm instanceof Some<FormOptions> some)) {
                 return;
             }
-            Form form = some.get();
+            Form form = some.get().form();
             FormDefinition def = form.definition();
 
             if (!def.containsField(id)) {
@@ -99,4 +99,10 @@ public abstract class FieldFragment<F extends Field<V>, V> extends Fragment {
     public abstract View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState);
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.d(TAG, "destroyed " + fieldId);
+    }
 }
