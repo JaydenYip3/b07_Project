@@ -48,6 +48,8 @@ public final class FirebaseDb implements Database {
     @NonNull private final String userId;
     @NonNull private final DailyMap dailies;
 
+    private boolean isListeningToDailies;
+
     public FirebaseDb() {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         this.userId = Option.mapNull(auth.getCurrentUser())
@@ -60,9 +62,19 @@ public final class FirebaseDb implements Database {
 
         dailies = new DailyMap();
 
+        isListeningToDailies = false;
+    }
+
+    public void addDailyListenerIfNotExists() {
+        if (isListeningToDailies) {
+            return;
+        }
+        isListeningToDailies = true;
+
         db.child("dailies").child(userId).addChildEventListener(new ChildEventListener() {
             @Override
-            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+            public void onChildAdded(@NonNull DataSnapshot snapshot,
+                                     @Nullable String previousChildName) {
                 DailyId id = new DailyId(Objects.requireNonNull(snapshot.getKey()));
                 DailyData d = DailyData.fromJson(snapshot.getValue());
                 dailies.put(d.withId(id));
@@ -70,7 +82,8 @@ public final class FirebaseDb implements Database {
             }
 
             @Override
-            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+            public void onChildChanged(@NonNull DataSnapshot snapshot,
+                                       @Nullable String previousChildName) {
                 DailyId id = new DailyId(Objects.requireNonNull(snapshot.getKey()));
                 DailyData d = DailyData.fromJson(snapshot.getValue());
                 dailies.put(d.withId(id));
@@ -87,12 +100,12 @@ public final class FirebaseDb implements Database {
             }
 
             @Override
-            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-
-            }
+            public void onChildMoved(@NonNull DataSnapshot snapshot,
+                                     @Nullable String previousChildName) {}
 
             @Override
-            public void onCancelled(@NonNull com.google.firebase.database.DatabaseError error) {
+            public void onCancelled(
+                    @NonNull com.google.firebase.database.DatabaseError error) {
                 Log.w(TAG, "onCancelled: ", error.toException());
             }
         });
@@ -147,6 +160,8 @@ public final class FirebaseDb implements Database {
             @NonNull Daily daily,
             @NonNull Consumer<Result<Unit, DatabaseError>> callback
     ) {
+        addDailyListenerIfNotExists();
+
         DailyData d = new DailyData(date, daily);
         db.child("dailies").child(userId).push().setValue(d.toJson(),
                 (err, ref) -> callback.accept(mapFirebaseError(err)));
@@ -156,6 +171,8 @@ public final class FirebaseDb implements Database {
             @NonNull DailyFetch updatedDaily,
             @NonNull Consumer<Result<Unit, DatabaseError>> callback
     ) {
+        addDailyListenerIfNotExists();
+
         Map<String, Object> map = new HashMap<>();
         map.put(updatedDaily.id().get(), updatedDaily.data().toJson());
 
@@ -167,6 +184,8 @@ public final class FirebaseDb implements Database {
             @NonNull DailyId id,
             @NonNull Consumer<Result<Unit, DatabaseError>> callback
     ) {
+        addDailyListenerIfNotExists();
+
         Map<String, Object> map = new HashMap<>();
         map.put(id.get(), null);
 
@@ -178,6 +197,8 @@ public final class FirebaseDb implements Database {
             @NonNull DateInterval interval,
             @NonNull Consumer<Result<DailyFetchList, DatabaseError>> callback
     ) {
+        addDailyListenerIfNotExists();
+
         if (dailies.isEmpty()) {
             db.child("dailies").child(userId).get().addOnCompleteListener(task -> {
                 if (!task.isSuccessful()) {
