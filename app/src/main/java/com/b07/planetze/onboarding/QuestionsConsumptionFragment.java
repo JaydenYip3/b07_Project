@@ -2,7 +2,6 @@ package com.b07.planetze.onboarding;
 
 import static android.content.ContentValues.TAG;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,8 +11,10 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
+
 import android.widget.TextView;
 import android.widget.Toast;
+
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,9 +24,6 @@ import androidx.fragment.app.FragmentTransaction;
 import com.b07.planetze.R;
 import com.b07.planetze.common.Emissions;
 import com.b07.planetze.database.firebase.FirebaseDb;
-import com.b07.planetze.util.measurement.Mass;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import java.time.LocalDate;
 
@@ -160,7 +158,7 @@ public class QuestionsConsumptionFragment extends Fragment{
     }
     private void loadFragment(Fragment fragment) {
         FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragmentContainer, fragment);
+        transaction.replace(R.id.onboarding_fragment_container, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
     }

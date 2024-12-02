@@ -3,10 +3,15 @@ package com.b07.planetze.form.field;
 import static com.b07.planetze.util.result.Result.error;
 import static com.b07.planetze.util.result.Result.ok;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.annotation.NonNull;
 
 import com.b07.planetze.form.definition.Field;
 import com.b07.planetze.form.definition.FieldId;
+import com.b07.planetze.form.definition.FieldDeparcelizer;
+import com.b07.planetze.util.Util;
 import com.b07.planetze.util.immutability.ImmutableList;
 import com.b07.planetze.util.Unit;
 import com.b07.planetze.util.result.Result;
@@ -49,5 +54,33 @@ public final class ChoiceField implements Field<Integer> {
     @Override
     public ChoiceFragment createFragment(@NonNull FieldId<?> fieldId) {
         return ChoiceFragment.newInstance(fieldId);
+    }
+
+    @NonNull
+    @Override
+    public FieldDeparcelizer deparcelizer() {
+        return FieldDeparcelizer.CHOICE;
+    }
+
+    public static final Parcelable.Creator<ChoiceField> CREATOR
+            = new Parcelable.Creator<>() {
+        public ChoiceField createFromParcel(Parcel in) {
+            return new ChoiceField(
+                    Util.deparcelizeImmutableList(in, Parcel::readString));
+        }
+
+        public ChoiceField[] newArray(int size) {
+            return new ChoiceField[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        Util.parcelizeImmutableList(dest, choices, Parcel::writeString);
     }
 }

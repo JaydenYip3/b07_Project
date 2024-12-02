@@ -2,6 +2,7 @@ package com.b07.planetze.daily.transport;
 
 import androidx.annotation.NonNull;
 
+import com.b07.planetze.daily.Daily;
 import com.b07.planetze.form.Form;
 import com.b07.planetze.util.measurement.ImmutableDistance;
 import com.b07.planetze.daily.DailyForm;
@@ -23,7 +24,7 @@ public final class DrivingForm implements DailyForm<DrivingDaily> {
     private DrivingForm() {
         FormBuilder fb = new FormBuilder();
         distance = fb.add("Distance travelled", DistanceField.create());
-        vehicle = fb.add("VehicleType", ChoiceField
+        vehicle = fb.add("Vehicle type", ChoiceField
                 .withChoices("Gas car", "Electric car", "Motorbike")
                 .initially(0));
         definition = fb.build();
@@ -37,7 +38,8 @@ public final class DrivingForm implements DailyForm<DrivingDaily> {
 
     @NonNull
     @Override
-    public Form dailyToForm(@NonNull DrivingDaily daily) {
+    public Form dailyToForm(@NonNull Daily d) {
+        var daily = (DrivingDaily) d;
         Form form = definition.createForm();
 
         form.set(distance, daily.distance());

@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.b07.planetze.R;
 import com.b07.planetze.WelcomeFragment;
+import com.b07.planetze.auth.backend.FirebaseAuthBackend;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
@@ -44,6 +45,9 @@ public class LoginFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_login, container, false);
+
+        var presenter = new LoginPresenter(
+                new FirebaseAuthBackend(), (LoginView) requireActivity());
 
         Button loginButton = view.findViewById(R.id.loginSubmitButton);
         TextView resetPassword = view.findViewById(R.id.resetPassword);
@@ -72,11 +76,11 @@ public class LoginFragment extends Fragment {
             String email = emailField.getText().toString().trim();
             String password = passwordField.getText().toString();
 
-            ((LoginCallback) requireActivity()).login(email, password);
+            presenter.login(email, password);
         });
 
         resetPassword.setOnClickListener(v -> {
-            ((AuthScreenSwitch) requireActivity()).switchScreens(AuthScreen.SEND_PASSWORD_RESET);
+            presenter.forgotPassword();
         });
 
         signUp.setOnClickListener(v -> {
@@ -86,8 +90,6 @@ public class LoginFragment extends Fragment {
         FirebaseAuth auth = FirebaseAuth.getInstance();
         FirebaseUser user = auth.getCurrentUser();
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-
-
 
         return view;
     }

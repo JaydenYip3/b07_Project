@@ -22,9 +22,6 @@ import androidx.fragment.app.FragmentTransaction;
 import com.b07.planetze.R;
 import com.b07.planetze.common.Emissions;
 import com.b07.planetze.database.firebase.FirebaseDb;
-import com.b07.planetze.util.measurement.Mass;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import java.time.LocalDate;
 
@@ -149,7 +146,8 @@ public class QuestionsHousingFragment extends Fragment{
                     housingEmissionsKgs += 233;
                 }
             }
-            if (b171.isChecked()) { housingEmissionsKgs = housingEmissionsKgs - 6000; }
+            if (b171.isChecked()) { housingEmissionsKgs -= 6000; }
+            if (b172.isChecked()) { housingEmissionsKgs -= 4000; }
 
             emissions[2] = housingEmissionsKgs;
             Log.d(TAG, "emissions: " + emissions[0] + emissions[1] + emissions[2] + emissions[3]);
@@ -161,7 +159,7 @@ public class QuestionsHousingFragment extends Fragment{
     }
     private void loadFragment(Fragment fragment) {
         FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragmentContainer, fragment);
+        transaction.replace(R.id.onboarding_fragment_container, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
     }

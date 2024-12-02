@@ -2,7 +2,6 @@ package com.b07.planetze.onboarding;
 
 import static android.content.ContentValues.TAG;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -13,7 +12,6 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -23,10 +21,7 @@ import com.b07.planetze.common.User;
 import com.b07.planetze.database.firebase.FirebaseDb;
 import com.b07.planetze.home.HomeActivity;
 import com.b07.planetze.util.measurement.Mass;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
-import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -166,7 +161,7 @@ public class CalcDisplayFragment extends Fragment {
     }
     private void loadFragment(Fragment fragment) {
         FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragmentContainer, fragment);
+        transaction.replace(R.id.onboarding_fragment_container, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
     }

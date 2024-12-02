@@ -5,13 +5,10 @@ import static android.view.View.INVISIBLE;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import android.view.ViewTreeObserver;
 
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -29,12 +26,8 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.b07.planetze.R;
-import com.b07.planetze.WelcomeFragment;
 import com.b07.planetze.common.Emissions;
 import com.b07.planetze.database.firebase.FirebaseDb;
-import com.b07.planetze.util.measurement.Mass;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
 import java.time.LocalDate;
 
@@ -214,7 +207,7 @@ public class QuestionsFoodFragment extends Fragment{
 
     private void loadFragment(Fragment fragment) {
         FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragmentContainer, fragment);
+        transaction.replace(R.id.onboarding_fragment_container, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
     }

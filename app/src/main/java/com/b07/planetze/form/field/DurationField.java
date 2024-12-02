@@ -3,9 +3,13 @@ package com.b07.planetze.form.field;
 import static com.b07.planetze.util.result.Result.error;
 import static com.b07.planetze.util.result.Result.ok;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.annotation.NonNull;
 
 import com.b07.planetze.form.definition.Field;
+import com.b07.planetze.form.definition.FieldDeparcelizer;
 import com.b07.planetze.util.measurement.ImmutableDuration;
 import com.b07.planetze.form.definition.FieldId;
 import com.b07.planetze.util.Unit;
@@ -31,4 +35,29 @@ public final class DurationField implements Field<ImmutableDuration> {
     public DurationFragment createFragment(@NonNull FieldId<?> fieldId) {
         return DurationFragment.newInstance(fieldId);
     }
+
+    @NonNull
+    @Override
+    public FieldDeparcelizer deparcelizer() {
+        return FieldDeparcelizer.DURATION;
+    }
+
+    public static final Parcelable.Creator<DurationField> CREATOR
+            = new Parcelable.Creator<>() {
+        public DurationField createFromParcel(Parcel in) {
+            return INSTANCE;
+        }
+
+        public DurationField[] newArray(int size) {
+            return new DurationField[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {}
 }
