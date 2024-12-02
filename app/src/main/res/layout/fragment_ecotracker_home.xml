@@ -48,7 +48,7 @@
             android:layout_height="200dp"
             android:orientation="vertical"
             android:layout_marginTop="25dp"
-            android:background="@drawable/black_background">
+            android:background="@drawable/home_bg_dark">
 
             <TextView
                 android:layout_width="match_parent"

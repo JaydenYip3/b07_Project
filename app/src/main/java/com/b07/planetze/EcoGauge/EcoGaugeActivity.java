@@ -2,6 +2,8 @@ package com.b07.planetze.EcoGauge;
 
 import static android.content.ContentValues.TAG;
 
+import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,6 +17,7 @@ import java.util.concurrent.atomic.AtomicReference;
 import com.b07.planetze.R;
 import com.b07.planetze.database.data.DailyFetch;
 import com.b07.planetze.database.firebase.FirebaseDb;
+import com.b07.planetze.ecotracker.EcoTrackerActivity;
 import com.b07.planetze.util.DateInterval;
 import com.b07.planetze.util.measurement.Mass;
 import com.b07.planetze.util.result.Ok;
@@ -28,6 +31,12 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 public class EcoGaugeActivity extends AppCompatActivity implements EcoGaugeOverviewCallback, EcoGaugeScreenSwitch, EcoGaugeTrendsCallback, EcoGaugeBreakdownCallback, EcoGaugeComparisonCallback{
+
+    public static void start(Context context) {
+        Intent intent = new Intent(context, EcoGaugeActivity.class);
+        context.startActivity(intent);
+    }
+
     String timePeriod;
     @Override
     public double calculateEmissionsForPeriod(String timePeriod) {

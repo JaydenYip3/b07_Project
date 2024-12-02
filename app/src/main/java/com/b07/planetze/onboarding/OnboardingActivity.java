@@ -18,7 +18,7 @@ import com.b07.planetze.auth.AuthActivity;
 public class OnboardingActivity extends AppCompatActivity {
 
     public static void start(Context context) {
-        Intent intent = new Intent(context, AuthActivity.class);
+        Intent intent = new Intent(context, OnboardingActivity.class);
         context.startActivity(intent);
     }
 
