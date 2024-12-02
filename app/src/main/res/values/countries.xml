@@ -2,6 +2,7 @@
 <resources>
 
     <string-array name="country_arrays">
+        <item>***Select a Country***</item>
         <item>Afghanistan</item>
         <item>Albania</item>
         <item>Algeria</item>
