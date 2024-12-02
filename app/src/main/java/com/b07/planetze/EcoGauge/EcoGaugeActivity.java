@@ -4,7 +4,9 @@ import static android.content.ContentValues.TAG;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -18,6 +20,8 @@ import com.b07.planetze.R;
 import com.b07.planetze.database.data.DailyFetch;
 import com.b07.planetze.database.firebase.FirebaseDb;
 import com.b07.planetze.ecotracker.EcoTrackerActivity;
+import com.b07.planetze.home.HomeScreenFragment;
+import com.b07.planetze.home.HomeViewModel;
 import com.b07.planetze.util.DateInterval;
 import com.b07.planetze.util.measurement.Mass;
 import com.b07.planetze.util.result.Ok;
@@ -29,6 +33,7 @@ import com.b07.planetze.onboarding.CountryProcessor;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 
 public class EcoGaugeActivity extends AppCompatActivity implements EcoGaugeOverviewCallback, EcoGaugeScreenSwitch, EcoGaugeTrendsCallback, EcoGaugeBreakdownCallback, EcoGaugeComparisonCallback{
 
@@ -225,6 +230,23 @@ public class EcoGaugeActivity extends AppCompatActivity implements EcoGaugeOverv
     }
 
     @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_ecogauge);
+
+        View container = findViewById(R.id.fragment_container);
+        if (container == null) {
+            throw new IllegalStateException("Fragment container not found in the layout!");
+        } else {
+            Log.d("DEBUG", "Fragment container found.");
+        }
+
+        if (savedInstanceState == null) {
+            switchScreens(EcoGaugeScreen.OVERVIEW);
+        }
+    }
+
+    @Override
     public void switchScreens(EcoGaugeScreen screen){
         switch (screen){
             case OVERVIEW -> loadFragment(new EcoGaugeOverviewFragment());
@@ -236,7 +258,7 @@ public class EcoGaugeActivity extends AppCompatActivity implements EcoGaugeOverv
     }
     private void loadFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.ecotracker_fragment_container, fragment);
+        transaction.replace(R.id.fragment_container, fragment);
         transaction.addToBackStack(fragment.getClass().getName());
         transaction.commit();
     }

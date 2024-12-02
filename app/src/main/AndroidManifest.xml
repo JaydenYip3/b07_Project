@@ -22,6 +22,7 @@
             android:name=".auth.AuthActivity"
             android:exported="false" />
         <activity android:name=".home.HomeActivity" />
+        <activity android:name=".EcoGauge.EcoGaugeActivity"/>
         <activity
             android:name=".MainActivity"
             android:exported="true">
