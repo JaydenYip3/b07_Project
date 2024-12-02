@@ -33,7 +33,7 @@ import androidx.fragment.app.FragmentTransaction;
 public class EcoGaugeActivity extends AppCompatActivity implements EcoGaugeOverviewCallback, EcoGaugeScreenSwitch, EcoGaugeTrendsCallback, EcoGaugeBreakdownCallback, EcoGaugeComparisonCallback{
 
     public static void start(Context context) {
-        Intent intent = new Intent(context, EcoTrackerActivity.class);
+        Intent intent = new Intent(context, EcoGaugeActivity.class);
         context.startActivity(intent);
     }
 

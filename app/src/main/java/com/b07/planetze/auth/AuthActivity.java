@@ -192,10 +192,10 @@ public class AuthActivity extends AppCompatActivity
     @NonNull
     private AuthScreen getAuthScreen() {
         AuthScreen initialScreen;
+
         Bundle extras = getIntent().getExtras();
         if (extras == null) {
-            initialScreen = AuthScreen.LOGIN;
-//            throw new AuthActivityInitException("EXTRA_INITIAL_SCREEN not specified in intent extras");
+            throw new AuthActivityInitException("EXTRA_INITIAL_SCREEN not specified in intent extras");
         } else {
             initialScreen = (AuthScreen) extras.getSerializable(EXTRA_INITIAL_SCREEN);
             if (initialScreen == null) {

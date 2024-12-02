@@ -16,6 +16,7 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.b07.planetze.EcoGauge.EcoGaugeActivity;
+import com.b07.planetze.MainActivity;
 import com.b07.planetze.R;
 import com.b07.planetze.ecotracker.EcoTrackerActivity;
 import com.b07.planetze.onboarding.OnboardingActivity;
@@ -37,12 +38,16 @@ public class HomeScreenFragment extends Fragment {
             emissions.setText(list.emissions().total().format() + " CO2e");
         });
 
+        View back = view.findViewById(R.id.home_back);
         View toTracker = view.findViewById(R.id.home_to_tracker);
         View toHabits = view.findViewById(R.id.home_to_habits);
         View toGauge = view.findViewById(R.id.home_to_gauge);
         View toFootprint = view.findViewById(R.id.home_to_footprint);
         View toHub = view.findViewById(R.id.home_to_hub);
 
+        back.setOnClickListener(v -> {
+            MainActivity.start(requireActivity());
+        });
         toTracker.setOnClickListener(v -> {
             EcoTrackerActivity.start(requireActivity());
         });
