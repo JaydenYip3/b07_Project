@@ -2,7 +2,9 @@ package com.b07.planetze.auth;
 
 import androidx.annotation.NonNull;
 
+import com.b07.planetze.auth.backend.error.LoginError;
 import com.b07.planetze.auth.backend.error.OtherAuthError;
+import com.b07.planetze.util.result.Result;
 
 public final class LoginPresenter {
     @NonNull private final LoginModel model;
@@ -38,11 +40,7 @@ public final class LoginPresenter {
             r.match(ok -> {
                 view.showToast("Password reset email sent");
             }, e -> {
-                if (e instanceof OtherAuthError) {
-                    view.showToast("Error: " + e.message());
-                } else {
-                    view.showToast(e.message());
-                }
+                view.showToast(e.message());
             });
         });
     }
