@@ -1,16 +1,22 @@
 package com.b07.planetze.util.measurement;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.b07.planetze.database.ToJson;
 import com.b07.planetze.util.Util;
 
+import java.text.DecimalFormat;
+import java.util.Locale;
+
 /**
  * A measurement of duration.
  */
 public final class Duration extends Measurement<Duration>
-        implements ToJson {
+        implements ToJson, Parcelable {
     private double s;
 
     private Duration(double s) {
@@ -27,6 +33,7 @@ public final class Duration extends Measurement<Duration>
 
     /**
      * {@return a new duration given seconds}
+     *
      * @param s a value in seconds
      */
     @NonNull
@@ -35,7 +42,18 @@ public final class Duration extends Measurement<Duration>
     }
 
     /**
+     * {@return a new duration given minutes}
+     *
+     * @param mins a value in minutes
+     */
+    @NonNull
+    public static Duration mins(double mins) {
+        return new Duration(60 * mins);
+    }
+
+    /**
      * {@return a new duration given hours}
+     *
      * @param h a value in hours
      */
     @NonNull
@@ -48,6 +66,10 @@ public final class Duration extends Measurement<Duration>
      */
     public double s() {
         return s;
+    }
+
+    public double mins() {
+        return s / 60;
     }
 
     /**
@@ -65,6 +87,24 @@ public final class Duration extends Measurement<Duration>
     @Override
     protected void setValue(double value) {
         s = value;
+    }
+
+    @NonNull
+    public String format() {
+        long s = (long) this.s;
+        if (s < 60) {
+            return s + " seconds";
+        } else if (s < 3600) {
+            return (s / 60) + " min" + (s/60 == 1 ? "" : "s");
+        }
+
+        long mins = (s % 3600) / 60;
+        long h = s / 3600;
+        String hours = h + " hour" + (h == 1 ? "" : "s");
+
+        return mins == 0
+                ? hours
+                : hours + " " + mins + " min" + (mins == 1 ? "" : "s");
     }
 
     @Override
@@ -105,5 +145,26 @@ public final class Duration extends Measurement<Duration>
     @Override
     public Object toJson() {
         return s;
+    }
+
+    public static final Parcelable.Creator<Duration> CREATOR
+            = new Parcelable.Creator<>() {
+        public Duration createFromParcel(Parcel in) {
+            return new Duration(in.readDouble());
+        }
+
+        public Duration[] newArray(int size) {
+            return new Duration[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeDouble(s);
     }
 }

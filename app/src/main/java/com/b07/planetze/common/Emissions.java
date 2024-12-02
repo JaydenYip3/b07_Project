@@ -1,5 +1,8 @@
 package com.b07.planetze.common;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.annotation.NonNull;
 
 import com.b07.planetze.database.ToJson;
@@ -16,7 +19,7 @@ import java.util.Map;
  * Stores CO2e emissions by category.
  */
 public final class Emissions
-        implements MutableWithCopy<Emissions>, ToJson {
+        implements MutableWithCopy<Emissions>, ToJson, Parcelable {
     @NonNull private final ImmutableList<Mass> categories;
 
     private Emissions() {
@@ -227,5 +230,28 @@ public final class Emissions
         map.put("food", food().toJson());
         map.put("shopping", shopping().toJson());
         return map;
+    }
+
+    public static final Parcelable.Creator<Emissions> CREATOR
+            = new Parcelable.Creator<>() {
+        public Emissions createFromParcel(Parcel in) {
+            Emissions e = new Emissions();
+            e.categories.forEach(c -> c.set(Mass.CREATOR.createFromParcel(in)));
+            return e;
+        }
+
+        public Emissions[] newArray(int size) {
+            return new Emissions[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        categories.forEach(c -> dest.writeParcelable(c, 0));
     }
 }

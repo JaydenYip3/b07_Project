@@ -1,19 +1,30 @@
 package com.b07.planetze.util.measurement;
 
-import android.util.Log;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import androidx.annotation.NonNull;
 
 import com.b07.planetze.database.ToJson;
 import com.b07.planetze.util.Util;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
+import java.util.function.Supplier;
+
 /**
  * A measurement of mass.
  */
 public final class Mass extends Measurement<Mass>
-        implements ToJson {
+        implements ToJson, Parcelable {
     private static final double POUNDS_TO_KG = 	0.45359237;
     private static final double KG_TO_POUNDS = 1 / POUNDS_TO_KG;
+    public enum Unit {
+        KG,
+        G,
+        LB
+    }
 
     private double kg;
 
@@ -56,6 +67,15 @@ public final class Mass extends Measurement<Mass>
         return new Mass(lb * POUNDS_TO_KG);
     }
 
+    @NonNull
+    public static Mass withUnit(Unit unit, double value) {
+        return switch (unit) {
+            case KG -> Mass.kg(value);
+            case G -> Mass.g(value);
+            case LB -> Mass.lb(value);
+        };
+    }
+
     /**
      * {@return this mass in kilograms}
      */
@@ -77,6 +97,14 @@ public final class Mass extends Measurement<Mass>
         return kg * KG_TO_POUNDS;
     }
 
+    public double get(Unit unit) {
+        return switch (unit) {
+            case KG -> kg();
+            case G -> g();
+            case LB -> lb();
+        };
+    }
+
     @Override
     protected double getValue() {
         return kg;
@@ -85,6 +113,15 @@ public final class Mass extends Measurement<Mass>
     @Override
     protected void setValue(double value) {
         kg = value;
+    }
+
+    @NonNull
+    public String format() {
+        List<Double> values = List.of(
+                g(), kg(), kg/1e3, kg/1e6, kg/1e9, kg/1e12, kg/1e15);
+        List<String> units = List.of("g", "kg", "Mg", "Gg", "Tg", "Pg", "Eg");
+
+        return Util.formatIncreasingSiPrefixes(values, units, kg(), "kg");
     }
 
     @Override
@@ -125,5 +162,26 @@ public final class Mass extends Measurement<Mass>
     @Override
     public Object toJson() {
         return kg;
+    }
+
+    public static final Parcelable.Creator<Mass> CREATOR
+            = new Parcelable.Creator<>() {
+        public Mass createFromParcel(Parcel in) {
+            return new Mass(in.readDouble());
+        }
+
+        public Mass[] newArray(int size) {
+            return new Mass[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeDouble(kg);
     }
 }

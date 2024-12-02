@@ -5,20 +5,32 @@ import androidx.annotation.NonNull;
 import com.b07.planetze.common.Emissions;
 import com.b07.planetze.util.immutability.ImmutableList;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Iterator;
+import java.util.List;
 
 /**
- * A list of {@link DailyFetch} (sorted by date). <br>
+ * A collection of {@link DailyFetch} <br>
  */
 public final class DailyFetchList implements Iterable<DailyFetch> {
     @NonNull private final ImmutableList<DailyFetch> dailies;
 
-    /**
-     * Intentionally package-private; get this from <code>Database</code>
-     * @param dailies a list of dailies sorted by date
-     */
-    DailyFetchList(@NonNull ImmutableList<DailyFetch> dailies) {
+    public DailyFetchList(@NonNull ImmutableList<DailyFetch> dailies) {
         this.dailies = dailies;
+    }
+
+    @NonNull
+    public static DailyFetchList empty() {
+        return new DailyFetchList(new ImmutableList<>(new ArrayList<>()));
+    }
+
+    public int size() {
+        return dailies.size();
+    }
+
+    public boolean isEmpty() {
+        return size() == 0;
     }
 
     /**
@@ -28,8 +40,20 @@ public final class DailyFetchList implements Iterable<DailyFetch> {
     @NonNull
     public Emissions emissions() {
         Emissions sum = Emissions.zero();
-        dailies.forEach(f -> sum.add(f.daily().emissions()));
+        dailies.forEach(f -> sum.add(f.emissions()));
         return sum;
+    }
+
+    /**
+     * {@return a new <code>DailyFetchList</code> sorted with a given
+     *          comparator}
+     * @param comparator the comparator
+     */
+    @NonNull
+    public DailyFetchList orderBy(@NonNull Comparator<DailyFetch> comparator) {
+        List<DailyFetch> list = dailies.copy();
+        list.sort(comparator);
+        return new DailyFetchList(new ImmutableList<>(list));
     }
 
     @NonNull

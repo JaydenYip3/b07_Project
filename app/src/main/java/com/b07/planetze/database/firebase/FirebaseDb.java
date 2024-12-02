@@ -1,5 +1,6 @@
 package com.b07.planetze.database.firebase;
 
+import static android.content.ContentValues.TAG;
 import static com.b07.planetze.util.result.Result.ok;
 import static com.b07.planetze.util.result.Result.error;
 import static com.b07.planetze.util.option.Option.some;
@@ -10,17 +11,21 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.b07.planetze.common.Emissions;
+import com.b07.planetze.common.Habit;
 import com.b07.planetze.common.User;
 import com.b07.planetze.daily.Daily;
 import com.b07.planetze.database.Database;
 import com.b07.planetze.database.DatabaseError;
 import com.b07.planetze.database.DatabaseException;
+import com.b07.planetze.database.data.DailyFetch;
 import com.b07.planetze.database.data.DailyFetchList;
 import com.b07.planetze.database.data.DailyId;
 import com.b07.planetze.database.data.DailyMap;
 import com.b07.planetze.database.data.DailyData;
+import com.b07.planetze.onboarding.CountryProcessor;
 import com.b07.planetze.util.DateInterval;
 import com.b07.planetze.util.Unit;
+import com.b07.planetze.util.immutability.ImmutableList;
 import com.b07.planetze.util.option.Option;
 import com.b07.planetze.util.result.Result;
 import com.google.android.gms.tasks.Task;
@@ -29,9 +34,12 @@ import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -42,6 +50,7 @@ public final class FirebaseDb implements Database {
     @NonNull private final DatabaseReference db;
     @NonNull private final String userId;
     @NonNull private final DailyMap dailies;
+    @NonNull private final ArrayList<String> habits = new ArrayList<String>();
 
     public FirebaseDb() {
         FirebaseAuth auth = FirebaseAuth.getInstance();
@@ -60,7 +69,7 @@ public final class FirebaseDb implements Database {
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 DailyId id = new DailyId(Objects.requireNonNull(snapshot.getKey()));
                 DailyData d = DailyData.fromJson(snapshot.getValue());
-                dailies.put(id, d.date(), d.daily());
+                dailies.put(d.withId(id));
                 Log.d(TAG, "onChildAdded: " + id.get());
             }
 
@@ -68,7 +77,7 @@ public final class FirebaseDb implements Database {
             public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 DailyId id = new DailyId(Objects.requireNonNull(snapshot.getKey()));
                 DailyData d = DailyData.fromJson(snapshot.getValue());
-                dailies.put(id, d.date(), d.daily());
+                dailies.put(d.withId(id));
 
                 Log.d(TAG, "onChildChanged: " + id.get());
             }
@@ -111,6 +120,57 @@ public final class FirebaseDb implements Database {
         return err == null ? ok() : error(new FirebaseError(err.getMessage()));
     }
 
+    public void fetchHabit(@NonNull Consumer<Result<Option<Habit>, DatabaseError>> callback) {
+        db.child("habits").child(userId).get().addOnCompleteListener(
+                task -> callback.accept(mapTask(task, Habit::fromJson)));
+    }
+
+    public void postHabit(
+            @NonNull String key,
+            @NonNull Consumer<Result<Unit, DatabaseError>> callback
+    ) {
+        fetchHabit(result -> {
+            result.match(habitOption -> { // if this operation was successful:
+                habitOption.match(// if the user has user info set:
+                        dbhabit -> {
+                            ArrayList<String> keys = dbhabit.keys();
+                            keys.add(key);
+                            db.child("habits").child(userId).setValue(dbhabit.toJson(),
+                                    (err, ref) -> callback.accept(mapFirebaseError(err)));
+                        },
+                        () -> {
+                            ArrayList<String> keys = new ArrayList<String>();
+                            keys.add(key);
+                            Habit newHabit = new Habit(keys);
+                            db.child("habits").child(userId).setValue(newHabit.toJson(),
+                                    (err, ref) -> callback.accept(mapFirebaseError(err)));
+                        });
+            }, dbError -> { // if this operation failed:
+                Log.d(TAG, "error: " + dbError);
+            });
+        });
+
+    }
+    public void deleteHabit(
+            @NonNull String key,
+            @NonNull Consumer<Result<Unit, DatabaseError>> callback
+    ) {
+        fetchHabit(result -> {
+            result.match(habitOption -> { // if this operation was successful:
+                habitOption.match(// if the user has user info set:
+                        dbhabit -> {
+                            Log.d(TAG, "found habits");
+                            ArrayList<String> keys = dbhabit.keys();
+                            keys.remove(key);
+                            db.child("habits").child(userId).setValue(dbhabit.toJson(),
+                                    (err, ref) -> callback.accept(mapFirebaseError(err)));
+                        },
+                        () -> Log.d(TAG, "habits nonexistent"));
+            }, dbError -> { // if this operation failed:
+                Log.d(TAG, "error: " + dbError);
+            });
+        });
+    }
     public void postUser(
             @NonNull User user,
             @NonNull Consumer<Result<Unit, DatabaseError>> callback
@@ -148,12 +208,11 @@ public final class FirebaseDb implements Database {
     }
 
     public void updateDaily(
-            @NonNull DailyId id,
-            @NonNull Daily update,
+            @NonNull DailyFetch updatedDaily,
             @NonNull Consumer<Result<Unit, DatabaseError>> callback
     ) {
         Map<String, Object> map = new HashMap<>();
-        map.put(id.get(), update.toJson());
+        map.put(updatedDaily.id().get(), updatedDaily.data().toJson());
 
         db.child("dailies").child(userId).updateChildren(map,
                 (err, ref) -> callback.accept(mapFirebaseError(err)));
@@ -174,6 +233,31 @@ public final class FirebaseDb implements Database {
             @NonNull DateInterval interval,
             @NonNull Consumer<Result<DailyFetchList, DatabaseError>> callback
     ) {
-        callback.accept(ok(dailies.getAllIn(interval)));
+        if (dailies.isEmpty()) {
+            db.child("dailies").child(userId).get().addOnCompleteListener(task -> {
+                if (!task.isSuccessful()) {
+                    callback.accept(error(new FirebaseError(
+                            Objects.requireNonNull(task.getException()))));
+                    return;
+                }
+                GenericTypeIndicator<HashMap<String, Object>> t
+                        = new GenericTypeIndicator<>() {};
+                Option<HashMap<String, Object>> map = Option.mapNull(
+                        task.getResult().getValue(t));
+
+                List<DailyFetch> fetch = new ArrayList<>();
+
+                map.apply(m -> m.forEach((id, data) -> {
+                    DailyData d = DailyData.fromJson(data);
+                    if (interval.contains(d.date())) {
+                        fetch.add(d.withId(new DailyId(id)));
+                    }
+                }));
+
+                callback.accept(ok(new DailyFetchList(new ImmutableList<>(fetch))));
+            });
+        } else {
+            callback.accept(ok(dailies.getAllIn(interval)));
+        }
     }
 }

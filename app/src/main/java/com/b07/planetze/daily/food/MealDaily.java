@@ -1,9 +1,13 @@
 package com.b07.planetze.daily.food;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.annotation.NonNull;
 
 import com.b07.planetze.common.Emissions;
 import com.b07.planetze.daily.DailyException;
+import com.b07.planetze.daily.shopping.BuyClothesDaily;
 import com.b07.planetze.util.Util;
 import com.b07.planetze.util.measurement.Mass;
 import com.b07.planetze.daily.Daily;
@@ -41,6 +45,12 @@ public record MealDaily(
 
     @NonNull
     @Override
+    public String summary() {
+        return numberServings + " servings of " + mealType.displayName();
+    }
+
+    @NonNull
+    @Override
     public DailyType type() {
         return DailyType.MEAL;
     }
@@ -63,11 +73,47 @@ public record MealDaily(
         return map;
     }
 
+    public static final Parcelable.Creator<MealDaily> CREATOR
+            = new Parcelable.Creator<>() {
+        public MealDaily createFromParcel(Parcel in) {
+            return new MealDaily(
+                    MealType.valueOf(in.readString()),
+                    in.readInt()
+            );
+        }
+
+        public MealDaily[] newArray(int size) {
+            return new MealDaily[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeString(mealType.name());
+        dest.writeInt(numberServings);
+    }
+
     public enum MealType {
-        BEEF,
-        PORK,
-        CHICKEN,
-        FISH,
-        PLANT_BASED
+        BEEF("beef"),
+        PORK("pork"),
+        CHICKEN("chicken"),
+        FISH("fish"),
+        PLANT_BASED("plant-based food");
+
+        @NonNull private final String displayName;
+
+        MealType(@NonNull String displayName) {
+            this.displayName = displayName;
+        }
+
+        @NonNull
+        public String displayName() {
+            return displayName;
+        }
     }
 }

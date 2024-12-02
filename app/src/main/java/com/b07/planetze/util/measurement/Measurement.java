@@ -22,6 +22,9 @@ public abstract class Measurement<T extends Measurement<T>>
      */
     protected abstract void setValue(double value);
 
+    @NonNull
+    public abstract String format();
+
     /**
      * Sets this measurement to another measurement.
      * @param other the other measurement
@@ -74,6 +77,10 @@ public abstract class Measurement<T extends Measurement<T>>
     public T negate() {
         setValue(-getValue());
         return self();
+    }
+
+    public boolean isZero() {
+        return getValue() == 0;
     }
 
     @Override

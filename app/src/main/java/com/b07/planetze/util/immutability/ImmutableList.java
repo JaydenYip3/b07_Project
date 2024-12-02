@@ -9,9 +9,11 @@ import androidx.annotation.Nullable;
 import com.b07.planetze.util.option.None;
 import com.b07.planetze.util.option.Option;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * A list wrapper that prevents mutation of the list.
@@ -79,5 +81,10 @@ public final class ImmutableList<T> implements Iterable<T> {
     @Override
     public boolean equals(@Nullable Object o) {
         return (o instanceof ImmutableList<?> l) && list.equals(l.list);
+    }
+
+    @NonNull
+    public List<T> copy() {
+        return new ArrayList<>(list);
     }
 }

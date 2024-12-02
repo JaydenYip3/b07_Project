@@ -1,18 +1,31 @@
 package com.b07.planetze.util.measurement;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.b07.planetze.database.ToJson;
 import com.b07.planetze.util.Util;
 
+import java.text.DecimalFormat;
+import java.util.List;
+import java.util.Locale;
+
 /**
  * A measurement of distance.
  */
 public final class Distance extends Measurement<Distance>
-        implements ToJson {
+        implements ToJson, Parcelable {
     private static final double MILES_TO_METRES = 1609.344;
     private static final double METRES_TO_MILES = 1 / MILES_TO_METRES;
+
+    public enum Unit {
+        KM,
+        M,
+        MI
+    }
 
     private double m;
 
@@ -55,6 +68,15 @@ public final class Distance extends Measurement<Distance>
         return new Distance(mi * MILES_TO_METRES);
     }
 
+    @NonNull
+    public static Distance withUnit(Unit unit, double value) {
+        return switch (unit) {
+            case KM -> km(value);
+            case M -> m(value);
+            case MI -> mi(value);
+        };
+    }
+
     /**
      * {@return this distance in metres}
      */
@@ -73,6 +95,14 @@ public final class Distance extends Measurement<Distance>
         return METRES_TO_MILES * m;
     }
 
+    public double get(Unit unit) {
+        return switch (unit) {
+            case KM -> km();
+            case M -> m();
+            case MI -> mi();
+        };
+    }
+
     @Override
     protected double getValue() {
         return m;
@@ -81,6 +111,15 @@ public final class Distance extends Measurement<Distance>
     @Override
     protected void setValue(double value) {
         m = value;
+    }
+
+    @NonNull
+    public String format() {
+        List<Double> values = List.of(
+                m(), km(), km()/1e3, km()/1e6, km()/1e9, km()/1e12, km()/1e15);
+        List<String> units = List.of("m", "km", "Mm", "Gm", "Tm", "Pm", "Em");
+
+        return Util.formatIncreasingSiPrefixes(values, units, m(), "m");
     }
 
     @Override
@@ -121,5 +160,26 @@ public final class Distance extends Measurement<Distance>
     @Override
     public Object toJson() {
         return m;
+    }
+
+    public static final Parcelable.Creator<Distance> CREATOR
+            = new Parcelable.Creator<>() {
+        public Distance createFromParcel(Parcel in) {
+            return new Distance(in.readDouble());
+        }
+
+        public Distance[] newArray(int size) {
+            return new Distance[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeDouble(m);
     }
 }

@@ -1,5 +1,8 @@
 package com.b07.planetze.util.measurement;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.annotation.NonNull;
 
 import com.b07.planetze.database.ToJson;
@@ -10,7 +13,7 @@ import com.b07.planetze.util.immutability.ImmutableCopy;
  * Consider instantiating this with {@link Distance#immutableCopy()}.
  */
 public final class ImmutableDistance extends ImmutableCopy<Distance>
-        implements ToJson {
+        implements ToJson, Parcelable {
     public ImmutableDistance(@NonNull Distance object) {
         super(object);
     }
@@ -37,6 +40,11 @@ public final class ImmutableDistance extends ImmutableCopy<Distance>
     }
 
     @NonNull
+    public String format() {
+        return object.format();
+    }
+
+    @NonNull
     public static ImmutableDistance fromJson(@NonNull Object o) {
         return Distance.fromJson(o).immutableCopy();
     }
@@ -45,5 +53,26 @@ public final class ImmutableDistance extends ImmutableCopy<Distance>
     @Override
     public Object toJson() {
         return object.toJson();
+    }
+
+    public static final Parcelable.Creator<ImmutableDistance> CREATOR
+            = new Parcelable.Creator<>() {
+        public ImmutableDistance createFromParcel(Parcel in) {
+            return Distance.CREATOR.createFromParcel(in).immutableCopy();
+        }
+
+        public ImmutableDistance[] newArray(int size) {
+            return new ImmutableDistance[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeParcelable(object, 0);
     }
 }

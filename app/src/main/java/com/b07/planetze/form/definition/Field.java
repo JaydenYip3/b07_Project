@@ -2,6 +2,8 @@ package com.b07.planetze.form.definition;
 
 import static com.b07.planetze.util.option.Option.some;
 
+import android.os.Parcelable;
+
 import androidx.annotation.NonNull;
 
 import com.b07.planetze.form.FieldFragment;
@@ -12,7 +14,7 @@ import com.b07.planetze.util.Unit;
  * An input field.
  * @param <T> the type of value accepted by this field
  */
-public interface Field<T> {
+public interface Field<T> extends Parcelable {
     /**
      * Checks whether a value is valid, returning an error message if it isn't.
      * @param value the value to validate
@@ -30,6 +32,9 @@ public interface Field<T> {
     FieldFragment<? extends Field<T>, T> createFragment(
             @NonNull FieldId<?> fieldId
     );
+
+    @NonNull
+    FieldDeparcelizer deparcelizer();
 
     /**
      * {@return a field with an added initial value}
