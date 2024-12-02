@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="20dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="30dp"
+            android:gravity="center">
+
+            <ImageButton
+                android:id="@+id/previousPage"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:background="@null"
+                android:src="@drawable/left_arrow"
+                android:scaleType="fitCenter"
+                android:layout_gravity="center" />
+
+            <TextView
+                android:id="@+id/editTextText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="Back"
+                android:textColor="@color/dark_bluegray"
+                android:textSize="35sp"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="end">
+
+                <androidx.appcompat.widget.AppCompatButton
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/circle_help"
+                    android:textColor="@android:color/black"
+                    android:backgroundTint="@null"
+                    android:text="?"
+                    android:textSize="20sp"
+                    />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="25dp"
+            android:orientation="vertical"
+            >
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Reset Your Password"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:layout_marginTop="25dp">
+
+            </TextView>
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Please enter the email associated with your account and we'll send you password reset instructions."
+                android:textColor="@color/dark_bluegray"
+                android:textSize="18sp"
+                android:layout_marginTop="5dp" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/textBoxEmail"
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:layout_marginTop="40dp"
+                android:hint="Email"
+                android:background="@drawable/text_input"
+                 />
+
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/buttonReset"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/sign_up_button"
+                android:textColor="@color/white"
+                android:layout_marginTop="30dp"
+                android:text="Send Reset"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,485 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".onboarding.QuestionsFoodFragment">
+
+    <!-- Back Button -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp">
+
+        <ImageButton
+            android:id="@+id/back"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:background="@null"
+            android:src="@drawable/left_arrow"
+            android:scaleType="fitCenter"
+            android:layout_gravity="center" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="Back"
+            android:textSize="35sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+    <!-- Category Title -->
+    <HorizontalScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/category_section_false"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="@string/survey_category1"
+                android:textColor="@color/dark_bluegray"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/category_section_true"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="@string/survey_category4"
+                android:textColor="@color/white"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/category_section_false"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="@string/survey_category5"
+                android:textColor="@color/dark_bluegray"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textViewCat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/category_section_false"
+                android:gravity="center"
+                android:padding="8dp"
+                android:text="@string/survey_category6"
+                android:textColor="@color/dark_bluegray"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+    </HorizontalScrollView>
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+
+        android:fillViewport="true"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:id="@+id/parentLayout"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="25dp"
+            android:layout_marginTop="10dp">
+
+            <TextView
+                android:id="@+id/textView8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:lineSpacingMultiplier="1.5"
+                android:text="@string/survey_question8"
+                android:textColor="@color/dark_bluegray"
+                android:textStyle="bold" />
+
+            <RadioGroup
+                android:id="@+id/radioGroup8"
+                android:layout_marginRight="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <RadioButton
+                    android:id="@+id/radioButton81"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/teal"
+                    android:text="@string/survey_answer81"
+                    android:textColor="@color/dark_bluegray"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/category_section_false" />
+
+                <RadioButton
+                    android:id="@+id/radioButton82"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/teal"
+                    android:text="@string/survey_answer82"
+                    android:textColor="@color/dark_bluegray"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/category_section_false"/>
+
+                <RadioButton
+                    android:id="@+id/radioButton83"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/teal"
+                    android:text="@string/survey_answer83"
+                    android:textColor="@color/dark_bluegray"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/category_section_false" />
+
+                <RadioButton
+                    android:id="@+id/radioButton84"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/teal"
+                    android:text="@string/survey_answer84"
+                    android:textColor="@color/dark_bluegray"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/category_section_false"/>
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/textView9"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:lineSpacingMultiplier="1.5"
+                android:text="@string/survey_question9"
+                android:textColor="@color/dark_bluegray"
+                android:textStyle="bold"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/textView9beef"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:lineSpacingMultiplier="1.5"
+                android:text="@string/survey_answer9_food1"
+                android:textColor="@color/dark_bluegray"
+                android:textStyle="bold"
+                android:visibility="gone" />
+
+            <RadioGroup
+                android:id="@+id/radioGroup9beef"
+                android:layout_marginRight="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone">
+
+                <RadioButton
+                    android:id="@+id/radioButton91beef"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/teal"
+                    android:text="@string/survey_answer91"
+                    android:textColor="@color/dark_bluegray"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/category_section_false"/>
+
+                <RadioButton
+                    android:id="@+id/radioButton92beef"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/teal"
+                    android:text="@string/survey_answer92"
+                    android:textColor="@color/dark_bluegray"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/category_section_false"/>
+
+                <RadioButton
+                    android:id="@+id/radioButton93beef"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/teal"
+                    android:text="@string/survey_answer93"
+                    android:textColor="@color/dark_bluegray"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/category_section_false"/>
+
+                <RadioButton
+                    android:id="@+id/radioButton94beef"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/teal"
+                    android:text="@string/survey_answer94"
+                    android:textColor="@color/dark_bluegray"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/category_section_false"/>
+            </RadioGroup>
+
+
+            <TextView
+                android:id="@+id/textView9pork"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:lineSpacingMultiplier="1.5"
+                android:text="@string/survey_answer9_food2"
+                android:textColor="@color/dark_bluegray"
+                android:textStyle="bold"
+                android:visibility="gone"/>
+
+            <RadioGroup
+                android:id="@+id/radioGroup9pork"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:visibility="gone">
+
+                <RadioButton
+                    android:id="@+id/radioButton91pork"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/teal"
+                    android:text="@string/survey_answer91"
+                    android:textColor="@color/dark_bluegray"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/category_section_false"/>
+
+                <RadioButton
+                    android:id="@+id/radioButton92pork"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/teal"
+                    android:text="@string/survey_answer92"
+                    android:textColor="@color/dark_bluegray"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/category_section_false"/>
+
+                <RadioButton
+                    android:id="@+id/radioButton93pork"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/teal"
+                    android:text="@string/survey_answer93"
+                    android:textColor="@color/dark_bluegray"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/category_section_false"/>
+
+                <RadioButton
+                    android:id="@+id/radioButton94pork"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/teal"
+                    android:text="@string/survey_answer94"
+                    android:textColor="@color/dark_bluegray"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/category_section_false"/>
+            </RadioGroup>
+            <TextView
+                android:id="@+id/textView9chkn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:lineSpacingMultiplier="1.5"
+                android:text="@string/survey_answer9_food3"
+                android:textColor="@color/dark_bluegray"
+                android:textStyle="bold"
+                android:visibility="gone" />
+
+            <RadioGroup
+                android:id="@+id/radioGroup9chkn"
+                android:layout_marginRight="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone">
+
+                <RadioButton
+                    android:id="@+id/radioButton91chkn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/teal"
+                    android:text="@string/survey_answer91"
+                    android:textColor="@color/dark_bluegray"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/category_section_false"/>
+
+                <RadioButton
+                    android:id="@+id/radioButton92chkn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/teal"
+                    android:text="@string/survey_answer92"
+                    android:textColor="@color/dark_bluegray"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/category_section_false"/>
+
+                <RadioButton
+                    android:id="@+id/radioButton93chkn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/teal"
+                    android:text="@string/survey_answer93"
+                    android:textColor="@color/dark_bluegray"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/category_section_false"/>
+
+                <RadioButton
+                    android:id="@+id/radioButton94chkn"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/teal"
+                    android:text="@string/survey_answer94"
+                    android:textColor="@color/dark_bluegray"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/category_section_false"/>
+            </RadioGroup>
+            <TextView
+                android:id="@+id/textView9fs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:lineSpacingMultiplier="1.5"
+                android:text="@string/survey_answer9_food4"
+                android:textColor="@color/dark_bluegray"
+                android:textStyle="bold"
+                android:visibility="gone" />
+
+            <RadioGroup
+                android:id="@+id/radioGroup9fs"
+                android:layout_marginRight="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone">
+
+                <RadioButton
+                    android:id="@+id/radioButton91fs"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/teal"
+                    android:text="@string/survey_answer91"
+                    android:textColor="@color/dark_bluegray"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/category_section_false"/>
+
+                <RadioButton
+                    android:id="@+id/radioButton92fs"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/teal"
+                    android:text="@string/survey_answer92"
+                    android:textColor="@color/dark_bluegray"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/category_section_false"/>
+
+                <RadioButton
+                    android:id="@+id/radioButton93fs"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/teal"
+                    android:text="@string/survey_answer93"
+                    android:textColor="@color/dark_bluegray"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/category_section_false"/>
+
+                <RadioButton
+                    android:id="@+id/radioButton94fs"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/teal"
+                    android:text="@string/survey_answer94"
+                    android:textColor="@color/dark_bluegray"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/category_section_false"/>
+            </RadioGroup>
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:lineSpacingMultiplier="1.5"
+                android:text="@string/survey_question10alt"
+                android:textColor="@color/dark_bluegray"
+                android:textStyle="bold" />
+
+            <RadioGroup
+                android:id="@+id/radioGroup10"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp">
+
+                <RadioButton
+                    android:id="@+id/radioButton101"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/teal"
+                    android:text="@string/survey_answer101"
+                    android:textColor="@color/dark_bluegray"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/category_section_false" />
+
+                <RadioButton
+                    android:id="@+id/radioButton102"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/teal"
+                    android:text="@string/survey_answer102"
+                    android:textColor="@color/dark_bluegray"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/category_section_false" />
+
+                <RadioButton
+                    android:id="@+id/radioButton103"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/teal"
+                    android:text="@string/survey_answer103"
+                    android:textColor="@color/dark_bluegray"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/category_section_false" />
+
+                <RadioButton
+                    android:id="@+id/radioButton104"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/teal"
+                    android:text="@string/survey_answer104"
+                    android:textColor="@color/dark_bluegray"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/category_section_false" />
+            </RadioGroup>
+
+        </LinearLayout>
+    </ScrollView>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/next"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/sign_up_button"
+        android:textColor="@color/white"
+        android:text="Next"/>
+</LinearLayout>
