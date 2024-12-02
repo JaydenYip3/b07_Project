@@ -5,10 +5,10 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".auth.AuthActivity">
+    tools:context=".onboarding.OnboardingActivity">
 
     <FrameLayout
-        android:id="@+id/fragmentContainer"
+        android:id="@+id/onboarding_fragment_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -19,5 +19,4 @@
         app:layout_constraintVertical_bias="1.0">
 
     </FrameLayout>
-
 </androidx.constraintlayout.widget.ConstraintLayout>

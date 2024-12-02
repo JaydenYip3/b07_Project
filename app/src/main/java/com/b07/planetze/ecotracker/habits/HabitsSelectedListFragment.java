@@ -107,7 +107,7 @@ public class HabitsSelectedListFragment extends Fragment implements AdapterView.
     }
     private void loadFragment(Fragment fragment) {
         FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragmentContainer, fragment);
+        transaction.replace(R.id.ecotracker_fragment_container, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
     }

@@ -227,7 +227,7 @@ public class EcoGaugeActivity extends AppCompatActivity implements EcoGaugeOverv
     }
     private void loadFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragmentContainer, fragment);
+        transaction.replace(R.id.ecotracker_fragment_container, fragment);
         transaction.addToBackStack(fragment.getClass().getName());
         transaction.commit();
     }
