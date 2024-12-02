@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -70,7 +71,7 @@ public class HabitSuggestionsFragment extends Fragment {
             }
         });
 
-        Button buttonBack = view.findViewById(R.id.buttonBack);
+        ImageButton buttonBack = view.findViewById(R.id.buttonBack);
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
