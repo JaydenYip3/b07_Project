@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -13,7 +12,6 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.b07.planetze.R;
-import com.b07.planetze.auth.RegisterCallback;
 import com.b07.planetze.common.User;
 import com.b07.planetze.database.firebase.FirebaseDb;
 import com.b07.planetze.ecotracker.EcoTrackerActivity;
@@ -39,7 +37,7 @@ public class HomeScreenFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        TextView username = view.findViewById(R.id.username);
+        TextView username = view.findViewById(R.id.home_username);
         LinearLayout tracker = view.findViewById(R.id.tracker);
         LinearLayout balance = view.findViewById(R.id.balance);
         LinearLayout hub = view.findViewById(R.id.hub);

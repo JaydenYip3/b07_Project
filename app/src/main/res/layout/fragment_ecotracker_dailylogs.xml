@@ -74,7 +74,8 @@
                     android:textSize="34sp"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/ecotracker_dailylogs_totaldescription" />
+                    app:layout_constraintTop_toBottomOf="@+id/ecotracker_dailylogs_totaldescription"
+                    tools:text="16kg CO2e" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
