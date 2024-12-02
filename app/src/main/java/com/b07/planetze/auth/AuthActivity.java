@@ -48,7 +48,7 @@ public class AuthActivity extends AppCompatActivity
      * @param context the context from which to start the activity
      * @param initialScreen the screen to display upon starting
      */
-    public static void start(Context context, AuthScreen initialScreen) {
+    public static void start(@NonNull Context context, @NonNull AuthScreen initialScreen) {
         Intent intent = new Intent(context, AuthActivity.class);
         intent.putExtra(EXTRA_INITIAL_SCREEN, initialScreen);
         context.startActivity(intent);
@@ -181,19 +181,27 @@ public class AuthActivity extends AppCompatActivity
             return insets;
         });
 
-        Bundle extras = getIntent().getExtras();
-        if (extras == null) {
-            throw new AuthActivityInitException("EXTRA_INITIAL_SCREEN not specified in intent extras");
-        }
-
-        AuthScreen initialScreen = (AuthScreen) extras.getSerializable(EXTRA_INITIAL_SCREEN);
-        if (initialScreen == null) {
-            throw new AuthActivityInitException("invalid EXTRA_INITIAL_SCREEN specified in intent extras");
-        }
+        AuthScreen initialScreen = getAuthScreen();
 
         switchScreens(initialScreen);
 
         fbAuth = FirebaseAuth.getInstance();
         auth = new FirebaseAuthBackend();
+    }
+
+    @NonNull
+    private AuthScreen getAuthScreen() {
+        AuthScreen initialScreen;
+        Bundle extras = getIntent().getExtras();
+        if (extras == null) {
+            initialScreen = AuthScreen.LOGIN;
+//            throw new AuthActivityInitException("EXTRA_INITIAL_SCREEN not specified in intent extras");
+        } else {
+            initialScreen = (AuthScreen) extras.getSerializable(EXTRA_INITIAL_SCREEN);
+            if (initialScreen == null) {
+                throw new AuthActivityInitException("invalid EXTRA_INITIAL_SCREEN specified in intent extras");
+            }
+        }
+        return initialScreen;
     }
 }

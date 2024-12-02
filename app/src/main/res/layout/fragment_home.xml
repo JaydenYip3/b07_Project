@@ -149,6 +149,8 @@
             app:layout_constraintTop_toBottomOf="@+id/home_to_tracker">
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/home_to_habits"
+                android:layout_width="0dp"
                 android:layout_height="140dp"
                 android:layout_weight="1"
                 android:background="@drawable/home_bg_dark"
@@ -157,7 +159,6 @@
                 android:foreground="?attr/selectableItemBackground">
 
                 <ImageView
-                    android:id="@+id/imageView7"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="-16dp"
@@ -193,7 +194,9 @@
                 android:layout_height="wrap_content" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/home_to_gauge"
                 android:layout_height="140dp"
+                android:layout_width="0dp"
                 android:layout_weight="1"
                 android:background="@drawable/home_bg_dark"
                 android:backgroundTint="@color/teal"
@@ -201,7 +204,6 @@
                 android:foreground="?attr/selectableItemBackground">
 
                 <ImageView
-                    android:id="@+id/imageView8"
                     android:layout_width="160dp"
                     android:layout_height="160dp"
                     android:layout_marginEnd="-32dp"
@@ -211,7 +213,6 @@
                     app:srcCompat="@drawable/gauge_4x_upscale_darker" />
 
                 <ImageView
-                    android:id="@+id/imageView6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="12dp"
@@ -246,7 +247,9 @@
             app:layout_constraintTop_toBottomOf="@+id/home_row_2">
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/home_to_footprint"
                 android:layout_height="140dp"
+                android:layout_width="0dp"
                 android:layout_weight="1"
                 android:background="@drawable/home_bg_dark"
                 android:backgroundTint="@color/teal"
@@ -254,7 +257,6 @@
                 android:foreground="?attr/selectableItemBackground">
 
                 <ImageView
-                    android:id="@+id/imageView7"
                     android:layout_width="160dp"
                     android:layout_height="200dp"
                     android:layout_marginEnd="-12dp"
@@ -291,7 +293,9 @@
                 android:layout_height="wrap_content" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/home_to_hub"
                 android:layout_height="140dp"
+                android:layout_width="0dp"
                 android:layout_weight="1"
                 android:background="@drawable/home_bg_dark"
                 android:backgroundTint="@color/teal"
@@ -299,7 +303,6 @@
                 android:foreground="?attr/selectableItemBackground">
 
                 <ImageView
-                    android:id="@+id/imageView8"
                     android:layout_width="160dp"
                     android:layout_height="160dp"
                     android:layout_marginEnd="-32dp"
@@ -309,7 +312,6 @@
                     app:srcCompat="@drawable/network_8x_upscale_darker" />
 
                 <ImageView
-                    android:id="@+id/imageView6"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="12dp"

@@ -1,8 +1,6 @@
 package com.b07.planetze;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,12 +13,10 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.b07.planetze.auth.AuthActivity;
 import com.b07.planetze.auth.AuthScreen;
-import com.b07.planetze.auth.RegisterFragment;
 
 public class WelcomeFragment extends Fragment{
     private static final String TAG = "WelcomeFragment";
@@ -54,7 +50,7 @@ public class WelcomeFragment extends Fragment{
 
     private void loadFragment(Fragment fragment) {
         FragmentTransaction transaction = getChildFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, fragment);
+        transaction.replace(R.id.home_fragment_container, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
     }
