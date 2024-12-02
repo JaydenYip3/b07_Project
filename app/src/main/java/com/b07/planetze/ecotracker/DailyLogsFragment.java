@@ -19,12 +19,14 @@ import android.view.ViewGroup;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.b07.planetze.R;
 import com.b07.planetze.daily.DailyType;
 import com.b07.planetze.database.data.DailyFetch;
 import com.b07.planetze.database.data.DailyFetchList;
+import com.b07.planetze.home.HomeActivity;
 import com.b07.planetze.util.Util;
 import com.b07.planetze.util.measurement.Mass;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -210,6 +212,11 @@ public final class DailyLogsFragment extends Fragment {
                 closeTypeSelector(view);
                 model.newForm(new FormAction.New(type));
             });
+        });
+
+        ImageButton back = view.findViewById(R.id.ecotracker_dailylogs_back);
+        back.setOnClickListener(v -> {
+            HomeActivity.start(requireActivity());
         });
 
         model.fetchDailies();
