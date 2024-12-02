@@ -3,6 +3,7 @@ package com.b07.planetze.database;
 import androidx.annotation.NonNull;
 
 import com.b07.planetze.common.Emissions;
+import com.b07.planetze.common.Habit;
 import com.b07.planetze.common.User;
 import com.b07.planetze.daily.Daily;
 import com.b07.planetze.database.data.DailyFetch;
@@ -79,6 +80,18 @@ public interface Database {
     );
 
     void fetchOnboardingEmissions(@NonNull Consumer<Result<Option<Emissions>, DatabaseError>> callback);
+
+    void fetchHabit(@NonNull Consumer<Result<Option<Habit>, DatabaseError>> callback);
+
+    void deleteHabit(
+            @NonNull String key,
+            @NonNull Consumer<Result<Unit, DatabaseError>> callback
+    );
+
+    void postHabit(
+            @NonNull String key,
+            @NonNull Consumer<Result<Unit, DatabaseError>> callback
+    );
 
     void postDaily(
             @NonNull LocalDate date,

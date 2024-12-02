@@ -16,4 +16,9 @@
     <color name="teal">#009999</color>
     <color name="dark_bluegray">#373f51</color>
     <color name="dark">#1b1b1e</color>
+
+    <color name="colorTransport">#FF5722</color>
+    <color name="colorEnergy">#4CAF50</color>
+    <color name="colorFood">#FFC107</color>
+    <color name="colorShopping">#2196F3</color>
 </resources>

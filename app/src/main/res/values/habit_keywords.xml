@@ -1,0 +1,79 @@
+<resources>
+    <string-array name="habit_keywords">
+        <item>transportation</item>
+        <item>public transportation</item>
+        <item>consolidate your flights</item>
+        <item>eat less meat</item>
+        <item>adopt a pescatarian diet</item>
+        <item>adopt a vegan diet</item>
+        <item>adopt a vegetarian diet</item>
+        <item>buy less clothes</item>
+        <item>buy less electronics</item>
+        <item>buy less appliances</item>
+        <item>buy less furniture</item>
+        <item>save electricity</item>
+        <item>save gas</item>
+        <item>save water</item>
+        <item>electric cars</item>
+        <item>cars</item>
+        <item>drive</item>
+        <item>driving</item>
+        <item>efficient</item>
+        <item>travel</item>
+        <item>travelling</item>
+        <item>personal car</item>
+        <item>alternative travel</item>
+        <item>public transit</item>
+        <item>walking</item>
+        <item>cycling</item>
+        <item>bicycle</item>
+        <item>bicycling</item>
+        <item>running</item>
+        <item>flying</item>
+        <item>flights</item>
+        <item>vacation</item>
+        <item>food</item>
+        <item>eating</item>
+        <item>meals</item>
+        <item>lunch</item>
+        <item>dinner</item>
+        <item>meats</item>
+        <item>beef</item>
+        <item>pork</item>
+        <item>chicken</item>
+        <item>fish</item>
+        <item>seafoods</item>
+        <item>diets</item>
+        <item>dieting</item>
+        <item>vegan</item>
+        <item>vegetarian</item>
+        <item>pescatarian</item>
+        <item>plant-based</item>
+        <item>alternative eating</item>
+        <item>consumption</item>
+        <item>shopping</item>
+        <item>buying clothes</item>
+        <item>clothes</item>
+        <item>purchases</item>
+        <item>buying electronics</item>
+        <item>electronics</item>
+        <item>phones</item>
+        <item>tablets</item>
+        <item>laptops</item>
+        <item>computers</item>
+        <item>devices</item>
+        <item>buying furniture</item>
+        <item>buying appliances</item>
+        <item>furniture</item>
+        <item>appliances</item>
+        <item>housing</item>
+        <item>energy</item>
+        <item>energy bills</item>
+        <item>home</item>
+        <item>house</item>
+        <item>electricity bill</item>
+        <item>gas bill</item>
+        <item>water bill</item>
+        <item>saving money</item>
+    </string-array>
+</resources>

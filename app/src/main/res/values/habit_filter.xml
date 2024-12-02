@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="habit_filter">
+        <item>None</item>
+        <item>Category: Transportation</item>
+        <item>Category: Food</item>
+        <item>Category: Energy</item>
+        <item>Category: Consumption</item>
+        <item>Impact</item>
+        <item>Personalized Recommendations</item>
+    </string-array>
+
+</resources>

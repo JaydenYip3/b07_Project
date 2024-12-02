@@ -143,7 +143,8 @@ public class QuestionsHousingFragment extends Fragment{
                     housingEmissionsKgs += 233;
                 }
             }
-            if (b171.isChecked()) { housingEmissionsKgs = housingEmissionsKgs - 6000; }
+            if (b171.isChecked()) { housingEmissionsKgs -= 6000; }
+            if (b172.isChecked()) { housingEmissionsKgs -= 4000; }
 
             emissions[2] = housingEmissionsKgs;
             Log.d(TAG, "emissions: " + emissions[0] + emissions[1] + emissions[2] + emissions[3]);

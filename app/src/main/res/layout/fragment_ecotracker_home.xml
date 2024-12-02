@@ -112,6 +112,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ecotracker_home_habit_suggestions"
             android:layout_marginTop="20dp"
             android:layout_width="300dp"
             android:layout_height="100dp"
