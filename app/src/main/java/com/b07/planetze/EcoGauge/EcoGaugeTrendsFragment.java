@@ -61,17 +61,17 @@ public class EcoGaugeTrendsFragment extends Fragment{
         switch (timePeriod) {
             case "Week":
                 for (int i = 5; i > 0; i--) {
-                    intervals.add(new DateInterval(LocalDate.now().minusWeeks(i), LocalDate.now().minusWeeks(i - 1)));
+                    intervals.add(new DateInterval(LocalDate.now().minusWeeks(i), LocalDate.now().minusWeeks(i - 1).plusDays(1)));
                 }
                 break;
             case "Month":
                 for (int i = 5; i > 0; i--) {
-                    intervals.add(new DateInterval(LocalDate.now().minusMonths(i), LocalDate.now().minusMonths(i - 1)));
+                    intervals.add(new DateInterval(LocalDate.now().minusMonths(i), LocalDate.now().minusMonths(i - 1).plusDays(1)));
                 }
                 break;
             case "Year":
                 for (int i = 5; i > 0; i--) {
-                    intervals.add(new DateInterval(LocalDate.now().minusYears(i), LocalDate.now().minusYears(i - 1)));
+                    intervals.add(new DateInterval(LocalDate.now().minusYears(i), LocalDate.now().minusYears(i - 1).plusDays(1)));
                 }
                 break;
         }
