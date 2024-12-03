@@ -1,5 +1,8 @@
 package com.b07.planetze.EcoGauge;
 
+import static android.content.ContentValues.TAG;
+
+import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -14,6 +17,15 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.b07.planetze.R;
+import com.b07.planetze.common.Emissions;
+import com.b07.planetze.database.data.DailyFetch;
+import com.b07.planetze.database.data.DailyFetchList;
+import com.b07.planetze.database.firebase.FirebaseDb;
+import com.b07.planetze.util.DateInterval;
+import com.b07.planetze.util.measurement.Mass;
+import com.b07.planetze.util.result.Ok;
+
+import java.time.LocalDate;
 
 public class EcoGaugeOverviewFragment extends Fragment {
 
@@ -74,8 +86,37 @@ public class EcoGaugeOverviewFragment extends Fragment {
         });
     }
 
-    private void updateEmissionsData(String timePeriod) {
-        double emissions = ((EcoGaugeOverviewCallback) requireActivity()).calculateEmissionsForPeriod(timePeriod);
-        resultsTextView.setText("You've emitted " + emissions + " kg CO2e this " + timePeriod.toLowerCase() + ".");
+    public void updateEmissionsData(String timePeriod) {
+        String temp = ((EcoGaugeOverviewCallback) requireActivity()).getPeriod(timePeriod);
+        DateInterval interval = null;
+        switch (timePeriod) {
+            case "Week":
+                interval = new DateInterval(LocalDate.now().minusWeeks(1), LocalDate.now());
+                break;
+            case "Month":
+                interval = new DateInterval(LocalDate.now().minusMonths(1), LocalDate.now());
+                break;
+            case "Year":
+                interval = new DateInterval(LocalDate.now().minusYears(1), LocalDate.now());
+                break;
+
+        }
+        // Fetch emissions data for the interval
+        FirebaseDb database = new FirebaseDb();
+        database.fetchDailies(interval, result -> {
+            if (result instanceof Ok<DailyFetchList, ?> r) {
+                DailyFetchList list = r.get();
+                Emissions emissions = list.emissions();
+                Log.d(TAG, "emissions: " + emissions);
+
+                for (DailyFetch fetch : list) {
+                    Log.d(TAG, "id: " + fetch.id());
+                    Log.d(TAG, "date: " + fetch.date());
+                    Log.d(TAG, "daily: " + fetch.daily());
+                }
+                Mass kilos = emissions.total();
+                resultsTextView.setText("You've emitted " + kilos.kg() + " kg CO2e this " + timePeriod.toLowerCase() + ".");
+            }
+        });
     }
 }
