@@ -19,6 +19,8 @@ import com.b07.planetze.EcoGauge.EcoGaugeActivity;
 import com.b07.planetze.MainActivity;
 import com.b07.planetze.R;
 import com.b07.planetze.ecotracker.EcoTrackerActivity;
+import com.b07.planetze.ecotracker.habits.HabitActivity;
+import com.b07.planetze.ecotracker.habits.HabitSuggestionsFragment;
 import com.b07.planetze.onboarding.OnboardingActivity;
 
 public class HomeScreenFragment extends Fragment {
@@ -56,6 +58,9 @@ public class HomeScreenFragment extends Fragment {
         });
         toFootprint.setOnClickListener(v -> {
             OnboardingActivity.start(requireActivity());
+        });
+        toHabits.setOnClickListener(v -> {
+            HabitActivity.start(requireActivity());
         });
         toHub.setOnClickListener(v -> {
             loadFragment(new NotFinishedFragment());

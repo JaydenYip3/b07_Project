@@ -23,6 +23,7 @@
             android:exported="false" />
         <activity android:name=".home.HomeActivity" />
         <activity android:name=".EcoGauge.EcoGaugeActivity"/>
+        <activity android:name=".ecotracker.habits.HabitActivity"/>
         <activity
             android:name=".MainActivity"
             android:exported="true">
