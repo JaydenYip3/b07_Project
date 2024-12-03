@@ -27,9 +27,7 @@ public class EmailConfirmationFragment extends Fragment {
         TextView resendConfirmation = view.findViewById(R.id.resendConfirmation);
         ImageButton btnPrevious = view.findViewById(R.id.previousPage);
 
-
-//        ((EmailConfirmationCallback) requireActivity()).confirmEmail();
-
+        ((EmailConfirmationCallback) requireActivity()).confirmEmail();
 
         resendConfirmation.setOnClickListener(v -> {
             ((RegisterCallback) requireActivity()).resendConfirmationEmail();

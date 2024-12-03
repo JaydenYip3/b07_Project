@@ -102,7 +102,6 @@ public class AuthActivity extends AppCompatActivity
                                 showToast("User registered successfully; "
                                         + "please verify your email address");
                                 switchScreens(AuthScreen.EMAIL_CONFIRMATION);
-                                confirmEmail();
                             }, e -> {
                                 showToast(e.message());
                             });
