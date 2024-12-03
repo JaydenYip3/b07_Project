@@ -37,13 +37,20 @@ public class OnboardingActivity extends AppCompatActivity {
 
         var model = new ViewModelProvider(this).get(OnboardingViewModel.class);
 
-        model.getScreen().observe(this, screen -> {
-            loadFragment(switch (screen) {
-                case TRANSPORTATION -> new QuestionsTransportationFragment();
-                case HOUSING -> new QuestionsHousingFragment();
-                case FOOD -> new QuestionsFoodFragment();
-                case CONSUMPTION -> new QuestionsConsumptionFragment();
-                case CALC_DISPLAY -> new CalcDisplayFragment();
+        model.getScreen().observe(this, maybeScreen -> {
+            maybeScreen.match(screen -> {
+                loadFragment(switch (screen) {
+                    case TRANSPORTATION -> new QuestionsTransportationFragment();
+                    case HOUSING -> new QuestionsHousingFragment();
+                    case FOOD -> new QuestionsFoodFragment();
+                    case CONSUMPTION -> new QuestionsConsumptionFragment();
+                    case CALC_DISPLAY -> new CalcDisplayFragment();
+                });
+            }, () -> {
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.onboarding_fragment_container, new QuestionsTransportationFragment())
+                        .commit();
             });
         });
     }
@@ -51,6 +58,7 @@ public class OnboardingActivity extends AppCompatActivity {
     private void loadFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.onboarding_fragment_container, fragment);
+        transaction.addToBackStack(fragment.getClass().getName());
         transaction.commit();
     }
 }

@@ -29,11 +29,13 @@ public final class HomeViewModel extends ViewModel {
 
     @NonNull private final MutableLiveData<DailyFetchList> dailies;
     @NonNull private final MutableLiveData<Option<User>> user;
+    @NonNull private final MutableLiveData<Boolean> hasCompletedOnboarding;
     @NonNull private final Database db;
 
     public HomeViewModel() {
         this.dailies = new MutableLiveData<>(DailyFetchList.empty());
         this.user = new MutableLiveData<>(none());
+        this.hasCompletedOnboarding = new MutableLiveData<>(true);
         this.db = new FirebaseDb();
     }
 
@@ -57,5 +59,22 @@ public final class HomeViewModel extends ViewModel {
         db.fetchUser(r -> {
             r.apply(user::setValue);
         });
+    }
+
+    @NonNull
+    public LiveData<Boolean> getHasCompletedOnboarding() {
+        return hasCompletedOnboarding;
+    }
+
+    public void fetchOnboardingStatus() {
+        db.fetchOnboardingEmissions(r -> {
+            r.apply(opt -> hasCompletedOnboarding.setValue(opt.isSome()));
+        });
+    }
+
+    public void fetchAll() {
+        fetchDailies();
+        fetchUser();
+        fetchOnboardingStatus();
     }
 }

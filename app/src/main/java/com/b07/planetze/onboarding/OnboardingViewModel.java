@@ -1,5 +1,8 @@
 package com.b07.planetze.onboarding;
 
+import static com.b07.planetze.util.option.Option.none;
+import static com.b07.planetze.util.option.Option.some;
+
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -20,22 +23,22 @@ import java.util.function.Consumer;
 public final class OnboardingViewModel extends ViewModel {
     @NonNull private final String TAG = "OnboardingViewModel";
 
-    @NonNull private final MutableLiveData<OnboardingScreen> screen;
+    @NonNull private final MutableLiveData<Option<OnboardingScreen>> screen;
     @NonNull private final Emissions emissions;
     @NonNull private final Database db;
 
     public OnboardingViewModel() {
-        screen = new MutableLiveData<>(OnboardingScreen.TRANSPORTATION);
+        screen = new MutableLiveData<>(none());
         emissions = Emissions.zero();
         db = new FirebaseDb();
     }
 
     public void setScreen(@NonNull OnboardingScreen screen) {
-        this.screen.setValue(screen);
+        this.screen.setValue(some(screen));
     }
 
     @NonNull
-    public LiveData<OnboardingScreen> getScreen() {
+    public LiveData<Option<OnboardingScreen>> getScreen() {
         return screen;
     }
 

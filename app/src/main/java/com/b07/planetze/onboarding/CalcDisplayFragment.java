@@ -20,6 +20,7 @@ import com.b07.planetze.R;
 import com.b07.planetze.common.Emissions;
 import com.b07.planetze.common.User;
 import com.b07.planetze.database.firebase.FirebaseDb;
+import com.b07.planetze.ecotracker.EcoTrackerActivity;
 import com.b07.planetze.home.HomeActivity;
 import com.b07.planetze.util.measurement.Mass;
 
@@ -94,7 +95,7 @@ public class CalcDisplayFragment extends Fragment {
         buttonBack.setOnClickListener(v -> model.setScreen(OnboardingScreen.CONSUMPTION));
 
         Button buttonNext = view.findViewById(R.id.buttonNext);
-        buttonNext.setOnClickListener(v -> HomeActivity.start(requireActivity()));
+        buttonNext.setOnClickListener(v -> EcoTrackerActivity.start(requireActivity()));
     }
 
     @NonNull
