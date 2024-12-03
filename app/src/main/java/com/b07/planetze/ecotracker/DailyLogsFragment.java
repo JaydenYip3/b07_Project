@@ -149,6 +149,7 @@ public final class DailyLogsFragment extends Fragment {
         ft.commit();
     }
 
+    @Override
     public void onViewCreated(@NonNull View view,
                               @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);

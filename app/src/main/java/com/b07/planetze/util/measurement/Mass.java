@@ -97,6 +97,13 @@ public final class Mass extends Measurement<Mass>
         return kg * KG_TO_POUNDS;
     }
 
+    /**
+     * {@return this mass in metric tons}
+     */
+    public double tons() {
+        return kg / 1000;
+    }
+
     public double get(Unit unit) {
         return switch (unit) {
             case KG -> kg();
@@ -122,6 +129,11 @@ public final class Mass extends Measurement<Mass>
         List<String> units = List.of("g", "kg", "Mg", "Gg", "Tg", "Pg", "Eg");
 
         return Util.formatIncreasingSiPrefixes(values, units, kg(), "kg");
+    }
+
+    @NonNull
+    public String formatTons() {
+        return String.format(Locale.US, "%.2f tons", tons());
     }
 
     @Override

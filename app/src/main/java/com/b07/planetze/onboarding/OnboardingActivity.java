@@ -11,9 +11,11 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.b07.planetze.R;
 import com.b07.planetze.auth.AuthActivity;
+import com.b07.planetze.ecotracker.EcoTrackerViewModel;
 
 public class OnboardingActivity extends AppCompatActivity {
 
@@ -33,7 +35,17 @@ public class OnboardingActivity extends AppCompatActivity {
             return insets;
         });
 
-        loadFragment(new QuestionsTransportationFragment());
+        var model = new ViewModelProvider(this).get(OnboardingViewModel.class);
+
+        model.getScreen().observe(this, screen -> {
+            loadFragment(switch (screen) {
+                case TRANSPORTATION -> new QuestionsTransportationFragment();
+                case HOUSING -> new QuestionsHousingFragment();
+                case FOOD -> new QuestionsFoodFragment();
+                case CONSUMPTION -> new QuestionsConsumptionFragment();
+                case CALC_DISPLAY -> new CalcDisplayFragment();
+            });
+        });
     }
 
     private void loadFragment(Fragment fragment) {
