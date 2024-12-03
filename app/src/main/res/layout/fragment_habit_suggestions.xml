@@ -4,93 +4,140 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/gray"
+    android:background="@color/white"
     tools:context=".ecotracker.habits.HabitSuggestionsFragment">
-    <Button
-        android:id="@+id/buttonBack"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:text="@string/back"
-        android:backgroundTint="@color/teal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:text="Habit Suggestions"
-        android:textColor="@color/dark_bluegray"
-        android:textSize="35sp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/buttonBack"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        android:text="Adopt some eco-friendly habits to help you in make the world a cleaner place!"
-        android:textColor="@color/dark_bluegray"
-        android:textSize="20sp"
-        app:layout_constraintTop_toBottomOf="@id/textView1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        />
-    <Button
-        android:id="@+id/buttonFrag1"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="15dp"
-        android:backgroundTint="@color/teal"
-        android:text="View My Habits"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView2" />
-    <View
-        android:id="@+id/line1"
-        android:layout_width="0dp"
-        android:layout_height="3dp"
-        android:layout_marginTop="2dp"
-        android:background="@color/bluegray"
-        app:layout_constraintStart_toStartOf="@id/buttonFrag1"
-        app:layout_constraintEnd_toEndOf="@id/buttonFrag1"
-        app:layout_constraintTop_toBottomOf="@id/buttonFrag1"/>
-    <Button
-        android:id="@+id/buttonFrag2"
-        android:layout_width="wrap_content"
-        android:layout_height="48dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginRight="30dp"
-        android:backgroundTint="@color/teal"
-        android:text="View Suggested Habits"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textView2" />
-    <View
-        android:id="@+id/line2"
-        android:layout_width="0dp"
-        android:layout_height="3dp"
-        android:layout_marginTop="2dp"
-        android:background="@color/bluegray"
-        android:visibility="invisible"
-        app:layout_constraintStart_toStartOf="@id/buttonFrag2"
-        app:layout_constraintEnd_toEndOf="@id/buttonFrag2"
-        app:layout_constraintTop_toBottomOf="@id/buttonFrag2"/>
-    <FrameLayout
-        android:id="@+id/frameLayout"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="30dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/buttonFrag1"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="30dp">
+
+                <ImageButton
+                    android:id="@+id/buttonBack"
+                    android:layout_width="32dp"
+                    android:layout_height="32dp"
+                    android:background="@null"
+                    android:src="@drawable/left_arrow"
+                    android:scaleType="fitCenter"
+                    android:layout_gravity="center" />
+
+                <TextView
+                    android:id="@+id/textView1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="Habit Suggestions"
+                    android:textColor="@color/dark_bluegray"
+                    android:layout_marginLeft="10dp"
+                    android:textSize="35sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:gravity="center"
+                android:text="Adopt some eco-friendly habits to help you in make the world a cleaner place!"
+                android:textColor="@color/dark_bluegray"
+                android:textSize="15sp" />
+
+            <LinearLayout
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="10dp">
+
+                <!-- First Button and Line -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/buttonFrag1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="10dp"
+                        android:background="@drawable/sign_up_button"
+                        android:padding="5dp"
+                        android:textColor="@color/white"
+                        android:text="View My Habits" />
+
+                    <View
+                        android:id="@+id/line1"
+                        android:layout_width="match_parent"
+                        android:layout_height="3dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginEnd="30dp"
+                        android:background="@color/bluegray" />
+                </LinearLayout>
+
+                <!-- Second Button and Line -->
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+
+                    <androidx.appcompat.widget.AppCompatButton
+                        android:id="@+id/buttonFrag2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/sign_up_button"
+                        android:backgroundTint="@color/teal"
+                        android:padding="5dp"
+                        android:textColor="@color/white"
+                        android:text="View Suggested Habits" />
+
+                    <View
+                        android:id="@+id/line2"
+                        android:layout_width="match_parent"
+                        android:layout_height="3dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginEnd="30dp"
+                        android:background="@color/bluegray"
+                        android:visibility="invisible" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+
+
+
+            <FrameLayout
+                android:id="@+id/frameLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="30dp" />
+
+        </LinearLayout>
+    </ScrollView>
+
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

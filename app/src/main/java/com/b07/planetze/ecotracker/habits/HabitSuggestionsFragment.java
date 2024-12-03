@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -27,6 +28,8 @@ import com.b07.planetze.common.Emissions;
 import com.b07.planetze.common.User;
 import com.b07.planetze.database.firebase.FirebaseDb;
 import com.b07.planetze.ecotracker.EcoTrackerHomeFragment;
+import com.b07.planetze.home.HomeActivity;
+import com.b07.planetze.home.HomeScreenFragment;
 import com.b07.planetze.onboarding.QuestionsFoodFragment;
 import com.b07.planetze.onboarding.QuestionsTransportationFragment;
 
@@ -70,11 +73,11 @@ public class HabitSuggestionsFragment extends Fragment {
             }
         });
 
-        Button buttonBack = view.findViewById(R.id.buttonBack);
+        ImageButton buttonBack = view.findViewById(R.id.buttonBack);
         buttonBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                loadFragment(EcoTrackerHomeFragment.newInstance()); //ecotracker home
+                requireActivity().finish();
             }
         });
 
