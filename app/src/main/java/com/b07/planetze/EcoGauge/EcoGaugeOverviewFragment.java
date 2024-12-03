@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
@@ -56,6 +57,12 @@ public class EcoGaugeOverviewFragment extends Fragment {
 
         comparisonButton.setOnClickListener(v -> {
             ((EcoGaugeScreenSwitch) requireActivity()).switchScreens(EcoGaugeScreen.COMPARISON);
+        });
+
+
+        ImageButton btnPrevious = view.findViewById(R.id.previousPage);
+        btnPrevious.setOnClickListener(v -> {
+            requireActivity().finish();
         });
 
         return view;
