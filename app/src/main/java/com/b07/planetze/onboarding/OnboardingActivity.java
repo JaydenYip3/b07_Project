@@ -3,8 +3,10 @@ package com.b07.planetze.onboarding;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -18,6 +20,7 @@ import com.b07.planetze.auth.AuthActivity;
 import com.b07.planetze.ecotracker.EcoTrackerViewModel;
 
 public class OnboardingActivity extends AppCompatActivity {
+    @NonNull private static final String TAG = "OnboardingActivity";
 
     public static void start(Context context) {
         Intent intent = new Intent(context, OnboardingActivity.class);
@@ -38,6 +41,7 @@ public class OnboardingActivity extends AppCompatActivity {
         var model = new ViewModelProvider(this).get(OnboardingViewModel.class);
 
         model.getScreen().observe(this, maybeScreen -> {
+            Log.d(TAG, "switch screens: " + maybeScreen);
             maybeScreen.match(screen -> {
                 loadFragment(switch (screen) {
                     case TRANSPORTATION -> new QuestionsTransportationFragment();

@@ -26,7 +26,7 @@ import com.b07.planetze.util.measurement.Mass;
 
 public class QuestionsTransportationFragment extends Fragment implements AdapterView.OnItemSelectedListener{
     @NonNull private static final String TAG = "QuestionsTransportationFragment";
-    private String country_selected;
+    private String selectedCountry;
 
     public QuestionsTransportationFragment() {}
 
@@ -216,7 +216,7 @@ public class QuestionsTransportationFragment extends Fragment implements Adapter
             if (b74.isChecked()) { transportEmissionsKg += 4400; }
             if (b75.isChecked()) { transportEmissionsKg += 6600; }
 
-            model.updateUserCountry(country_selected);
+            model.updateUserCountry(selectedCountry);
             model.emissions().transport().set(Mass.kg(transportEmissionsKg));
 
             Log.d(TAG, "emissions: " + model.emissions());
@@ -230,7 +230,7 @@ public class QuestionsTransportationFragment extends Fragment implements Adapter
     @Override
     public void onItemSelected(AdapterView<?> parent, View view,
                                int pos, long id) {
-        country_selected = parent.getItemAtPosition(pos).toString();
+        selectedCountry = parent.getItemAtPosition(pos).toString();
     }
 
     @Override

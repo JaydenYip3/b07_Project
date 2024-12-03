@@ -34,6 +34,7 @@ public final class OnboardingViewModel extends ViewModel {
     }
 
     public void setScreen(@NonNull OnboardingScreen screen) {
+        Log.d(TAG, "setScreen: " + screen);
         this.screen.setValue(some(screen));
     }
 
