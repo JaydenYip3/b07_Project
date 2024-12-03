@@ -3,7 +3,6 @@ package com.b07.planetze.onboarding;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
@@ -16,8 +15,6 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.b07.planetze.R;
-import com.b07.planetze.auth.AuthActivity;
-import com.b07.planetze.ecotracker.EcoTrackerViewModel;
 
 public class OnboardingActivity extends AppCompatActivity {
     @NonNull private static final String TAG = "OnboardingActivity";
@@ -40,29 +37,23 @@ public class OnboardingActivity extends AppCompatActivity {
 
         var model = new ViewModelProvider(this).get(OnboardingViewModel.class);
 
-        model.getScreen().observe(this, maybeScreen -> {
-            Log.d(TAG, "switch screens: " + maybeScreen);
-            maybeScreen.match(screen -> {
-                loadFragment(switch (screen) {
-                    case TRANSPORTATION -> new QuestionsTransportationFragment();
-                    case HOUSING -> new QuestionsHousingFragment();
-                    case FOOD -> new QuestionsFoodFragment();
-                    case CONSUMPTION -> new QuestionsConsumptionFragment();
-                    case CALC_DISPLAY -> new CalcDisplayFragment();
-                });
-            }, () -> {
-                getSupportFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.onboarding_fragment_container, new QuestionsTransportationFragment())
-                        .commit();
-            });
-        });
+        model.getScreen().observe(this, this::setScreen);
     }
 
-    private void loadFragment(Fragment fragment) {
+    private void setScreen(OnboardingScreen screen) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        Fragment fragment = switch (screen) {
+            case EXPLANATION -> new OnboardingExplanationFragment();
+            case TRANSPORTATION -> new QuestionsTransportationFragment();
+            case HOUSING -> new QuestionsHousingFragment();
+            case FOOD -> new QuestionsFoodFragment();
+            case CONSUMPTION -> new QuestionsConsumptionFragment();
+            case CALC_DISPLAY -> new CalcDisplayFragment();
+        };
         transaction.replace(R.id.onboarding_fragment_container, fragment);
-        transaction.addToBackStack(fragment.getClass().getName());
+        if (screen != OnboardingScreen.EXPLANATION) {
+            transaction.addToBackStack(fragment.getClass().getName());
+        }
         transaction.commit();
     }
 }

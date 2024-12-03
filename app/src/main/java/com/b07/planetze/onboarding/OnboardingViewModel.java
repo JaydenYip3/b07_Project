@@ -23,23 +23,23 @@ import java.util.function.Consumer;
 public final class OnboardingViewModel extends ViewModel {
     @NonNull private final String TAG = "OnboardingViewModel";
 
-    @NonNull private final MutableLiveData<Option<OnboardingScreen>> screen;
+    @NonNull private final MutableLiveData<OnboardingScreen> screen;
     @NonNull private final Emissions emissions;
     @NonNull private final Database db;
 
     public OnboardingViewModel() {
-        screen = new MutableLiveData<>(none());
+        screen = new MutableLiveData<>(OnboardingScreen.EXPLANATION);
         emissions = Emissions.zero();
         db = new FirebaseDb();
     }
 
     public void setScreen(@NonNull OnboardingScreen screen) {
         Log.d(TAG, "setScreen: " + screen);
-        this.screen.setValue(some(screen));
+        this.screen.setValue(screen);
     }
 
     @NonNull
-    public LiveData<Option<OnboardingScreen>> getScreen() {
+    public LiveData<OnboardingScreen> getScreen() {
         return screen;
     }
 
