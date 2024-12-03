@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -52,6 +54,11 @@ public class EcoGaugeBreakdownFragment extends Fragment {
                 interval = new DateInterval(LocalDate.now().minusYears(1), LocalDate.now());
                 break;
         }
+
+        ImageButton btnPrevious = view.findViewById(R.id.previousPage);
+        btnPrevious.setOnClickListener(v -> {
+            getParentFragmentManager().popBackStack();
+        });
 
         // Fetch emissions data for the interval
         FirebaseDb database = new FirebaseDb();

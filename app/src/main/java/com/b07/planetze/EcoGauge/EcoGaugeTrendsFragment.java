@@ -21,6 +21,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -74,6 +75,12 @@ public class EcoGaugeTrendsFragment extends Fragment{
                 }
                 break;
         }
+
+        ImageButton btnPrevious = view.findViewById(R.id.previousPage);
+        btnPrevious.setOnClickListener(v -> {
+            getParentFragmentManager().popBackStack();
+        });
+
 
         // Fetch emissions for each interval
         for (int i = 0; i < intervals.size(); i++) {

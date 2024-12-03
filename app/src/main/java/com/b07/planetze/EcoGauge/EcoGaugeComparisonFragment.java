@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -38,6 +39,7 @@ public class EcoGaugeComparisonFragment extends Fragment {
         // Reference TextView from layout
         comparisonTextView = view.findViewById(R.id.comparisonTextView);
 
+
         // Get comparison data
         CountryProcessor countryProcessor = new CountryProcessor(view.getContext(), "countries.json");
         FirebaseDb database = new FirebaseDb();
@@ -50,6 +52,11 @@ public class EcoGaugeComparisonFragment extends Fragment {
             comparisonTextView.setText("Invalid time period.");
             return view;
         }
+
+        ImageButton btnPrevious = view.findViewById(R.id.previousPage);
+        btnPrevious.setOnClickListener(v -> {
+            getParentFragmentManager().popBackStack();
+        });
 
         // Fetch emissions data
         fetchEmissions(database, interval, timePeriod, countryProcessor);
