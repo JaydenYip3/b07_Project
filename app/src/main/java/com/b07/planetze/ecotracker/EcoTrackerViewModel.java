@@ -32,7 +32,7 @@ public final class EcoTrackerViewModel extends ViewModel {
     @NonNull private final Database db;
 
     public EcoTrackerViewModel() {
-        this.state = new MutableLiveData<>(new EcoTrackerState.Home());
+        this.state = new MutableLiveData<>(new EcoTrackerState.ViewLogs(false));
         this.dailies = new MutableLiveData<>(DailyFetchList.empty());
         this.date = new MutableLiveData<>(LocalDate.now());
         this.db = new FirebaseDb();
