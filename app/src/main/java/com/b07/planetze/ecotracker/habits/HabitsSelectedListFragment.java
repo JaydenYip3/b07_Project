@@ -21,9 +21,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.b07.planetze.R;
 import com.b07.planetze.common.Emissions;
-import com.b07.planetze.daily.DailyType;
-import com.b07.planetze.database.data.DailyFetch;
-import com.b07.planetze.database.data.DailyFetchList;
 import com.b07.planetze.database.firebase.FirebaseDb;
 
 import org.json.JSONArray;
@@ -37,12 +34,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
-import com.b07.planetze.util.DateInterval;
-import com.b07.planetze.util.measurement.Mass;
-import com.b07.planetze.util.result.Ok;
-import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.series.DataPoint;
-import com.jjoe64.graphview.series.LineGraphSeries;
 
 public class HabitsSelectedListFragment extends Fragment implements AdapterView.OnItemSelectedListener, AdapterView.OnItemClickListener {
     FirebaseDb db = new FirebaseDb();
@@ -87,24 +78,10 @@ public class HabitsSelectedListFragment extends Fragment implements AdapterView.
         recyclerView.setHasFixedSize(true);
 
         //getData(view);
-        /*Button buttonSubmit = view.findViewById(R.id.buttonNext);
-        buttonSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onSubmit(view);
-            }
-        });*/
-
-        //visibility set to gone --> constraints not there, keep expandable in layout thatll
-        //always b there for item below to constrain top to bottom of layout
 
         return view;
     }
 
-
-    public void onSubmit(@NonNull View v) {
-        //loadFragment(new QuestionsFoodFragment(emissions));
-    }
     private void loadFragment(Fragment fragment) {
         FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
         transaction.replace(R.id.fragmentContainer, fragment);
@@ -121,23 +98,21 @@ public class HabitsSelectedListFragment extends Fragment implements AdapterView.
                         habits -> {
                             Map<String, ArrayList<String>> userJson = (Map<String, ArrayList<String>>) habits.toJson();
                             ArrayList<String> userHabits = userJson.get("keys");
-                            Log.d(TAG, "User found");
-                            Log.d(TAG, "filter:" + filter + ", keyword:" + keyword + "userhabit size:" + userHabits.size());
                             if(userHabits!=null && !Objects.equals(keyword, "")){
                                 for (int i = 1; i < 14; i++){
                                     String key = "habit" + i;
                                     Object[] habitInfo = habitProcessor.getResult(key);
-                                    String[] keywords = new String[((JSONArray)habitInfo[6]).length()];
-                                    for (int j = 0; j < ((JSONArray)habitInfo[6]).length(); j++){
+                                    String[] keywords = new String[((JSONArray)habitInfo[7]).length()];
+                                    for (int j = 0; j < ((JSONArray)habitInfo[7]).length(); j++){
                                         try {
-                                            keywords[j] = ((JSONArray)habitInfo[6]).getString(j);
+                                            keywords[j] = ((JSONArray)habitInfo[7]).getString(j);
                                         } catch (JSONException e) {
                                             throw new RuntimeException(e);
                                         }
                                     }
                                     List<String> keywordsList = Arrays.stream(keywords).toList();
                                     if(keywordsList.contains(keyword) && userHabits.contains(key)){
-                                        SuggestedHabit habit = new SuggestedHabit((String)habitInfo[0], (String)habitInfo[1], (String)habitInfo[2], (String)habitInfo[3], (double)habitInfo[4], (String)habitInfo[5], keywords);
+                                        SuggestedHabit habit = new SuggestedHabit((String)habitInfo[0], (String)habitInfo[1], (String)habitInfo[2], (String)habitInfo[3], (String)habitInfo[4], (double)habitInfo[5], (String)habitInfo[6], keywords);
                                         habitList.add(habit);
                                     }
                                 }
@@ -148,16 +123,16 @@ public class HabitsSelectedListFragment extends Fragment implements AdapterView.
                                 for (int i = 1; i < 14; i++){
                                     String key = "habit" + i;
                                     Object[] habitInfo = habitProcessor.getResult(key);
-                                    String[] keywords = new String[((JSONArray)habitInfo[6]).length()];
-                                    for (int j = 0; j < ((JSONArray)habitInfo[6]).length(); j++){
+                                    String[] keywords = new String[((JSONArray)habitInfo[7]).length()];
+                                    for (int j = 0; j < ((JSONArray)habitInfo[7]).length(); j++){
                                         try {
-                                            keywords[j] = ((JSONArray)habitInfo[6]).getString(j);
+                                            keywords[j] = ((JSONArray)habitInfo[7]).getString(j);
                                         } catch (JSONException e) {
                                             throw new RuntimeException(e);
                                         }
                                     }
                                     if(userHabits.contains(key)){
-                                        SuggestedHabit habit = new SuggestedHabit((String)habitInfo[0], (String)habitInfo[1], (String)habitInfo[2], (String)habitInfo[3], (double)habitInfo[4], (String)habitInfo[5], keywords);
+                                        SuggestedHabit habit = new SuggestedHabit((String)habitInfo[0], (String)habitInfo[1], (String)habitInfo[2], (String)habitInfo[3], (String)habitInfo[4], (double)habitInfo[5], (String)habitInfo[6], keywords);
                                         habitList.add(habit);
                                     }
                                 }
@@ -171,16 +146,16 @@ public class HabitsSelectedListFragment extends Fragment implements AdapterView.
                                 for (int i = 1; i < 14; i++){
                                     String key = "habit" + i;
                                     Object[] habitInfo = habitProcessor.getResult(key);
-                                    String[] keywords = new String[((JSONArray)habitInfo[6]).length()];
-                                    for (int j = 0; j < ((JSONArray)habitInfo[6]).length(); j++){
+                                    String[] keywords = new String[((JSONArray)habitInfo[7]).length()];
+                                    for (int j = 0; j < ((JSONArray)habitInfo[7]).length(); j++){
                                         try {
-                                            keywords[j] = ((JSONArray)habitInfo[6]).getString(j);
+                                            keywords[j] = ((JSONArray)habitInfo[7]).getString(j);
                                         } catch (JSONException e) {
                                             throw new RuntimeException(e);
                                         }
                                     }
                                     if(userHabits.contains(key)){
-                                        SuggestedHabit habit = new SuggestedHabit((String)habitInfo[0], (String)habitInfo[1], (String)habitInfo[2], (String)habitInfo[3], (double)habitInfo[4], (String)habitInfo[5], keywords);
+                                        SuggestedHabit habit = new SuggestedHabit((String)habitInfo[0], (String)habitInfo[1], (String)habitInfo[2], (String)habitInfo[3], (String)habitInfo[4], (double)habitInfo[5], (String)habitInfo[6], keywords);
                                         String category = "Category: " + (String)habitInfo[2];
                                         if(Objects.equals(filter, category)){
                                             habitList.add(habit);
@@ -193,24 +168,22 @@ public class HabitsSelectedListFragment extends Fragment implements AdapterView.
                                 for (int i = 1; i < 14; i++){
                                     String key = "habit" + i;
                                     Object[] habitInfo = habitProcessor.getResult(key);
-                                    String[] keywords = new String[((JSONArray)habitInfo[6]).length()];
-                                    for (int j = 0; j < ((JSONArray)habitInfo[6]).length(); j++){
+                                    String[] keywords = new String[((JSONArray)habitInfo[7]).length()];
+                                    for (int j = 0; j < ((JSONArray)habitInfo[7]).length(); j++){
                                         try {
-                                            keywords[j] = ((JSONArray)habitInfo[6]).getString(j);
+                                            keywords[j] = ((JSONArray)habitInfo[7]).getString(j);
                                         } catch (JSONException e) {
                                             throw new RuntimeException(e);
                                         }
                                     }
                                     if(userHabits.contains(key)){
-                                        SuggestedHabit habit = new SuggestedHabit((String)habitInfo[0], (String)habitInfo[1], (String)habitInfo[2], (String)habitInfo[3], (double)habitInfo[4], (String)habitInfo[5], keywords);
+                                        SuggestedHabit habit = new SuggestedHabit((String)habitInfo[0], (String)habitInfo[1], (String)habitInfo[2], (String)habitInfo[3], (String)habitInfo[4], (double)habitInfo[5], (String)habitInfo[6], keywords);
                                         habitList.add(habit);
                                         Collections.sort(habitList);
                                     }
                                 }
                                 keyword = "";
-                                Log.d(TAG, "size:" + habitList.size());
                             }
-                            Log.d(TAG, "habit sizein async: " + habitList.size());
                             myAdapter = new MyAdapterSelected(this.getContext(), habitList);
                             recyclerView.setAdapter(myAdapter);
                             myAdapter.notifyDataSetChanged();
@@ -221,7 +194,6 @@ public class HabitsSelectedListFragment extends Fragment implements AdapterView.
                 Log.d(TAG, "error: " + dbError);
             });
         });
-        Log.d(TAG, "habit size not in async: " + habitList.size());
     }
 
     public void onItemSelected(AdapterView<?> parent, View view,
