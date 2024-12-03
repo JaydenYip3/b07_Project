@@ -51,7 +51,6 @@ public class OnboardingActivity extends AppCompatActivity {
     private void loadFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.onboarding_fragment_container, fragment);
-        transaction.addToBackStack(fragment.getClass().getName());
         transaction.commit();
     }
 }
