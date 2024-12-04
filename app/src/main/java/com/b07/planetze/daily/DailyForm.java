@@ -26,7 +26,7 @@ public interface DailyForm<T extends Daily> {
      * @param daily the daily
      */
     @NonNull
-    Form dailyToForm(@NonNull T daily);
+    Form dailyToForm(@NonNull Daily daily);
 
     /**
      * {@return a daily activity instance from a form submission}

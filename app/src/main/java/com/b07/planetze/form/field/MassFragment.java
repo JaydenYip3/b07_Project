@@ -3,10 +3,14 @@ package com.b07.planetze.form.field;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,6 +24,8 @@ import com.b07.planetze.form.definition.FieldId;
 
 public final class MassFragment
         extends FieldFragment<MassField, ImmutableMass> {
+    @NonNull private static final String TAG = "MassFragment";
+
     /**
      * Use {@link MassFragment#newInstance} instead of calling this
      * manually.
@@ -56,6 +62,42 @@ public final class MassFragment
 
         TextView error = view.findViewById(R.id.form_mass_error);
 
+        final Spinner[] unit = {view.findViewById(R.id.form_mass_unit)};
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
+                requireActivity(),
+                R.array.mass_units,
+                android.R.layout.simple_spinner_item
+        );
+        adapter.setDropDownViewResource(
+                android.R.layout.simple_spinner_dropdown_item);
+        unit[0].setAdapter(adapter);
+
+        final Mass.Unit[] massUnit = new Mass.Unit[] {Mass.Unit.KG};
+
+        unit[0].setOnItemSelectedListener(
+                new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(
+                    AdapterView<?> parent, View view, int position, long id) {
+                String item = (String) parent.getItemAtPosition(position);
+
+                massUnit[0] = switch (item) {
+                    case "kg" -> Mass.Unit.KG;
+                    case "g" -> Mass.Unit.G;
+                    case "lb" -> Mass.Unit.LB;
+                    default -> {
+                        Log.w(TAG, "Invalid unit received: " + item);
+                        yield Mass.Unit.KG;
+                    }
+                };
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
         EditText input = view.findViewById(R.id.form_mass_input);
         form.get(id).map(Object::toString).apply(input::setText);
 
@@ -74,7 +116,7 @@ public final class MassFragment
                     error.setText(R.string.mass_error);
                     return;
                 }
-                form.set(id, Mass.kg(value).immutableCopy())
+                form.set(id, Mass.withUnit(massUnit[0], value).immutableCopy())
                         .match(ok -> error.setText(""), error::setText);
             }
 

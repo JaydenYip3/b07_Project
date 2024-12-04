@@ -1,0 +1,393 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:contentDescription="Close button"
+    tools:context=".ecotracker.DailyLogsFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:background="@color/white"
+        android:backgroundTint="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/ecotracker_dailylogs_back"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="16dp"
+            android:background="@null"
+            android:scaleType="fitCenter"
+            android:src="@drawable/left_arrow"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/ecotracker_dailylogs_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/teal"
+            android:minWidth="130dp"
+            android:textColor="@color/lightgray"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ScrollView
+        android:id="@+id/ecotracker_dailylogs_scroll"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraintLayout">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/ecotracker_dailylogs_totaldescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="30dp"
+                    android:text="Total emissions"
+                    android:textColor="@color/dark"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <TextView
+                    android:id="@+id/ecotracker_dailylogs_totalemissions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="14dp"
+                    android:textColor="@color/dark"
+                    android:textSize="34sp"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/ecotracker_dailylogs_totaldescription"
+                    tools:text="16kg CO2e" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <LinearLayout
+                android:id="@+id/ecotracker_dailylogs_dailysummaries"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/ecotracker_dailylogs_nologs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ecotracker_dailyfetch_bg"
+                android:padding="20dp"
+                android:text="No activities logged—click on the add button to log a new activity."
+                android:textColor="@color/dark"
+                android:textSize="16sp"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="120dp" />
+        </LinearLayout>
+    </ScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/ecotracker_dailylogs_add"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="32dp"
+        android:clickable="true"
+        android:contentDescription="@string/ecotracker_dailylogs_add_description"
+        android:src="@drawable/ecotracker_dailylogs_add"
+        app:backgroundTint="@color/teal"
+        app:fabCustomSize="60dp"
+        app:layout_constraintBottom_toBottomOf="@+id/ecotracker_dailylogs_scroll"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:maxImageSize="32dp"
+        app:shapeAppearanceOverlay="@style/Theme.Planetze.Rounded"
+        app:tint="@color/white" />
+
+    <View
+        android:id="@+id/ecotracker_dailylogs_type_exit"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:alpha="0"
+        android:background="@color/dark_bluegray"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="gone" />
+
+    <FrameLayout
+        android:id="@+id/ecotracker_dailylogs_type_layout"
+        android:layout_width="0dp"
+        android:layout_height="500dp"
+        android:background="@drawable/ecotracker_dailylogs_type_bg"
+        android:elevation="10dp"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/ecotracker_dailylogs_scroll"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:visibility="gone">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:id="@+id/ecotracker_dailylogs_type_close"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="20dp"
+                android:background="#00FFFFFF"
+                android:contentDescription="@string/ecotracker_dailylogs_close_description"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="22dp"
+                android:layout_marginEnd="30dp"
+                android:background="@drawable/ecotracker_dailylogs_type_close_bg"
+                android:src="@drawable/ecotracker_dailylogs_close"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/dark_bluegray" />
+
+            <TextView
+                android:id="@+id/ecotracker_dailylogs_type_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="@string/ecotracker_dailylogs_type_title"
+                android:textColor="@color/dark"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ScrollView
+                android:id="@+id/ecotracker_dailylogs_type_scroll"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginBottom="32dp"
+                android:paddingLeft="30dp"
+                android:paddingTop="20dp"
+                android:paddingRight="30dp"
+                android:paddingBottom="10dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ecotracker_dailylogs_type_title">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginBottom="20dp"
+                        android:background="@drawable/ecotracker_dailylogs_type_section_bg"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/ecotracker_dailylogs_type_driving"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/ecotracker_dailylogs_type_item_height"
+                            android:foreground="?attr/selectableItemBackground"
+                            android:gravity="center_vertical"
+                            android:paddingLeft="@dimen/ecotracker_dailylogs_type_item_padding"
+                            android:paddingRight="@dimen/ecotracker_dailylogs_type_item_padding"
+                            android:text="@string/ecotracker_dailylogs_type_driving"
+                            android:textColor="@color/ecotracker_dailylogs_type_item_text_color"
+                            android:textSize="@dimen/ecotracker_dailylogs_type_item_text_size" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/ecotracker_dailylogs_type_separator_height"
+                            android:background="@color/ecotracker_dailylogs_type_separator_color" />
+
+                        <TextView
+                            android:id="@+id/ecotracker_dailylogs_type_publictransit"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/ecotracker_dailylogs_type_item_height"
+                            android:foreground="?attr/selectableItemBackground"
+                            android:gravity="center_vertical"
+                            android:paddingLeft="@dimen/ecotracker_dailylogs_type_item_padding"
+                            android:paddingRight="@dimen/ecotracker_dailylogs_type_item_padding"
+                            android:text="@string/ecotracker_dailylogs_type_publictransit"
+                            android:textColor="@color/ecotracker_dailylogs_type_item_text_color"
+                            android:textSize="@dimen/ecotracker_dailylogs_type_item_text_size" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/ecotracker_dailylogs_type_separator_height"
+                            android:background="@color/ecotracker_dailylogs_type_separator_color" />
+
+                        <TextView
+                            android:id="@+id/ecotracker_dailylogs_type_cyclingorwalking"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/ecotracker_dailylogs_type_item_height"
+                            android:foreground="?attr/selectableItemBackground"
+                            android:gravity="center_vertical"
+                            android:paddingLeft="@dimen/ecotracker_dailylogs_type_item_padding"
+                            android:paddingRight="@dimen/ecotracker_dailylogs_type_item_padding"
+                            android:text="@string/ecotracker_dailylogs_type_cyclingorwalking"
+                            android:textColor="@color/ecotracker_dailylogs_type_item_text_color"
+                            android:textSize="@dimen/ecotracker_dailylogs_type_item_text_size" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/ecotracker_dailylogs_type_separator_height"
+                            android:background="@color/ecotracker_dailylogs_type_separator_color" />
+
+                        <TextView
+                            android:id="@+id/ecotracker_dailylogs_type_flight"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/ecotracker_dailylogs_type_item_height"
+                            android:foreground="?attr/selectableItemBackground"
+                            android:gravity="center_vertical"
+                            android:paddingLeft="@dimen/ecotracker_dailylogs_type_item_padding"
+                            android:paddingRight="@dimen/ecotracker_dailylogs_type_item_padding"
+                            android:text="@string/ecotracker_dailylogs_type_flight"
+                            android:textColor="@color/ecotracker_dailylogs_type_item_text_color"
+                            android:textSize="@dimen/ecotracker_dailylogs_type_item_text_size" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="20dp"
+                        android:background="@drawable/ecotracker_dailylogs_type_section_bg"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/ecotracker_dailylogs_type_buyclothes"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/ecotracker_dailylogs_type_item_height"
+                            android:foreground="?attr/selectableItemBackground"
+                            android:gravity="center_vertical"
+                            android:paddingLeft="@dimen/ecotracker_dailylogs_type_item_padding"
+                            android:paddingRight="@dimen/ecotracker_dailylogs_type_item_padding"
+                            android:text="@string/ecotracker_dailylogs_type_buyclothes"
+                            android:textColor="@color/ecotracker_dailylogs_type_item_text_color"
+                            android:textSize="@dimen/ecotracker_dailylogs_type_item_text_size" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/ecotracker_dailylogs_type_separator_height"
+                            android:background="@color/ecotracker_dailylogs_type_separator_color" />
+
+                        <TextView
+                            android:id="@+id/ecotracker_dailylogs_type_buyelectronics"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/ecotracker_dailylogs_type_item_height"
+                            android:foreground="?attr/selectableItemBackground"
+                            android:gravity="center_vertical"
+                            android:paddingLeft="@dimen/ecotracker_dailylogs_type_item_padding"
+                            android:paddingRight="@dimen/ecotracker_dailylogs_type_item_padding"
+                            android:text="@string/ecotracker_dailylogs_type_buyelectronics"
+                            android:textColor="@color/ecotracker_dailylogs_type_item_text_color"
+                            android:textSize="@dimen/ecotracker_dailylogs_type_item_text_size" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/ecotracker_dailylogs_type_separator_height"
+                            android:background="@color/ecotracker_dailylogs_type_separator_color" />
+
+                        <TextView
+                            android:id="@+id/ecotracker_dailylogs_type_buyother"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/ecotracker_dailylogs_type_item_height"
+                            android:foreground="?attr/selectableItemBackground"
+                            android:gravity="center_vertical"
+                            android:paddingLeft="@dimen/ecotracker_dailylogs_type_item_padding"
+                            android:paddingRight="@dimen/ecotracker_dailylogs_type_item_padding"
+                            android:text="@string/ecotracker_dailylogs_type_buyother"
+                            android:textColor="@color/ecotracker_dailylogs_type_item_text_color"
+                            android:textSize="@dimen/ecotracker_dailylogs_type_item_text_size" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="20dp"
+                        android:background="@drawable/ecotracker_dailylogs_type_section_bg"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/ecotracker_dailylogs_type_meal"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/ecotracker_dailylogs_type_item_height"
+                            android:foreground="?attr/selectableItemBackground"
+                            android:gravity="center_vertical"
+                            android:paddingLeft="@dimen/ecotracker_dailylogs_type_item_padding"
+                            android:paddingRight="@dimen/ecotracker_dailylogs_type_item_padding"
+                            android:text="@string/ecotracker_dailylogs_type_meal"
+                            android:textColor="@color/ecotracker_dailylogs_type_item_text_color"
+                            android:textSize="@dimen/ecotracker_dailylogs_type_item_text_size" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="20dp"
+                        android:background="@drawable/ecotracker_dailylogs_type_section_bg"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/ecotracker_dailylogs_type_energybills"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/ecotracker_dailylogs_type_item_height"
+                            android:foreground="?attr/selectableItemBackground"
+                            android:gravity="center_vertical"
+                            android:paddingLeft="@dimen/ecotracker_dailylogs_type_item_padding"
+                            android:paddingRight="@dimen/ecotracker_dailylogs_type_item_padding"
+                            android:text="@string/ecotracker_dailylogs_type_energybills"
+                            android:textColor="@color/ecotracker_dailylogs_type_item_text_color"
+                            android:textSize="@dimen/ecotracker_dailylogs_type_item_text_size" />
+                    </LinearLayout>
+                </LinearLayout>
+            </ScrollView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

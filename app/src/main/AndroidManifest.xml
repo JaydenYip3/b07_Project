@@ -13,12 +13,17 @@
         android:theme="@style/Theme.Planetze"
         tools:targetApi="31">
         <activity
+            android:name=".onboarding.OnboardingActivity"
+            android:exported="false" />
+        <activity
             android:name=".ecotracker.EcoTrackerActivity"
             android:exported="false" />
         <activity
             android:name=".auth.AuthActivity"
             android:exported="false" />
         <activity android:name=".home.HomeActivity" />
+        <activity android:name=".EcoGauge.EcoGaugeActivity"/>
+        <activity android:name=".ecotracker.habits.HabitActivity"/>
         <activity
             android:name=".MainActivity"
             android:exported="true">
@@ -27,7 +32,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- Register Activity -->
+        </activity>
     </application>
 
 </manifest>

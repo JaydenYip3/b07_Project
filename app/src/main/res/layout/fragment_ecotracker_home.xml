@@ -48,7 +48,7 @@
             android:layout_height="200dp"
             android:orientation="vertical"
             android:layout_marginTop="25dp"
-            android:background="@drawable/black_background">
+            android:background="@drawable/home_bg_dark">
 
             <TextView
                 android:layout_width="match_parent"
@@ -79,35 +79,40 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_marginTop="50dp"
+            android:id="@+id/ecotracker_home_activitylog"
             android:layout_width="300dp"
             android:layout_height="100dp"
-            android:orientation="vertical"
+            android:layout_marginTop="50dp"
             android:background="@drawable/icon_background"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="vertical">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center">
+                android:gravity="center"
+                android:orientation="horizontal">
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Manage Activities"
                     android:layout_gravity="center"
-                    android:textSize="20sp"
-                    android:layout_marginLeft="20dp"/>
+                    android:layout_marginLeft="20dp"
+                    android:text="Manage Activities"
+                    android:textSize="20sp" />
+
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:src="@drawable/leaf"
                     android:layout_marginLeft="10dp"
-                    android:scaleType="fitCenter"/>
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/leaf" />
             </LinearLayout>
 
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ecotracker_home_habit_suggestions"
             android:layout_marginTop="20dp"
             android:layout_width="300dp"
             android:layout_height="100dp"

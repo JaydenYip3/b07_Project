@@ -18,6 +18,7 @@ public final class FormSubmission {
         this.values = values;
     }
 
+    @NonNull
     public <T> T get(@NonNull FieldId<T> field) {
         formId.assertEquals(field.formId());
 
@@ -25,5 +26,10 @@ public final class FormSubmission {
         T value = (T) values.get(field.index());
 
         return value;
+    }
+
+    @NonNull
+    public FormId id() {
+        return formId;
     }
 }

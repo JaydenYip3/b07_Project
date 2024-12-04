@@ -1,6 +1,7 @@
 package com.b07.planetze.auth;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.b07.planetze.R;
 import com.b07.planetze.WelcomeFragment;
+import com.b07.planetze.database.firebase.FirebaseDb;
 
 public class EmailConfirmationFragment extends Fragment {
 
@@ -27,9 +29,29 @@ public class EmailConfirmationFragment extends Fragment {
         TextView resendConfirmation = view.findViewById(R.id.resendConfirmation);
         ImageButton btnPrevious = view.findViewById(R.id.previousPage);
 
+        ((EmailConfirmationCallback) requireActivity()).confirmEmail();
 
-//        ((EmailConfirmationCallback) requireActivity()).confirmEmail();
 
+        FirebaseDb firebaseDb = new FirebaseDb();
+
+
+        TextView email_text = view.findViewById(R.id.textView6);
+
+        firebaseDb.fetchUser(result -> {
+            result.match(
+                    userOption -> userOption.match(
+                            user -> {
+                                // Successfully retrieved the user, extract email
+                                String email = user.email();
+                                email_text.setText("An email has been sent to " + email);
+                                Log.d("FirebaseEmail", "User email: " + email);
+                                // Use the email as needed
+                            },
+                            () -> Log.e("FirebaseEmail", "User does not exist.")
+                    ),
+                    dbError -> Log.e("FirebaseEmail", "Error fetching user: " + dbError)
+            );
+        });
 
         resendConfirmation.setOnClickListener(v -> {
             ((RegisterCallback) requireActivity()).resendConfirmationEmail();

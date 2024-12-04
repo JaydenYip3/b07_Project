@@ -1,8 +1,5 @@
 package com.b07.planetze.onboarding;
 
-import static android.content.ContentValues.TAG;
-
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,66 +9,47 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
-import android.widget.TextView;
+
 import android.widget.Toast;
+
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.b07.planetze.R;
-import com.b07.planetze.common.Emissions;
-import com.b07.planetze.database.firebase.FirebaseDb;
 import com.b07.planetze.util.measurement.Mass;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 
-import java.time.LocalDate;
+public class QuestionsConsumptionFragment extends Fragment {
+    @NonNull private static final String TAG = "QuestionsConsumptionFragment";
 
-public class QuestionsConsumptionFragment extends Fragment{
-    FirebaseDb db = new FirebaseDb();
-    Emissions consumptionEmissions;
-    private double consumptionEmissionsKgs = 0;
-    private double[] emissions = new double[4];
-    public LocalDate dateAdded= LocalDate.now();
+    public QuestionsConsumptionFragment() {}
 
-    QuestionsConsumptionFragment(double[] allEmissions){
-        emissions[0] = allEmissions[0];
-        emissions[1] = allEmissions[1];
-        emissions[2] = allEmissions[2];
-        emissions[3] = allEmissions[3];
-    }
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_questions_consumption, container, false);
+    public void onViewCreated(@NonNull View view,
+                              @Nullable Bundle savedInstanceState) {
+        var model = new ViewModelProvider(requireActivity())
+                .get(OnboardingViewModel.class);
 
+        Log.d(TAG, "emissions: " + model.emissions().total());
+        ImageButton buttonBack = view.findViewById(R.id.onboarding_consumption_back);
 
-        Log.d(TAG, "emissions: " + emissions[0] + emissions[1] + emissions[2] + emissions[3]);
-        ImageButton buttonBack = view.findViewById(R.id.back);
-
-        buttonBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loadFragment(new QuestionsHousingFragment(emissions));
-            }
-        });
-
+        buttonBack.setOnClickListener(v -> getParentFragmentManager().popBackStack());
 
         Button buttonSubmit = view.findViewById(R.id.submit);
 
-        buttonSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onSubmit(view);
-            }
-        });
-
-        return view;
+        buttonSubmit.setOnClickListener(v -> onSubmit(view, model));
     }
 
-    public void onSubmit(@NonNull View v) {
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_questions_consumption, container, false);
+    }
+
+    public void onSubmit(@NonNull View v, @NonNull OnboardingViewModel model) {
+        double consumptionEmissionsKgs = 0;
         RadioButton b181 = v.findViewById(R.id.radioButton181);
         RadioButton b182 = v.findViewById(R.id.radioButton182);
         RadioButton b183 = v.findViewById(R.id.radioButton183);
@@ -150,18 +128,11 @@ public class QuestionsConsumptionFragment extends Fragment{
                 if (b214.isChecked()) { consumptionEmissionsKgs -= 360; }
             }
 
-            emissions[3] = consumptionEmissionsKgs;
-            Log.d(TAG, "emissions: " + emissions[0] + emissions[1] + emissions[2] + emissions[3]);
-            loadFragment(new CalcDisplayFragment(emissions));
-        }
-        else{
+            model.emissions().shopping().set(Mass.kg(consumptionEmissionsKgs));
+            Log.d(TAG, "emissions: " + model.emissions());
+            model.setScreen(OnboardingScreen.CALC_DISPLAY);
+        } else {
             Toast.makeText(v.getContext(), "Please complete all the questions.", Toast.LENGTH_SHORT).show();
         }
-    }
-    private void loadFragment(Fragment fragment) {
-        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragmentContainer, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
     }
 }

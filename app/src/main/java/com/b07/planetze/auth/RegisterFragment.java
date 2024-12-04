@@ -14,11 +14,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.b07.planetze.R;
-import com.b07.planetze.WelcomeFragment;
 
 /**
  * A user registration screen. <br>
@@ -77,7 +75,7 @@ public class RegisterFragment extends Fragment {
 
     private void loadFragment(Fragment fragment) {
         FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, fragment);
+        transaction.replace(R.id.home_fragment_container, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
     }

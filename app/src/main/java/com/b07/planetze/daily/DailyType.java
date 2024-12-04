@@ -1,5 +1,8 @@
 package com.b07.planetze.daily;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import androidx.annotation.NonNull;
 
 import com.b07.planetze.daily.energy.EnergyBillsDaily;
@@ -28,29 +31,85 @@ import java.util.function.Function;
 /**
  * The type of a logged daily activity.
  */
-public enum DailyType implements ToJson {
-    DRIVING(DrivingForm.INSTANCE,"DRIVING", DrivingDaily::fromJson),
-    PUBLIC_TRANSIT(PublicTransitForm.INSTANCE, "PUBLIC_TRANSIT", PublicTransitDaily::fromJson),
-    CYCLING_OR_WALKING(CyclingOrWalkingForm.INSTANCE, "CYCLING_OR_WALKING", CyclingOrWalkingDaily::fromJson),
-    FLIGHT(FlightForm.INSTANCE, "FLIGHT", FlightDaily::fromJson),
-    MEAL(MealForm.INSTANCE, "MEAL", MealDaily::fromJson),
-    BUY_CLOTHES(BuyClothesForm.INSTANCE, "BUY_CLOTHES", BuyClothesDaily::fromJson),
-    BUY_ELECTRONICS(BuyElectronicsForm.INSTANCE, "BUY_ELECTRONICS", BuyElectronicsDaily::fromJson),
-    BUY_OTHER(BuyOtherForm.INSTANCE, "BUY_OTHER", BuyOtherDaily::fromJson),
-    ENERGY_BILLS(EnergyBillsForm.INSTANCE, "ENERGY_BILLS", EnergyBillsDaily::fromJson);
+public enum DailyType implements ToJson, Parcelable {
+    DRIVING("Driving",
+            DailyCategory.TRANSPORT,
+            DrivingForm.INSTANCE,
+            DrivingDaily::fromJson,
+            DrivingDaily.CREATOR::createFromParcel),
+    PUBLIC_TRANSIT("Public transit",
+            DailyCategory.TRANSPORT,
+            PublicTransitForm.INSTANCE,
+            PublicTransitDaily::fromJson,
+            PublicTransitDaily.CREATOR::createFromParcel),
+    CYCLING_OR_WALKING("Cycling / walking",
+            DailyCategory.TRANSPORT,
+            CyclingOrWalkingForm.INSTANCE,
+            CyclingOrWalkingDaily::fromJson,
+            CyclingOrWalkingDaily.CREATOR::createFromParcel),
+    FLIGHT("Flight",
+            DailyCategory.TRANSPORT,
+            FlightForm.INSTANCE,
+            FlightDaily::fromJson,
+            FlightDaily.CREATOR::createFromParcel),
+    MEAL("Food consumption",
+            DailyCategory.FOOD,
+            MealForm.INSTANCE,
+            MealDaily::fromJson,
+            MealDaily.CREATOR::createFromParcel),
+    BUY_CLOTHES("Clothes shopping",
+            DailyCategory.SHOPPING,
+            BuyClothesForm.INSTANCE,
+            BuyClothesDaily::fromJson,
+            BuyClothesDaily.CREATOR::createFromParcel),
+    BUY_ELECTRONICS("Electronics shopping",
+            DailyCategory.SHOPPING,
+            BuyElectronicsForm.INSTANCE,
+            BuyElectronicsDaily::fromJson,
+            BuyElectronicsDaily.CREATOR::createFromParcel),
+    BUY_OTHER("Other shopping",
+            DailyCategory.SHOPPING,
+            BuyOtherForm.INSTANCE,
+            BuyOtherDaily::fromJson,
+            BuyClothesDaily.CREATOR::createFromParcel),
+    ENERGY_BILLS("Energy bills",
+            DailyCategory.ENERGY,
+            EnergyBillsForm.INSTANCE,
+            EnergyBillsDaily::fromJson,
+            EnergyBillsDaily.CREATOR::createFromParcel);
 
-    @NonNull private final DailyForm<?> form;
-    @NonNull private final String string;
-    @NonNull private final Function<Map<String, Object>, Daily> createDailyFromJson;
+    @NonNull
+    private final String displayName;
+    @NonNull
+    private final DailyCategory category;
+    @NonNull
+    private final DailyForm<?> form;
+    @NonNull
+    private final Function<Map<String, Object>, Daily> createDailyFromJson;
+    @NonNull
+    private final Function<Parcel, Daily> createDailyFromParcel;
 
     DailyType(
+            @NonNull String displayName,
+            @NonNull DailyCategory category,
             @NonNull DailyForm<?> form,
-            @NonNull String string,
-            @NonNull Function<Map<String, Object>, Daily> createDailyFromJson
+            @NonNull Function<Map<String, Object>, Daily> createDailyFromJson,
+            @NonNull Function<Parcel, Daily> createDailyFromParcel
     ) {
+        this.displayName = displayName;
+        this.category = category;
         this.form = form;
-        this.string = string;
         this.createDailyFromJson = createDailyFromJson;
+        this.createDailyFromParcel = createDailyFromParcel;
+    }
+    @NonNull
+    public String displayName() {
+        return displayName;
+    }
+
+    @NonNull
+    public DailyCategory category() {
+        return category;
     }
 
     @NonNull
@@ -60,28 +119,43 @@ public enum DailyType implements ToJson {
 
     @NonNull
     public static DailyType fromJson(Object o) {
-        return switch((String) o) {
-            case "DRIVING" -> DRIVING;
-            case "PUBLIC_TRANSIT" -> PUBLIC_TRANSIT;
-            case "CYCLING_OR_WALKING" -> CYCLING_OR_WALKING;
-            case "FLIGHT" -> FLIGHT;
-            case "MEAL" -> MEAL;
-            case "BUY_CLOTHES" -> BUY_CLOTHES;
-            case "BUY_ELECTRONICS" -> BUY_ELECTRONICS;
-            case "BUY_OTHER" -> BUY_OTHER;
-            case "ENERGY_BILLS" -> ENERGY_BILLS;
-            default -> throw new DailyException();
-        };
+        return DailyType.valueOf((String) o);
     }
 
     @NonNull
     @Override
     public Object toJson() {
-        return string;
+        return this.name();
     }
 
     @NonNull
     public Daily createDailyFromJson(Map<String, Object> map) {
         return createDailyFromJson.apply(map);
+    }
+
+    @NonNull
+    public Daily createDailyFromParcel(Parcel in) {
+        return createDailyFromParcel.apply(in);
+    }
+
+    public static final Parcelable.Creator<DailyType> CREATOR
+            = new Parcelable.Creator<>() {
+        public DailyType createFromParcel(Parcel in) {
+            return DailyType.valueOf(in.readString());
+        }
+
+        public DailyType[] newArray(int size) {
+            return new DailyType[size];
+        }
+    };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel dest, int flags) {
+        dest.writeString(this.name());
     }
 }

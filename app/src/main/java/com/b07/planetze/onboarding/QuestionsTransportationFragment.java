@@ -1,7 +1,5 @@
 package com.b07.planetze.onboarding;
 
-import static android.content.ContentValues.TAG;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -20,54 +18,23 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.ConstraintSet;
-
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.b07.planetze.R;
-
-import com.b07.planetze.common.Emissions;
-import com.b07.planetze.common.User;
-import com.b07.planetze.database.DatabaseError;
-import com.b07.planetze.database.firebase.FirebaseDb;
-import com.b07.planetze.util.Unit;
 import com.b07.planetze.util.measurement.Mass;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-
-import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.Map;
 
 public class QuestionsTransportationFragment extends Fragment implements AdapterView.OnItemSelectedListener{
-    FirebaseDb db = new FirebaseDb();
-    Emissions transportEmissions;
-    String country_selected;
-    private double transportEmissionsKgs = 0;
+    @NonNull private static final String TAG = "QuestionsTransportationFragment";
+    private String selectedCountry;
 
-    double[] emissions = new double[4];
-    User currentUser;
-    public LocalDate dateAdded= LocalDate.now();
+    public QuestionsTransportationFragment() {}
 
-    public QuestionsTransportationFragment(){
-        emissions[0] = 0;
-        emissions[1] = 0;
-        emissions[2] = 0;
-        emissions[3] = 0;
-    }
-    QuestionsTransportationFragment(double[] allEmissions){
-        emissions[0] = allEmissions[0];
-        emissions[1] = allEmissions[1];
-        emissions[2] = allEmissions[2];
-        emissions[3] = allEmissions[3];
-    }
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_questions_transportation, container, false);
-
+    public void onViewCreated(@NonNull View view,
+                              @Nullable Bundle savedInstanceState) {
+        var model = new ViewModelProvider(requireActivity())
+                .get(OnboardingViewModel.class);
 
         Spinner spinner = view.findViewById(R.id.countries);
         // Create an ArrayAdapter using the string array and a default spinner layout.
@@ -83,39 +50,22 @@ public class QuestionsTransportationFragment extends Fragment implements Adapter
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
 
-
         //changing constraints (whether or not a question is showed) based off of answers --------------------------
 
         Button buttonOwnCar = view.findViewById(R.id.radioButton11);
 
-        buttonOwnCar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ownCar(view);
-
-            }
-        });
+        buttonOwnCar.setOnClickListener(v -> ownCar(view));
 
         Button buttonNotOwnCar = view.findViewById(R.id.radioButton12);
-        buttonNotOwnCar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                notOwnCar(view);
-            }
-        });
+        buttonNotOwnCar.setOnClickListener(v -> notOwnCar(view));
 
         Button buttonSubmit = view.findViewById(R.id.next);
-        buttonSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onSubmit(view);
-            }
-        });
+        buttonSubmit.setOnClickListener(v -> onSubmit(view, model));
+    }
 
-
-
-
-        return view;
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_questions_transportation, container, false);
     }
 
     public void ownCar(@NonNull View view) {
@@ -181,7 +131,7 @@ public class QuestionsTransportationFragment extends Fragment implements Adapter
     }
 
 
-    public void onSubmit(@NonNull View v) {
+    public void onSubmit(@NonNull View v, @NonNull OnboardingViewModel model) {
         RadioButton b11 = v.findViewById(R.id.radioButton11);
         RadioButton b12 = v.findViewById(R.id.radioButton12);
         RadioButton b21 = v.findViewById(R.id.radioButton21);
@@ -221,6 +171,8 @@ public class QuestionsTransportationFragment extends Fragment implements Adapter
             return;
         }
 
+        double transportEmissionsKg = 0;
+
         if((b11.isChecked() || b12.isChecked())
                 && (b41.isChecked() || b42.isChecked() || b43.isChecked() || b44.isChecked())
                 && (b51.isChecked() || b52.isChecked() || b53.isChecked() || b54.isChecked() || b55.isChecked())
@@ -230,94 +182,59 @@ public class QuestionsTransportationFragment extends Fragment implements Adapter
                 && b31.isChecked() || b32.isChecked() || b33.isChecked() || b34.isChecked() || b35.isChecked() || b36.isChecked()))) {
 
             if (b11.isChecked()) {
-                if (b21.isChecked()) { transportEmissionsKgs += 0.24; }
-                if (b22.isChecked()) { transportEmissionsKgs += 0.27; }
-                if (b23.isChecked()) { transportEmissionsKgs += 0.16; }
-                if (b24.isChecked()) { transportEmissionsKgs += 0.05; }
-                if (b31.isChecked()) transportEmissionsKgs = transportEmissionsKgs * 5000;
-                if (b32.isChecked()) transportEmissionsKgs = transportEmissionsKgs * 10000;
-                if (b33.isChecked()) transportEmissionsKgs = transportEmissionsKgs * 15000;
-                if (b34.isChecked()) transportEmissionsKgs = transportEmissionsKgs * 20000;
-                if (b35.isChecked()) transportEmissionsKgs = transportEmissionsKgs * 25000;
-                if (b36.isChecked()) transportEmissionsKgs = transportEmissionsKgs * 35000;
+                if (b21.isChecked()) { transportEmissionsKg += 0.24; }
+                if (b22.isChecked()) { transportEmissionsKg += 0.27; }
+                if (b23.isChecked()) { transportEmissionsKg += 0.16; }
+                if (b24.isChecked()) { transportEmissionsKg += 0.05; }
+                if (b31.isChecked()) transportEmissionsKg = transportEmissionsKg * 5000;
+                if (b32.isChecked()) transportEmissionsKg = transportEmissionsKg * 10000;
+                if (b33.isChecked()) transportEmissionsKg = transportEmissionsKg * 15000;
+                if (b34.isChecked()) transportEmissionsKg = transportEmissionsKg * 20000;
+                if (b35.isChecked()) transportEmissionsKg = transportEmissionsKg * 25000;
+                if (b36.isChecked()) transportEmissionsKg = transportEmissionsKg * 35000;
             }
             if (b42.isChecked()) {
-                if (b51.isChecked()) { transportEmissionsKgs += 246; }
-                if (b52.isChecked()) { transportEmissionsKgs += 819; }
-                if (b53.isChecked()) { transportEmissionsKgs += 1638; }
-                if (b54.isChecked()) { transportEmissionsKgs += 3071; }
-                if (b55.isChecked()) { transportEmissionsKgs += 4095; }
+                if (b51.isChecked()) { transportEmissionsKg += 246; }
+                if (b52.isChecked()) { transportEmissionsKg += 819; }
+                if (b53.isChecked()) { transportEmissionsKg += 1638; }
+                if (b54.isChecked()) { transportEmissionsKg += 3071; }
+                if (b55.isChecked()) { transportEmissionsKg += 4095; }
             }
             if (b43.isChecked() || b44.isChecked()) {
-                if (b51.isChecked()) { transportEmissionsKgs += 573; }
-                if (b52.isChecked()) { transportEmissionsKgs += 1911; }
-                if (b53.isChecked()) { transportEmissionsKgs += 3822; }
-                if (b54.isChecked()) { transportEmissionsKgs += 7166; }
-                if (b55.isChecked()) { transportEmissionsKgs += 9555; }
+                if (b51.isChecked()) { transportEmissionsKg += 573; }
+                if (b52.isChecked()) { transportEmissionsKg += 1911; }
+                if (b53.isChecked()) { transportEmissionsKg += 3822; }
+                if (b54.isChecked()) { transportEmissionsKg += 7166; }
+                if (b55.isChecked()) { transportEmissionsKg += 9555; }
             }
-            if (b62.isChecked()) { transportEmissionsKgs += 225; }
-            if (b63.isChecked()) { transportEmissionsKgs += 600; }
-            if (b64.isChecked()) { transportEmissionsKgs += 1200; }
-            if (b65.isChecked()) { transportEmissionsKgs += 1800; }
-            if (b72.isChecked()) { transportEmissionsKgs += 825; }
-            if (b73.isChecked()) { transportEmissionsKgs += 2200; }
-            if (b74.isChecked()) { transportEmissionsKgs += 4400; }
-            if (b75.isChecked()) { transportEmissionsKgs += 6600; }
+            if (b62.isChecked()) { transportEmissionsKg += 225; }
+            if (b63.isChecked()) { transportEmissionsKg += 600; }
+            if (b64.isChecked()) { transportEmissionsKg += 1200; }
+            if (b65.isChecked()) { transportEmissionsKg += 1800; }
+            if (b72.isChecked()) { transportEmissionsKg += 825; }
+            if (b73.isChecked()) { transportEmissionsKg += 2200; }
+            if (b74.isChecked()) { transportEmissionsKg += 4400; }
+            if (b75.isChecked()) { transportEmissionsKg += 6600; }
 
+            model.updateUserCountry(selectedCountry);
+            model.emissions().transport().set(Mass.kg(transportEmissionsKg));
 
-            db.fetchUser(result -> {
-                result.match(userOption -> { // if this operation was successful:
-                    userOption.match(// if the user has user info set:
-                            user -> {
-                                Log.d(TAG, "User found");
-                                currentUser = user;
-                                Map<String, String> userJson = (HashMap<String, String>) currentUser.toJson();
-                                userJson.put("country", country_selected);
-                                User updatedUser = User.fromJson(userJson);
-                                db.postUser(updatedUser, result1 -> {
-                                    result1.match(user1 -> Log.d(TAG, "user found")
-                                            , dbError -> { // if this operation failed:
-                                                Log.d(TAG, "error: " + dbError);
-                                            });
-                                });
-                            },
-                            () -> Log.d(TAG, "user nonexistent"));
-                }, dbError -> { // if this operation failed:
-                    Log.d(TAG, "error: " + dbError);
-                });
-            });
-            emissions[0] = transportEmissionsKgs;
-            Log.d(TAG, "emissions: " + emissions[0] + emissions[1] + emissions[2] + emissions[3]);
-            loadFragment(new QuestionsFoodFragment(emissions));
-        }
-        else{
+            Log.d(TAG, "emissions: " + model.emissions());
+            model.setScreen(OnboardingScreen.FOOD);
+
+        }  else {
             Toast.makeText(v.getContext(), "Please complete all the questions.", Toast.LENGTH_SHORT).show();
         }
     }
+
+    @Override
     public void onItemSelected(AdapterView<?> parent, View view,
                                int pos, long id) {
-
-        db.fetchUser(result -> {
-            result.match(userOption -> { // if this operation was successful:
-                userOption.match(// if the user has user info set:
-                        user -> currentUser = user,
-                        () -> Log.d(TAG, "user nonexistent"));
-            }, dbError -> { // if this operation failed:
-                Log.d(TAG, "error: " + dbError);
-            });
-        });
-
-        country_selected = parent.getItemAtPosition(pos).toString();
-
+        selectedCountry = parent.getItemAtPosition(pos).toString();
     }
 
+    @Override
     public void onNothingSelected(AdapterView<?> parent) {
         // Another interface callback.
-    }
-    private void loadFragment(Fragment fragment) {
-        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragmentContainer, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
     }
 }

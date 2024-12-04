@@ -44,6 +44,17 @@ public final class Error<T, E> extends Result<T, E> {
         return value;
     }
 
+    /**
+     * {@return <code>this</code>, but with a different <code>Ok</code>-type}
+     * @param <U> the new {@link Ok}-type
+     */
+    @NonNull
+    public <U> Error<U, E> map() {
+        @SuppressWarnings("unchecked")
+        var e = (Error<U, E>) this;
+        return e;
+    }
+
     @NonNull
     @Override
     public Error<T, E> apply(@NonNull Consumer<T> f) {

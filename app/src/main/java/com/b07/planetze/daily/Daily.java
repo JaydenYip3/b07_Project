@@ -1,5 +1,7 @@
 package com.b07.planetze.daily;
 
+import android.os.Parcelable;
+
 import androidx.annotation.NonNull;
 
 import com.b07.planetze.common.Emissions;
@@ -19,12 +21,15 @@ import java.util.HashMap;
 /**
  * The details of a daily activity.
  */
-public interface Daily extends ToJson {
+public interface Daily extends ToJson, Parcelable {
     /**
      * {@return the CO2e emitted from this activity}
      */
     @NonNull
     Emissions emissions();
+
+    @NonNull
+    String summary();
 
     /**
      * {@return the type of this activity}

@@ -1,98 +1,89 @@
 package com.b07.planetze.home;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 
+import com.b07.planetze.EcoGauge.EcoGaugeActivity;
+import com.b07.planetze.EcoGauge.EcoGaugeScreen;
+import com.b07.planetze.EcoGauge.EcoGaugeScreenSwitch;
+import com.b07.planetze.MainActivity;
 import com.b07.planetze.R;
-import com.b07.planetze.auth.RegisterCallback;
 import com.b07.planetze.common.User;
-import com.b07.planetze.database.firebase.FirebaseDb;
 import com.b07.planetze.ecotracker.EcoTrackerActivity;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.b07.planetze.ecotracker.habits.HabitActivity;
+import com.b07.planetze.onboarding.OnboardingActivity;
 
 public class HomeScreenFragment extends Fragment {
 
-    User currentUser;
-    FirebaseDb db = new FirebaseDb();
+    private Button signOutButton;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);}
+    public void onViewCreated(@NonNull View view,
+                              @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        HomeViewModel model = new ViewModelProvider(requireActivity())
+                .get(HomeViewModel.class);
 
+        signOutButton = view.findViewById(R.id.signOutButton);
+        TextView username = view.findViewById(R.id.home_username);
+        TextView emissions = view.findViewById(R.id.home_emissions);
+
+        signOutButton.setOnClickListener(v -> {
+            UserSessionManager.signOut(view.getContext());
+        });
+
+        model.getUser().observe(requireActivity(), maybeUser -> {
+            maybeUser.map(User::name).apply(username::setText);
+        });
+        model.getDailies().observe(requireActivity(), list -> {
+            emissions.setText(list.emissions().total().format() + " CO2e");
+        });
+
+        View toTracker = view.findViewById(R.id.home_to_tracker);
+        View toHabits = view.findViewById(R.id.home_to_habits);
+        View toGauge = view.findViewById(R.id.home_to_gauge);
+        View toFootprint = view.findViewById(R.id.home_to_footprint);
+        View toHub = view.findViewById(R.id.home_to_hub);
+
+        toTracker.setOnClickListener(v -> {
+            EcoTrackerActivity.start(requireActivity());
+        });
+        toGauge.setOnClickListener(v -> {
+            EcoGaugeActivity.start(requireActivity());
+        });
+        toFootprint.setOnClickListener(v -> {
+            OnboardingActivity.start(requireActivity());
+        });
+        toHabits.setOnClickListener(v -> {
+            HabitActivity.start(requireActivity());
+        });
+        toHub.setOnClickListener(v -> {
+            loadFragment(new NotFinishedFragment());
+        });
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_home, container, false);
-
-        TextView username = view.findViewById(R.id.username);
-        LinearLayout tracker = view.findViewById(R.id.tracker);
-        LinearLayout balance = view.findViewById(R.id.balance);
-        LinearLayout hub = view.findViewById(R.id.hub);
-
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
-        String currentUserId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
-
-        databaseReference.child("users").child(currentUserId).child("name").addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                username.setText(dataSnapshot.getValue(String.class));
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {}
-        });
-
-
-        tracker.setOnClickListener(v -> EcoTrackerActivity.start(requireActivity()));
-
-//        ((EmailConfirmationCallback) requireActivity()).confirmEmail();
-        balance.setOnClickListener(v -> {
-            // Create a new instance of NotFinishedFragment
-            NotFinishedFragment fragment = new NotFinishedFragment();
-
-            // Replace the existing fragment with the new one
-            FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.fragment_container, fragment); // Replace with your container ID
-            transaction.addToBackStack(null); // Add to backstack if you want to allow "back" navigation
-            transaction.commit(); // Commit the transaction
-        });
-
-        hub.setOnClickListener(v -> {
-            // Create a new instance of NotFinishedFragment
-            NotFinishedFragment fragment = new NotFinishedFragment();
-
-            // Replace the existing fragment with the new one
-            FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.fragment_container, fragment); // Replace with your container ID
-            transaction.addToBackStack(null); // Add to backstack if you want to allow "back" navigation
-            transaction.commit(); // Commit the transaction
-        });
-
-
-        return view;
-
-
+        return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
-    private void loadFragment(Fragment fragment) {
-        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, fragment);
+    private void loadFragment(@NonNull Fragment fragment) {
+        FragmentTransaction transaction = requireActivity()
+                .getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.home_fragment_container, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
     }

@@ -1,20 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="int_hint">e.g., 2</string>
+    <string name="int_hint">0</string>
     <string name="int_error">Enter an integer</string>
 
-    <string name="distance_hint">e.g., 2.5</string>
+    <string name="distance_hint">0</string>
     <string name="distance_error">Enter a number</string>
 
-    <string name="mass_hint">e.g., 2.5</string>
+    <string name="mass_hint">0</string>
     <string name="mass_error">Enter a number</string>
 
-    <string name="duration_hint">e.g., 2.5</string>
+    <string name="duration_hint">0</string>
     <string name="duration_error">Enter a number</string>
 
-    <string name="money_hint">e.g., 150</string>
+    <string name="money_hint">0</string>
     <string name="money_error">Enter a number</string>
 
-    <string name="field_required">Field is required</string>
+    <string name="field_required">This field is required</string>
     <string name="form_submit">Submit</string>
+
+    <string-array name="mass_units">
+        <item>kg</item>
+        <item>g</item>
+        <item>lb</item>
+    </string-array>
+
+    <string-array name="distance_units">
+        <item>km</item>
+        <item>m</item>
+        <item>mi</item>
+    </string-array>
 </resources>
