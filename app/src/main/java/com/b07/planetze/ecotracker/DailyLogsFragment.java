@@ -220,7 +220,7 @@ public final class DailyLogsFragment extends Fragment {
 
         ImageButton back = view.findViewById(R.id.ecotracker_dailylogs_back);
         back.setOnClickListener(v -> {
-            HomeActivity.start(requireActivity());
+            requireActivity().finish();
         });
 
         model.fetchDailies();

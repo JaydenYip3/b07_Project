@@ -1,4 +1,4 @@
-package com.b07.planetze.EcoGauge;
+package com.b07.planetze.ecogauge;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,29 +12,15 @@ import com.b07.planetze.R;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 
-public class EcoGaugeActivity extends AppCompatActivity implements EcoGaugeOverviewCallback, EcoGaugeScreenSwitch{
+public class EcoGaugeActivity extends AppCompatActivity implements EcoGaugeScreenSwitch {
+
+    private EcoGaugeViewModel model;
 
     public static void start(Context context) {
         Intent intent = new Intent(context, EcoGaugeActivity.class);
         context.startActivity(intent);
-    }
-
-    String timePeriod;
-    boolean intialized = false;
-
-    @Override
-    public String getPeriod(String timePeriod) {
-        if (!intialized){
-            this.timePeriod = timePeriod;
-            intialized = true;
-        }
-        return this.timePeriod;
-    }
-
-    public void setTimePeriod(String timePeriod) {
-
-        this.timePeriod = timePeriod;
     }
 
     @Override
@@ -42,7 +28,9 @@ public class EcoGaugeActivity extends AppCompatActivity implements EcoGaugeOverv
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ecogauge);
 
-        View container = findViewById(R.id.fragment_container);
+        model = new ViewModelProvider(this).get(EcoGaugeViewModel.class);
+
+        View container = findViewById(R.id.ecogauge_fragment_container);
         if (container == null) {
             throw new IllegalStateException("Fragment container not found in the layout!");
         } else {
@@ -51,22 +39,25 @@ public class EcoGaugeActivity extends AppCompatActivity implements EcoGaugeOverv
 
         if (savedInstanceState == null) {
             switchScreens(EcoGaugeScreen.OVERVIEW);
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.ecogauge_fragment_container, new EcoGaugeOverviewFragment())
+                    .commit();
         }
     }
 
     @Override
-    public void switchScreens(EcoGaugeScreen screen){
-        switch (screen){
+    public void switchScreens(EcoGaugeScreen screen) {
+        switch (screen) {
             case OVERVIEW -> loadFragment(new EcoGaugeOverviewFragment());
             case TRENDS -> loadFragment(new EcoGaugeTrendsFragment());
             case BREAKDOWN -> loadFragment (new EcoGaugeBreakdownFragment());
-            case COMPARISON -> loadFragment (new EcoGaugeComparisonFragment());
         }
 
     }
     private void loadFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.fragment_container, fragment);
+        transaction.replace(R.id.ecogauge_fragment_container, fragment);
         transaction.addToBackStack(fragment.getClass().getName());
         transaction.commit();
     }

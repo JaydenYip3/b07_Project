@@ -21,7 +21,7 @@ public class NotFinishedFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_not_complete, container, false);
 
-        ImageButton back = view.findViewById(R.id.previousPage);
+        ImageButton back = view.findViewById(R.id.ecogauge_back);
 
 
         back.setOnClickListener( v -> {

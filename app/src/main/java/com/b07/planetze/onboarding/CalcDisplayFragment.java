@@ -91,7 +91,7 @@ public class CalcDisplayFragment extends Fragment {
         buttonBack.setOnClickListener(v -> getParentFragmentManager().popBackStack());
 
         Button buttonNext = view.findViewById(R.id.buttonNext);
-        buttonNext.setOnClickListener(v -> EcoTrackerActivity.start(requireActivity()));
+        buttonNext.setOnClickListener(v -> HomeActivity.start(requireActivity(), true));
     }
 
     @NonNull
