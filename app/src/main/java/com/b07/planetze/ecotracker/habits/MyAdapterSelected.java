@@ -8,12 +8,14 @@ import static com.b07.planetze.daily.transport.DrivingDaily.VehicleType.ELECTRIC
 
 import android.content.Context;
 import android.util.Log;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -284,38 +286,40 @@ public class MyAdapterSelected extends RecyclerView.Adapter<MyAdapterSelected.My
         TextView w2A = holder.itemView.findViewById(R.id.monthw2Amount);
         TextView w3A = holder.itemView.findViewById(R.id.monthw3Amount);
         TextView w4A =holder.itemView.findViewById(R.id.monthw4Amount);
+        TextView label =holder.itemView.findViewById(R.id.labelMonth);
+        TextView thisWeekLabel =holder.itemView.findViewById(R.id.monthw1Label);
         String dailyInfo = "";
-        String w1AText = d1y[0] + " times";
-        if(d1y[0]==1) w1AText = d1y[0] + " time";
-        String w2AText = d2y[0] + " times";
-        if(d2y[0]==1) w2AText = d2y[0] + " time";
-        String w3AText = d3y[0] + " times";
-        if(d3y[0]==1) w3AText = d3y[0] + " time";
-        String w4AText = d4y[0] + " times";
-        if(d4y[0]==1) w4AText = d4y[0] + " time";
+        String w1AText = d1y[0]+"";
+        if(d1y[0]==1) w1AText = d1y[0] + "";
+        String w2AText = d2y[0] + "";
+        if(d2y[0]==1) w2AText = d2y[0] + "";
+        String w3AText = d3y[0] + "";
+        if(d3y[0]==1) w3AText = d3y[0] + "";
+        String w4AText = d4y[0] + "";
+        if(d4y[0]==1) w4AText = d4y[0] + "";
         if(Objects.equals(holder.track, "This Month")){
-            dailyInfo = "You've logged this activity " + (d1y[0]+d2y[0]+d3y[0]+d4y[0]) + " times this month. Here's a weekly breakdown:";
+            dailyInfo = "You've logged this activity " + (d1y[0]+d2y[0]+d3y[0]+d4y[0]) + " days this month. Here's a weekly breakdown of number of days logged per week:";
             if(d1y[0]+d2y[0]+d3y[0]+d4y[0]==1){
-                dailyInfo = "You've logged this activity " + (d1y[0]+d2y[0]+d3y[0]+d4y[0]) + " time this month. Don't give up! Here's a weekly breakdown:";
+                dailyInfo = "You've logged this activity " + (d1y[0]+d2y[0]+d3y[0]+d4y[0]) + " day this month. Don't give up! Here's a weekly breakdown of number of days logged per week:";
             }
-            w1.setText("Week 1: ");
-            w2.setText("Week 2: ");
-            w3.setText("Week 3: ");
-            w4.setText("Week 4: ");
+            thisWeekLabel.setVisibility(View.INVISIBLE);
+            label.setText("Week of the Month");
             w1A.setText(w1AText);
             w2A.setText(w2AText);
             w3A.setText(w3AText);
             w4A.setText(w4AText);
         }
         if(Objects.equals(holder.track, "Past 4 Weeks")){
-            dailyInfo = "You've logged this activity " + (d1y[0]+d2y[0]+d3y[0]+d4y[0]) + " times in the past 4 weeks. Here's a weekly breakdown:";
+            dailyInfo = "You've logged this activity " + (d1y[0]+d2y[0]+d3y[0]+d4y[0]) + " days in the past 4 weeks. Here's a weekly breakdown of number of days logged per week:";
             if(d1y[0]+d2y[0]+d3y[0]+d4y[0]==1){
-                dailyInfo = "You've logged this activity " + (d1y[0]+d2y[0]+d3y[0]+d4y[0]) + " time in the past 4 weeks. Don't give up! Here's a weekly breakdown:";
+                dailyInfo = "You've logged this activity " + (d1y[0]+d2y[0]+d3y[0]+d4y[0]) + " day in the past 4 weeks. Don't give up! Here's a weekly breakdown of number of days logged per week:";
             }
-            w1.setText("This Week: ");
-            w2.setText("Last Week: ");
-            w3.setText("2 Weeks Ago: ");
-            w4.setText("3 Weeks Ago: ");
+            label.setText("Number of Weeks Ago");
+            thisWeekLabel.setVisibility(View.VISIBLE);
+            w1.setText("0");
+            w2.setText("1");
+            w3.setText("2");
+            w4.setText("3");
             w1A.setText(w4AText);
             w2A.setText(w3AText);
             w3A.setText(w2AText);
@@ -336,21 +340,22 @@ public class MyAdapterSelected extends RecyclerView.Adapter<MyAdapterSelected.My
         DateInterval day7 = DateInterval.between(startWeek.plusDays(6), startWeek.plusDays(7));
 
         if(Objects.equals(holder.track, "Past 7 Days")){
-            day1 = DateInterval.between(LocalDate.now().minusDays(7), LocalDate.now().minusDays(6));
-            day2 = DateInterval.between(LocalDate.now().minusDays(6), LocalDate.now().minusDays(5));
-            day3 = DateInterval.between(LocalDate.now().minusDays(5), LocalDate.now().minusDays(4));
-            day4 = DateInterval.between(LocalDate.now().minusDays(4), LocalDate.now().minusDays(3));
-            day5 = DateInterval.between(LocalDate.now().minusDays(3), LocalDate.now().minusDays(2));
-            day6 = DateInterval.between(LocalDate.now().minusDays(2), LocalDate.now().minusDays(1));
-            day7 = DateInterval.between(LocalDate.now().minusDays(1), LocalDate.now().plusDays(1));
+            day1 = DateInterval.between(LocalDate.now().minusDays(6), LocalDate.now().minusDays(5));
+            day2 = DateInterval.between(LocalDate.now().minusDays(5), LocalDate.now().minusDays(4));
+            day3 = DateInterval.between(LocalDate.now().minusDays(4), LocalDate.now().minusDays(3));
+            day4 = DateInterval.between(LocalDate.now().minusDays(3), LocalDate.now().minusDays(2));
+            day5 = DateInterval.between(LocalDate.now().minusDays(2), LocalDate.now().minusDays(1));
+            day6 = DateInterval.between(LocalDate.now().minusDays(1), LocalDate.now());
+            day7 = DateInterval.between(LocalDate.now(), LocalDate.now().plusDays(1));
         }
-        final int[] d1y = {0};
-        final int[] d2y = {0};
-        final int[] d3y = {0};
-        final int[] d4y = {0};
-        final int[] d5y = {0};
-        final int[] d6y = {0};
-        final int[] d7y = {0};
+
+        final boolean[] d1y = {false};
+        final boolean[] d2y = {false};
+        final boolean[] d3y = {false};
+        final boolean[] d4y = {false};
+        final boolean[] d5y = {false};
+        final boolean[] d6y = {false};
+        final boolean[] d7y = {false};
         DateInterval finalDay1 = day1;
         DateInterval finalDay2 = day2;
         DateInterval finalDay3 = day3;
@@ -360,25 +365,25 @@ public class MyAdapterSelected extends RecyclerView.Adapter<MyAdapterSelected.My
         DateInterval finalDay7 = day7;
         dates.forEach(date -> {
             if(finalDay1.contains(date)){
-                d1y[0]++;
+                d1y[0] = true;
             }
             if(finalDay2.contains(date)){
-                d2y[0]++;
+                d2y[0] = true;
             }
             if(finalDay3.contains(date)){
-                d3y[0]++;
+                d3y[0] = true;
             }
             if(finalDay4.contains(date)){
-                d4y[0]++;
+                d4y[0] = true;
             }
             if(finalDay5.contains(date)){
-                d5y[0]++;
+                d5y[0] = true;
             }
             if(finalDay6.contains(date)){
-                d6y[0]++;
+                d6y[0] = true;
             }
             if(finalDay7.contains(date)){
-                d7y[0]++;
+                d7y[0] = true;
             }
         });
 
@@ -389,67 +394,118 @@ public class MyAdapterSelected extends RecyclerView.Adapter<MyAdapterSelected.My
         TextView d5 = holder.itemView.findViewById(R.id.weekd5);
         TextView d6 = holder.itemView.findViewById(R.id.weekd6);
         TextView d7 = holder.itemView.findViewById(R.id.weekd7);
-        TextView d1A = holder.itemView.findViewById(R.id.weekd1Amount);
-        TextView d2A = holder.itemView.findViewById(R.id.weekd2Amount);
-        TextView d3A = holder.itemView.findViewById(R.id.weekd3Amount);
-        TextView d4A = holder.itemView.findViewById(R.id.weekd4Amount);
-        TextView d5A = holder.itemView.findViewById(R.id.weekd5Amount);
-        TextView d6A = holder.itemView.findViewById(R.id.weekd6Amount);
-        TextView d7A = holder.itemView.findViewById(R.id.weekd7Amount);
+        ImageView d1A = holder.itemView.findViewById(R.id.day1Image);
+        ImageView d2A = holder.itemView.findViewById(R.id.day2Image);
+        ImageView d3A = holder.itemView.findViewById(R.id.day3Image);
+        ImageView d4A = holder.itemView.findViewById(R.id.day4Image);
+        ImageView d5A = holder.itemView.findViewById(R.id.day5Image);
+        ImageView d6A = holder.itemView.findViewById(R.id.day6Image);
+        ImageView d7A = holder.itemView.findViewById(R.id.day7Image);
+        TextView label = holder.itemView.findViewById(R.id.label);
+        TextView todayLabel = holder.itemView.findViewById(R.id.weekd1Label);
         String dailyInfo = "";
-        String d1AText = d1y[0] + " times";
-        if(d1y[0]==1) d1AText = d1y[0] + " time";
-        String d2AText = d2y[0] + " times";
-        if(d2y[0]==1) d2AText = d2y[0] + " time";
-        String d3AText = d3y[0] + " times";
-        if(d3y[0]==1) d3AText = d3y[0] + " time";
-        String d4AText = d4y[0] + " times";
-        if(d4y[0]==1) d4AText = d4y[0] + " time";
-        String d5AText = d5y[0] + " times";
-        if(d5y[0]==1) d5AText = d5y[0] + " time";
-        String d6AText = d6y[0] + " times";
-        if(d6y[0]==1) d6AText = d6y[0] + " time";
-        String d7AText = d7y[0] + " times";
-        if(d7y[0]==1) d7AText = d7y[0] + " time";
+        int count = 0;
+        if(d1y[0]){
+            d1A.setImageResource(R.drawable.teal_check);
+            count++;
+        }
+        else d1A.setImageResource(R.drawable.grey_x);
+        if(d2y[0]){
+            d2A.setImageResource(R.drawable.teal_check);
+            count++;
+        }
+        else d2A.setImageResource(R.drawable.grey_x);
+        if(d3y[0]){
+            d3A.setImageResource(R.drawable.teal_check);
+            count++;
+        }
+        else d3A.setImageResource(R.drawable.grey_x);
+        if(d4y[0]){
+            d4A.setImageResource(R.drawable.teal_check);
+            count++;
+        }
+        else d4A.setImageResource(R.drawable.grey_x);
+        if(d5y[0]){
+            d5A.setImageResource(R.drawable.teal_check);
+            count++;
+        }
+        else d5A.setImageResource(R.drawable.grey_x);
+        if(d6y[0]){
+            d6A.setImageResource(R.drawable.teal_check);
+            count++;
+        }
+        else d6A.setImageResource(R.drawable.grey_x);
+        if(d7y[0]){
+            d7A.setImageResource(R.drawable.teal_check);
+            count++;
+        }
+        else d7A.setImageResource(R.drawable.grey_x);
 
         if(Objects.equals(holder.track, "This Week")){
-            dailyInfo = "You've logged this activity " + (d1y[0]+d2y[0]+d3y[0]+d4y[0]+d5y[0]+d6y[0]+d7y[0]) + " times this week. Here's a daily breakdown:";
-            if(d1y[0]+d2y[0]+d3y[0]+d4y[0]+d5y[0]+d6y[0]+d7y[0]==1){
-                dailyInfo = "You've logged this activity " + (d1y[0]+d2y[0]+d3y[0]+d4y[0]+d5y[0]+d6y[0]+d7y[0]) + " time this week. Don't give up! Here's a daily breakdown:";
+            dailyInfo = "You've logged this activity " + count + " days this week. Here's a daily breakdown:";
+            if(count==1){
+                dailyInfo = "You've logged this activity " + count + " day this week. Don't give up! Here's a daily breakdown:";
             }
-            d1.setText("Sun: ");
-            d2.setText("Mon: ");
-            d3.setText("Tues: ");
-            d4.setText("Wed: ");
-            d5.setText("Thurs: ");
-            d6.setText("Fri: ");
-            d7.setText("Sat: ");
-            d1A.setText(d1AText);
-            d2A.setText(d2AText);
-            d3A.setText(d3AText);
-            d4A.setText(d4AText);
-            d5A.setText(d5AText);
-            d6A.setText(d6AText);
-            d7A.setText(d7AText);
+            todayLabel.setVisibility(View.INVISIBLE);
+            label.setText("Day of the Week");
+            d1.setText("S");
+            d2.setText("M");
+            d3.setText("T");
+            d4.setText("W");
+            d5.setText("T");
+            d6.setText("F");
+            d7.setText("S");
         }
         if(Objects.equals(holder.track, "Past 7 Days")){
-            dailyInfo = "You've logged this activity " + (d1y[0]+d2y[0]+d3y[0]+d4y[0]+d5y[0]+d6y[0]+d7y[0]) + " times in the past 7 days. Here's a daily breakdown:";
-            if(d1y[0]+d2y[0]+d3y[0]+d4y[0]+d5y[0]+d6y[0]+d7y[0]==1){
-                dailyInfo = "You've logged this activity " + (d1y[0]+d2y[0]+d3y[0]+d4y[0]+d5y[0]+d6y[0]+d7y[0]) + " time in the past 7 days. Don't give up! Here's a daily breakdown:";
+            count = 0;
+            if(d7y[0]){
+                d1A.setImageResource(R.drawable.teal_check);
+                count++;
             }
-            d2.setText("1 Day Ago: ");
-            d3.setText("2 Days Ago: ");
-            d4.setText("3 Days Ago: ");
-            d5.setText("4 Days Ago: ");
-            d6.setText("5 Days Ago: ");
-            d7.setText("6 Days Ago: ");
-            d1A.setText(d7AText);
-            d2A.setText(d6AText);
-            d3A.setText(d5AText);
-            d4A.setText(d4AText);
-            d5A.setText(d3AText);
-            d6A.setText(d2AText);
-            d7A.setText(d1AText);
+            else d1A.setImageResource(R.drawable.grey_x);
+            if(d6y[0]){
+                d2A.setImageResource(R.drawable.teal_check);
+                count++;
+            }
+            else d2A.setImageResource(R.drawable.grey_x);
+            if(d5y[0]){
+                d3A.setImageResource(R.drawable.teal_check);
+                count++;
+            }
+            else d3A.setImageResource(R.drawable.grey_x);
+            if(d4y[0]){
+                d4A.setImageResource(R.drawable.teal_check);
+                count++;
+            }
+            else d4A.setImageResource(R.drawable.grey_x);
+            if(d3y[0]){
+                d5A.setImageResource(R.drawable.teal_check);
+                count++;
+            }
+            else d5A.setImageResource(R.drawable.grey_x);
+            if(d2y[0]){
+                d6A.setImageResource(R.drawable.teal_check);
+                count++;
+            }
+            else d6A.setImageResource(R.drawable.grey_x);
+            if(d1y[0]){
+                d7A.setImageResource(R.drawable.teal_check);
+                count++;
+            }
+            else d7A.setImageResource(R.drawable.grey_x);
+            dailyInfo = "You've logged this activity " + count + " out of the past 7 days. Here's a daily breakdown:";
+            if(count==1){
+                dailyInfo = "You've logged this activity " + count + " out of the past 7 days. Don't give up! Here's a daily breakdown:";
+            }
+            todayLabel.setVisibility(View.VISIBLE);
+            label.setText("Number of Days Ago");
+            d1.setText("0");
+            d2.setText("1");
+            d3.setText("2");
+            d4.setText("3");
+            d5.setText("4");
+            d6.setText("5");
+            d7.setText("6");
         }
         holder.dailyType.setText(dailyInfo);
     }
@@ -484,19 +540,19 @@ public class MyAdapterSelected extends RecyclerView.Adapter<MyAdapterSelected.My
         TextView q3A = holder.itemView.findViewById(R.id.flightq3Amount);
         TextView q4A = holder.itemView.findViewById(R.id.flightq4Amount);
 
-        String q1AText = d1y[0] + " times";
-        if(d1y[0]==1) q1AText = d1y[0] + " time";
-        String q2AText = d2y[0] + " times";
-        if(d2y[0]==1) q2AText = d2y[0] + " time";
-        String q3AText = d3y[0] + " times";
-        if(d3y[0]==1) q3AText = d3y[0] + " time";
-        String q4AText = d4y[0] + " times";
-        if(d4y[0]==1) q4AText = d4y[0] + " time";
+        String q1AText = d1y[0] + "";
+        if(d1y[0]==1) q1AText = d1y[0] + "";
+        String q2AText = d2y[0] + "";
+        if(d2y[0]==1) q2AText = d2y[0] + "";
+        String q3AText = d3y[0] + "";
+        if(d3y[0]==1) q3AText = d3y[0] + "";
+        String q4AText = d4y[0] + "";
+        if(d4y[0]==1) q4AText = d4y[0] + "";
 
         int total = d1y[0]+d2y[0]+d3y[0]+d4y[0];
-        String dailyInfo = "You've logged this activity " + total + " times this year.  Here's a breakdown:";
+        String dailyInfo = "You've logged this activity " + total + " days this year.  Here's a breakdown of number of days logged per quarter of this year:";
         if(total==1){
-            dailyInfo = "You've logged this activity " + total + " time this year. Here's a breakdown:";
+            dailyInfo = "You've logged this activity " + total + " day this year. Here's a breakdown of number of days logged per quarter of this year:";
         }
         holder.dailyType.setText(dailyInfo);
         q1A.setText(q1AText);
@@ -581,9 +637,9 @@ public class MyAdapterSelected extends RecyclerView.Adapter<MyAdapterSelected.My
         TextView avgCost = holder.itemView.findViewById(R.id.avgAmount);
         String currentText = "$"+total;
         String avgText = "$"+avg;
-        String dailyInfo = "You've logged this activity " + list.size() + " times in the past year. Here's a cost breakdown:";
+        String dailyInfo = "You've logged this activity " + list.size() + " days in the past year. Here's a cost breakdown:";
         if(list.size()==1){
-            dailyInfo = "You've logged this activity " + list.size() + " time in the past year. Here's a cost breakdown:";
+            dailyInfo = "You've logged this activity " + list.size() + " day in the past year. Here's a cost breakdown:";
         }
         holder.dailyType.setText(dailyInfo);
         currentCost.setText (currentText);
