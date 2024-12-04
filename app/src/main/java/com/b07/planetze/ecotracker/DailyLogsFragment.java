@@ -128,6 +128,9 @@ public final class DailyLogsFragment extends Fragment {
         Mass total = list.emissions().total();
         totalEmissions.setText(total.format() + " CO2e");
 
+        TextView noLogs = view.findViewById(R.id.ecotracker_dailylogs_nologs);
+        noLogs.setVisibility(list.isEmpty() ? View.VISIBLE : View.GONE);
+
         FragmentManager mgr = requireActivity().getSupportFragmentManager();
         FragmentTransaction ft = mgr.beginTransaction();
 
@@ -149,6 +152,7 @@ public final class DailyLogsFragment extends Fragment {
         ft.commit();
     }
 
+    @Override
     public void onViewCreated(@NonNull View view,
                               @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
