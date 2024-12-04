@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,6 +17,8 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.b07.planetze.EcoGauge.EcoGaugeActivity;
+import com.b07.planetze.EcoGauge.EcoGaugeScreen;
+import com.b07.planetze.EcoGauge.EcoGaugeScreenSwitch;
 import com.b07.planetze.MainActivity;
 import com.b07.planetze.R;
 import com.b07.planetze.common.User;
@@ -24,14 +27,22 @@ import com.b07.planetze.ecotracker.habits.HabitActivity;
 import com.b07.planetze.onboarding.OnboardingActivity;
 
 public class HomeScreenFragment extends Fragment {
+
+    private Button signOutButton;
+
     public void onViewCreated(@NonNull View view,
                               @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         HomeViewModel model = new ViewModelProvider(requireActivity())
                 .get(HomeViewModel.class);
 
+        signOutButton = view.findViewById(R.id.signOutButton);
         TextView username = view.findViewById(R.id.home_username);
         TextView emissions = view.findViewById(R.id.home_emissions);
+
+        signOutButton.setOnClickListener(v -> {
+            UserSessionManager.signOut(view.getContext());
+        });
 
         model.getUser().observe(requireActivity(), maybeUser -> {
             maybeUser.map(User::name).apply(username::setText);

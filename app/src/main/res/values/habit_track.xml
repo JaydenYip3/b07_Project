@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string-array name="habit_track">
+        <item>This Month</item>
+        <item>Past 4 Weeks</item>
+        <item>This Week</item>
+        <item>Past 7 Days</item>
+    </string-array>
+
+</resources>

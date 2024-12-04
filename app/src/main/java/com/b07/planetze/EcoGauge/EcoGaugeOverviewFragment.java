@@ -98,13 +98,13 @@ public class EcoGaugeOverviewFragment extends Fragment {
         DateInterval interval = null;
         switch (timePeriod) {
             case "Week":
-                interval = new DateInterval(LocalDate.now().minusWeeks(1), LocalDate.now());
+                interval = new DateInterval(LocalDate.now().minusWeeks(1), LocalDate.now().plusDays(1));
                 break;
             case "Month":
-                interval = new DateInterval(LocalDate.now().minusMonths(1), LocalDate.now());
+                interval = new DateInterval(LocalDate.now().minusMonths(1), LocalDate.now().plusDays(1));
                 break;
             case "Year":
-                interval = new DateInterval(LocalDate.now().minusYears(1), LocalDate.now());
+                interval = new DateInterval(LocalDate.now().minusYears(1), LocalDate.now().plusDays(1));
                 break;
 
         }

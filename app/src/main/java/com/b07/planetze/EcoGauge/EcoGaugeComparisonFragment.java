@@ -67,11 +67,11 @@ public class EcoGaugeComparisonFragment extends Fragment {
     private DateInterval getDateInterval(String timePeriod) {
         switch (timePeriod) {
             case "Week":
-                return new DateInterval(LocalDate.now().minusWeeks(1), LocalDate.now());
+                return new DateInterval(LocalDate.now().minusWeeks(1), LocalDate.now().plusDays(1));
             case "Month":
-                return new DateInterval(LocalDate.now().minusMonths(1), LocalDate.now());
+                return new DateInterval(LocalDate.now().minusMonths(1), LocalDate.now().plusDays(1));
             case "Year":
-                return new DateInterval(LocalDate.now().minusYears(1), LocalDate.now());
+                return new DateInterval(LocalDate.now().minusYears(1), LocalDate.now().plusDays(1));
             default:
                 return null;
         }
