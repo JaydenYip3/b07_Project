@@ -49,7 +49,7 @@ public class EcoGaugeTrendsFragment extends Fragment{
 
         // on below line we are setting
         // our title text size.
-        graphView.setTitleTextSize(18);
+        graphView.setTitleTextSize(40);
 
         String temp = "a";
         String timePeriod = ((EcoGaugeOverviewCallback) requireActivity()).getPeriod(temp);
