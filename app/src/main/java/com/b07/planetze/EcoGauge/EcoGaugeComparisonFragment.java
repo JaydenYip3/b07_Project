@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
@@ -53,7 +54,7 @@ public class EcoGaugeComparisonFragment extends Fragment {
             return view;
         }
 
-        ImageButton btnPrevious = view.findViewById(R.id.previousPage);
+        Button btnPrevious = view.findViewById(R.id.previousPage);
         btnPrevious.setOnClickListener(v -> {
             getParentFragmentManager().popBackStack();
         });

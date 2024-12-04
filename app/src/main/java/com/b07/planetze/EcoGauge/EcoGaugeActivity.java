@@ -32,6 +32,11 @@ public class EcoGaugeActivity extends AppCompatActivity implements EcoGaugeOverv
         return this.timePeriod;
     }
 
+    public void setTimePeriod(String timePeriod) {
+
+        this.timePeriod = timePeriod;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
