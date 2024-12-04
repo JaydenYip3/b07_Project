@@ -25,6 +25,7 @@ import com.b07.planetze.home.HomeActivity;
 import com.b07.planetze.util.measurement.Mass;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class CalcDisplayFragment extends Fragment {
@@ -59,15 +60,10 @@ public class CalcDisplayFragment extends Fragment {
             globalTarget.setText(globalTargetMet);
         }
 
-        String transportAmountText = emissions.transport().formatTons() + " of CO2e/year";
-        String foodAmountText = emissions.food().formatTons() + " of CO2e/year";
-        String housingAmountText = emissions.energy().formatTons() + " of CO2e/year";
-        String consumptionAmountText = emissions.shopping().formatTons() + " of CO2e/year";
-
-        transport.setText(transportAmountText);
-        food.setText(foodAmountText);
-        housing.setText(housingAmountText);
-        consumption.setText(consumptionAmountText);
+        transport.setText(String.format(Locale.US, "%.1f", emissions.transport().tons()));
+        food.setText(String.format(Locale.US, "%.1f", emissions.food().tons()));
+        housing.setText(String.format(Locale.US, "%.1f", emissions.energy().tons()));
+        consumption.setText(String.format(Locale.US, "%.1f", emissions.shopping().tons()));
 
         model.fetchUser(user -> {
             String country = user.country();
@@ -84,15 +80,15 @@ public class CalcDisplayFragment extends Fragment {
                 percentage = Math.round(1000 * (1 - totalAmount / regionAverage))/10.0;
                 descriptor = "below";
             }
-            String avgText = "Your annual carbon footprint is " + percentage + "% " + descriptor + " the national average for " + country + ": "  + regionAverage;
+            String avgText = String.format(Locale.US, "Your annual carbon footprint is %.1f%% %s the national average for %s (%.1f tons CO2e/year)", percentage, descriptor, country, regionAverage);
             if (totalAmount == regionAverage) {
-                avgText = "Your annual carbon footprint is the same as national average for " + country + ": " + regionAverage;
+                avgText = String.format(Locale.US, "Your annual carbon footprint is the same as the national average for %s (%.1f tons CO2e/year)", country, regionAverage);
             }
             nationalAvg.setText(avgText);
         });
 
         Button buttonBack = view.findViewById(R.id.buttonBack);
-        buttonBack.setOnClickListener(v -> model.setScreen(OnboardingScreen.CONSUMPTION));
+        buttonBack.setOnClickListener(v -> getParentFragmentManager().popBackStack());
 
         Button buttonNext = view.findViewById(R.id.buttonNext);
         buttonNext.setOnClickListener(v -> EcoTrackerActivity.start(requireActivity()));
