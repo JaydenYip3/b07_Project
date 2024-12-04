@@ -1,8 +1,5 @@
 package com.b07.planetze.onboarding;
 
-import static android.content.ContentValues.TAG;
-
-import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,62 +14,44 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.b07.planetze.R;
-import com.b07.planetze.common.Emissions;
-import com.b07.planetze.database.firebase.FirebaseDb;
-
-import java.time.LocalDate;
+import com.b07.planetze.util.measurement.Mass;
 
 public class QuestionsHousingFragment extends Fragment{
-    FirebaseDb db = new FirebaseDb();
-    Emissions housingEmissions;
-    private double housingEmissionsKgs = 0;
-    private double[] emissions = new double[4];
-    public LocalDate dateAdded= LocalDate.now();
+    @NonNull private static final String TAG = "QuestionsHousingFragment";
 
-    String q11Answer;
-    String q12Answer;
-    String q13Answer;
-    String q14Answer;
-    String q15Answer;
-    String q16Answer;
-    QuestionsHousingFragment(double[] allEmissions){
-        emissions[0] = allEmissions[0];
-        emissions[1] = allEmissions[1];
-        emissions[2] = allEmissions[2];
-        emissions[3] = allEmissions[3];
+    public QuestionsHousingFragment() {}
+
+    @Override
+    public void onViewCreated(@NonNull View view,
+                              @Nullable Bundle savedInstanceState) {
+        var model = new ViewModelProvider(requireActivity())
+                .get(OnboardingViewModel.class);
+
+
+        ImageButton buttonBack = view.findViewById(R.id.onboarding_housing_back);
+        buttonBack.setOnClickListener(v -> getParentFragmentManager().popBackStack());
+
+        Button buttonSubmit = view.findViewById(R.id.next);
+
+        buttonSubmit.setOnClickListener(v -> onSubmit(view, model));
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_questions_housing, container, false);
-
-
-        ImageButton buttonBack = view.findViewById(R.id.back);
-
-        buttonBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loadFragment(new QuestionsFoodFragment(emissions));
-            }
-        });
-
-
-        Button buttonSubmit = view.findViewById(R.id.next);
-
-        buttonSubmit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onSubmit(view);
-            }
-        });
-
-        return view;
+        return inflater.inflate(R.layout.fragment_questions_housing, container, false);
     }
-    public void onSubmit(@NonNull View v) {
+    public void onSubmit(@NonNull View v, @NonNull OnboardingViewModel model) {
+        String q11Answer = null;
+        String q12Answer = null;
+        String q13Answer = null;
+        String q14Answer = null;
+        String q15Answer = null;
+        String q16Answer = null;
+
         RadioButton b111 = v.findViewById(R.id.radioButton111);
         RadioButton b112 = v.findViewById(R.id.radioButton112);
         RadioButton b113 = v.findViewById(R.id.radioButton113);
@@ -138,7 +117,7 @@ public class QuestionsHousingFragment extends Fragment{
 
             String userKey = String.join("-", q11Answer, q12Answer, q13Answer, q14Answer, q15Answer);
             SurveyProcessor surveyProcessor = new SurveyProcessor(v.getContext(), "housing.json");
-            housingEmissionsKgs = surveyProcessor.getResult(userKey);
+            double housingEmissionsKgs = surveyProcessor.getResult(userKey);
             if (q14Answer != null && q16Answer != null && !(q14Answer.equals(q16Answer))) {
                 if (q16Answer.equals("E") || q16Answer.equals("B")) {
                     housingEmissionsKgs -= 233;
@@ -149,18 +128,12 @@ public class QuestionsHousingFragment extends Fragment{
             if (b171.isChecked()) { housingEmissionsKgs -= 6000; }
             if (b172.isChecked()) { housingEmissionsKgs -= 4000; }
 
-            emissions[2] = housingEmissionsKgs;
-            Log.d(TAG, "emissions: " + emissions[0] + emissions[1] + emissions[2] + emissions[3]);
-            loadFragment(new QuestionsConsumptionFragment(emissions));
-        }
-        else{
+            model.emissions().energy().set(Mass.kg(housingEmissionsKgs));
+
+            Log.d(TAG, "emissions: " + model.emissions());
+            model.setScreen(OnboardingScreen.CONSUMPTION);
+        } else {
             Toast.makeText(v.getContext(), "Please complete all the questions.", Toast.LENGTH_SHORT).show();
         }
-    }
-    private void loadFragment(Fragment fragment) {
-        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-        transaction.replace(R.id.onboarding_fragment_container, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
     }
 }

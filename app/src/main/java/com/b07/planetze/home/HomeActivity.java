@@ -14,6 +14,7 @@ import android.view.View;
 
 import com.b07.planetze.R;
 import com.b07.planetze.ecotracker.EcoTrackerViewModel;
+import com.b07.planetze.onboarding.OnboardingActivity;
 import com.google.firebase.database.FirebaseDatabase;
 
 public class HomeActivity extends AppCompatActivity {
@@ -29,8 +30,13 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
 
         var model = new ViewModelProvider(this).get(HomeViewModel.class);
-        model.fetchDailies();
-        model.fetchUser();
+        model.fetchAll();
+
+        model.getHasCompletedOnboarding().observe(this, hasOnboarded -> {
+            if (!hasOnboarded) {
+                OnboardingActivity.start(this);
+            }
+        });
 
         loadFragment(new HomeScreenFragment());
     }

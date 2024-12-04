@@ -25,6 +25,7 @@ import com.b07.planetze.common.User;
 import com.b07.planetze.database.Database;
 import com.b07.planetze.database.firebase.FirebaseDb;
 import com.b07.planetze.home.HomeActivity;
+import com.b07.planetze.onboarding.OnboardingActivity;
 import com.b07.planetze.onboarding.QuestionsTransportationFragment;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -102,7 +103,6 @@ public class AuthActivity extends AppCompatActivity
                                 showToast("User registered successfully; "
                                         + "please verify your email address");
                                 switchScreens(AuthScreen.EMAIL_CONFIRMATION);
-                                confirmEmail();
                             }, e -> {
                                 showToast(e.message());
                             });
@@ -124,6 +124,11 @@ public class AuthActivity extends AppCompatActivity
     @Override
     public void confirmEmail() {
         Handler handler = new Handler();
+
+        Runnable onboard = () -> {
+            OnboardingActivity.start(this);
+        };
+
         Runnable checkEmailVerification = new Runnable() {
             @Override
             public void run() {
@@ -133,7 +138,7 @@ public class AuthActivity extends AppCompatActivity
                         boolean isVerified = user.isEmailVerified();
                         if (isVerified) {
                             Toast.makeText(getApplicationContext(), "Email verified! Access granted.", Toast.LENGTH_SHORT).show();
-                            loadFragment(new QuestionsTransportationFragment());
+                            onboard.run();
                         } else {
                             handler.postDelayed(this, 5000);
                         }

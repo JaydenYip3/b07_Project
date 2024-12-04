@@ -5,17 +5,19 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.b07.planetze.R;
-import com.b07.planetze.auth.AuthActivity;
 
 public class OnboardingActivity extends AppCompatActivity {
+    @NonNull private static final String TAG = "OnboardingActivity";
 
     public static void start(Context context) {
         Intent intent = new Intent(context, OnboardingActivity.class);
@@ -33,13 +35,25 @@ public class OnboardingActivity extends AppCompatActivity {
             return insets;
         });
 
-        loadFragment(new QuestionsTransportationFragment());
+        var model = new ViewModelProvider(this).get(OnboardingViewModel.class);
+
+        model.getScreen().observe(this, this::setScreen);
     }
 
-    private void loadFragment(Fragment fragment) {
+    private void setScreen(OnboardingScreen screen) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        Fragment fragment = switch (screen) {
+            case EXPLANATION -> new OnboardingExplanationFragment();
+            case TRANSPORTATION -> new QuestionsTransportationFragment();
+            case HOUSING -> new QuestionsHousingFragment();
+            case FOOD -> new QuestionsFoodFragment();
+            case CONSUMPTION -> new QuestionsConsumptionFragment();
+            case CALC_DISPLAY -> new CalcDisplayFragment();
+        };
         transaction.replace(R.id.onboarding_fragment_container, fragment);
-        transaction.addToBackStack(fragment.getClass().getName());
+        if (screen != OnboardingScreen.EXPLANATION) {
+            transaction.addToBackStack(fragment.getClass().getName());
+        }
         transaction.commit();
     }
 }

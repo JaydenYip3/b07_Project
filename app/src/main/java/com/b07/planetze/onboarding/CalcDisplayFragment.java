@@ -14,34 +14,31 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.b07.planetze.R;
 import com.b07.planetze.common.Emissions;
 import com.b07.planetze.common.User;
 import com.b07.planetze.database.firebase.FirebaseDb;
+import com.b07.planetze.ecotracker.EcoTrackerActivity;
 import com.b07.planetze.home.HomeActivity;
 import com.b07.planetze.util.measurement.Mass;
 
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class CalcDisplayFragment extends Fragment {
-    Emissions userEmissions = Emissions.zero();
-    User currentUser;
-    double[] emissions = new double[4];
-    FirebaseDb db = new FirebaseDb();
+    public CalcDisplayFragment() {}
 
-    CalcDisplayFragment(double[] allEmissions){
-        emissions[0] = allEmissions[0];
-        emissions[1] = allEmissions[1];
-        emissions[2] = allEmissions[2];
-        emissions[3] = allEmissions[3];
-    }
-
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_calc_display, container, false);
+    public void onViewCreated(@NonNull View view,
+                              @Nullable Bundle savedInstanceState) {
+        var model = new ViewModelProvider(requireActivity())
+                .get(OnboardingViewModel.class);
+
+        Emissions emissions = model.emissions();
+        model.postOnboardingEmissions(emissions.immutableCopy());
 
         TextView total = view.findViewById(R.id.total);
         TextView transport = view.findViewById(R.id.transportAmount);
@@ -51,118 +48,55 @@ public class CalcDisplayFragment extends Fragment {
         TextView nationalAvg = view.findViewById(R.id.textView8);
         TextView globalTarget = view.findViewById(R.id.textView9);
 
-        Mass t = userEmissions.transport();
-        t.set(Mass.zero());
-        t.set(Mass.kg(emissions[0]));
-        Mass f = userEmissions.food();
-        f.set(Mass.zero());
-        f.set(Mass.kg(emissions[1]));
-        Mass h = userEmissions.energy();
-        h.set(Mass.zero());
-        h.set(Mass.kg(emissions[2]));
-        Mass c = userEmissions.shopping();
-        c.set(Mass.zero());
-        c.set(Mass.kg(emissions[3]));
-
-
-
-        db.postOnboardingEmissions(userEmissions,result2 -> {
-            result2.match(user2 -> Log.d(TAG, "user found")
-                    , dbError -> { // if this operation failed:
-                        Log.d(TAG, "error: " + dbError);
-                    });
-        });
-
-        Mass totalMass = userEmissions.total();
-        Log.d(TAG, "emissions: " + userEmissions);
+        Mass totalMass = emissions.total();
+        Log.d(TAG, "emissions: " + emissions);
         Log.d(TAG, "mass total: " + totalMass);
 
-        double totalAmount= Math.round(((double)totalMass.toJson())*(1/0.45359237)/200)/10.0;
-        String amountText = String.valueOf(totalAmount);
+        double totalAmount = totalMass.tons();
+        String amountText = totalMass.formatTons();
         String globalTargetMet = "Your footprint has reached global targets for climate change reduction of 2 tons CO2e/year! Good job!";
         total.setText(amountText);
-        if(totalAmount<2){
+        if (totalAmount < 2) {
             globalTarget.setText(globalTargetMet);
         }
 
-        Mass transportMass = userEmissions.transport();
-        double transportAmount = Math.round(((double)transportMass.toJson())*(1/0.45359237)/200)/10.0;
-        String transportAmountText = transportAmount + " tons of CO2e/year";
-        Mass foodMass = userEmissions.food();
-        double foodAmount = Math.round(((double)foodMass.toJson())*(1/0.45359237)/200)/10.0;
-        String foodAmountText = foodAmount + " tons of CO2e/year";
-        Mass housingMass = userEmissions.energy();
-        double housingAmount = Math.round(((double)housingMass.toJson())*(1/0.45359237)/200)/10.0;
-        String housingAmountText = housingAmount + " tons of CO2e/year";
-        Mass consumptionMass = userEmissions.shopping();
-        double consumptionAmount = Math.round(((double)consumptionMass.toJson())*(1/0.45359237)/200)/10.0;
-        String consumptionAmountText = consumptionAmount + " tons of CO2e/year";
+        transport.setText(String.format(Locale.US, "%.1f", emissions.transport().tons()));
+        food.setText(String.format(Locale.US, "%.1f", emissions.food().tons()));
+        housing.setText(String.format(Locale.US, "%.1f", emissions.energy().tons()));
+        consumption.setText(String.format(Locale.US, "%.1f", emissions.shopping().tons()));
 
-        transport.setText(transportAmountText);
-        food.setText(foodAmountText);
-        housing.setText(housingAmountText);
-        consumption.setText(consumptionAmountText);
+        model.fetchUser(user -> {
+            String country = user.country();
 
-        db.fetchUser(result2 -> {
-            result2.match(userOption2 -> { // if this operation was successful:
-                userOption2.match(// if the user has user info set:
-                        user2 -> {
-                            currentUser = user2;
-                            Log.d(TAG, "User found");
-                            Map<String, String> userJson = (HashMap<String, String>) currentUser.toJson();
-                            String country = userJson.get("country");
-                            CountryProcessor countryProcessor = new CountryProcessor(view.getContext(), "countries.json");
-                            double regionAverage = countryProcessor.getResult(country);
-                            double percentage;
-                            String descriptor = "";
-                            if (totalAmount > regionAverage){
-                                percentage = Math.round(1000 * totalAmount / regionAverage)/10.0;
-                                descriptor = "above";
-                            }
-                            else{
-                                percentage = Math.round(1000 * (1 - totalAmount / regionAverage))/10.0;
-                                descriptor = "below";
-                            }
-                            String avgText = "Your annual carbon footprint is " + percentage + "% " + descriptor + " the national average for " + country + ": "  + regionAverage;
-                            if (totalAmount == regionAverage){
-                                avgText = "Your annual carbon footprint is the same as national average for " + country + ": " + regionAverage;
-                            }
-                            nationalAvg.setText(avgText);
-                        },
-                        () -> Log.d(TAG, "user nonexistent"));
-            }, dbError -> { // if this operation failed:
-                Log.d(TAG, "error: " + dbError);
-            });
+            var countryProcessor = new CountryProcessor(view.getContext(), "countries.json");
+
+            double regionAverage = countryProcessor.getResult(country);
+            double percentage;
+            String descriptor = "";
+            if (totalAmount > regionAverage){
+                percentage = Math.round(1000 * totalAmount / regionAverage)/10.0;
+                descriptor = "above";
+            } else {
+                percentage = Math.round(1000 * (1 - totalAmount / regionAverage))/10.0;
+                descriptor = "below";
+            }
+            String avgText = String.format(Locale.US, "Your annual carbon footprint is %.1f%% %s the national average for %s (%.1f tons CO2e/year)", percentage, descriptor, country, regionAverage);
+            if (totalAmount == regionAverage) {
+                avgText = String.format(Locale.US, "Your annual carbon footprint is the same as the national average for %s (%.1f tons CO2e/year)", country, regionAverage);
+            }
+            nationalAvg.setText(avgText);
         });
-
 
         Button buttonBack = view.findViewById(R.id.buttonBack);
-        buttonBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                loadFragment(new QuestionsConsumptionFragment(emissions));
-            }
-        });
+        buttonBack.setOnClickListener(v -> getParentFragmentManager().popBackStack());
 
         Button buttonNext = view.findViewById(R.id.buttonNext);
-        buttonNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                HomeActivity.start(requireActivity());
-            }
-        });
-
-        return view;
+        buttonNext.setOnClickListener(v -> EcoTrackerActivity.start(requireActivity()));
     }
 
-    public void onSubmit(@NonNull View v) {
-        //loadFragment(new QuestionsFoodFragment());
-
-    }
-    private void loadFragment(Fragment fragment) {
-        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-        transaction.replace(R.id.onboarding_fragment_container, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
+    @NonNull
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_calc_display, container, false);
     }
 }
