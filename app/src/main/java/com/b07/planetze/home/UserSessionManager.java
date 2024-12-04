@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.b07.planetze.MainActivity;
 import com.b07.planetze.auth.AuthActivity;
 import com.b07.planetze.auth.LoginFragment;
 
@@ -29,11 +30,11 @@ public class UserSessionManager {
         Toast.makeText(context, "Signed out successfully", Toast.LENGTH_SHORT).show();
 
         // Redirect to the login screen
-        AuthActivity.start(context, LOGIN);
+        MainActivity.start(context);
 
         // Optionally finish the current activity (if called within an activity)
         if (context instanceof AppCompatActivity) {
-            ((AppCompatActivity) context).finish();
+            ((AppCompatActivity) context).finishAffinity();
         }
     }
 
