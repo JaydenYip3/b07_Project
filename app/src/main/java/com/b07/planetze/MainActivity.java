@@ -18,6 +18,7 @@ import com.google.firebase.database.FirebaseDatabase;
 public class MainActivity extends AppCompatActivity {
     public static void start(@NonNull Context context) {
         Intent intent = new Intent(context, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         context.startActivity(intent);
     }
 
@@ -26,32 +27,13 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        db = FirebaseDatabase.getInstance("https://planetze-3cc9d-default-rtdb.firebaseio.com/");
-//        View container = findViewById(R.id.home_fragment_container);
-//        if (container == null) {
-//            throw new IllegalStateException("Fragment container not found in the layout!");
-//        } else {
-//            Log.d("DEBUG", "Fragment container found.");
-//        }
-        //DatabaseReference myRef = db.getReference("testDemo");
-
-        //myRef.setValue("B07 Demo!");
-        //User bruh = new User("Caleb", "passwordthatneedstobeencrypted", "bruh.com");
-        //myRef.child("User").setValue(bruh);
-
-//        EcoTrackerActivity.start(this);
-
-//        if (savedInstanceState == null) {
-            loadFragment(new WelcomeFragment());
-//        }
-
+        loadFragment(new WelcomeFragment());
 
     }
 
     private void loadFragment(Fragment fragment) {
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.home_fragment_container, fragment);
-        transaction.addToBackStack(null);
         transaction.commit();
     }
 

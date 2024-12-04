@@ -40,7 +40,7 @@ public class RegisterFragment extends Fragment {
         EditText editConfirmPasswordRegister = view.findViewById(R.id.editTextTextConfirmPassword);
         EditText editUsername = view.findViewById(R.id.editTextName);
         Button btnCreate = view.findViewById(R.id.btnCreateAccount);
-        ImageButton btnPrevious = view.findViewById(R.id.previousPage);
+        ImageButton btnPrevious = view.findViewById(R.id.ecogauge_back);
         TextView signIn = view.findViewById(R.id.signInTextView);
 
         ImageView imageView = view.findViewById(R.id.imageView3);

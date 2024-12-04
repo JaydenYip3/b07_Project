@@ -1,4 +1,4 @@
-package com.b07.planetze.EcoGauge;
+package com.b07.planetze.ecogauge;
 
 public interface EcoGaugeScreenSwitch {
     /**

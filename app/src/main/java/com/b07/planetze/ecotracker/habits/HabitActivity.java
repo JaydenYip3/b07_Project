@@ -8,17 +8,11 @@ import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.lifecycle.ViewModelProvider;
 
 import android.util.Log;
 import android.view.View;
 
-import com.b07.planetze.EcoGauge.EcoGaugeScreen;
 import com.b07.planetze.R;
-import com.b07.planetze.ecotracker.EcoTrackerViewModel;
-import com.b07.planetze.home.HomeScreenFragment;
-import com.b07.planetze.home.HomeViewModel;
-import com.google.firebase.database.FirebaseDatabase;
 
 public class HabitActivity extends AppCompatActivity {
 

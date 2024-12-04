@@ -22,7 +22,7 @@
             android:name=".auth.AuthActivity"
             android:exported="false" />
         <activity android:name=".home.HomeActivity" />
-        <activity android:name=".EcoGauge.EcoGaugeActivity"/>
+        <activity android:name=".ecogauge.EcoGaugeActivity"/>
         <activity android:name=".ecotracker.habits.HabitActivity"/>
         <activity
             android:name=".MainActivity"

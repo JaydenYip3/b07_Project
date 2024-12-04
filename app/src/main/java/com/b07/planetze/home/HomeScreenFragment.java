@@ -1,12 +1,9 @@
 package com.b07.planetze.home;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Button;
 
@@ -16,10 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.b07.planetze.EcoGauge.EcoGaugeActivity;
-import com.b07.planetze.EcoGauge.EcoGaugeScreen;
-import com.b07.planetze.EcoGauge.EcoGaugeScreenSwitch;
-import com.b07.planetze.MainActivity;
+import com.b07.planetze.ecogauge.EcoGaugeActivity;
 import com.b07.planetze.R;
 import com.b07.planetze.common.User;
 import com.b07.planetze.ecotracker.EcoTrackerActivity;
@@ -28,15 +22,13 @@ import com.b07.planetze.onboarding.OnboardingActivity;
 
 public class HomeScreenFragment extends Fragment {
 
-    private Button signOutButton;
-
     public void onViewCreated(@NonNull View view,
                               @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         HomeViewModel model = new ViewModelProvider(requireActivity())
                 .get(HomeViewModel.class);
 
-        signOutButton = view.findViewById(R.id.signOutButton);
+        Button signOutButton = view.findViewById(R.id.signOutButton);
         TextView username = view.findViewById(R.id.home_username);
         TextView emissions = view.findViewById(R.id.home_emissions);
 
