@@ -5,17 +5,19 @@ public class SuggestedHabit implements Comparable<SuggestedHabit>{
     String dailyType;
     String category;
     String description;
+    String selectedDescription;
     double potential;
     String tracking;
     String[] keywords;
     boolean visibility;
     boolean selected;
 
-    public SuggestedHabit(String header, String dailyType, String category, String description, double potential, String tracking, String[] keywords) {
+    public SuggestedHabit(String header, String dailyType, String category, String description, String selectedDescription, double potential, String tracking, String[] keywords) {
         this.header = header;
         this.dailyType = dailyType;
         this.category = category;
         this.description = description;
+        this.selectedDescription = selectedDescription;
         this.potential = potential;
         this.tracking = tracking;
         this.keywords = keywords;

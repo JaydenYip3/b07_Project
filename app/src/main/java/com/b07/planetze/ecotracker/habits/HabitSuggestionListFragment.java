@@ -101,17 +101,7 @@ public class HabitSuggestionListFragment extends Fragment implements AdapterView
         return view;
     }
 
-    public void onSubmit(@NonNull View v) {
-        //loadFragment(new QuestionsFoodFragment(emissions));
-    }
-    private void loadFragment(Fragment fragment) {
-        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-        transaction.replace(R.id.ecotracker_fragment_container, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
-    }
-
-    private void getData(View view) throws JSONException {
+    private void getData(@NonNull View view) throws JSONException {
         HabitProcessor habitProcessor = new HabitProcessor(view.getContext(), "habits.json");
         habitList = new ArrayList<SuggestedHabit>();
 
@@ -120,12 +110,12 @@ public class HabitSuggestionListFragment extends Fragment implements AdapterView
         if(!Objects.equals(keyword, "")){
             for (int i = 1; i < 14; i++){
                 Object[] habitInfo = habitProcessor.getResult("habit" + i);
-                String[] keywords = new String[((JSONArray)habitInfo[6]).length()];
-                for (int j = 0; j < ((JSONArray)habitInfo[6]).length(); j++){
-                    keywords[j] = ((JSONArray)habitInfo[6]).getString(j);
+                String[] keywords = new String[((JSONArray)habitInfo[7]).length()];
+                for (int j = 0; j < ((JSONArray)habitInfo[7]).length(); j++){
+                    keywords[j] = ((JSONArray)habitInfo[7]).getString(j);
                 }
                 List keywordsList = Arrays.stream(keywords).toList();
-                SuggestedHabit habit = new SuggestedHabit((String)habitInfo[0], (String)habitInfo[1], (String)habitInfo[2], (String)habitInfo[3], (double)habitInfo[4], (String)habitInfo[5], keywords);
+                SuggestedHabit habit = new SuggestedHabit((String)habitInfo[0], (String)habitInfo[1], (String)habitInfo[2], (String)habitInfo[3], (String)habitInfo[4], (double)habitInfo[5], (String)habitInfo[6], keywords);
                 if(keywordsList.contains(keyword)){
                     habitList.add(habit);
                 }
@@ -136,11 +126,11 @@ public class HabitSuggestionListFragment extends Fragment implements AdapterView
             for (int i = 1; i < 14; i++){
                 Object[] habitInfo = habitProcessor.getResult("habit" + i);
 
-                String[] keywords = new String[((JSONArray)habitInfo[6]).length()];
-                for (int j = 0; j < ((JSONArray)habitInfo[6]).length(); j++){
-                    keywords[j] = ((JSONArray)habitInfo[6]).getString(j);
+                String[] keywords = new String[((JSONArray)habitInfo[7]).length()];
+                for (int j = 0; j < ((JSONArray)habitInfo[7]).length(); j++){
+                    keywords[j] = ((JSONArray)habitInfo[7]).getString(j);
                 }
-                SuggestedHabit habit = new SuggestedHabit((String)habitInfo[0], (String)habitInfo[1], (String)habitInfo[2], (String)habitInfo[3], (double)habitInfo[4], (String)habitInfo[5], keywords);
+                SuggestedHabit habit = new SuggestedHabit((String)habitInfo[0], (String)habitInfo[1], (String)habitInfo[2], (String)habitInfo[3], (String)habitInfo[4], (double)habitInfo[5], (String)habitInfo[6], keywords);
                 habitList.add(habit);
             }
             keyword = "";
@@ -153,11 +143,11 @@ public class HabitSuggestionListFragment extends Fragment implements AdapterView
                 && Objects.equals(keyword, "")){
             for (int i = 1; i < 14; i++){
                 Object[] habitInfo = habitProcessor.getResult("habit" + i);
-                String[] keywords = new String[((JSONArray)habitInfo[6]).length()];
-                for (int j = 0; j < ((JSONArray)habitInfo[6]).length(); j++){
-                    keywords[j] = ((JSONArray)habitInfo[6]).getString(j);
+                String[] keywords = new String[((JSONArray)habitInfo[7]).length()];
+                for (int j = 0; j < ((JSONArray)habitInfo[7]).length(); j++){
+                    keywords[j] = ((JSONArray)habitInfo[7]).getString(j);
                 }
-                SuggestedHabit habit = new SuggestedHabit((String)habitInfo[0], (String)habitInfo[1], (String)habitInfo[2], (String)habitInfo[3], (double)habitInfo[4], (String)habitInfo[5], keywords);
+                SuggestedHabit habit = new SuggestedHabit((String)habitInfo[0], (String)habitInfo[1], (String)habitInfo[2], (String)habitInfo[3], (String)habitInfo[4], (double)habitInfo[5], (String)habitInfo[6], keywords);
                 String category = "Category: " + (String)habitInfo[2];
                 if(Objects.equals(filter, category)){
                     habitList.add(habit);
@@ -168,11 +158,11 @@ public class HabitSuggestionListFragment extends Fragment implements AdapterView
         if(Objects.equals(filter, "Impact") && Objects.equals(keyword, "")){
             for (int i = 1; i < 14; i++){
                 Object[] habitInfo = habitProcessor.getResult("habit" + i);
-                String[] keywords = new String[((JSONArray)habitInfo[6]).length()];
-                for (int j = 0; j < ((JSONArray)habitInfo[6]).length(); j++){
-                    keywords[j] = ((JSONArray)habitInfo[6]).getString(j);
+                String[] keywords = new String[((JSONArray)habitInfo[7]).length()];
+                for (int j = 0; j < ((JSONArray)habitInfo[7]).length(); j++){
+                    keywords[j] = ((JSONArray)habitInfo[7]).getString(j);
                 }
-                SuggestedHabit habit = new SuggestedHabit((String)habitInfo[0], (String)habitInfo[1], (String)habitInfo[2], (String)habitInfo[3], (double)habitInfo[4], (String)habitInfo[5], keywords);
+                SuggestedHabit habit = new SuggestedHabit((String)habitInfo[0], (String)habitInfo[1], (String)habitInfo[2], (String)habitInfo[3], (String)habitInfo[4], (double)habitInfo[5], (String)habitInfo[6], keywords);
                 habitList.add(habit);
             }
             Collections.sort(habitList);
@@ -205,18 +195,18 @@ public class HabitSuggestionListFragment extends Fragment implements AdapterView
 
                                 for (int i = 1; i < 14; i++){
                                     Object[] habitInfo = habitProcessor.getResult("habit" + i);
-                                    String[] keywords = new String[((JSONArray)habitInfo[6]).length()];
-                                    for (int j = 0; j < ((JSONArray)habitInfo[6]).length(); j++){
+                                    String[] keywords = new String[((JSONArray)habitInfo[7]).length()];
+                                    for (int j = 0; j < ((JSONArray)habitInfo[7]).length(); j++){
                                         try {
-                                            keywords[j] = ((JSONArray)habitInfo[6]).getString(j);
+                                            keywords[j] = ((JSONArray)habitInfo[7]).getString(j);
                                         } catch (JSONException e) {
                                             throw new RuntimeException(e);
                                         }
                                     }
                                     SuggestedHabit habit = new SuggestedHabit((String)habitInfo[0], (String)habitInfo[1],
                                             (String)habitInfo[2], (String)habitInfo[3],
-                                            (double)habitInfo[4], (String)habitInfo[5],
-                                            keywords);
+                                            (String)habitInfo[4], (double)habitInfo[5],
+                                            (String)habitInfo[6], keywords);
                                     if(Objects.equals((String)habitInfo[2], maxCat)){
                                         habitList.add(habit);
                                     }
@@ -233,7 +223,6 @@ public class HabitSuggestionListFragment extends Fragment implements AdapterView
             });
         }
 
-        Log.d(TAG, "habitList size: " + habitList.size());
         if(!Objects.equals(filter, "Personalized Recommendations")){
             myAdapter = new MyAdapterSuggested(this.getContext(), habitList);
             recyclerView.setAdapter(myAdapter);

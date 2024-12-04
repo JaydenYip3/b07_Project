@@ -68,15 +68,13 @@
         app:layout_constraintStart_toStartOf="@id/category"
         app:layout_constraintTop_toBottomOf="@id/category" />
 
-    <androidx.appcompat.widget.AppCompatButton
+    <Button
         android:id="@+id/select"
-        android:layout_width="100dp"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="10dp"
         android:backgroundTint="@color/teal"
-        android:background="@drawable/sign_up_button"
-        android:textColor="@color/white"
         android:text="@string/select"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
