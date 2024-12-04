@@ -1,6 +1,5 @@
 package com.b07.planetze.onboarding;
 
-import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,15 +14,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.b07.planetze.R;
-import com.b07.planetze.common.Emissions;
-import com.b07.planetze.database.firebase.FirebaseDb;
 import com.b07.planetze.util.measurement.Mass;
-
-import java.time.LocalDate;
 
 public class QuestionsHousingFragment extends Fragment{
     @NonNull private static final String TAG = "QuestionsHousingFragment";
@@ -37,9 +31,8 @@ public class QuestionsHousingFragment extends Fragment{
                 .get(OnboardingViewModel.class);
 
 
-        ImageButton buttonBack = view.findViewById(R.id.back);
-
-        buttonBack.setOnClickListener(v -> model.setScreen(OnboardingScreen.FOOD));
+        ImageButton buttonBack = view.findViewById(R.id.onboarding_housing_back);
+        buttonBack.setOnClickListener(v -> getParentFragmentManager().popBackStack());
 
         Button buttonSubmit = view.findViewById(R.id.next);
 

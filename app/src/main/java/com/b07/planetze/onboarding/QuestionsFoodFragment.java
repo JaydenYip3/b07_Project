@@ -1,6 +1,5 @@
 package com.b07.planetze.onboarding;
 
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,26 +8,17 @@ import android.view.ViewGroup;
 
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.b07.planetze.R;
-import com.b07.planetze.common.Emissions;
-import com.b07.planetze.database.firebase.FirebaseDb;
 import com.b07.planetze.util.measurement.Mass;
-
-import java.time.LocalDate;
 
 public class QuestionsFoodFragment extends Fragment {
     @NonNull private static final String TAG = "QuestionsFoodFragment";
@@ -52,8 +42,8 @@ public class QuestionsFoodFragment extends Fragment {
         buttonNoMeat2.setOnClickListener(v -> NoMeat(view));
         buttonNoMeat3.setOnClickListener(v -> NoMeat(view));
 
-        ImageButton buttonBack = view.findViewById(R.id.back);
-        buttonBack.setOnClickListener(v -> model.setScreen(OnboardingScreen.TRANSPORTATION));
+        ImageButton buttonBack = view.findViewById(R.id.onboarding_food_back);
+        buttonBack.setOnClickListener(v -> getParentFragmentManager().popBackStack());
 
         Button buttonNext = view.findViewById(R.id.next);
         buttonNext.setOnClickListener(v -> onSubmit(view, model));

@@ -10,22 +10,16 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
 
-import android.widget.TextView;
 import android.widget.Toast;
 
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.b07.planetze.R;
-import com.b07.planetze.common.Emissions;
-import com.b07.planetze.database.firebase.FirebaseDb;
 import com.b07.planetze.util.measurement.Mass;
-
-import java.time.LocalDate;
 
 public class QuestionsConsumptionFragment extends Fragment {
     @NonNull private static final String TAG = "QuestionsConsumptionFragment";
@@ -39,9 +33,9 @@ public class QuestionsConsumptionFragment extends Fragment {
                 .get(OnboardingViewModel.class);
 
         Log.d(TAG, "emissions: " + model.emissions().total());
-        ImageButton buttonBack = view.findViewById(R.id.back);
+        ImageButton buttonBack = view.findViewById(R.id.onboarding_consumption_back);
 
-        buttonBack.setOnClickListener(v -> model.setScreen(OnboardingScreen.HOUSING));
+        buttonBack.setOnClickListener(v -> getParentFragmentManager().popBackStack());
 
         Button buttonSubmit = view.findViewById(R.id.submit);
 
