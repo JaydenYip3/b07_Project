@@ -28,15 +28,13 @@ import com.b07.planetze.onboarding.OnboardingActivity;
 
 public class HomeScreenFragment extends Fragment {
 
-    private Button signOutButton;
-
     public void onViewCreated(@NonNull View view,
                               @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         HomeViewModel model = new ViewModelProvider(requireActivity())
                 .get(HomeViewModel.class);
 
-        signOutButton = view.findViewById(R.id.signOutButton);
+        Button signOutButton = view.findViewById(R.id.signOutButton);
         TextView username = view.findViewById(R.id.home_username);
         TextView emissions = view.findViewById(R.id.home_emissions);
 
