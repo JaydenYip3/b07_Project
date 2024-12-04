@@ -18,7 +18,7 @@ public final class DateInterval {
     @NonNull private final LocalDate start;
     @NonNull private final LocalDate end;
 
-    public DateInterval(@NonNull LocalDate start, @NonNull LocalDate end) {
+    private DateInterval(@NonNull LocalDate start, @NonNull LocalDate end) {
         if (end.isBefore(start)) {
             throw new DateIntervalException("End of interval before start");
         }

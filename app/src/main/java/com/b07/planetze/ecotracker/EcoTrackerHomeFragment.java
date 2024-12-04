@@ -43,7 +43,7 @@ public final class EcoTrackerHomeFragment extends Fragment {
             loadFragment(new HabitSuggestionsFragment());
         });
 
-        ImageButton previousPage = view.findViewById(R.id.previousPage);
+        ImageButton previousPage = view.findViewById(R.id.ecogauge_back);
         TextView daily_emission = view.findViewById(R.id.daily_emissions);
 
         //TODO daily_emission.setText(db.);

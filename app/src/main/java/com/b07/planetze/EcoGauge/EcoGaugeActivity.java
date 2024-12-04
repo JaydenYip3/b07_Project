@@ -55,7 +55,6 @@ public class EcoGaugeActivity extends AppCompatActivity implements EcoGaugeOverv
             case OVERVIEW -> loadFragment(new EcoGaugeOverviewFragment());
             case TRENDS -> loadFragment(new EcoGaugeTrendsFragment());
             case BREAKDOWN -> loadFragment (new EcoGaugeBreakdownFragment());
-            case COMPARISON -> loadFragment (new EcoGaugeComparisonFragment());
         }
 
     }

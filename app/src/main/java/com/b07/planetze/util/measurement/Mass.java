@@ -67,6 +67,15 @@ public final class Mass extends Measurement<Mass>
         return new Mass(lb * POUNDS_TO_KG);
     }
 
+    /**
+     * {@return a new mass given metric tons}
+     * @param tons a value in metric tons
+     */
+    @NonNull
+    public static Mass tons(double tons) {
+        return new Mass(tons * 1000);
+    }
+
     @NonNull
     public static Mass withUnit(Unit unit, double value) {
         return switch (unit) {

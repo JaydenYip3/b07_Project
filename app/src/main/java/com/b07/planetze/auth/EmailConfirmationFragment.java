@@ -9,10 +9,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.b07.planetze.R;
-import com.b07.planetze.WelcomeFragment;
 import com.b07.planetze.database.firebase.FirebaseDb;
 
 public class EmailConfirmationFragment extends Fragment {
@@ -27,7 +25,7 @@ public class EmailConfirmationFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_email_confirmation, container, false);
 
         TextView resendConfirmation = view.findViewById(R.id.resendConfirmation);
-        ImageButton btnPrevious = view.findViewById(R.id.previousPage);
+        ImageButton btnPrevious = view.findViewById(R.id.ecogauge_back);
 
         ((EmailConfirmationCallback) requireActivity()).confirmEmail();
 

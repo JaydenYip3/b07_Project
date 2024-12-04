@@ -20,7 +20,7 @@
             android:gravity="center">
 
             <ImageButton
-                android:id="@+id/previousPage"
+                android:id="@+id/ecogauge_back"
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:background="@null"

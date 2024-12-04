@@ -42,20 +42,17 @@ public class EcoGaugeBreakdownFragment extends Fragment {
         String temp = "a";
         String timePeriod = ((EcoGaugeOverviewCallback) requireActivity()).getPeriod(temp);
         // Determine the date interval based on the time period
-        DateInterval interval = null;
-        switch (timePeriod) {
-            case "Week":
-                interval = new DateInterval(LocalDate.now().minusWeeks(1), LocalDate.now().plusDays(1));
-                break;
-            case "Month":
-                interval = new DateInterval(LocalDate.now().minusMonths(1), LocalDate.now().plusDays(1));
-                break;
-            case "Year":
-                interval = new DateInterval(LocalDate.now().minusYears(1), LocalDate.now().plusDays(1));
-                break;
-        }
+        DateInterval interval = switch (timePeriod) {
+            case "Week" ->
+                    DateInterval.between(LocalDate.now().minusWeeks(1), LocalDate.now().plusDays(1));
+            case "Month" ->
+                    DateInterval.between(LocalDate.now().minusMonths(1), LocalDate.now().plusDays(1));
+            case "Year" ->
+                    DateInterval.between(LocalDate.now().minusYears(1), LocalDate.now().plusDays(1));
+            default -> null;
+        };
 
-        ImageButton btnPrevious = view.findViewById(R.id.previousPage);
+        ImageButton btnPrevious = view.findViewById(R.id.ecogauge_back);
         btnPrevious.setOnClickListener(v -> {
             getParentFragmentManager().popBackStack();
         });

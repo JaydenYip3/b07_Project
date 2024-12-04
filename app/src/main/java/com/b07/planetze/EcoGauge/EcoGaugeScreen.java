@@ -4,5 +4,4 @@ public enum EcoGaugeScreen {
     OVERVIEW,
     TRENDS,
     BREAKDOWN,
-    COMPARISON
 }
