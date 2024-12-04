@@ -43,6 +43,8 @@ public class EcoGaugeBreakdownFragment extends Fragment {
         // Reference PieChart from layout
         PieChart pieChart = view.findViewById(R.id.pieChart);
 
+        pieChart.setEntryLabelTextSize(20f);
+
         model.getInterval().observe(requireActivity(), timePeriod -> {
             // Determine the date interval based on the time period
             DateInterval interval = switch (timePeriod) {
@@ -91,6 +93,7 @@ public class EcoGaugeBreakdownFragment extends Fragment {
                     // Create PieDataSet and PieData
                     PieDataSet dataSet = new PieDataSet(entries, "Emissions Breakdown");
                     dataSet.setColors(new int[] { R.color.colorTransport, R.color.colorEnergy, R.color.colorFood, R.color.colorShopping }, requireActivity());
+                    dataSet.setValueTextSize(20f);
                     PieData data = new PieData(dataSet);
 
                     // Set data to PieChart

@@ -57,6 +57,9 @@ public class EcoGaugeTrendsFragment extends Fragment{
         // our title text size.
         graphView.setTitleTextSize(40);
 
+        graphView.getGridLabelRenderer().setTextSize(20f);
+        graphView.getGridLabelRenderer().reloadStyles();
+
         model.getInterval().observe(requireActivity(), timePeriod -> {
             timePeriod = timePeriod.toLowerCase();
             FirebaseDb database = new FirebaseDb();
