@@ -51,16 +51,12 @@ public class HomeScreenFragment extends Fragment {
             emissions.setText(list.emissions().total().format() + " CO2e");
         });
 
-        View back = view.findViewById(R.id.home_back);
         View toTracker = view.findViewById(R.id.home_to_tracker);
         View toHabits = view.findViewById(R.id.home_to_habits);
         View toGauge = view.findViewById(R.id.home_to_gauge);
         View toFootprint = view.findViewById(R.id.home_to_footprint);
         View toHub = view.findViewById(R.id.home_to_hub);
 
-        back.setOnClickListener(v -> {
-            MainActivity.start(requireActivity());
-        });
         toTracker.setOnClickListener(v -> {
             EcoTrackerActivity.start(requireActivity());
         });
