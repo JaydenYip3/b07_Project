@@ -8,7 +8,7 @@ import org.json.JSONObject;
 
 public class HabitProcessor {
     private JSONObject habits;
-    Object[] habitInfo= new Object[7];
+    Object[] habitInfo= new Object[8];
 
     public HabitProcessor(Context context, String fileName) {
         // Load JSON data
@@ -23,9 +23,10 @@ public class HabitProcessor {
                 habitInfo[1] = habit.get("dailyType");
                 habitInfo[2] = habit.get("category");
                 habitInfo[3] = habit.get("description");
-                habitInfo[4] = habit.get("potential");
-                habitInfo[5] = habit.get("tracking");
-                habitInfo[6] = habit.get("keywords");
+                habitInfo[4] = habit.get("selectedDescription");
+                habitInfo[5] = habit.get("potential");
+                habitInfo[6] = habit.get("tracking");
+                habitInfo[7] = habit.get("keywords");
                 return habitInfo;
             } else {
                 return habitInfo; // Default value for missing keys

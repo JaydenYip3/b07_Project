@@ -21,9 +21,9 @@ import com.b07.planetze.EcoGauge.EcoGaugeScreen;
 import com.b07.planetze.EcoGauge.EcoGaugeScreenSwitch;
 import com.b07.planetze.MainActivity;
 import com.b07.planetze.R;
+import com.b07.planetze.common.User;
 import com.b07.planetze.ecotracker.EcoTrackerActivity;
 import com.b07.planetze.ecotracker.habits.HabitActivity;
-import com.b07.planetze.ecotracker.habits.HabitSuggestionsFragment;
 import com.b07.planetze.onboarding.OnboardingActivity;
 
 public class HomeScreenFragment extends Fragment {
@@ -45,7 +45,7 @@ public class HomeScreenFragment extends Fragment {
         });
 
         model.getUser().observe(requireActivity(), maybeUser -> {
-            maybeUser.apply(user -> username.setText(user.name()));
+            maybeUser.map(User::name).apply(username::setText);
         });
         model.getDailies().observe(requireActivity(), list -> {
             emissions.setText(list.emissions().total().format() + " CO2e");

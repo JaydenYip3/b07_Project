@@ -1,9 +1,5 @@
 package com.b07.planetze.onboarding;
 
-import static android.content.ContentValues.TAG;
-import static android.view.View.INVISIBLE;
-
-import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,94 +8,51 @@ import android.view.ViewGroup;
 
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.constraintlayout.widget.ConstraintSet;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.b07.planetze.R;
-import com.b07.planetze.common.Emissions;
-import com.b07.planetze.database.firebase.FirebaseDb;
+import com.b07.planetze.util.measurement.Mass;
 
-import java.time.LocalDate;
+public class QuestionsFoodFragment extends Fragment {
+    @NonNull private static final String TAG = "QuestionsFoodFragment";
 
-public class QuestionsFoodFragment extends Fragment{
-    FirebaseDb db = new FirebaseDb();
-    Emissions foodEmissions;
-    double[] emissions = new double[4];
-    private double foodEmissionsKgs = 0;
-    public LocalDate dateAdded= LocalDate.now();
-    QuestionsFoodFragment(double[] allEmissions){
-        emissions[0] = allEmissions[0];
-        emissions[1] = allEmissions[1];
-        emissions[2] = allEmissions[2];
-        emissions[3] = allEmissions[3];
-    }
-    @Nullable
+    public QuestionsFoodFragment() {}
+
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_questions_food, container, false);
+    public void onViewCreated(@NonNull View view,
+                              @Nullable Bundle savedInstanceState) {
+        var model = new ViewModelProvider(requireActivity())
+                .get(OnboardingViewModel.class);
 
         Button buttonMeat = view.findViewById(R.id.radioButton84);
-        buttonMeat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                eatMeat(view);
-            }
-        });
-
-
+        buttonMeat.setOnClickListener(v -> eatMeat(view));
 
         Button buttonNoMeat1 = view.findViewById(R.id.radioButton81);
         Button buttonNoMeat2 = view.findViewById(R.id.radioButton82);
         Button buttonNoMeat3 = view.findViewById(R.id.radioButton83);
 
-        buttonNoMeat1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                NoMeat(view);
-            }
-        });
-        buttonNoMeat2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                NoMeat(view);
-            }
-        });
-        buttonNoMeat3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                NoMeat(view);
-            }
-        });
+        buttonNoMeat1.setOnClickListener(v -> NoMeat(view));
+        buttonNoMeat2.setOnClickListener(v -> NoMeat(view));
+        buttonNoMeat3.setOnClickListener(v -> NoMeat(view));
 
-
-        ImageButton buttonBack = view.findViewById(R.id.back);
-        buttonBack.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.O)
-            @Override
-            public void onClick(View v) {
-                loadFragment(new QuestionsTransportationFragment(emissions));
-            }
-        });
+        ImageButton buttonBack = view.findViewById(R.id.onboarding_food_back);
+        buttonBack.setOnClickListener(v -> getParentFragmentManager().popBackStack());
 
         Button buttonNext = view.findViewById(R.id.next);
-        buttonNext.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onSubmit(view);
-            }
-        });
+        buttonNext.setOnClickListener(v -> onSubmit(view, model));
+    }
 
-        return view;
+    @Nullable
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_questions_food, container, false);
     }
 
     public void eatMeat(View view) {
@@ -121,7 +74,9 @@ public class QuestionsFoodFragment extends Fragment{
         // Ensure question 10 remains in the correct position
         question10.setVisibility(View.VISIBLE);
     }
-    public void onSubmit(View v) {
+    public void onSubmit(@NonNull View v, @NonNull OnboardingViewModel model) {
+        double foodEmissionsKgs = 0;
+
         RadioButton b81 = v.findViewById(R.id.radioButton81);
         RadioButton b82 = v.findViewById(R.id.radioButton82);
         RadioButton b83 = v.findViewById(R.id.radioButton83);
@@ -175,11 +130,10 @@ public class QuestionsFoodFragment extends Fragment{
             if (b103.isChecked()) { foodEmissionsKgs += 70.2; }
             if (b104.isChecked()) { foodEmissionsKgs += 140.2; }
 
-            emissions[1] = foodEmissionsKgs;
-            Log.d(TAG, "emissions: " + emissions[0] + emissions[1] + emissions[2] + emissions[3]);
-            loadFragment(new QuestionsHousingFragment(emissions));
-        }
-        else{
+            model.emissions().food().set(Mass.kg(foodEmissionsKgs));
+            Log.d(TAG, "emissions: " + model.emissions());
+            model.setScreen(OnboardingScreen.HOUSING);
+        }  else {
             Toast.makeText(v.getContext(), "Please complete all the questions.", Toast.LENGTH_SHORT).show();
         }
     }
@@ -201,14 +155,5 @@ public class QuestionsFoodFragment extends Fragment{
 
         // Ensure the order remains unchanged
         question10.setVisibility(View.VISIBLE);
-    }
-
-
-
-    private void loadFragment(Fragment fragment) {
-        FragmentTransaction transaction = getParentFragmentManager().beginTransaction();
-        transaction.replace(R.id.onboarding_fragment_container, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
     }
 }

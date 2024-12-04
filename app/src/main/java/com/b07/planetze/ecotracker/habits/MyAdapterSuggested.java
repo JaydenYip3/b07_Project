@@ -52,10 +52,17 @@ public class MyAdapterSuggested extends RecyclerView.Adapter<MyAdapterSuggested.
         holder.header.setText(habit.header);
         holder.category.setText(habit.category);
         holder.description.setText(habit.description);
-
         boolean isVisible = habit.visibility;
         holder.constraintLayout.setVisibility(isVisible ? View.VISIBLE : View.GONE);
+        if(holder.selected[position]){
+            Log.d(TAG, habit.header);
+            holder.select.setText("Unselect");
+        }
+        else{
+            holder.select.setText("Select");
+        }
     }
+
 
     @Override
     public int getItemCount() {
@@ -64,10 +71,10 @@ public class MyAdapterSuggested extends RecyclerView.Adapter<MyAdapterSuggested.
 
     public class MyViewHolder extends RecyclerView.ViewHolder{
         TextView header;
-        TextView dailyType;
         TextView category;
         TextView description;
         Button select;
+        boolean[] selected = {false,false,false,false,false,false,false,false,false,false,false,false,false};
         ConstraintLayout constraintLayout;
         public MyViewHolder(@NonNull View itemView){
             super(itemView);
@@ -81,6 +88,7 @@ public class MyAdapterSuggested extends RecyclerView.Adapter<MyAdapterSuggested.
             header.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    HabitProcessor habitProcessor = new HabitProcessor(itemView.getContext(), "habits.json");
                     SuggestedHabit habit = habitList.get(getAdapterPosition());
                     habit.setVisibility(!habit.isVisibility());
                     notifyItemChanged(getAdapterPosition());
@@ -91,7 +99,6 @@ public class MyAdapterSuggested extends RecyclerView.Adapter<MyAdapterSuggested.
             select.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.d(TAG, "pos: "+getAdapterPosition());
                     SuggestedHabit habit;
                     habit = habitList.get(getAdapterPosition());
 
@@ -116,6 +123,8 @@ public class MyAdapterSuggested extends RecyclerView.Adapter<MyAdapterSuggested.
                                                                 });
                                                     });
                                                     select.setText("Select");
+                                                    selected[i-1]=false;
+                                                    notifyItemChanged(getAdapterPosition());
                                                 }
                                                 if(Objects.equals(habit.header, (String) habitInfo[0])
                                                         && !userHabits.contains(key)){
@@ -126,6 +135,8 @@ public class MyAdapterSuggested extends RecyclerView.Adapter<MyAdapterSuggested.
                                                                 });
                                                     });
                                                     select.setText("Unselect");
+                                                    selected[i-1]=true;
+                                                    notifyItemChanged(getAdapterPosition());
                                                 }
                                             }
                                     },
@@ -141,6 +152,7 @@ public class MyAdapterSuggested extends RecyclerView.Adapter<MyAdapterSuggested.
                                                             });
                                                 });
                                                 select.setText("Unselect");
+                                                selected[i-1]=true;
                                             }
                                         }
                                     });
@@ -149,6 +161,29 @@ public class MyAdapterSuggested extends RecyclerView.Adapter<MyAdapterSuggested.
                         });
                     });
                 }
+            });
+            HabitProcessor habitProcessor = new HabitProcessor(itemView.getContext(), "habits.json");
+            db.fetchHabit(result -> {
+                result.match(habitOption -> { // if this operation was successful:
+                    habitOption.match(// if the user has user info set:
+                            habits -> {
+                                Log.d(TAG, "User's habits found");
+                                Map<String, ArrayList<String>> userJson = (Map<String, ArrayList<String>>) habits.toJson();
+                                ArrayList<String> userHabits = userJson.get("keys");
+                                for (int i = 1; i < 14; i++){
+                                    String key = "habit" + i;
+                                    Object[] habitInfo = habitProcessor.getResult(key);
+                                    if(userHabits.contains(key)){
+                                        selected[i-1]=true;
+                                        Log.d(TAG, "true"+key);
+                                    }
+                                    notifyItemChanged(getAdapterPosition());
+                                }
+                            },
+                            () -> Log.d(TAG, "User's habits not found"));
+                }, dbError -> { // if this operation failed:
+                    Log.d(TAG, "error: " + dbError);
+                });
             });
         }
     }
