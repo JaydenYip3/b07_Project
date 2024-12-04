@@ -1,4 +1,4 @@
-package com.b07.planetze.EcoGauge;
+package com.b07.planetze.ecogauge;
 
 import static android.content.ContentValues.TAG;
 
@@ -9,27 +9,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.b07.planetze.R;
 import com.b07.planetze.common.Emissions;
 import com.b07.planetze.database.Database;
-import com.b07.planetze.database.data.DailyFetch;
 import com.b07.planetze.database.data.DailyFetchList;
 import com.b07.planetze.database.firebase.FirebaseDb;
+import com.b07.planetze.ecotracker.EcoTrackerViewModel;
 import com.b07.planetze.onboarding.CountryProcessor;
 import com.b07.planetze.util.DateInterval;
 import com.b07.planetze.util.measurement.Mass;
 import com.b07.planetze.util.result.Ok;
 
 import java.time.LocalDate;
-import java.util.HashMap;
 import java.util.Locale;
 
 public class EcoGaugeOverviewFragment extends Fragment {
@@ -37,11 +36,14 @@ public class EcoGaugeOverviewFragment extends Fragment {
     private TextView resultsTextView;
     private TextView comparison;
     private Spinner timeSpinner;
+    private EcoGaugeViewModel model;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_eco_gauge_overview, container, false);
+
+        model = new ViewModelProvider(requireActivity()).get(EcoGaugeViewModel.class);
 
         resultsTextView = view.findViewById(R.id.ecogauge_emissions);
         timeSpinner = view.findViewById(R.id.ecogauge_interval);
@@ -56,12 +58,12 @@ public class EcoGaugeOverviewFragment extends Fragment {
         setupTimeSpinner(db, countryProcessor);
 
         emissionsTrendButton.setOnClickListener(v -> {
-            ((EcoGaugeOverviewCallback) requireActivity()).setTimePeriod(timeSpinner.getSelectedItem().toString());
+            model.setInterval(timeSpinner.getSelectedItem().toString());
             ((EcoGaugeScreenSwitch) requireActivity()).switchScreens(EcoGaugeScreen.TRENDS);
         });
 
         breakdownButton.setOnClickListener(v -> {
-            ((EcoGaugeOverviewCallback) requireActivity()).setTimePeriod(timeSpinner.getSelectedItem().toString());
+            model.setInterval(timeSpinner.getSelectedItem().toString());
             ((EcoGaugeScreenSwitch) requireActivity()).switchScreens(EcoGaugeScreen.BREAKDOWN);
         });
 
