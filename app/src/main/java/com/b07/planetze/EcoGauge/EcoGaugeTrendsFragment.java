@@ -47,32 +47,37 @@ public class EcoGaugeTrendsFragment extends Fragment{
         // text color to our graph view.
         graphView.setTitleColor(R.color.purple_200);
 
+        graphView.getGridLabelRenderer().setVerticalAxisTitle("Emissions (kg CO2e)");
+
         // on below line we are setting
         // our title text size.
-        graphView.setTitleTextSize(18);
+        graphView.setTitleTextSize(40);
 
         String temp = "a";
-        String timePeriod = ((EcoGaugeOverviewCallback) requireActivity()).getPeriod(temp);
+        String timePeriod = ((EcoGaugeOverviewCallback) requireActivity()).getPeriod(temp).toLowerCase();
         FirebaseDb database = new FirebaseDb();
         List<DataPoint> dataPoints = new ArrayList<>();
 
         // Define intervals based on the time period
         List<DateInterval> intervals = new ArrayList<>();
         switch (timePeriod) {
-            case "Week":
+            case "week":
                 for (int i = 5; i > 0; i--) {
                     intervals.add(DateInterval.between(LocalDate.now().minusWeeks(i), LocalDate.now().minusWeeks(i - 1).plusDays(1)));
                 }
+                graphView.getGridLabelRenderer().setHorizontalAxisTitle("Weeks");
                 break;
-            case "Month":
+            case "month":
                 for (int i = 5; i > 0; i--) {
                     intervals.add(DateInterval.between(LocalDate.now().minusMonths(i), LocalDate.now().minusMonths(i - 1).plusDays(1)));
                 }
+                graphView.getGridLabelRenderer().setHorizontalAxisTitle("Months");
                 break;
-            case "Year":
+            case "year":
                 for (int i = 5; i > 0; i--) {
                     intervals.add(DateInterval.between(LocalDate.now().minusYears(i), LocalDate.now().minusYears(i - 1).plusDays(1)));
                 }
+                graphView.getGridLabelRenderer().setHorizontalAxisTitle("Years");
                 break;
         }
 

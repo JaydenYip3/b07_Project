@@ -56,10 +56,12 @@ public class EcoGaugeOverviewFragment extends Fragment {
         setupTimeSpinner(db, countryProcessor);
 
         emissionsTrendButton.setOnClickListener(v -> {
+            ((EcoGaugeOverviewCallback) requireActivity()).setTimePeriod(timeSpinner.getSelectedItem().toString());
             ((EcoGaugeScreenSwitch) requireActivity()).switchScreens(EcoGaugeScreen.TRENDS);
         });
 
         breakdownButton.setOnClickListener(v -> {
+            ((EcoGaugeOverviewCallback) requireActivity()).setTimePeriod(timeSpinner.getSelectedItem().toString());
             ((EcoGaugeScreenSwitch) requireActivity()).switchScreens(EcoGaugeScreen.BREAKDOWN);
         });
 

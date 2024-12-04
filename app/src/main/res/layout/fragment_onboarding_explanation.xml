@@ -42,11 +42,13 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView24" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/onboarding_go"
             android:layout_width="0dp"
             android:layout_height="60dp"
             android:backgroundTint="@color/teal"
+            android:background="@drawable/sign_up_button"
+            android:textColor="@color/white"
             android:text="Go"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
